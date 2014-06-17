@@ -23,6 +23,10 @@ import android.widget.Toast;
 public class Settings {
 	
 	public static String SETTING_LANG = "LANG";
+	public static String SETTING_USERNAME = "USERNAME";
+	public static String SETTING_PASSWORD = "PASSWORD";
+	public static String SETTING_REMEMBER_ME = "REMEMBER_ME";
+	public static String SETTING_OBU_ID = "OBU_ID";
 
 	public static HashMap<Integer,String> languages = new HashMap<Integer,String>() {{
 																					    put(0, "en");

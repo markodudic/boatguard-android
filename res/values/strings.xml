@@ -11,5 +11,13 @@
     <string name="remember_me">REMEMBER ME</string>
     <string name="register">REGISTER</string>
     <string name="login">LOGIN</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
     
+    
+	<string name="json_error">Nepravilen odgovor strežnika</string> 
+	<string name="json_title">Povezava na strežnik</string> 
+	<string name="conn_error">Ni internetne povezave</string> 
+	<string name="conn_title">Internetna povezava</string> 
+	    
 </resources>

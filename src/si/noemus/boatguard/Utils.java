@@ -1,11 +1,13 @@
 package si.noemus.boatguard;
 
 
-import java.util.Set;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.view.Menu;
 
 public class Utils {
     public static final String PREFS_NAME = "si.noemus.boatguard.PREFS_FILE";
@@ -57,9 +59,6 @@ public class Utils {
     {
         return context.getSharedPreferences(PREFS_NAME, 0).getBoolean(paramString, def);
     }
-
-
-    
 
 
 }

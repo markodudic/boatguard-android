@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources> 
+	<string name="server_url">http://93.103.12.155:8080/boatguard/</string>
+
+</resources> 
+	
