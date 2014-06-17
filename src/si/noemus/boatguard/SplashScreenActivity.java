@@ -71,7 +71,8 @@ public class SplashScreenActivity extends Activity {
 	    	   	    	   		DialogFactory.getInstance().displayWarning(SplashScreenActivity.this, name, msg, false);
 	    	   	    	   	} else {
 	    	   	    	   		Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
-	    	   					startActivity(i);								    	   		
+	    	   					startActivity(i);
+	    	   					finish();
 	    	   	    	   	}
 
 	    	   	        } catch (Exception e) {
