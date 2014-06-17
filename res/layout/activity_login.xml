@@ -1,0 +1,87 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${packageName}.${activityClass}"
+    android:orientation="vertical"
+    style="@style/Layout" >
+    
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="@dimen/shadow"
+	    android:orientation="vertical"
+	    android:background="@drawable/drop_shadow"/>
+    
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical"
+	    android:paddingBottom="@dimen/activity_vertical_margin"
+		android:paddingLeft="@dimen/activity_horizontal_margin"
+		android:paddingRight="@dimen/activity_horizontal_margin"
+		android:paddingTop="@dimen/activity_vertical_margin" >
+    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/username"
+	        style="@style/LoginText" />
+	
+	    <EditText
+	        android:id="@+id/username"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/LoginEditText"
+	        android:text="marko"
+	         >
+	        <requestFocus />
+	    </EditText>
+	
+	    <TextView
+	        style="@style/LoginText"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/password" />
+	    
+	    <EditText
+	        android:id="@+id/password"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/LoginEditText"
+	        android:text="dudic" />
+	    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/obu_id"
+	        style="@style/LoginText" />
+	
+	    <EditText
+	        android:id="@+id/obu_id"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/LoginEditText"
+	        android:text="123456" />
+	    
+	    <CheckBox
+	        android:id="@+id/checkBox_remember_me"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/remember_me"
+	        style="@style/LoginRememberText" />
+	
+	    <Button
+	        android:id="@+id/button_register"
+	        style="@style/LoginButtonText"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/register" />
+	  
+	    <Button
+	        android:id="@+id/button_login"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/login"
+	        style="@style/LoginButtonText" />
+	</LinearLayout>
+</FrameLayout>
