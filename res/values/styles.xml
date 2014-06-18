@@ -30,7 +30,13 @@
 	  <item name="android:textSize">40.0sp</item>
 	</style>
 	
-   <style name="Layout">
+   <style name="ActionBarText"  parent="@android:style/TextAppearance.Medium">
+       <item name="android:textSize">40.0sp</item>
+       <item name="android:textColor">@color/text_content</item>
+   </style>	
+	
+	
+	<style name="Layout">
        <item name="android:background">@color/background</item>
    </style>	
 		

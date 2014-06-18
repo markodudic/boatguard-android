@@ -1,0 +1,15 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+	<si.noemus.boatguard.components.TextViewFont
+	    android:id="@+id/actionbar_text"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center"
+	    boatguard:font_name="@string/font_normal"
+	    style="@style/ActionBarText" />
+</LinearLayout>

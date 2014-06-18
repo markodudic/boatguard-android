@@ -1,23 +1,12 @@
 package si.noemus.boatguard;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map.Entry;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Configuration;
-import android.text.Html;
-import android.widget.Toast;
+import android.graphics.Typeface;
 
 
 public class Settings {
@@ -34,6 +23,7 @@ public class Settings {
 																					    put(2, "hr");
 																					    put(3, "it");
 																					}};
+																					
     public static void setLanguage(Context context, String lang) {
     	System.out.println("LANG="+lang);
         Locale locale = new Locale(lang);

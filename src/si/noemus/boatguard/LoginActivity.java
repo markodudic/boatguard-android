@@ -3,9 +3,8 @@ package si.noemus.boatguard;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.graphics.Typeface;
@@ -26,12 +25,13 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
-        int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
-        TextView tvTitle = (TextView) findViewById(titleId);
-        Typeface ft=Typeface.createFromAsset(getAssets(), "fonts/Dosis-SemiBold.otf");
-        tvTitle.setTypeface(ft);
+		getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
+		getActionBar().setCustomView(R.layout.actionbar_text);
+		
+		TextView tvTitle = (TextView) findViewById(R.id.actionbar_text);
+        tvTitle.setText(R.string.title_activity_login);
         
-        Button btnRegister = (Button) findViewById(R.id.button_register);
+        TextView btnRegister = (TextView) findViewById(R.id.button_register);
 		btnRegister.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) { 
@@ -39,7 +39,7 @@ public class LoginActivity extends Activity {
 			}
 		});
 		
-		Button btnLogin = (Button) findViewById(R.id.button_login);
+		TextView btnLogin = (TextView) findViewById(R.id.button_login);
 		btnLogin.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -48,7 +48,7 @@ public class LoginActivity extends Activity {
 		});
 	}
 
-
+	
 	private void loginRegister(String type) {
 		try {
 			EditText etUsername = (EditText) findViewById(R.id.username);
@@ -70,15 +70,6 @@ public class LoginActivity extends Activity {
     	   		String msg = ((JSONObject)jRes.get("error")).getString("msg");
     	   		String name = ((JSONObject)jRes.get("error")).getString("name");
     	   		DialogFactory.getInstance().displayWarning(LoginActivity.this, name, msg, false);
-    	   		/*AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-    	   		builder.setMessage(msg).setTitle(name);
-    	   		builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-    	            public void onClick(DialogInterface dialog, int id) {
-    	            	dialog.dismiss();
-    	            }
-    	        });
-    	   		AlertDialog dialog = builder.create();
-    	   		dialog.show();*/
     	   	} else {
     	   		CheckBox cbRememberMe = (CheckBox) findViewById(R.id.checkBox_remember_me);
 		        Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_USERNAME, etUsername.getText().toString());

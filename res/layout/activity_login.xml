@@ -1,5 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}"
@@ -21,59 +22,66 @@
 		android:paddingRight="@dimen/activity_horizontal_margin"
 		android:paddingTop="@dimen/activity_vertical_margin" >
     
-	    <TextView
+	    <si.noemus.boatguard.components.TextViewFont
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/username"
-	        style="@style/LoginText" />
+	        boatguard:font_name="@string/font_normal"
+	    	style="@style/LoginText" />
 	
-	    <EditText
+	    <si.noemus.boatguard.components.EditTextFont
 	        android:id="@+id/username"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        style="@style/LoginEditText"
-	        android:text="marko"
-	         >
+	        boatguard:font_name="@string/font_normal"
+	    	android:text="marko">
 	        <requestFocus />
-	    </EditText>
+	    </si.noemus.boatguard.components.EditTextFont>
 	
-	    <TextView
+	    <si.noemus.boatguard.components.TextViewFont
 	        style="@style/LoginText"
-	        android:layout_width="wrap_content"
+	        boatguard:font_name="@string/font_normal"
+	    	android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/password" />
 	    
-	    <EditText
+	    <si.noemus.boatguard.components.EditTextFont
 	        android:id="@+id/password"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        style="@style/LoginEditText"
-	        android:text="dudic" />
+	        boatguard:font_name="@string/font_normal"
+	    	android:text="dudic" />
 	    
-	    <TextView
+	    <si.noemus.boatguard.components.TextViewFont
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/obu_id"
-	        style="@style/LoginText" />
+	        boatguard:font_name="@string/font_normal"
+	    	style="@style/LoginText" />
 	
-	    <EditText
+	    <si.noemus.boatguard.components.EditTextFont
 	        android:id="@+id/obu_id"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        style="@style/LoginEditText"
-	        android:text="123456" />
+	        boatguard:font_name="@string/font_normal"
+	    	android:text="123456" />
 	    
-	    <CheckBox
+	    <si.noemus.boatguard.components.CheckBoxFont
 	        android:id="@+id/checkBox_remember_me"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/remember_me"
-	        style="@style/LoginRememberText" />
+	        boatguard:font_name="@string/font_normal"
+	    	style="@style/LoginRememberText" />
 	
-	    <Button
+	    <si.noemus.boatguard.components.TextViewFont
 	        android:id="@+id/button_register"
 	        style="@style/LoginButtonText"
-	        android:layout_width="match_parent"
+	        boatguard:font_name="@string/font_normal"
+	    	android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:text="@string/register" />
 	  
