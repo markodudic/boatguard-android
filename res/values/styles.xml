@@ -21,7 +21,7 @@
 	<style name="MyTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
 	  <item name="android:background">@color/background</item>
 	  <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
-	  <item name="android:height">80dp</item>
+	  <item name="android:height">@dimen/actionbar_height</item>
 	  <item name="android:icon">@android:color/transparent</item>
 	</style>
 	
@@ -62,5 +62,28 @@
        <item name="android:gravity">center_vertical|center_horizontal</item>
    </style>	   
    
+   <style name="LastUpdateText">
+       <item name="android:layout_height">@dimen/menu_height</item>
+       <item name="android:textSize">18.0sp</item>
+       <item name="android:textColor">@color/text_default</item>
+       <item name="android:gravity">center_vertical|center_horizontal</item>
+   </style>	  
    
+   <style name="MenuLineLayout">
+       <item name="android:layout_width">2dp</item>
+       <item name="android:layout_marginTop">10.0dp</item>
+       <item name="android:background">@color/horizontal_line</item>
+   </style>	     
 </resources>
+
+
+
+
+
+
+
+
+
+
+
+

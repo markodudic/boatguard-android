@@ -1,4 +1,4 @@
-package si.noemus.boatguard;
+package si.noemus.boatguard.utils;
 
 import java.util.HashMap;
 import java.util.Locale;

@@ -6,6 +6,9 @@ import java.util.Map.Entry;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import si.noemus.boatguard.utils.Comm;
+import si.noemus.boatguard.utils.Settings;
+import si.noemus.boatguard.utils.Utils;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;

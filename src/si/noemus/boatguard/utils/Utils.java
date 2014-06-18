@@ -1,4 +1,4 @@
-package si.noemus.boatguard;
+package si.noemus.boatguard.utils;
 
 
 import java.io.BufferedReader;

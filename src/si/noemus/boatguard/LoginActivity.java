@@ -3,6 +3,9 @@ package si.noemus.boatguard;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import si.noemus.boatguard.utils.Comm;
+import si.noemus.boatguard.utils.Settings;
+import si.noemus.boatguard.utils.Utils;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;

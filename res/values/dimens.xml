@@ -6,5 +6,7 @@
     <dimen name="login_edit_margin">3dp</dimen>
     <dimen name="login_edit_padding">15dp</dimen>
     <dimen name="shadow">15dp</dimen>
+    <dimen name="actionbar_height">80dp</dimen>
+    <dimen name="menu_height">70dp</dimen>
     
 </resources>
