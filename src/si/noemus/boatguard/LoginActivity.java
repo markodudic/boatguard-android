@@ -80,7 +80,7 @@ public class LoginActivity extends Activity {
 					"&device_version="+URLEncoder.encode(Build.VERSION.RELEASE)+
 					"&device_uuid="+URLEncoder.encode(Build.SERIAL);
 
-			if (mTelephonyMgr.getLine1Number().length() > 0) {
+			if (mTelephonyMgr!=null && mTelephonyMgr.getLine1Number()!=null && mTelephonyMgr.getLine1Number().length() > 0) {
 				urlString += "&phone_number="+URLEncoder.encode(mTelephonyMgr.getLine1Number());
 			}     
 					
