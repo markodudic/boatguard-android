@@ -26,6 +26,7 @@
         <activity
             android:name="si.noemus.boatguard.MainActivity"
             android:screenOrientation="portrait"
+			android:launchMode="singleTop"
             android:label="" >
         </activity>
         <activity
@@ -33,6 +34,12 @@
             android:screenOrientation="portrait"
             android:label="@string/title_activity_login" >
         </activity>
+        
+        <receiver android:name="si.noemus.boatguard.utils.IncomingSms">   
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>        
     </application>
 
     <uses-permission android:name="android.permission.VIBRATE" />
