@@ -34,60 +34,16 @@
 	
 			    <ImageView
 			        android:id="@+id/iv_refresh"
-			        android:layout_width="match_parent"
+			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:clickable="false"
-			        android:gravity="center_horizontal|center_vertical"
-			        android:src="@drawable/ic_refresh"
+			        android:layout_gravity="center_horizontal|center_vertical"
+			        android:background="@drawable/refresh_animation"
 			        android:visibility="gone" />
 
 		    </LinearLayout>
 		    
 		    		    	        
-		    <si.noemus.boatguard.components.TextViewFont
-		        style="@style/LastUpdateText"
-		        android:layout_width="match_parent"
-		        android:text="@string/last_update"
-		        boatguard:font_name="@string/font_normal" />
-		    
-		    		    		    <si.noemus.boatguard.components.TextViewFont
-		        style="@style/LastUpdateText"
-		        android:layout_width="match_parent"
-		        android:text="@string/last_update"
-		        boatguard:font_name="@string/font_normal" />
-		    
-		    <si.noemus.boatguard.components.TextViewFont
-		        style="@style/LastUpdateText"
-		        android:layout_width="match_parent"
-		        android:text="@string/last_update"
-		        boatguard:font_name="@string/font_normal" />
-		    		    		    
-		    		    		    		    		    <si.noemus.boatguard.components.TextViewFont
-		        style="@style/LastUpdateText"
-		        android:layout_width="match_parent"
-		        android:text="@string/last_update"
-		        boatguard:font_name="@string/font_normal" />
-		    		    <si.noemus.boatguard.components.TextViewFont
-		        style="@style/LastUpdateText"
-		        android:layout_width="match_parent"
-		        android:text="@string/last_update"
-		        boatguard:font_name="@string/font_normal" />
-		    		    		    		    		    		    <si.noemus.boatguard.components.TextViewFont
-		        style="@style/LastUpdateText"
-		        android:layout_width="match_parent"
-		        android:text="@string/last_update"
-		        boatguard:font_name="@string/font_normal" />
-		    		    		    <si.noemus.boatguard.components.TextViewFont
-		        style="@style/LastUpdateText"
-		        android:layout_width="match_parent"
-		        android:text="@string/last_update"
-		        boatguard:font_name="@string/font_normal" />
-		    		    		    		    		    		    		    <si.noemus.boatguard.components.TextViewFont
-		        style="@style/LastUpdateText"
-		        android:layout_width="match_parent"
-		        android:text="@string/last_update"
-		        boatguard:font_name="@string/font_normal" />
-		    		    		    
 		    
 		    
 		    

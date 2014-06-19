@@ -10,17 +10,16 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.util.Log;
 
 public class Comm extends AsyncTask<String, String, String> {
-
+	
 	@Override
     protected String doInBackground(String... params) {
- 
        HttpClient httpClient = new DefaultHttpClient();
        HttpContext localContext = new BasicHttpContext();
        HttpGet httpGet = new HttpGet(params[0]);
@@ -49,4 +48,5 @@ public class Comm extends AsyncTask<String, String, String> {
 		}
 		return out.toString();
 	}	
+
 }

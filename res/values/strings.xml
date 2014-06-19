@@ -20,5 +20,9 @@
 	<string name="json_title">Povezava na strežnik</string> 
 	<string name="conn_error">Ni internetne povezave</string> 
 	<string name="conn_title">Internetna povezava</string> 
+	<string name="no_active_connection_title">Internetna povezave</string> 
+	<string name="no_active_connection_msg">Ni internetna povezave. omogočite povezavo za uporabo aplikacije.</string> 
+		
+	
 	    
 </resources>

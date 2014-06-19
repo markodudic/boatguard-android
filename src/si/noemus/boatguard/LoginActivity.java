@@ -1,5 +1,7 @@
 package si.noemus.boatguard;
 
+import java.net.URLEncoder;
+
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -8,14 +10,15 @@ import si.noemus.boatguard.utils.Settings;
 import si.noemus.boatguard.utils.Utils;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -58,31 +61,43 @@ public class LoginActivity extends Activity {
 	        EditText etPassword = (EditText) findViewById(R.id.password);
 	        EditText etObuid = (EditText) findViewById(R.id.obu_id);
 	        PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+   		    TelephonyManager mTelephonyMgr;
+	   	    mTelephonyMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
 
 	        String urlString = LoginActivity.this.getString(R.string.server_url) + 
 					"login?type="+type +
 					"&username=" + etUsername.getText().toString() + 
 					"&password=" + etPassword.getText().toString() + 
 					"&obu_sn=" + etObuid.getText().toString() + 
-					"&app_version=" + pInfo.versionName;
-	        
-	        AsyncTask at = new Comm().execute(urlString); 
-            String res = (String) at.get();
-     	   	JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
-    	   	if (jRes.has("error") && !jRes.getString("error").equals("null")) {
-    	   		String msg = ((JSONObject)jRes.get("error")).getString("msg");
-    	   		String name = ((JSONObject)jRes.get("error")).getString("name");
-    	   		DialogFactory.getInstance().displayWarning(LoginActivity.this, name, msg, false);
-    	   	} else {
-    	   		CheckBox cbRememberMe = (CheckBox) findViewById(R.id.checkBox_remember_me);
-		        Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_USERNAME, etUsername.getText().toString());
-    	   		Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_PASSWORD, etPassword.getText().toString());
-    	   		Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_OBU_ID, etObuid.getText().toString());
-    	   		Utils.savePrefernciesBoolean(LoginActivity.this, Settings.SETTING_REMEMBER_ME, cbRememberMe.isChecked());
-    	   		Intent i = new Intent(LoginActivity.this, MainActivity.class);
-				startActivity(i);								    	   		
-    	   	}
+					"&app_version=" + URLEncoder.encode(pInfo.versionName) +
+					"&device_name="+URLEncoder.encode(Build.MODEL)+
+					"&device_platform="+Build.VERSION.SDK_INT+
+					"&device_version="+URLEncoder.encode(Build.VERSION.RELEASE)+
+					"&device_uuid="+URLEncoder.encode(Build.SERIAL);
 
+			if (mTelephonyMgr.getLine1Number().length() > 0) {
+				urlString += "&phone_number="+URLEncoder.encode(mTelephonyMgr.getLine1Number());
+			}     
+					
+	        if (Utils.isNetworkConnected(LoginActivity.this)) {
+	        	AsyncTask at = new Comm().execute(urlString); 
+	            String res = (String) at.get();
+	     	   	JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
+	    	   	if (jRes.has("error") && !jRes.getString("error").equals("null")) {
+	    	   		String msg = ((JSONObject)jRes.get("error")).getString("msg");
+	    	   		String name = ((JSONObject)jRes.get("error")).getString("name");
+	    	   		DialogFactory.getInstance().displayWarning(LoginActivity.this, name, msg, false);
+	    	   	} else {
+	    	   		CheckBox cbRememberMe = (CheckBox) findViewById(R.id.checkBox_remember_me);
+			        Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_USERNAME, etUsername.getText().toString());
+	    	   		Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_PASSWORD, etPassword.getText().toString());
+	    	   		String uid = ((JSONObject)jRes.get("obu")).getString("uid");
+	    	   		Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_OBU_ID, uid);
+	    	   		Utils.savePrefernciesBoolean(LoginActivity.this, Settings.SETTING_REMEMBER_ME, cbRememberMe.isChecked());
+	    	   		Intent i = new Intent(LoginActivity.this, MainActivity.class);
+					startActivity(i);								    	   		
+	    	   	}
+	        }
         } catch (Exception e) {
         	e.printStackTrace();
         	Toast toast = Toast.makeText(LoginActivity.this, getString(R.string.json_error), Toast.LENGTH_LONG);

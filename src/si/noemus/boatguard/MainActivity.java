@@ -1,7 +1,9 @@
 package si.noemus.boatguard;
 
+import si.noemus.boatguard.utils.Settings;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 	
 	private int initialPosition;
+	private boolean refreshing = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,10 @@ public class MainActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}*/
+        final TextView tvLastUpdate = (TextView)findViewById(R.id.tv_last_update);
+        final ImageView ivRefresh = (ImageView)findViewById(R.id.iv_refresh);
+        final AnimationDrawable refreshAnimation = (AnimationDrawable) ivRefresh.getBackground();
+
         final ScrollView sv = (ScrollView)findViewById(R.id.scroll_main);
         sv.setOnTouchListener(new View.OnTouchListener() {
            @Override
@@ -38,29 +45,33 @@ public class MainActivity extends Activity {
                 case MotionEvent.ACTION_SCROLL:
                 	break;
                 case MotionEvent.ACTION_MOVE:
+             	    final float scale = MainActivity.this.getResources().getDisplayMetrics().density;
+                    int px = (int) (MainActivity.this.getResources().getDimension(R.dimen.menu_height) * scale + 0.5f);
+                    LinearLayout lMenu = (LinearLayout)findViewById(R.id.layout_menu);
+             	   	TranslateAnimation anim = null;
                 	int newPosition = sv.getScrollY();
                 	if (newPosition > initialPosition) {
-             	   		System.out.println("up");
-             	   		LinearLayout lMenu = (LinearLayout)findViewById(R.id.layout_menu);
-	             	   	TranslateAnimation anim=new TranslateAnimation(0,0,lMenu.getY(),170);
-	             	   	anim.setDuration(1000);
-	             	    anim.setFillAfter(true);
-	             	    lMenu.setAnimation(anim);
-             	   
-                	} else if (newPosition < initialPosition) {
-                		if (newPosition == 0 && initialPosition != 0) {
-                			System.out.println("refresh");
-                			TextView tvLastUpdate = (TextView)findViewById(R.id.tv_last_update);
+                		//System.out.println("up="+lMenu.getY()+":"+px);
+             	   		anim=new TranslateAnimation(0,0,0,px);
+                	} else if ((newPosition < initialPosition) || (newPosition==0 && initialPosition==0)) {
+             	   		anim=new TranslateAnimation(0,0,200,0);
+             	   		if (newPosition == 0 && !refreshing) {
+                			//System.out.println("refresh");
                 			tvLastUpdate.setVisibility(View.GONE);	
-                			ImageView ivRefresh = (ImageView)findViewById(R.id.iv_refresh);
                 			ivRefresh.setVisibility(View.VISIBLE);	
-                			
+                			refreshAnimation.start();
                 			
                 			//TODO naredim resfresh podatkov in vrnem last update
+                			refreshing = true;
                 		}
              	   	}
-             	   initialPosition = sv.getScrollY();
-                   break;
+                	if (anim!=null) {
+	                	anim.setDuration(1000);
+	             	    anim.setFillAfter(true);
+	             	    lMenu.setAnimation(anim);
+                	}
+             	    initialPosition = sv.getScrollY();
+                    break;
                 case MotionEvent.ACTION_DOWN:
                 	break;
                 case MotionEvent.ACTION_CANCEL:
@@ -69,7 +80,10 @@ public class MainActivity extends Activity {
                 }
                 return false;
             }
-        });        
+        });       
+        
+        Settings.getSettings(this);        
+        Settings.getObuSettings(this);        
 	}
 
 	@Override

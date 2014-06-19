@@ -6,8 +6,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import si.noemus.boatguard.DialogFactory;
+import si.noemus.boatguard.LoginActivity;
+import si.noemus.boatguard.R;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 public class Utils {
     public static final String PREFS_NAME = "si.noemus.boatguard.PREFS_FILE";
@@ -54,11 +59,20 @@ public class Utils {
         localEditor.putBoolean(paramString1, paramString2);
         localEditor.commit();
     }
-
+ 
     public static boolean getPrefernciesBoolean(Context context, String paramString, boolean def)
     {
         return context.getSharedPreferences(PREFS_NAME, 0).getBoolean(paramString, def);
     }
 
-
+	
+    public static boolean isNetworkConnected(Context context) {
+	  ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+	  NetworkInfo ni = cm.getActiveNetworkInfo();
+	  if (ni == null) {
+	   	  DialogFactory.getInstance().displayWarning(context, context.getResources().getString(R.string.no_active_connection_title), context.getResources().getString(R.string.no_active_connection_msg), false);
+		  return false;
+	  } else
+		  return true;
+	}	
 }

@@ -1,7 +1,7 @@
 package si.noemus.boatguard;
 
+import java.net.URLEncoder;
 import java.util.Locale;
-import java.util.Map.Entry;
 
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -10,16 +10,15 @@ import si.noemus.boatguard.utils.Comm;
 import si.noemus.boatguard.utils.Settings;
 import si.noemus.boatguard.utils.Utils;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.telephony.TelephonyManager;
 import android.view.Gravity;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Toast;
 
 public class SplashScreenActivity extends Activity {
@@ -43,6 +42,8 @@ public class SplashScreenActivity extends Activity {
         	Settings.setLanguage(SplashScreenActivity.this, Settings.languages.get(lang));
         }
         
+
+        
         new Handler().postDelayed(new Runnable() {
  
 	            @Override
@@ -58,26 +59,37 @@ public class SplashScreenActivity extends Activity {
 	    	   		} else {
 	    	   			try {
 	    	   				PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+		    	   		    TelephonyManager mTelephonyMgr;
+			    	   	    mTelephonyMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
 	    	   				String urlString = SplashScreenActivity.this.getString(R.string.server_url) + 
-	    	   						"login?type=login" +
+	    	   						"login?type=login" + 
 	    	   						"&username=" + username + 
-	    	   						"&password=" + password + 
+	    	   						"&password=" + password +
 	    	   						"&obu_sn=" + obu_id + 
-	    	   						"&app_version=" + pInfo.versionName;
-	    	   		        
-	    	   		        AsyncTask at = new Comm().execute(urlString); 
-	    	   	            String res = (String) at.get();
-	    	   	     	   	JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
-	    	   	    	   	if (jRes.has("error") && !jRes.getString("error").equals("null")) {
-	    	   	    	   		String msg = ((JSONObject)jRes.get("error")).getString("msg");
-	    	   	    	   		String name = ((JSONObject)jRes.get("error")).getString("name");
-	    	   	    	   		DialogFactory.getInstance().displayWarning(SplashScreenActivity.this, name, msg, false);
-	    	   	    	   	} else {
-	    	   	    	   		Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
-	    	   					startActivity(i);
-	    	   					finish();
-	    	   	    	   	}
+									"&app_version=" + URLEncoder.encode(pInfo.versionName) +
+									"&device_name="+URLEncoder.encode(Build.MODEL)+
+									"&device_platform="+Build.VERSION.SDK_INT+
+									"&device_version="+URLEncoder.encode(Build.VERSION.RELEASE)+
+									"&device_uuid="+URLEncoder.encode(Build.SERIAL);
 
+	    	   				if (mTelephonyMgr.getLine1Number().length() > 0) {
+	    	   					urlString += "&phone_number="+URLEncoder.encode(mTelephonyMgr.getLine1Number());
+	    	   				}        
+	    	   	        
+	    	   		        if (Utils.isNetworkConnected(SplashScreenActivity.this)) {
+	    	   		        	AsyncTask at = new Comm().execute(urlString); 
+		    	   	            String res = (String) at.get();
+		    	   	            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
+		    	   	    	   	if (jRes.has("error") && !jRes.getString("error").equals("null")) {
+		    	   	    	   		String msg = ((JSONObject)jRes.get("error")).getString("msg");
+		    	   	    	   		String name = ((JSONObject)jRes.get("error")).getString("name");
+		    	   	    	   		DialogFactory.getInstance().displayWarning(SplashScreenActivity.this, name, msg, false);
+		    	   	    	   	} else {
+		    	   	    	   		Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
+		    	   					startActivity(i);
+		    	   					finish();
+		    	   	    	   	}
+	    	   		        }
 	    	   	        } catch (Exception e) {
 	    	   	        	e.printStackTrace();
 	    	   	        	Toast toast = Toast.makeText(SplashScreenActivity.this, getString(R.string.json_error), Toast.LENGTH_LONG);

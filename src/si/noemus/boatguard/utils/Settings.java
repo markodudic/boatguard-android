@@ -4,9 +4,22 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map.Entry;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import si.noemus.boatguard.R;
+import si.noemus.boatguard.objects.Alarm;
+import si.noemus.boatguard.objects.AppSetting;
+import si.noemus.boatguard.objects.ObuSetting;
+import si.noemus.boatguard.objects.State;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
+import android.os.AsyncTask;
+import android.view.Gravity;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 
 public class Settings {
@@ -24,7 +37,14 @@ public class Settings {
 																					    put(3, "it");
 																					}};
 																					
-    public static void setLanguage(Context context, String lang) {
+	public static HashMap<Integer,Alarm> alarms = new HashMap<Integer,Alarm>(){};
+	public static HashMap<Integer,AppSetting> appSettings = new HashMap<Integer,AppSetting>(){};
+	public static HashMap<Integer,State> states = new HashMap<Integer,State>(){};
+	public static HashMap<Integer,ObuSetting> obuSettings = new HashMap<Integer,ObuSetting>(){};
+			
+	private static Gson gson = new Gson();																					
+    
+	public static void setLanguage(Context context, String lang) {
     	System.out.println("LANG="+lang);
         Locale locale = new Locale(lang);
 	    Locale.setDefault(locale);
@@ -37,6 +57,84 @@ public class Settings {
 	        	Utils.savePrefernciesInt(context, Settings.SETTING_LANG, entry.getKey());
 	        }
     	}
-
     }	
+    
+    public static void getSettings(Context context) {
+    	String urlString = context.getString(R.string.server_url) + "getsettings";
+    	if (Utils.isNetworkConnected(context)) {
+  			try {
+		        	AsyncTask at = new Comm().execute(urlString); 
+		            String res = (String) at.get();
+		            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
+		    	   	if (jRes.has("error") && !jRes.getString("error").equals("null")) {
+		    	   	} else {
+		    	   		JSONArray jsonAlarms = (JSONArray)jRes.get("alarms");
+		    	   		alarms.clear();
+		    	   		for (int i=0; i< jsonAlarms.length(); i++) {
+		    	   			Alarm alarm = gson.fromJson(jsonAlarms.get(i).toString(), Alarm.class);
+		    	   			//System.out.println(alarm.toString());
+		    	   			alarms.put(alarm.getId(), alarm);
+		    	   		}
+		    	   		
+		    	   		JSONArray jsonAppSettings = (JSONArray)jRes.get("app_settings");
+		    	   		appSettings.clear();
+		    	   		for (int i=0; i< jsonAppSettings.length(); i++) {
+		    	   			AppSetting appSetting = gson.fromJson(jsonAppSettings.get(i).toString(), AppSetting.class);
+		    	   			//System.out.println(appSetting.toString());
+		    	   			appSettings.put(appSetting.getId(), appSetting);
+		    	   		}
+
+		    	   		JSONArray jsonStates = (JSONArray)jRes.get("states");
+		    	   		states.clear();
+		    	   		for (int i=0; i< jsonStates.length(); i++) {
+		    	   			State state = gson.fromJson(jsonStates.get(i).toString(), State.class);
+		    	   			//System.out.println(state.toString());
+		    	   			states.put(state.getId(), state);
+		    	   		}
+		    	   		
+		    	   	}
+	        } catch (Exception e) {
+   	        	e.printStackTrace();
+   	        	Toast toast = Toast.makeText(context, context.getString(R.string.json_error), Toast.LENGTH_LONG);
+   	        	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+   	        	toast.show();
+   	   		}
+    	}
+    }
+    
+    public static void getObuSettings(Context context) {
+    	String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
+   		
+    	String urlString = context.getString(R.string.server_url) + "getobusettings?obuid="+obuId+"&format=json";
+    	if (Utils.isNetworkConnected(context)) {
+  			try {
+		        	AsyncTask at = new Comm().execute(urlString); 
+		            String res = (String) at.get();
+		            JSONArray jsonObuSettings = (JSONArray)new JSONTokener(res).nextValue();
+	    	   		obuSettings.clear();
+	    	   		for (int i=0; i< jsonObuSettings.length(); i++) {
+	    	   			ObuSetting obuSetting = gson.fromJson(jsonObuSettings.get(i).toString(), ObuSetting.class);
+	    	   			System.out.println(obuSetting.toString());
+	    	   			obuSettings.put(obuSetting.getIdSetting(), obuSetting);
+	    	   		}
+	        } catch (Exception e) {
+   	        	e.printStackTrace();
+   	        	Toast toast = Toast.makeText(context, context.getString(R.string.json_error), Toast.LENGTH_LONG);
+   	        	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+   	        	toast.show();
+   	   		}
+    	}
+    }
+    
 }
+
+
+
+
+
+
+
+
+
+
+
