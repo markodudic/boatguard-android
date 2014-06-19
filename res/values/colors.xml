@@ -21,15 +21,5 @@
    
     <color name="transparent_color">#00000000</color>
     
-    <color name="background">#464f58</color>
-    <color name="vertical_line">#232d37</color>
-    <color name="horizontal_line">#232d37</color>
-    <color name="background_button">#323f48</color>
-    <color name="text_default">#e8e7e8</color>
-    <color name="text_content">#6d747c</color>
-    <color name="text_input">#303e48</color>
-
-    
-    
 </resources>
 

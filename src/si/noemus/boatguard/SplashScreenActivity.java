@@ -27,7 +27,7 @@ public class SplashScreenActivity extends Activity {
  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
  
         int lang = Utils.getPrefernciesInt(SplashScreenActivity.this, Settings.SETTING_LANG);

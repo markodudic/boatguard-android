@@ -31,6 +31,7 @@ public class Settings {
 	public static String SETTING_OBU_ID = "OBU_ID";
 	public static String SETTING_REFRESH_TIME = "REFRESH_TIME";
 	public static String SETTING_SERVER_NUM = "SERVER_NUM";
+	public static String SETTING_THEME = "THEME";
 
 	public static HashMap<Integer,String> languages = new HashMap<Integer,String>() {{
 																					    put(0, "en");

@@ -3,4 +3,15 @@
      <declare-styleable name="boatguard"> 
         <attr name="font_name" format="string" /> 
     </declare-styleable>  
+    
+	<attr name="background"/>
+    <attr name="vertical_line"/>
+    <attr name="horizontal_line"/>
+    <attr name="background_button"/>
+    <attr name="text_default"/>
+    <attr name="text_content"/>
+    <attr name="text_input"/> 
+    
+    
+    <attr name="ic_logotype"/> 
 </resources>

@@ -28,6 +28,11 @@ public class LoginActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		int theme = Utils.getPrefernciesInt(this, Settings.SETTING_THEME);
+		System.out.println("SET="+theme);
+		if (theme != -1) {
+			setTheme(theme);			
+		}
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		

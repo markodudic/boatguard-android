@@ -61,6 +61,11 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		int theme = Utils.getPrefernciesInt(this, Settings.SETTING_THEME);
+		System.out.println("SET="+theme);
+		if (theme != -1) {
+			setTheme(theme);			
+		}
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
@@ -73,10 +78,35 @@ public class MainActivity extends Activity {
         ivRefresh = (ImageView)findViewById(R.id.iv_refresh);
         refreshAnimation = (AnimationDrawable) ivRefresh.getBackground();
 
-        /*if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}*/
+        ImageView ivSettings = (ImageView)findViewById(R.id.iv_settings);
+        ivSettings.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) { 
+				int theme = Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME);
+				System.out.println("CURR="+theme);
+				if (theme == R.style.AppThemeDay) {
+					Utils.savePrefernciesInt(MainActivity.this, Settings.SETTING_THEME, R.style.AppThemeNight);
+				} else {
+					Utils.savePrefernciesInt(MainActivity.this, Settings.SETTING_THEME, R.style.AppThemeDay);					
+				}
+				finish();
+				startActivity(getIntent());
+			}
+		});
+        ImageView ivHome = (ImageView)findViewById(R.id.iv_home);
+        ivHome.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) { 
+
+			}
+		});
+		ImageView ivLocation = (ImageView)findViewById(R.id.iv_loction);
+		ivLocation.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) { 
+
+			}
+		});
 
         final ScrollView sv = (ScrollView)findViewById(R.id.scroll_main);
         sv.setOnTouchListener(new View.OnTouchListener() {

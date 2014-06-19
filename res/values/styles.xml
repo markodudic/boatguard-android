@@ -1,49 +1,58 @@
 <resources>
 
-    <!--
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    -->
-    <style name="AppBaseTheme" parent="android:Theme.Light">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
-    </style>
-
-
-    
-   <style name="AppTheme" parent="AppBaseTheme">
+	<!-- DAY THEME -->
+    <style name="AppThemeDay">
     	<item name="android:actionBarStyle">@style/MyTheme.ActionBarStyle</item>
-    </style>
+		<item name="background">#d5d6d8</item>
+	    <item name="vertical_line">#b3b3b3</item>
+	    <item name="horizontal_line">#b3b3b3</item>
+	    <item name="background_button">#dfe0e2</item>
+	    <item name="text_default">#333e48</item>
+	    <item name="text_content">#6d747c</item>
+	    <item name="text_input">#323f48</item>    
+	    <item name="ic_logotype">@drawable/ic_logotype_day</item>    
+	</style>
+   
+    
+	<!-- NIGHT THEME -->
+   <style name="AppThemeNight">
+    	<item name="android:actionBarStyle">@style/MyTheme.ActionBarStyle</item>
+		<item name="background">#464f58</item>
+	    <item name="vertical_line">#232d37</item>
+	    <item name="horizontal_line">#232d37</item>
+	    <item name="background_button">#323f48</item>
+	    <item name="text_default">#e8e7e8</item>
+	    <item name="text_content">#6d747c</item>
+	    <item name="text_input">#303e48</item>    
+	    <item name="ic_logotype">@drawable/ic_logotype</item>    
+	</style>
     
 	<style name="MyTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
-	  <item name="android:background">@color/background</item>
+	  <item name="android:background">?background</item>
 	  <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
 	  <item name="android:height">@dimen/actionbar_height</item>
 	  <item name="android:icon">@android:color/transparent</item>
 	</style>
 	
 	<style name="MyTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-	  <item name="android:textColor">@color/text_content</item>
+	  <item name="android:textColor">?text_content</item>
 	  <item name="android:textSize">40.0sp</item>
 	</style>
 	
    <style name="ActionBarText"  parent="@android:style/TextAppearance.Medium">
        <item name="android:textSize">40.0sp</item>
-       <item name="android:textColor">@color/text_content</item>
+       <item name="android:textColor">?text_content</item>
    </style>	
 	
 	
 	<style name="Layout">
-       <item name="android:background">@color/background</item>
+       <item name="android:background">?background</item>
    </style>	
 		
    <style name="LoginText">
        <item name="android:height">30.0sp</item>
        <item name="android:textSize">22.0sp</item>
-       <item name="android:textColor">@color/text_content</item>
+       <item name="android:textColor">?text_content</item>
        <item name="android:gravity">center_vertical</item>
    </style>	
  
@@ -53,7 +62,7 @@
    
    <style name="LoginEditText" parent="LoginRememberText">
        <item name="android:paddingLeft">@dimen/login_edit_padding</item>
-       <item name="android:background">@color/background_button</item>
+       <item name="android:background">?background_button</item>
        <item name="android:layout_marginTop">@dimen/login_edit_margin</item>
        <item name="android:layout_marginBottom">@dimen/login_edit_margin</item>
    </style>	
@@ -65,14 +74,14 @@
    <style name="LastUpdateText">
        <item name="android:layout_height">@dimen/menu_height</item>
        <item name="android:textSize">18.0sp</item>
-       <item name="android:textColor">@color/text_default</item>
+       <item name="android:textColor">?text_default</item>
        <item name="android:gravity">center_vertical|center_horizontal</item>
    </style>	  
    
    <style name="MenuLineLayout">
        <item name="android:layout_width">2dp</item>
        <item name="android:layout_marginTop">10.0dp</item>
-       <item name="android:background">@color/horizontal_line</item>
+       <item name="android:background">?horizontal_line</item>
    </style>	     
 </resources>
 
