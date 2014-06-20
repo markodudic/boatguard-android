@@ -39,7 +39,13 @@
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
-        </receiver>        
+        </receiver>  
+     
+        
+		<meta-data
+		    android:name="com.google.android.maps.v2.API_KEY"
+		    android:value="AIzaSyAr89G02R99OP5FdYEC6wkd-UYJRFMdwNU"/>        
+  
     </application>
 
     <uses-permission android:name="android.permission.VIBRATE" />
