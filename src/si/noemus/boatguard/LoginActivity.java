@@ -36,11 +36,16 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
-		getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
-		getActionBar().setCustomView(R.layout.actionbar_text);
+		final ActionBar actionBar = getActionBar();
+        actionBar.setCustomView(R.layout.actionbar_icon);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        
+        //getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
+		//getActionBar().setCustomView(R.layout.actionbar_text);
 		
-		TextView tvTitle = (TextView) findViewById(R.id.actionbar_text);
-        tvTitle.setText(R.string.title_activity_login);
+		//TextView tvTitle = (TextView) findViewById(R.id.actionbar_text);
+        //tvTitle.setText(R.string.title_activity_login);
         
         TextView btnRegister = (TextView) findViewById(R.id.button_register);
 		btnRegister.setOnClickListener(new View.OnClickListener() {

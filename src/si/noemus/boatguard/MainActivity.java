@@ -16,6 +16,9 @@ import si.noemus.boatguard.utils.Settings;
 import si.noemus.boatguard.utils.Utils;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -34,7 +37,9 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -55,8 +60,10 @@ public class MainActivity extends Activity {
     
 	public static HashMap<Integer,ObuState> obuStates = new HashMap<Integer,ObuState>(){};
 	public static HashMap<Integer,ObuAlarm> obuAlarms = new HashMap<Integer,ObuAlarm>(){};
-	
 
+	private static MainFragment mFragment;
+	private static LocationFragment lFragment;
+    
 	private static Gson gson = new Gson();																					
 
 	@Override
@@ -78,6 +85,17 @@ public class MainActivity extends Activity {
         ivRefresh = (ImageView)findViewById(R.id.iv_refresh);
         refreshAnimation = (AnimationDrawable) ivRefresh.getBackground();
 
+        
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        mFragment = (MainFragment) fm.findFragmentById(R.id.fragment_main);
+        lFragment = (LocationFragment) fm.findFragmentById(R.id.fragment_location);
+        ft.hide(lFragment);
+        ft.commit();
+        addShowHideListener(R.id.fragment_location, lFragment);
+        addShowHideListener(R.id.fragment_main, mFragment);
+        
+        
         ImageView ivSettings = (ImageView)findViewById(R.id.iv_settings);
         ivSettings.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -93,20 +111,7 @@ public class MainActivity extends Activity {
 				startActivity(getIntent());
 			}
 		});
-        ImageView ivHome = (ImageView)findViewById(R.id.iv_home);
-        ivHome.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) { 
 
-			}
-		});
-		ImageView ivLocation = (ImageView)findViewById(R.id.iv_loction);
-		ivLocation.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) { 
-
-			}
-		});
 
         final ScrollView sv = (ScrollView)findViewById(R.id.scroll_main);
         sv.setOnTouchListener(new View.OnTouchListener() {
@@ -154,6 +159,32 @@ public class MainActivity extends Activity {
         
 	}
 
+	
+    void addShowHideListener(int buttonId, final Fragment fragment) {
+        ImageView ivHome = (ImageView)findViewById(R.id.iv_home);
+        ivHome.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) { 
+				System.out.println("HOME");
+				FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.show(mFragment);
+                ft.hide(lFragment);
+                ft.commit();
+            }
+		});
+		ImageView ivLocation = (ImageView)findViewById(R.id.iv_loction);
+		ivLocation.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) { 
+				FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.show(lFragment);
+                ft.hide(mFragment);
+                ft.commit();
+			}
+		});
+    }
+    
+    
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -181,7 +212,7 @@ public class MainActivity extends Activity {
     	   		for (int i=0; i< jsonStates.length(); i++) {
     	   			ObuState obuState = gson.fromJson(jsonStates.get(i).toString(), ObuState.class);
     	   			System.out.println(obuState.toString());
-    	   			obuStates.put(obuState.getIdState(), obuState);
+    	   			obuStates.put(obuState.getId_state(), obuState);
     	   		}
 	    	   	
 	    	   	JSONArray jsonAlarms = (JSONArray)jRes.get("alarms");
@@ -256,22 +287,7 @@ public class MainActivity extends Activity {
 	   }
 	};	    
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	/*
-	public static class PlaceholderFragment extends Fragment {
+	
 
-		public PlaceholderFragment() {
-		}
 
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
-			return rootView;
-		}
-	}
-*/
 }

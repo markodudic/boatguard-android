@@ -8,22 +8,22 @@ public class ObuSetting {
 		
 	}	
 	
-	private int idSetting;
+	private int id_setting;
 	private String code;
 	private String value;
 	private String type;
 	
 	@Override
 	public String toString(){
-		return "OBUSETTING: idSetting: " + this.idSetting + ", code:" + this.code + ", value:" + this.value + ", type" + this.type;
+		return "OBUSETTING: idSetting: " + this.id_setting + ", code:" + this.code + ", value:" + this.value + ", type" + this.type;
 	}
 
 
 	public int getIdSetting() {
-		return idSetting;
+		return id_setting;
 	}
-	public void setIdSetting(int idSetting) {
-		this.idSetting = idSetting;
+	public void setIdSetting(int id_setting) {
+		this.id_setting = id_setting;
 	}
 	public String getCode() {
 		return code;

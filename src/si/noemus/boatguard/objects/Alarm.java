@@ -16,7 +16,7 @@ public class Alarm {
 	private String operand;
 	private String previous;
 	private String message;
-	private String messageShort;
+	private String message_short;
 	private String title;
 	private String action;
 	private String type;
@@ -26,8 +26,8 @@ public class Alarm {
 	public String toString(){
 		return "ALARM: id: " + this.id + ", idState:" + this.idState + ", name:" + this.name + ", code:" + this.code + 
 				", value:" + this.value + ", operand " + this.operand + ", previous " + this.previous + 
-				", message" + this.message + ", messageShort" + this.messageShort + ", title" + this.title + 
-				", action" + this.action + ", messageShort" + this.messageShort + ", active" + this.active;
+				", message" + this.message + ", messageShort" + this.message_short + ", title" + this.title + 
+				", action" + this.action + ", messageShort" + this.message_short + ", active" + this.active;
 	}
 
 	public int getId() {
@@ -79,10 +79,10 @@ public class Alarm {
 		this.message = message;
 	}
 	public String getMessageShort() {
-		return messageShort;
+		return message_short;
 	}
-	public void setMessageShort(String messageShort) {
-		this.messageShort = messageShort;
+	public void setMessageShort(String message_short) {
+		this.message_short = message_short;
 	}
 	public String getTitle() {
 		return title;

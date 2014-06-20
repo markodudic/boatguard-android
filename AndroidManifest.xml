@@ -32,7 +32,7 @@
         <activity
             android:name="si.noemus.boatguard.LoginActivity"
             android:screenOrientation="portrait"
-            android:label="@string/title_activity_login" >
+            android:label="" >
         </activity>
         
         <receiver android:name="si.noemus.boatguard.utils.IncomingSms">   

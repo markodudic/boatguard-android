@@ -8,30 +8,30 @@ public class ObuState {
 		
 	}	
 	
-	private int idState;
-	private int idObu;
+	private int id_state;
+	private int id_obu;
 	private String value;
-	private String dateState;
+	private String date_state;
 	
 	@Override
 	public String toString(){
-		return "OBUSTATE: idState: " + this.idState + ", idObu:" + this.idObu + ", value:" + this.value + ", dateState" + this.dateState;
+		return "OBUSTATE: idState: " + this.id_state + ", idObu:" + this.id_obu + ", value:" + this.value + ", dateState" + this.date_state;
 	}
 
-	public int getIdState() {
-		return idState;
+	public int getId_state() {
+		return id_state;
 	}
 
-	public void setIdState(int idState) {
-		this.idState = idState;
+	public void setId_state(int id_state) {
+		this.id_state = id_state;
 	}
 
-	public int getIdObu() {
-		return idObu;
+	public int getId_obu() {
+		return id_obu;
 	}
 
-	public void setIdObu(int idObu) {
-		this.idObu = idObu;
+	public void setId_obu(int id_obu) {
+		this.id_obu = id_obu;
 	}
 
 	public String getValue() {
@@ -42,14 +42,13 @@ public class ObuState {
 		this.value = value;
 	}
 
-	public String getDateState() {
-		return dateState;
+	public String getDate_state() {
+		return date_state;
 	}
 
-	public void setDateState(String dateState) {
-		this.dateState = dateState;
+	public void setDate_state(String date_state) {
+		this.date_state = date_state;
 	}
-
 
 
 }

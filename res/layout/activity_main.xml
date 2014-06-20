@@ -18,33 +18,18 @@
 	        style="@style/Layout"
 	        android:orientation="vertical">
 	    
-		    <LinearLayout
-		        style="@style/Layout"
-		        android:layout_width="match_parent"
-		        android:layout_height="@dimen/menu_height"
-		        android:gravity="center_vertical"
-		        android:orientation="vertical" >
-		        
-			    <si.noemus.boatguard.components.TextViewFont
-			        android:id="@+id/tv_last_update"
-			        style="@style/LastUpdateText"
-			        android:layout_width="match_parent"
-			        android:text="@string/last_update"
-			        boatguard:font_name="@string/font_normal" />
-	
-			    <ImageView
-			        android:id="@+id/iv_refresh"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:clickable="false"
-			        android:layout_gravity="center_horizontal|center_vertical"
-			        android:background="@drawable/refresh_animation"
-			        android:visibility="gone" />
 
-		    </LinearLayout>
-		    
+			<fragment android:name="si.noemus.boatguard.MainFragment"
+	            android:id="@+id/fragment_main"
+	            android:layout_width="match_parent"
+			    android:layout_height="@dimen/menu_height" />
+	        		    
 		    		    	        
-		    
+			<fragment android:name="si.noemus.boatguard.LocationFragment"
+	            android:id="@+id/fragment_location"
+	            android:layout_weight="1"
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent" />		    
 		    
 		    
 		    

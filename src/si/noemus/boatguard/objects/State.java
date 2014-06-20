@@ -9,7 +9,7 @@ public class State {
 	}	
 	
 	private int id;
-	private int idComponent;
+	private int id_component;
 	private String name;
 	private String code;
 	private String position;
@@ -18,7 +18,7 @@ public class State {
 	
 	@Override
 	public String toString(){
-		return "STATE: id: " + this.id + ", idComponent:" + this.idComponent + ", name:" + this.name + ", code:" + this.code + 
+		return "STATE: id: " + this.id + ", idComponent:" + this.id_component + ", name:" + this.name + ", code:" + this.code + 
 				", type" + this.type + ", active" + this.active;
 	}
 
@@ -30,11 +30,11 @@ public class State {
 	}
 	
 	public int getIdComponent() {
-		return idComponent;
+		return id_component;
 	}
 
-	public void setIdComponent(int idComponent) {
-		this.idComponent = idComponent;
+	public void setIdComponent(int id_component) {
+		this.id_component = id_component;
 	}
 
 	public String getPosition() {
