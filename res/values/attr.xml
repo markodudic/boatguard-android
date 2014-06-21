@@ -4,13 +4,13 @@
         <attr name="font_name" format="string" /> 
     </declare-styleable>  
     
-	<attr name="background"/>
-    <attr name="vertical_line"/>
-    <attr name="horizontal_line"/>
-    <attr name="background_button"/>
-    <attr name="text_default"/>
-    <attr name="text_content"/>
-    <attr name="text_input"/> 
+	<attr name="background" format="reference"/>
+    <attr name="vertical_line" format="reference"/>
+    <attr name="horizontal_line" format="reference"/>
+    <attr name="background_button" format="reference"/>
+    <attr name="text_default" format="reference"/>
+    <attr name="text_content" format="reference"/>
+    <attr name="text_input" format="reference"/> 
     
     
     <attr name="ic_logotype"/> 

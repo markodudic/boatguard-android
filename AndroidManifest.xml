@@ -41,10 +41,10 @@
             </intent-filter>
         </receiver>  
      
-        
-		<meta-data
+
+		<!--  meta-data
 		    android:name="com.google.android.maps.v2.API_KEY"
-		    android:value="AIzaSyAr89G02R99OP5FdYEC6wkd-UYJRFMdwNU"/>        
+		    android:value="AIzaSyAr89G02R99OP5FdYEC6wkd-UYJRFMdwNU"/-->        
   
     </application>
 

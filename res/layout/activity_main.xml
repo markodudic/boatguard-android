@@ -14,7 +14,7 @@
 	    
 	    <LinearLayout
 	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
+	        android:layout_height="match_parent"
 	        style="@style/Layout"
 	        android:orientation="vertical">
 	    
@@ -22,14 +22,14 @@
 			<fragment android:name="si.noemus.boatguard.MainFragment"
 	            android:id="@+id/fragment_main"
 	            android:layout_width="match_parent"
-			    android:layout_height="@dimen/menu_height" />
+			    android:layout_height="match_parent" />
 	        		    
 		    		    	        
-			<fragment android:name="com.google.android.gms.maps.MapFragment"
+			<!--  fragment android:name="com.google.android.gms.maps.MapFragment"
 	            android:id="@+id/fragment_location"
 	            android:layout_weight="1"
 	            android:layout_width="match_parent"
-	            android:layout_height="match_parent" />		    
+	            android:layout_height="match_parent" /-->		    
 		    
 		    
 		    
@@ -47,7 +47,7 @@
 	    android:id="@+id/layout_menu"
 		android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    style="@style/Layout"
+	    style="@style/LayoutMenu"
 	    android:orientation="vertical"
 	    android:layout_gravity="bottom">
 	

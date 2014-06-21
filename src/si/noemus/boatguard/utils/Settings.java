@@ -11,6 +11,7 @@ import org.json.JSONTokener;
 import si.noemus.boatguard.R;
 import si.noemus.boatguard.objects.Alarm;
 import si.noemus.boatguard.objects.AppSetting;
+import si.noemus.boatguard.objects.ObuComponent;
 import si.noemus.boatguard.objects.ObuSetting;
 import si.noemus.boatguard.objects.State;
 import android.content.Context;
@@ -44,6 +45,7 @@ public class Settings {
 	public static HashMap<Integer,AppSetting> appSettings = new HashMap<Integer,AppSetting>(){};
 	public static HashMap<Integer,State> states = new HashMap<Integer,State>(){};
 	public static HashMap<Integer,ObuSetting> obuSettings = new HashMap<Integer,ObuSetting>(){};
+	public static HashMap<Integer,ObuComponent> obuComponents = new HashMap<Integer,ObuComponent>(){};
 			
 	private static Gson gson = new Gson();																					
     
@@ -121,7 +123,7 @@ public class Settings {
     	   		obuSettings.clear();
     	   		for (int i=0; i< jsonObuSettings.length(); i++) {
     	   			ObuSetting obuSetting = gson.fromJson(jsonObuSettings.get(i).toString(), ObuSetting.class);
-    	   			System.out.println(obuSetting.toString());
+    	   			//System.out.println(obuSetting.toString());
     	   			obuSettings.put(obuSetting.getIdSetting(), obuSetting);
     	   			if (obuSetting.getCode().equals(SETTING_REFRESH_TIME)) {
     	   				Utils.savePrefernciesInt(context, SETTING_REFRESH_TIME, Integer.parseInt(obuSetting.getValue()));
@@ -137,6 +139,30 @@ public class Settings {
     	}
     }
     
+    
+    public static void getObuComponents(Context context) {
+    	String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
+   		
+    	String urlString = context.getString(R.string.server_url) + "getobucomponents?obuid="+obuId;
+    	if (Utils.isNetworkConnected(context)) {
+  			try {
+	        	AsyncTask at = new Comm().execute(urlString); 
+	            String res = (String) at.get();
+	            JSONArray jsonObuComponents = (JSONArray)new JSONTokener(res).nextValue();
+    	   		obuSettings.clear();
+    	   		for (int i=0; i< jsonObuComponents.length(); i++) {
+    	   			ObuComponent obuComponent = gson.fromJson(jsonObuComponents.get(i).toString(), ObuComponent.class);
+    	   			//System.out.println(obuComponent.toString());
+    	   			obuComponents.put(obuComponent.getId_component(), obuComponent);	
+    	   		}
+	        } catch (Exception e) {
+   	        	e.printStackTrace();
+   	        	Toast toast = Toast.makeText(context, context.getString(R.string.json_error), Toast.LENGTH_LONG);
+   	        	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+   	        	toast.show();
+   	   		}
+    	}
+    }    
 }
 
 

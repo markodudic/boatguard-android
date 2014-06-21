@@ -3,13 +3,17 @@ package si.noemus.boatguard;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import si.noemus.boatguard.objects.ObuAlarm;
+import si.noemus.boatguard.objects.ObuComponent;
 import si.noemus.boatguard.objects.ObuState;
 import si.noemus.boatguard.utils.Comm;
 import si.noemus.boatguard.utils.Settings;
@@ -23,6 +27,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.Ringtone;
@@ -37,12 +42,12 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.animation.TranslateAnimation;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TableLayout.LayoutParams;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,7 +67,7 @@ public class MainActivity extends Activity {
 	public static HashMap<Integer,ObuAlarm> obuAlarms = new HashMap<Integer,ObuAlarm>(){};
 
 	private static MainFragment mFragment;
-	private static LocationFragment lFragment;
+	//private static LocationFragment lFragment;
     
 	private static Gson gson = new Gson();																					
 
@@ -89,10 +94,10 @@ public class MainActivity extends Activity {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         mFragment = (MainFragment) fm.findFragmentById(R.id.fragment_main);
-        lFragment = (LocationFragment) fm.findFragmentById(R.id.fragment_location);
-        ft.hide(lFragment);
+        //lFragment = (LocationFragment) fm.findFragmentById(R.id.fragment_location);
+        //ft.hide(lFragment);
         ft.commit();
-        addShowHideListener(R.id.fragment_location, lFragment);
+        //addShowHideListener(R.id.fragment_location, lFragment);
         addShowHideListener(R.id.fragment_main, mFragment);
         
         
@@ -155,10 +160,43 @@ public class MainActivity extends Activity {
         
         Settings.getSettings(this);        
         Settings.getObuSettings(this);  
+        Settings.getObuComponents(this);  
+        showObuSettings();
    		handler.postDelayed(startRefresh, 1000);
         
 	}
 
+	private void showObuSettings(){
+        LinearLayout lComponents = (LinearLayout)findViewById(R.id.components);
+      
+        TypedArray a1 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.text_input});     
+        int backgroundId = a1.getResourceId(0, 0);       
+
+        TypedArray a2 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.background});     
+        int backgroundLineId = a2.getResourceId(0, 0);       
+
+        HashMap<Integer,ObuComponent> obuComponents = Settings.obuComponents;
+		Set set = obuComponents.entrySet(); 
+		Iterator i = set.iterator();
+		while(i.hasNext()) { 
+			Map.Entry obuComponent = (Map.Entry)i.next(); 
+			System.out.println(obuComponent.getValue());
+			
+			LinearLayout component = new LinearLayout(this);
+			component.setId((Integer)obuComponent.getKey());
+			component.setBackgroundColor(this.getResources().getColor(backgroundId));
+			component.setLayoutParams(new TableRow.LayoutParams(LayoutParams.MATCH_PARENT, Utils.dpToPx(this, (int)getResources().getDimension(R.dimen.component_height))));
+			lComponents.addView(component);		
+
+			LinearLayout line = new LinearLayout(this);
+			line.setBackgroundColor(this.getResources().getColor(backgroundLineId));
+			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, Utils.dpToPx(this, (int)getResources().getDimension(R.dimen.line_height)));
+			layoutParams.setMargins(60, 0, 60, 0);
+			lComponents.addView(line, layoutParams);			
+		}
+		
+	}
+	
 	
     void addShowHideListener(int buttonId, final Fragment fragment) {
         ImageView ivHome = (ImageView)findViewById(R.id.iv_home);
@@ -168,7 +206,7 @@ public class MainActivity extends Activity {
 				System.out.println("HOME");
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.show(mFragment);
-                ft.hide(lFragment);
+                //ft.hide(lFragment);
                 ft.commit();
             }
 		});
@@ -177,7 +215,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) { 
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.show(lFragment);
+                //ft.show(lFragment);
                 ft.hide(mFragment);
                 ft.commit();
 			}

@@ -20,6 +20,21 @@
 <resources>
    
     <color name="transparent_color">#00000000</color>
-    
+
+   	<color name="background_day">#d5d6d8</color>
+    <color name="vertical_line_day">#b3b3b3</color>
+    <color name="horizontal_line_day">#b3b3b3</color>
+    <color name="background_button_day">#dfe0e2</color>
+    <color name="text_default_day">#333e48</color>
+    <color name="text_content_day">#6d747c</color>
+    <color name="text_input_day">#323f48</color>    
+	    
+	<color name="background_night">#464f58</color>
+    <color name="vertical_line_night">#232d37</color>
+    <color name="horizontal_line_night">#232d37</color>
+    <color name="background_button_night">#323f48</color>
+    <color name="text_default_night">#e8e7e8</color>
+    <color name="text_content_night">#6d747c</color>
+    <color name="text_input_night">#303e48</color> 	    
 </resources>
 
