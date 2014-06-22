@@ -11,7 +11,11 @@
     <attr name="text_default" format="reference"/>
     <attr name="text_content" format="reference"/>
     <attr name="text_input" format="reference"/> 
+    <attr name="component" format="reference"/> 
     
     
     <attr name="ic_logotype"/> 
+    <attr name="ic_settings"/> 
+    <attr name="ic_home"/> 
+    <attr name="ic_location"/> 
 </resources>

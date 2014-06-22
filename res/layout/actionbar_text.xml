@@ -10,6 +10,6 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="center"
-	    boatguard:font_name="@string/font_normal"
+	    boatguard:font_name="@string/font_semibold"
 	    style="@style/ActionBarText" />
 </LinearLayout>

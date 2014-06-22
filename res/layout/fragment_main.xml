@@ -17,7 +17,7 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
     		android:text="@string/last_update"
-	        boatguard:font_name="@string/font_normal" />
+	        boatguard:font_name="@string/font_semibold" />
 	
 	    <ImageView
 	        android:id="@+id/iv_refresh"
@@ -28,6 +28,10 @@
 	        android:visibility="gone" />
 	</LinearLayout>
 
+  	<LinearLayout
+  	    android:layout_width="match_parent"
+  	    style="@style/LineLayout" />
+	
 	<LinearLayout 
 		android:id="@+id/components"
         android:layout_width="match_parent"

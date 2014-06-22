@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Date;
 
 import si.noemus.boatguard.DialogFactory;
 import si.noemus.boatguard.LoginActivity;
@@ -81,4 +82,20 @@ public class Utils {
         float density = context.getResources().getDisplayMetrics().density;
         return Math.round((float)dp * density);
     }    
+    
+    
+    public static String formatDate(String dateToConvert)
+    {
+		Date d = new Date(dateToConvert);
+		String D = d.getDate()+"";
+		String M = (d.getMonth()+1)+"";
+		if (d.getMonth()<10) {M = "0"+M;};
+		String h = d.getHours()+"";
+		if (d.getHours()<10) {h = "0"+h;};
+		String m = d.getMinutes()+"";
+		if (d.getMinutes()<10) {m = "0"+m;};
+		String date = D+"."+M+"."+(1900+d.getYear())+" "+h+":"+m;
+		
+		return date;
+    }
 }

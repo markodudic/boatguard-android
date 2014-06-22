@@ -34,6 +34,17 @@ public class Settings {
 	public static String SETTING_SERVER_NUM = "SERVER_NUM";
 	public static String SETTING_THEME = "THEME";
 
+	public static String COMPONENT_TYPE_ACCU = "ACCU";
+	public static String COMPONENT_TYPE_PUMP = "PUMP";
+	public static String COMPONENT_TYPE_GEO = "GEO";
+	public static String COMPONENT_TYPE_ANCHOR = "ANCHOR";
+
+	public static int STATE_ROW_DATA = 1;
+	public static int STATE_GEO = 10;
+	public static int STATE_PUMP = 20;
+	public static int STATE_ACCU = 30;
+	public static int STATE_ANCHOR = 40;
+	
 	public static HashMap<Integer,String> languages = new HashMap<Integer,String>() {{
 																					    put(0, "en");
 																					    put(1, "ru");

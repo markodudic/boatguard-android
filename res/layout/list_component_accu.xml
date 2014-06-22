@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/Component"
+    android:orientation="vertical" >
+
+	<LinearLayout 
+		android:layout_width="match_parent"
+	    android:layout_height="@dimen/component_height"
+	    android:orientation="horizontal" >
+	    
+	    <si.noemus.boatguard.components.TextViewFont
+	        android:id="@+id/label"
+	        style="@style/ComponentText"
+	        boatguard:font_name="@string/font_regular"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:text="label" />
+	 
+		<FrameLayout 
+			android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:layout_weight="4"
+		    android:orientation="vertical" >
+		    	    
+		    <si.noemus.boatguard.components.TextViewFont
+		        android:id="@+id/label"
+		        style="@style/ComponentAccuText"
+		        android:layout_width="wrap_content"
+		        android:layout_height="match_parent"
+		        android:layout_gravity="center_vertical|center_horizontal"
+		        android:layout_weight="1"
+		        android:gravity="center_vertical"
+		        android:text="100%"
+		        boatguard:font_name="@string/font_medium" />
+		    
+		    <ImageView
+		        android:id="@+id/step"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="bottom"
+		        android:layout_weight="9"
+		        android:paddingBottom="10dp"
+		        android:src="@drawable/ic_battery_step_1" />
+
+	    </FrameLayout>
+	</LinearLayout>
+
+  	<LinearLayout
+  	    android:layout_width="match_parent"
+  	    style="@style/ComponentLineLayout" />
+    
+</LinearLayout>

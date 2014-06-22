@@ -2,7 +2,8 @@
 <resources> 
 	<string name="server_url">http://93.103.12.155:8080/boatguard/</string>
 
-	<string name="font_normal">fonts/Dosis-SemiBold.otf</string>
-	
+	<string name="font_semibold">fonts/Dosis-SemiBold.otf</string>
+	<string name="font_regular">fonts/Dosis-Regular.otf</string>
+	<string name="font_medium">fonts/Dosis-Medium.otf</string>		
 </resources> 
 	

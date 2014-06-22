@@ -11,11 +11,11 @@ public class ObuState {
 	private int id_state;
 	private int id_obu;
 	private String value;
-	private String date_state;
+	private String dateState;
 	
 	@Override
 	public String toString(){
-		return "OBUSTATE: idState: " + this.id_state + ", idObu:" + this.id_obu + ", value:" + this.value + ", dateState" + this.date_state;
+		return "OBUSTATE: idState: " + this.id_state + ", idObu:" + this.id_obu + ", value:" + this.value + ", dateState" + this.dateState;
 	}
 
 	public int getId_state() {
@@ -42,12 +42,12 @@ public class ObuState {
 		this.value = value;
 	}
 
-	public String getDate_state() {
-		return date_state;
+	public String getDateState() {
+		return dateState;
 	}
 
-	public void setDate_state(String date_state) {
-		this.date_state = date_state;
+	public void setDateState(String dateState) {
+		this.dateState = dateState;
 	}
 
 

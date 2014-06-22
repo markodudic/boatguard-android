@@ -2,6 +2,7 @@ package si.noemus.boatguard;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -27,7 +28,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.Ringtone;
@@ -39,15 +39,15 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TableLayout.LayoutParams;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -161,28 +161,65 @@ public class MainActivity extends Activity {
         Settings.getSettings(this);        
         Settings.getObuSettings(this);  
         Settings.getObuComponents(this);  
-        showObuSettings();
+        showObuComponents();
    		handler.postDelayed(startRefresh, 1000);
         
 	}
 
-	private void showObuSettings(){
+	private void showObuComponents(){
         LinearLayout lComponents = (LinearLayout)findViewById(R.id.components);
       
-        TypedArray a1 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.text_input});     
+        /*TypedArray a1 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.text_input});     
         int backgroundId = a1.getResourceId(0, 0);       
-
+ 
         TypedArray a2 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.background});     
         int backgroundLineId = a2.getResourceId(0, 0);       
-
+*/
         HashMap<Integer,ObuComponent> obuComponents = Settings.obuComponents;
 		Set set = obuComponents.entrySet(); 
 		Iterator i = set.iterator();
 		while(i.hasNext()) { 
-			Map.Entry obuComponent = (Map.Entry)i.next(); 
-			System.out.println(obuComponent.getValue());
+			Map.Entry map = (Map.Entry)i.next(); 
+			System.out.println(map.getValue());
+			ObuComponent obuComponent = (ObuComponent)map.getValue();
+			if (obuComponent.getShow() == 0) continue;
 			
-			LinearLayout component = new LinearLayout(this);
+			int lc = R.layout.list_component;
+			if (obuComponent.getType().equals("ACCU")) { 
+				lc = R.layout.list_component_accu;
+			}
+
+			
+			LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		    View component = inflater.inflate(lc, null);
+		    component.setId(obuComponent.getId_component());
+			
+		    LinearLayout l = (LinearLayout)((LinearLayout)component).getChildAt(0);
+		    TextView textView = (TextView)(l).getChildAt(0);
+			textView.setText(obuComponent.getName());
+			
+			if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_GEO)) {
+				LinearLayout ll = (LinearLayout)(l).getChildAt(1);
+			    ImageView imageView = (ImageView)(ll).getChildAt(0);
+				imageView.setImageResource(R.drawable.ic_geofence);
+			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_PUMP)) {
+				LinearLayout ll = (LinearLayout)(l).getChildAt(1);
+			    ImageView imageView = (ImageView)(ll).getChildAt(0);
+				imageView.setImageResource(R.drawable.ic_bilgepump);				
+			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ANCHOR)) { 
+				LinearLayout ll = (LinearLayout)(l).getChildAt(1);
+			    ImageView imageView = (ImageView)(ll).getChildAt(0);
+				imageView.setImageResource(R.drawable.ic_anchor);				
+			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ACCU)) { 
+				FrameLayout ll = (FrameLayout)(l).getChildAt(1);
+				TextView tvAccu = (TextView)(ll).getChildAt(0);
+				tvAccu.setText("");				
+			} 
+				
+			//component.setLayoutParams(new TableRow.LayoutParams(LayoutParams.MATCH_PARENT, Utils.dpToPx(this, (int)getResources().getDimension(R.dimen.component_height))));
+			lComponents.addView(component);
+				
+			/*LinearLayout component = new LinearLayout(this);
 			component.setId((Integer)obuComponent.getKey());
 			component.setBackgroundColor(this.getResources().getColor(backgroundId));
 			component.setLayoutParams(new TableRow.LayoutParams(LayoutParams.MATCH_PARENT, Utils.dpToPx(this, (int)getResources().getDimension(R.dimen.component_height))));
@@ -192,7 +229,7 @@ public class MainActivity extends Activity {
 			line.setBackgroundColor(this.getResources().getColor(backgroundLineId));
 			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, Utils.dpToPx(this, (int)getResources().getDimension(R.dimen.line_height)));
 			layoutParams.setMargins(60, 0, 60, 0);
-			lComponents.addView(line, layoutParams);			
+			lComponents.addView(line, layoutParams);	*/		
 		}
 		
 	}
@@ -265,6 +302,7 @@ public class MainActivity extends Activity {
     	   			}
     	   		}
     	   		
+	    	   	showObuData();
 
 	        } catch (Exception e) {
    	        	e.printStackTrace();
@@ -276,7 +314,35 @@ public class MainActivity extends Activity {
    		handler.postDelayed(endRefresh, 1000);
     }	
     
-    
+	@SuppressWarnings("deprecation")
+	private void showObuData(){
+        Set set = obuStates.entrySet(); 
+		Iterator i = set.iterator();
+		while(i.hasNext()) { 
+			Map.Entry map = (Map.Entry)i.next(); 
+			System.out.println(map.getValue());
+			ObuState obuState = (ObuState)map.getValue();
+			int idState = obuState.getId_state();
+			
+			if (idState == Settings.STATE_ROW_DATA) { 
+            	tvLastUpdate.setText(getResources().getString(R.string.last_update) + " " + Utils.formatDate(obuState.getDateState()));
+			}			
+			else if (idState == Settings.STATE_GEO) { 
+				LinearLayout component = (LinearLayout)findViewById(idState);
+			}			
+			else if (idState == Settings.STATE_PUMP) { 
+			}
+			else if (idState == Settings.STATE_ACCU) { 
+			}			
+			else if (idState == Settings.STATE_ANCHOR) { 
+			}	
+			
+		}
+
+		
+	}
+	
+	
 	private void showNotification(int id, String title, String message, Timestamp date){
 		Intent resultIntent = new Intent(this, MainActivity.class);
 		
