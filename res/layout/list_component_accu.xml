@@ -21,13 +21,14 @@
 	        android:text="label" />
 	 
 		<FrameLayout 
-			android:layout_width="match_parent"
+			android:onClick="changeAccuStep"
+		    android:layout_width="match_parent"
 		    android:layout_height="match_parent"
-		    android:layout_weight="4"
+		    android:layout_weight="3"
 		    android:orientation="vertical" >
 		    	    
 		    <si.noemus.boatguard.components.TextViewFont
-		        android:id="@+id/label"
+		        android:id="@+id/accu_napetost"
 		        style="@style/ComponentAccuText"
 		        android:layout_width="wrap_content"
 		        android:layout_height="match_parent"
@@ -37,11 +38,35 @@
 		        android:text="100%"
 		        boatguard:font_name="@string/font_medium" />
 		    
+		    <si.noemus.boatguard.components.TextViewFont
+		        android:id="@+id/accu_ah"
+		        style="@style/ComponentAccuText"
+		        android:layout_width="wrap_content"
+		        android:layout_height="match_parent"
+		        android:layout_gravity="center_vertical|center_horizontal"
+		        android:layout_weight="1"
+		        android:gravity="center_vertical"
+		        android:text="100%"
+		        boatguard:font_name="@string/font_medium"
+		        android:visibility="gone" />
+
+		    <si.noemus.boatguard.components.TextViewFont
+		        android:id="@+id/accu_tok"
+		        style="@style/ComponentAccuText"
+		        android:layout_width="wrap_content"
+		        android:layout_height="match_parent"
+		        android:layout_gravity="center_vertical|center_horizontal"
+		        android:layout_weight="1"
+		        android:gravity="center_vertical"
+		        android:text="100%"
+		        boatguard:font_name="@string/font_medium"
+		        android:visibility="gone" />
+		    		    		    
 		    <ImageView
 		        android:id="@+id/step"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_gravity="bottom"
+		        android:layout_gravity="bottom|center_horizontal"
 		        android:layout_weight="9"
 		        android:paddingBottom="10dp"
 		        android:src="@drawable/ic_battery_step_1" />

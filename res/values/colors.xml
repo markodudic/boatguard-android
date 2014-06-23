@@ -29,7 +29,8 @@
     <color name="text_content_day">#6d747c</color>
     <color name="text_input_day">#323f48</color>    
     <color name="component_day">#d5d6d8</color>    
-    	    
+	<color name="text_green_day">#39a935</color> 
+	    	    
 	<color name="background_night">#464f58</color>
     <color name="vertical_line_night">#232d37</color>
     <color name="horizontal_line_night">#232d37</color>
@@ -37,6 +38,7 @@
     <color name="text_default_night">#e8e7e8</color>
     <color name="text_content_night">#6d747c</color>
     <color name="text_input_night">#303e48</color> 	    
-    <color name="component_night">#303e48</color> 	    
+    <color name="component_night">#303e48</color> 	
+	<color name="text_green_night">#39a935</color> 	
 </resources>
 

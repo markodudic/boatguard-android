@@ -10,6 +10,7 @@
 	    <item name="text_default">@color/text_default_day</item>
 	    <item name="text_content">@color/text_content_day</item>
 	    <item name="text_input">@color/text_input_day</item>    
+	    <item name="text_green">@color/text_green_day</item>    
 	    <item name="component">@color/component_day</item>    
 	    <item name="ic_logotype">@drawable/ic_logotype_day</item>    
 	    <item name="ic_settings">@drawable/ic_settings_day</item>    
@@ -28,6 +29,7 @@
 	    <item name="text_default">@color/text_default_night</item>
 	    <item name="text_content">@color/text_content_night</item>
 	    <item name="text_input">@color/text_input_night</item>    
+	    <item name="text_green">@color/text_green_night</item>    
 	    <item name="component">@color/component_night</item>    
 	    <item name="ic_logotype">@drawable/ic_logotype</item>    
 	    <item name="ic_settings">@drawable/ic_settings</item>    
@@ -129,7 +131,8 @@
    </style>	  
     
    <style name="ComponentAccuText" parent="ComponentText">
-       <item name="android:textSize">26.0sp</item>
+       <item name="android:textSize">30.0sp</item>
+       <item name="android:textColor">?text_green</item>
    </style>	   
    
 </resources>

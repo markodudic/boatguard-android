@@ -1,8 +1,8 @@
 package si.noemus.boatguard;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -13,9 +13,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import si.noemus.boatguard.objects.AppSetting;
 import si.noemus.boatguard.objects.ObuAlarm;
 import si.noemus.boatguard.objects.ObuComponent;
 import si.noemus.boatguard.objects.ObuState;
+import si.noemus.boatguard.objects.State;
 import si.noemus.boatguard.utils.Comm;
 import si.noemus.boatguard.utils.Settings;
 import si.noemus.boatguard.utils.Utils;
@@ -69,7 +71,10 @@ public class MainActivity extends Activity {
 	private static MainFragment mFragment;
 	//private static LocationFragment lFragment;
     
-	private static Gson gson = new Gson();																					
+	private static Gson gson = new Gson();	
+	
+	private int accuStep = 0;
+	private int accuComponentId = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -201,7 +206,7 @@ public class MainActivity extends Activity {
 			if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_GEO)) {
 				LinearLayout ll = (LinearLayout)(l).getChildAt(1);
 			    ImageView imageView = (ImageView)(ll).getChildAt(0);
-				imageView.setImageResource(R.drawable.ic_geofence);
+				imageView.setImageResource(R.drawable.ic_geofence_disabled);
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_PUMP)) {
 				LinearLayout ll = (LinearLayout)(l).getChildAt(1);
 			    ImageView imageView = (ImageView)(ll).getChildAt(0);
@@ -209,11 +214,12 @@ public class MainActivity extends Activity {
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ANCHOR)) { 
 				LinearLayout ll = (LinearLayout)(l).getChildAt(1);
 			    ImageView imageView = (ImageView)(ll).getChildAt(0);
-				imageView.setImageResource(R.drawable.ic_anchor);				
+				imageView.setImageResource(R.drawable.ic_anchor_not_active);				
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ACCU)) { 
 				FrameLayout ll = (FrameLayout)(l).getChildAt(1);
 				TextView tvAccu = (TextView)(ll).getChildAt(0);
-				tvAccu.setText("");				
+				tvAccu.setText("");	
+				accuComponentId = obuComponent.getId_component();
 			} 
 				
 			//component.setLayoutParams(new TableRow.LayoutParams(LayoutParams.MATCH_PARENT, Utils.dpToPx(this, (int)getResources().getDimension(R.dimen.component_height))));
@@ -324,24 +330,99 @@ public class MainActivity extends Activity {
 			ObuState obuState = (ObuState)map.getValue();
 			int idState = obuState.getId_state();
 			
-			if (idState == Settings.STATE_ROW_DATA) { 
+			if (idState == ((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId()) { 
             	tvLastUpdate.setText(getResources().getString(R.string.last_update) + " " + Utils.formatDate(obuState.getDateState()));
 			}			
-			else if (idState == Settings.STATE_GEO) { 
+			else if (idState == ((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()) { 
 				LinearLayout component = (LinearLayout)findViewById(idState);
+				LinearLayout ll = (LinearLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
+			    ImageView imageView = (ImageView)(ll).getChildAt(0);
+				String geofence = obuState.getValue();
+				
+				if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_DISABLED)).getValue())) {
+					imageView.setImageResource(R.drawable.ic_geofence_disabled);
+				} 
+				else if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ENABLED)).getValue())) {
+					imageView.setImageResource(R.drawable.ic_geofence_home);
+				} 
+				else if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ALARM)).getValue())) {
+					imageView.setImageResource(R.drawable.ic_geofence_alarm_1);
+				}
 			}			
-			else if (idState == Settings.STATE_PUMP) { 
+			else if (idState == ((State)Settings.states.get(Settings.STATE_PUMP_STATE)).getId()) { 
+				LinearLayout component = (LinearLayout)findViewById(idState);
+				LinearLayout ll = (LinearLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
+			    ImageView imageView = (ImageView)(ll).getChildAt(0);
+				String pumpState = obuState.getValue();
+				
+				if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_OK)).getValue())) {
+					imageView.setImageResource(R.drawable.ic_bilgepump);
+				}
+				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_PUMPING)).getValue())) {
+					imageView.setImageResource(R.drawable.bilge_pump_animation);
+				}
+				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_CLODGED)).getValue())) {
+					imageView.setImageResource(R.drawable.ic_bilgepump_clodged);
+				}
 			}
-			else if (idState == Settings.STATE_ACCU) { 
+			else if (idState == ((State)Settings.states.get(Settings.STATE_ANCHOR_STATE)).getId()) { 
 			}			
-			else if (idState == Settings.STATE_ANCHOR) { 
+			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) { 
+				LinearLayout component = (LinearLayout)findViewById(idState);
+				FrameLayout ll = (FrameLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
+			    TextView tvAccu = (TextView)(ll).getChildAt(0);
+				tvAccu.setText(obuState.getValue() + "%");
+			}			
+			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) { 
+				LinearLayout component = (LinearLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
+				FrameLayout ll = (FrameLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
+			    TextView tvAccu = (TextView)(ll).getChildAt(1);
+			    String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
+				tvAccu.setText(f + "AH");
 			}	
-			
+			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) { 
+				LinearLayout component = (LinearLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
+				FrameLayout ll = (FrameLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
+			    TextView tvAccu = (TextView)(ll).getChildAt(2);
+			    String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
+				tvAccu.setText(f + "A");
+			}	
 		}
-
-		
 	}
 	
+	
+	public void changeAccuStep (View v) {
+		LinearLayout component = (LinearLayout)findViewById(accuComponentId);
+		FrameLayout ll = (FrameLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);	
+		TextView tvAccuNapetost = (TextView)(ll).getChildAt(0);
+		TextView tvAccuAH = (TextView)(ll).getChildAt(1);
+		TextView tvAccuTok = (TextView)(ll).getChildAt(2);
+		ImageView ivStep = (ImageView)(ll).getChildAt(3);
+		
+		switch (accuStep) {
+		case 0:
+			tvAccuNapetost.setVisibility(View.GONE);
+			tvAccuAH.setVisibility(View.VISIBLE);
+			tvAccuTok.setVisibility(View.GONE);
+			ivStep.setImageResource(R.drawable.ic_battery_step_2);
+			accuStep = 1;
+			break;
+		case 1:
+			tvAccuNapetost.setVisibility(View.GONE);
+			tvAccuAH.setVisibility(View.GONE);
+			tvAccuTok.setVisibility(View.VISIBLE);
+			ivStep.setImageResource(R.drawable.ic_battery_step_3);
+			accuStep = 2;
+			break;
+		case 2:
+			tvAccuNapetost.setVisibility(View.VISIBLE);
+			tvAccuAH.setVisibility(View.GONE);
+			tvAccuTok.setVisibility(View.GONE);
+			ivStep.setImageResource(R.drawable.ic_battery_step_1);
+			accuStep = 0;
+			break;
+		}
+	}
 	
 	private void showNotification(int id, String title, String message, Timestamp date){
 		Intent resultIntent = new Intent(this, MainActivity.class);

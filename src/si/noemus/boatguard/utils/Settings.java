@@ -39,12 +39,22 @@ public class Settings {
 	public static String COMPONENT_TYPE_GEO = "GEO";
 	public static String COMPONENT_TYPE_ANCHOR = "ANCHOR";
 
-	public static int STATE_ROW_DATA = 1;
-	public static int STATE_GEO = 10;
-	public static int STATE_PUMP = 20;
-	public static int STATE_ACCU = 30;
-	public static int STATE_ANCHOR = 40;
+	public static String STATE_ROW_STATE = "ROW_STATE";
+	public static String STATE_GEO_FENCE = "GEO_FENCE";
+	public static String STATE_PUMP_STATE = "PUMP_STATE";
+	public static String STATE_ACCU_NAPETOST = "ACCU_NAPETOST";
+	public static String STATE_ACCU_AH = "ACCU_AH";
+	public static String STATE_ACCU_TOK = "ACCU_TOK";
+	public static String STATE_ANCHOR_STATE = "ANCHOR_STATE";
 	
+	public static String APP_STATE_GEO_FENCE_DISABLED = "GEO_FENCE_DISABLED";
+	public static String APP_STATE_GEO_FENCE_ENABLED = "GEO_FENCE_ENABLED";
+	public static String APP_STATE_GEO_FENCE_ALARM = "GEO_FENCE_ALARM";
+	public static String APP_STATE_PUMP_OK = "PUMP_OK";
+	public static String APP_STATE_PUMP_PUMPING = "PUMP_PUMPING";
+	public static String APP_STATE_PUMP_CLODGED = "PUMP_CLODGED";
+			
+			
 	public static HashMap<Integer,String> languages = new HashMap<Integer,String>() {{
 																					    put(0, "en");
 																					    put(1, "ru");
@@ -53,8 +63,8 @@ public class Settings {
 																					}};
 																					
 	public static HashMap<Integer,Alarm> alarms = new HashMap<Integer,Alarm>(){};
-	public static HashMap<Integer,AppSetting> appSettings = new HashMap<Integer,AppSetting>(){};
-	public static HashMap<Integer,State> states = new HashMap<Integer,State>(){};
+	public static HashMap<String,AppSetting> appSettings = new HashMap<String,AppSetting>(){};
+	public static HashMap<String,State> states = new HashMap<String,State>(){};
 	public static HashMap<Integer,ObuSetting> obuSettings = new HashMap<Integer,ObuSetting>(){};
 	public static HashMap<Integer,ObuComponent> obuComponents = new HashMap<Integer,ObuComponent>(){};
 			
@@ -97,7 +107,7 @@ public class Settings {
 		    	   		for (int i=0; i< jsonAppSettings.length(); i++) {
 		    	   			AppSetting appSetting = gson.fromJson(jsonAppSettings.get(i).toString(), AppSetting.class);
 		    	   			//System.out.println(appSetting.toString());
-		    	   			appSettings.put(appSetting.getId(), appSetting);
+		    	   			appSettings.put(appSetting.getName(), appSetting);
 		    	   			if (appSetting.getName().equals(SETTING_SERVER_NUM)) {
 		    	   				Utils.savePrefernciesString(context, SETTING_SERVER_NUM, appSetting.getValue());
 		    	   			}
@@ -109,7 +119,7 @@ public class Settings {
 		    	   		for (int i=0; i< jsonStates.length(); i++) {
 		    	   			State state = gson.fromJson(jsonStates.get(i).toString(), State.class);
 		    	   			//System.out.println(state.toString());
-		    	   			states.put(state.getId(), state);
+		    	   			states.put(state.getCode(), state);
 		    	   		}
 		    	   		
 		    	   	}
