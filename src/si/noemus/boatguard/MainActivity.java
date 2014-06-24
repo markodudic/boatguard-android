@@ -241,40 +241,23 @@ public class MainActivity extends Activity {
 				lc = R.layout.list_component_accu;
 			}
 
-			
 			LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		    View component = inflater.inflate(lc, null);
 		    component.setId(obuComponent.getId_component());
 			
-		    //LinearLayout l = (LinearLayout)((LinearLayout)component).getChildAt(0);
-		    
-		    //TextView textView = (TextView)(l).getChildAt(0);
-			//textView.setText(obuComponent.getName());
-			((TextView)component.findViewById(R.id.label)).setText(obuComponent.getName());
+		    ((TextView)component.findViewById(R.id.label)).setText(obuComponent.getName());
 			
 			if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_GEO)) {
-				//LinearLayout ll = (LinearLayout)(l).getChildAt(1);
-			    //ImageView imageView = (ImageView)(ll).getChildAt(0);
-			    ((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_geofence_disabled);
-				//imageView.setImageResource(R.drawable.ic_geofence_disabled);
+				((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_geofence_disabled);
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_PUMP)) {
-				//LinearLayout ll = (LinearLayout)(l).getChildAt(1);
-			    //ImageView imageView = (ImageView)(ll).getChildAt(0);
 			    ((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_bilgepump);
-				//imageView.setImageResource(R.drawable.ic_bilgepump);				
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ANCHOR)) { 
-				//LinearLayout ll = (LinearLayout)(l).getChildAt(1);
-			    //ImageView imageView = (ImageView)(ll).getChildAt(0);
-			    ((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_anchor_not_active);
-				//imageView.setImageResource(R.drawable.ic_anchor_not_active);				
+			    ((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_anchor_disabled); 
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ACCU)) { 
-				//FrameLayout ll = (FrameLayout)(l).getChildAt(1);
-				//TextView tvAccu = (TextView)(ll).getChildAt(0);
 				((TextView)component.findViewById(R.id.accu_napetost)).setText("");
-				//tvAccu.setText("");	
 				accuComponentId = obuComponent.getId_component();
 			} 
-				
+			
 			lComponents.addView(component);
 		}
 		
@@ -376,8 +359,6 @@ public class MainActivity extends Activity {
             	tvLastUpdate.setText(getResources().getString(R.string.last_update) + " " + Utils.formatDate(obuState.getDateState()));
 			}			
 			else if (idState == ((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()) { 
-				//LinearLayout ll = (LinearLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
-			    //ImageView imageView = (ImageView)(ll).getChildAt(0);
 				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
 				String geofence = obuState.getValue();
 				cancelAlarmAnimation(component);
@@ -396,8 +377,6 @@ public class MainActivity extends Activity {
 				}
 			}			
 			else if (idState == ((State)Settings.states.get(Settings.STATE_PUMP_STATE)).getId()) { 
-				//LinearLayout ll = (LinearLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
-			    //ImageView imageView = (ImageView)(ll).getChildAt(0);
 				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
 				String pumpState = obuState.getValue();
 				cancelAlarmAnimation(component);
@@ -412,32 +391,23 @@ public class MainActivity extends Activity {
 					showAlarmAnimation(component, imageView, R.drawable.pump_clodged_animation);
 				}
 				else {
-					imageView.setImageResource(android.R.color.transparent);
+					imageView.setImageResource(android.R.color.transparent); 
 				}
 			}
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ANCHOR_STATE)).getId()) { 
 			}			
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) { 
-				//FrameLayout ll = (FrameLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
-			    //TextView tvAccu = (TextView)(ll).getChildAt(0);
-				//tvAccu.setText(obuState.getValue() + "%");
 				((TextView)component.findViewById(R.id.accu_napetost)).setText(obuState.getValue() + "%");
 			}			
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) { 
 				component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
-				//FrameLayout ll = (FrameLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
-			    //TextView tvAccu = (TextView)(ll).getChildAt(1);
-			    String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
-				//tvAccu.setText(f + "AH");
+				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
 				((TextView)component.findViewById(R.id.accu_ah)).setText(f + "AH");
 			}	
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) { 
 				System.out.println("1");
 				component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
-				//FrameLayout ll = (FrameLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
-			    //TextView tvAccu = (TextView)(ll).getChildAt(2);
-			    String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
-				//tvAccu.setText(f + "A");
+				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
 				((TextView)component.findViewById(R.id.accu_tok)).setText(f + "A");
 				System.out.println("2");			
 			}	
@@ -464,6 +434,10 @@ public class MainActivity extends Activity {
 		((LinearLayout)layout.findViewById(R.id.shadow_bottom)).setVisibility(View.VISIBLE);
 		
 		alarmAnimaations.put(layout.getId(), colorFade);
+		
+	    TypedArray a2 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_logotype_alarm});     
+        int logoId = a2.getResourceId(0, 0);       
+		((ImageView)findViewById(R.id.actionBarLogo)).setImageResource(logoId);
 	}
 	
 	private void cancelAlarmAnimation (FrameLayout layout) {
@@ -473,11 +447,16 @@ public class MainActivity extends Activity {
 
 		    TypedArray a1 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.component});     
 	        int backgroundId = a1.getResourceId(0, 0);       
-	        layout.setBackgroundColor(getResources().getColor(backgroundId));
+	        ((LinearLayout)layout.findViewById(R.id.main)).setBackgroundColor(getResources().getColor(backgroundId));
 	        
 			((LinearLayout)layout.findViewById(R.id.line)).setVisibility(View.VISIBLE);
 			((LinearLayout)layout.findViewById(R.id.shadow_top)).setVisibility(View.GONE);
 			((LinearLayout)layout.findViewById(R.id.shadow_bottom)).setVisibility(View.GONE);
+			
+		    TypedArray a2 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_logotype});     
+	        int logoId = a2.getResourceId(0, 0);       
+			((ImageView)findViewById(R.id.actionBarLogo)).setImageResource(logoId);
+			
 		}
 	}
 	

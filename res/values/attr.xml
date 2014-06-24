@@ -16,6 +16,7 @@
     
     
     <attr name="ic_logotype"/> 
+    <attr name="ic_logotype_alarm"/> 
     <attr name="ic_settings"/> 
     <attr name="ic_home"/> 
     <attr name="ic_location"/> 

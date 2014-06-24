@@ -13,6 +13,7 @@
 	    <item name="text_green">@color/text_green_day</item>    
 	    <item name="component">@color/component_day</item>    
 	    <item name="ic_logotype">@drawable/ic_logotype_day</item>    
+	    <item name="ic_logotype_alarm">@drawable/ic_logotype_alarm_day</item>    
 	    <item name="ic_settings">@drawable/ic_settings_day</item>    
 	    <item name="ic_home">@drawable/ic_home_day</item>    
 	    <item name="ic_location">@drawable/ic_location_day</item>    
@@ -32,6 +33,7 @@
 	    <item name="text_green">@color/text_green_night</item>    
 	    <item name="component">@color/component_night</item>    
 	    <item name="ic_logotype">@drawable/ic_logotype</item>    
+	    <item name="ic_logotype_alarm">@drawable/ic_logotype_alarm</item>    
 	    <item name="ic_settings">@drawable/ic_settings</item>    
 	    <item name="ic_home">@drawable/ic_home</item>    
 	    <item name="ic_location">@drawable/ic_location</item>    
