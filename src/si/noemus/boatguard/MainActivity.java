@@ -21,6 +21,8 @@ import si.noemus.boatguard.objects.State;
 import si.noemus.boatguard.utils.Comm;
 import si.noemus.boatguard.utils.Settings;
 import si.noemus.boatguard.utils.Utils;
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -30,7 +32,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -40,18 +44,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
-import android.view.Gravity;
+import android.support.v4.view.MotionEventCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -67,6 +71,8 @@ public class MainActivity extends Activity {
     
 	public static HashMap<Integer,ObuState> obuStates = new HashMap<Integer,ObuState>(){};
 	public static HashMap<Integer,ObuAlarm> obuAlarms = new HashMap<Integer,ObuAlarm>(){};
+	
+	public static HashMap<Integer,ObjectAnimator> alarmAnimaations = new HashMap<Integer,ObjectAnimator>(){};
 
 	private static MainFragment mFragment;
 	//private static LocationFragment lFragment;
@@ -75,6 +81,11 @@ public class MainActivity extends Activity {
 	
 	private int accuStep = 0;
 	private int accuComponentId = 0;
+	
+	private int mActivePointerId = 123456;
+	
+	private float mLastTouchX, mPosX;
+    private float mLastTouchY, mPosY;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -126,12 +137,29 @@ public class MainActivity extends Activity {
         final ScrollView sv = (ScrollView)findViewById(R.id.scroll_main);
         sv.setOnTouchListener(new View.OnTouchListener() {
            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-        	    switch (event.getAction()) {
+            public boolean onTouch(View v, MotionEvent ev) {
+        	   	final int action = MotionEventCompat.getActionMasked(ev); 
+        	    
+        	    switch (ev.getAction()) {
                 case MotionEvent.ACTION_SCROLL:
                 	break;
                 case MotionEvent.ACTION_MOVE:
-             	    final float scale = MainActivity.this.getResources().getDisplayMetrics().density;
+                	
+                    final int pointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);  
+                
+		            final float x = MotionEventCompat.getX(ev, pointerIndex);
+		            final float y = MotionEventCompat.getY(ev, pointerIndex);
+		                
+		            // Calculate the distance moved
+		            final float dx = x - mLastTouchX;
+		            final float dy = y - mLastTouchY;
+		            mPosX += dx;
+		            mPosY += dy;
+
+		            mLastTouchX = x;
+		            mLastTouchY = y;
+            
+                	final float scale = MainActivity.this.getResources().getDisplayMetrics().density;
                     int px = (int) (MainActivity.this.getResources().getDimension(R.dimen.menu_height) * scale + 0.5f);
                     LinearLayout lMenu = (LinearLayout)findViewById(R.id.layout_menu);
              	   	TranslateAnimation anim = null;
@@ -141,7 +169,7 @@ public class MainActivity extends Activity {
              	   		anim=new TranslateAnimation(0,0,0,px);
                 	} else if ((newPosition < initialPosition) || (newPosition==0 && initialPosition==0)) {
              	   		anim=new TranslateAnimation(0,0,200,0);
-             	   		if (newPosition == 0 && !refreshing) {
+             	   		if (newPosition == 0 && !refreshing && (mPosX > 200 || mPosY > 200)) {
                 			//System.out.println("refresh");
                 			getObudata();
                 		}
@@ -153,11 +181,36 @@ public class MainActivity extends Activity {
                 	}
              	    initialPosition = sv.getScrollY();
                     break;
-                case MotionEvent.ACTION_DOWN:
+                case MotionEvent.ACTION_DOWN: 
+                    final int pointerIndex1 = MotionEventCompat.getActionIndex(ev); 
+                    final float x1 = MotionEventCompat.getX(ev, pointerIndex1); 
+                    final float y1 = MotionEventCompat.getY(ev, pointerIndex1); 
+                        
+                    // Remember where we started (for dragging)
+                    mLastTouchX = x1;
+                    mLastTouchY = y1;
+                    // Save the ID of this pointer (for dragging)
+                    mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
+                	
                 	break;
                 case MotionEvent.ACTION_CANCEL:
                 case MotionEvent.ACTION_UP:
+                	mPosX=0;
+                	mPosY=0;
                     break;
+                case MotionEvent.ACTION_POINTER_UP:                     
+                    final int pointerIndex2 = MotionEventCompat.getActionIndex(ev); 
+                    final int pointerId = MotionEventCompat.getPointerId(ev, pointerIndex2); 
+
+                    if (pointerId == mActivePointerId) {
+                        // This was our active pointer going up. Choose a new
+                        // active pointer and adjust accordingly.
+                        final int newPointerIndex = pointerIndex2 == 0 ? 1 : 0;
+                        mLastTouchX = MotionEventCompat.getX(ev, newPointerIndex); 
+                        mLastTouchY = MotionEventCompat.getY(ev, newPointerIndex); 
+                        mActivePointerId = MotionEventCompat.getPointerId(ev, newPointerIndex);
+                    }
+                    break; 
                 }
                 return false;
             }
@@ -173,19 +226,13 @@ public class MainActivity extends Activity {
 
 	private void showObuComponents(){
         LinearLayout lComponents = (LinearLayout)findViewById(R.id.components);
-      
-        /*TypedArray a1 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.text_input});     
-        int backgroundId = a1.getResourceId(0, 0);       
- 
-        TypedArray a2 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.background});     
-        int backgroundLineId = a2.getResourceId(0, 0);       
-*/
+
         HashMap<Integer,ObuComponent> obuComponents = Settings.obuComponents;
 		Set set = obuComponents.entrySet(); 
 		Iterator i = set.iterator();
 		while(i.hasNext()) { 
 			Map.Entry map = (Map.Entry)i.next(); 
-			System.out.println(map.getValue());
+			//System.out.println(map.getValue());
 			ObuComponent obuComponent = (ObuComponent)map.getValue();
 			if (obuComponent.getShow() == 0) continue;
 			
@@ -199,43 +246,36 @@ public class MainActivity extends Activity {
 		    View component = inflater.inflate(lc, null);
 		    component.setId(obuComponent.getId_component());
 			
-		    LinearLayout l = (LinearLayout)((LinearLayout)component).getChildAt(0);
-		    TextView textView = (TextView)(l).getChildAt(0);
-			textView.setText(obuComponent.getName());
+		    //LinearLayout l = (LinearLayout)((LinearLayout)component).getChildAt(0);
+		    
+		    //TextView textView = (TextView)(l).getChildAt(0);
+			//textView.setText(obuComponent.getName());
+			((TextView)component.findViewById(R.id.label)).setText(obuComponent.getName());
 			
 			if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_GEO)) {
-				LinearLayout ll = (LinearLayout)(l).getChildAt(1);
-			    ImageView imageView = (ImageView)(ll).getChildAt(0);
-				imageView.setImageResource(R.drawable.ic_geofence_disabled);
+				//LinearLayout ll = (LinearLayout)(l).getChildAt(1);
+			    //ImageView imageView = (ImageView)(ll).getChildAt(0);
+			    ((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_geofence_disabled);
+				//imageView.setImageResource(R.drawable.ic_geofence_disabled);
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_PUMP)) {
-				LinearLayout ll = (LinearLayout)(l).getChildAt(1);
-			    ImageView imageView = (ImageView)(ll).getChildAt(0);
-				imageView.setImageResource(R.drawable.ic_bilgepump);				
+				//LinearLayout ll = (LinearLayout)(l).getChildAt(1);
+			    //ImageView imageView = (ImageView)(ll).getChildAt(0);
+			    ((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_bilgepump);
+				//imageView.setImageResource(R.drawable.ic_bilgepump);				
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ANCHOR)) { 
-				LinearLayout ll = (LinearLayout)(l).getChildAt(1);
-			    ImageView imageView = (ImageView)(ll).getChildAt(0);
-				imageView.setImageResource(R.drawable.ic_anchor_not_active);				
+				//LinearLayout ll = (LinearLayout)(l).getChildAt(1);
+			    //ImageView imageView = (ImageView)(ll).getChildAt(0);
+			    ((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_anchor_not_active);
+				//imageView.setImageResource(R.drawable.ic_anchor_not_active);				
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ACCU)) { 
-				FrameLayout ll = (FrameLayout)(l).getChildAt(1);
-				TextView tvAccu = (TextView)(ll).getChildAt(0);
-				tvAccu.setText("");	
+				//FrameLayout ll = (FrameLayout)(l).getChildAt(1);
+				//TextView tvAccu = (TextView)(ll).getChildAt(0);
+				((TextView)component.findViewById(R.id.accu_napetost)).setText("");
+				//tvAccu.setText("");	
 				accuComponentId = obuComponent.getId_component();
 			} 
 				
-			//component.setLayoutParams(new TableRow.LayoutParams(LayoutParams.MATCH_PARENT, Utils.dpToPx(this, (int)getResources().getDimension(R.dimen.component_height))));
 			lComponents.addView(component);
-				
-			/*LinearLayout component = new LinearLayout(this);
-			component.setId((Integer)obuComponent.getKey());
-			component.setBackgroundColor(this.getResources().getColor(backgroundId));
-			component.setLayoutParams(new TableRow.LayoutParams(LayoutParams.MATCH_PARENT, Utils.dpToPx(this, (int)getResources().getDimension(R.dimen.component_height))));
-			lComponents.addView(component);		
-
-			LinearLayout line = new LinearLayout(this);
-			line.setBackgroundColor(this.getResources().getColor(backgroundLineId));
-			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, Utils.dpToPx(this, (int)getResources().getDimension(R.dimen.line_height)));
-			layoutParams.setMargins(60, 0, 60, 0);
-			lComponents.addView(line, layoutParams);	*/		
 		}
 		
 	}
@@ -279,7 +319,7 @@ public class MainActivity extends Activity {
     	String obuId = Utils.getPrefernciesString(this, Settings.SETTING_OBU_ID);
    		
     	String urlString = this.getString(R.string.server_url) + "getdata?obuid="+obuId;
-    	if (Utils.isNetworkConnected(this)) {
+    	if (Utils.isNetworkConnected(this, false)) {
   			try {
   				tvLastUpdate.setVisibility(View.GONE);	
     			ivRefresh.setVisibility(View.VISIBLE);	
@@ -292,7 +332,7 @@ public class MainActivity extends Activity {
 	    	   	obuStates.clear();
     	   		for (int i=0; i< jsonStates.length(); i++) {
     	   			ObuState obuState = gson.fromJson(jsonStates.get(i).toString(), ObuState.class);
-    	   			System.out.println(obuState.toString());
+    	   			//System.out.println(obuState.toString());
     	   			obuStates.put(obuState.getId_state(), obuState);
     	   		}
 	    	   	
@@ -300,7 +340,7 @@ public class MainActivity extends Activity {
 	    	   	obuAlarms.clear();
 	    	   	for (int i=0; i< jsonAlarms.length(); i++) {
     	   			ObuAlarm obuAlarm = gson.fromJson(jsonAlarms.get(i).toString(), ObuAlarm.class);
-    	   			System.out.println(obuAlarm.toString());
+    	   			//System.out.println(obuAlarm.toString());
     	   			obuAlarms.put(obuAlarm.getId_alarm(), obuAlarm);
     	   			if (activeAlarms.indexOf(obuAlarm.getId_alarm()) == -1) {
     	   				showNotification(obuAlarm.getId_alarm(), obuAlarm.getTitle(), obuAlarm.getMessage(), obuAlarm.getDate_alarm());
@@ -311,14 +351,14 @@ public class MainActivity extends Activity {
 	    	   	showObuData();
 
 	        } catch (Exception e) {
-   	        	e.printStackTrace();
+   	        	/*e.printStackTrace();
    	        	Toast toast = Toast.makeText(this, this.getString(R.string.json_error), Toast.LENGTH_LONG);
    	        	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
-   	        	toast.show();
+   	        	toast.show();*/
    	   		}
     	}
    		handler.postDelayed(endRefresh, 1000);
-    }	
+    }	 
     
 	@SuppressWarnings("deprecation")
 	private void showObuData(){
@@ -329,15 +369,18 @@ public class MainActivity extends Activity {
 			System.out.println(map.getValue());
 			ObuState obuState = (ObuState)map.getValue();
 			int idState = obuState.getId_state();
+			FrameLayout component = (FrameLayout)findViewById(idState);
+			
 			
 			if (idState == ((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId()) { 
             	tvLastUpdate.setText(getResources().getString(R.string.last_update) + " " + Utils.formatDate(obuState.getDateState()));
 			}			
 			else if (idState == ((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()) { 
-				LinearLayout component = (LinearLayout)findViewById(idState);
-				LinearLayout ll = (LinearLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
-			    ImageView imageView = (ImageView)(ll).getChildAt(0);
+				//LinearLayout ll = (LinearLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
+			    //ImageView imageView = (ImageView)(ll).getChildAt(0);
+				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
 				String geofence = obuState.getValue();
+				cancelAlarmAnimation(component);
 				
 				if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_DISABLED)).getValue())) {
 					imageView.setImageResource(R.drawable.ic_geofence_disabled);
@@ -346,47 +389,95 @@ public class MainActivity extends Activity {
 					imageView.setImageResource(R.drawable.ic_geofence_home);
 				} 
 				else if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ALARM)).getValue())) {
-					imageView.setImageResource(R.drawable.ic_geofence_alarm_1);
+					showAlarmAnimation(component, imageView, R.drawable.geofence_animation);
+				}
+				else {
+					imageView.setImageResource(android.R.color.transparent);
 				}
 			}			
 			else if (idState == ((State)Settings.states.get(Settings.STATE_PUMP_STATE)).getId()) { 
-				LinearLayout component = (LinearLayout)findViewById(idState);
-				LinearLayout ll = (LinearLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
-			    ImageView imageView = (ImageView)(ll).getChildAt(0);
+				//LinearLayout ll = (LinearLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
+			    //ImageView imageView = (ImageView)(ll).getChildAt(0);
+				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
 				String pumpState = obuState.getValue();
+				cancelAlarmAnimation(component);
 				
 				if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_OK)).getValue())) {
 					imageView.setImageResource(R.drawable.ic_bilgepump);
 				}
 				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_PUMPING)).getValue())) {
-					imageView.setImageResource(R.drawable.bilge_pump_animation);
+					showAlarmAnimation(component, imageView, R.drawable.bilge_pumping_animation);
 				}
 				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_CLODGED)).getValue())) {
-					imageView.setImageResource(R.drawable.ic_bilgepump_clodged);
+					showAlarmAnimation(component, imageView, R.drawable.pump_clodged_animation);
+				}
+				else {
+					imageView.setImageResource(android.R.color.transparent);
 				}
 			}
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ANCHOR_STATE)).getId()) { 
 			}			
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) { 
-				LinearLayout component = (LinearLayout)findViewById(idState);
-				FrameLayout ll = (FrameLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
-			    TextView tvAccu = (TextView)(ll).getChildAt(0);
-				tvAccu.setText(obuState.getValue() + "%");
+				//FrameLayout ll = (FrameLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
+			    //TextView tvAccu = (TextView)(ll).getChildAt(0);
+				//tvAccu.setText(obuState.getValue() + "%");
+				((TextView)component.findViewById(R.id.accu_napetost)).setText(obuState.getValue() + "%");
 			}			
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) { 
-				LinearLayout component = (LinearLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
-				FrameLayout ll = (FrameLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
-			    TextView tvAccu = (TextView)(ll).getChildAt(1);
+				component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
+				//FrameLayout ll = (FrameLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
+			    //TextView tvAccu = (TextView)(ll).getChildAt(1);
 			    String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
-				tvAccu.setText(f + "AH");
+				//tvAccu.setText(f + "AH");
+				((TextView)component.findViewById(R.id.accu_ah)).setText(f + "AH");
 			}	
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) { 
-				LinearLayout component = (LinearLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
-				FrameLayout ll = (FrameLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
-			    TextView tvAccu = (TextView)(ll).getChildAt(2);
+				System.out.println("1");
+				component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
+				//FrameLayout ll = (FrameLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);
+			    //TextView tvAccu = (TextView)(ll).getChildAt(2);
 			    String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
-				tvAccu.setText(f + "A");
+				//tvAccu.setText(f + "A");
+				((TextView)component.findViewById(R.id.accu_tok)).setText(f + "A");
+				System.out.println("2");			
 			}	
+		}
+	}
+	
+	private void showAlarmAnimation (FrameLayout layout, ImageView imageView, int anim_id) {
+	    TypedArray a1 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.component});     
+        int backgroundId = a1.getResourceId(0, 0);       
+
+		ObjectAnimator colorFade = ObjectAnimator.ofObject((LinearLayout)layout.findViewById(R.id.main), "backgroundColor", 
+				new ArgbEvaluator(), 
+				getResources().getColor(backgroundId), 
+				getResources().getColor(R.color.alarm));
+		colorFade.setDuration(getResources().getInteger(R.integer.animation_interval));
+		colorFade.setRepeatCount(-1);
+		colorFade.setRepeatMode(Animation.REVERSE);
+		colorFade.start();
+				
+		imageView.setImageResource(anim_id);
+				
+		((LinearLayout)layout.findViewById(R.id.line)).setVisibility(View.GONE);
+		((LinearLayout)layout.findViewById(R.id.shadow_top)).setVisibility(View.VISIBLE);
+		((LinearLayout)layout.findViewById(R.id.shadow_bottom)).setVisibility(View.VISIBLE);
+		
+		alarmAnimaations.put(layout.getId(), colorFade);
+	}
+	
+	private void cancelAlarmAnimation (FrameLayout layout) {
+		if (alarmAnimaations.containsKey(layout.getId())) {
+	        ObjectAnimator colorFade = (ObjectAnimator)alarmAnimaations.get(layout.getId());
+			colorFade.end();
+
+		    TypedArray a1 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.component});     
+	        int backgroundId = a1.getResourceId(0, 0);       
+	        layout.setBackgroundColor(getResources().getColor(backgroundId));
+	        
+			((LinearLayout)layout.findViewById(R.id.line)).setVisibility(View.VISIBLE);
+			((LinearLayout)layout.findViewById(R.id.shadow_top)).setVisibility(View.GONE);
+			((LinearLayout)layout.findViewById(R.id.shadow_bottom)).setVisibility(View.GONE);
 		}
 	}
 	

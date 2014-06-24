@@ -89,7 +89,7 @@ public class LoginActivity extends Activity {
 				urlString += "&phone_number="+URLEncoder.encode(mTelephonyMgr.getLine1Number());
 			}     
 					
-	        if (Utils.isNetworkConnected(LoginActivity.this)) {
+	        if (Utils.isNetworkConnected(LoginActivity.this, true)) {
 	        	AsyncTask at = new Comm().execute(urlString); 
 	            String res = (String) at.get();
 	     	   	JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();

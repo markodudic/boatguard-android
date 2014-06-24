@@ -67,12 +67,14 @@ public class Utils {
     }
 
 	
-    public static boolean isNetworkConnected(Context context) {
+    public static boolean isNetworkConnected(Context context, boolean showDialog) {
 	  ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 	  NetworkInfo ni = cm.getActiveNetworkInfo();
 	  if (ni == null) {
-	   	  DialogFactory.getInstance().displayWarning(context, context.getResources().getString(R.string.no_active_connection_title), context.getResources().getString(R.string.no_active_connection_msg), false);
-		  return false;
+	   	  if (showDialog) {
+	   		  DialogFactory.getInstance().displayWarning(context, context.getResources().getString(R.string.no_active_connection_title), context.getResources().getString(R.string.no_active_connection_msg), false);
+	   	  }
+   		  return false;
 	  } else
 		  return true;
 	}

@@ -6,10 +6,9 @@
     android:orientation="vertical" >
 
 	        
-	<LinearLayout
+	<FrameLayout
 	    android:layout_width="match_parent"
-	    android:layout_height="@dimen/menu_height"
-	    android:orientation="vertical" >
+	    android:layout_height="@dimen/menu_height" >
     
 	    <si.noemus.boatguard.components.TextViewFont
 	        android:id="@+id/tv_last_update"
@@ -24,18 +23,34 @@
 	        style="@style/RefreshImage"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_vertical|center_horizontal"
 	        android:clickable="false"
 	        android:visibility="gone" />
-	</LinearLayout>
 
-  	<LinearLayout
-  	    android:layout_width="match_parent"
-  	    style="@style/LineLayout" />
+	</FrameLayout>
 	
-	<LinearLayout 
-		android:id="@+id/components"
-        android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="vertical" >
-	</LinearLayout>
+	<FrameLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+	    
+		<LinearLayout 
+			android:id="@+id/components"
+	        android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical" />
+
+		<LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="@dimen/shadow"
+		    android:orientation="vertical"
+		    android:layout_gravity="top"
+		    android:background="@drawable/drop_shadow_top"/>
+	
+		<LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="@dimen/shadow"
+		    android:orientation="vertical"
+		    android:layout_gravity="bottom"
+		    android:background="@drawable/drop_shadow_bottom"/>
+	</FrameLayout>
 </LinearLayout>

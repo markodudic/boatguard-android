@@ -87,7 +87,7 @@ public class Settings {
     
     public static void getSettings(Context context) {
     	String urlString = context.getString(R.string.server_url) + "getsettings";
-    	if (Utils.isNetworkConnected(context)) {
+    	if (Utils.isNetworkConnected(context, true)) {
   			try {
 		        	AsyncTask at = new Comm().execute(urlString); 
 		            String res = (String) at.get();
@@ -136,7 +136,7 @@ public class Settings {
     	String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
    		
     	String urlString = context.getString(R.string.server_url) + "getobusettings?obuid="+obuId+"&format=json";
-    	if (Utils.isNetworkConnected(context)) {
+    	if (Utils.isNetworkConnected(context, true)) {
   			try {
 	        	AsyncTask at = new Comm().execute(urlString); 
 	            String res = (String) at.get();
@@ -165,7 +165,7 @@ public class Settings {
     	String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
    		
     	String urlString = context.getString(R.string.server_url) + "getobucomponents?obuid="+obuId;
-    	if (Utils.isNetworkConnected(context)) {
+    	if (Utils.isNetworkConnected(context, true)) {
   			try {
 	        	AsyncTask at = new Comm().execute(urlString); 
 	            String res = (String) at.get();

@@ -76,7 +76,7 @@ public class SplashScreenActivity extends Activity {
 	    	   					urlString += "&phone_number="+URLEncoder.encode(mTelephonyMgr.getLine1Number());
 	    	   				}        
 	    	   	        
-	    	   		        if (Utils.isNetworkConnected(SplashScreenActivity.this)) {
+	    	   		        if (Utils.isNetworkConnected(SplashScreenActivity.this, true)) {
 	    	   		        	AsyncTask at = new Comm().execute(urlString); 
 		    	   	            String res = (String) at.get();
 		    	   	            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();

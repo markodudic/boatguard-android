@@ -88,7 +88,7 @@
    
    <style name="LastUpdateText">
        <item name="android:textSize">18.0sp</item>
-       <item name="android:textColor">?text_content</item>
+       <item name="android:textColor">?text_default</item>
        <item name="android:gravity">center_vertical|center_horizontal</item>
    </style>	  
    
