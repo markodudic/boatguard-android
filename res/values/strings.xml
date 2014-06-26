@@ -15,6 +15,7 @@
     <string name="cancel">CANCEL</string>
     <string name="last_update">LAST UPDATE:</string>
     <string name="alarm">ALARM</string>
+    <string name="location_title">LAST LOCATION:</string>
     
     
 	<string name="json_error">Nepravilen odgovor strežnika</string> 

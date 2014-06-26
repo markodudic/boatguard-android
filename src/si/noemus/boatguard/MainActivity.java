@@ -26,9 +26,6 @@ import android.animation.ObjectAnimator;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -59,6 +56,15 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
 public class MainActivity extends Activity {
@@ -78,7 +84,7 @@ public class MainActivity extends Activity {
 	public static HashMap<Integer,ObjectAnimator> alarmAnimaations = new HashMap<Integer,ObjectAnimator>(){};
 
 	private static MainFragment mFragment;
-	//private static LocationFragment lFragment;
+	private static MapFragment lFragment;
     
 	private static Gson gson = new Gson();	
 	
@@ -92,6 +98,8 @@ public class MainActivity extends Activity {
 
     private Dialog dialogAlarm = null;
     private Integer dialogAlarmActive = -1;
+    
+    GoogleMap map;
     		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -112,17 +120,66 @@ public class MainActivity extends Activity {
         ivRefresh = (ImageView)findViewById(R.id.iv_refresh);
         refreshAnimation = (AnimationDrawable) ivRefresh.getBackground();
 
+        final ScrollView sv = (ScrollView)findViewById(R.id.scroll_main);
+        final LinearLayout lLocation = (LinearLayout)findViewById(R.id.lLocation);
+
+        MapFragment mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragment_location));
         
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        mFragment = (MainFragment) fm.findFragmentById(R.id.fragment_main);
-        //lFragment = (LocationFragment) fm.findFragmentById(R.id.fragment_location);
-        //ft.hide(lFragment);
-        ft.commit();
-        //addShowHideListener(R.id.fragment_location, lFragment);
-        addShowHideListener(R.id.fragment_main, mFragment);
+        map = mapFragment.getMap();
+        map.getUiSettings().setAllGesturesEnabled(true);
+        map.getUiSettings().setMyLocationButtonEnabled(true);
+        map.setMyLocationEnabled(true);
+
         
-        
+        ImageView ivHome = (ImageView)findViewById(R.id.iv_home);
+        ivHome.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) { 
+				sv.setVisibility(View.VISIBLE);
+				lLocation.setVisibility(View.GONE);
+            } 
+		});
+		ImageView ivLocation = (ImageView)findViewById(R.id.iv_loction);
+		ivLocation.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) { 
+				double lat=0, lon=0;
+				String date = "";
+		        Set set = obuStates.entrySet(); 
+				Iterator i = set.iterator();
+				while(i.hasNext()) { 
+					Map.Entry map = (Map.Entry)i.next(); 
+					ObuState obuState = (ObuState)map.getValue();
+					if (obuState.getId_state() == ((State)Settings.states.get(Settings.STATE_LAT)).getId()) { 
+				        lat = Double.parseDouble(obuState.getValue());
+					}
+					else if (obuState.getId_state() == ((State)Settings.states.get(Settings.STATE_LON)).getId()) { 
+				        lon = Double.parseDouble(obuState.getValue());
+					} else if (obuState.getId_state() == ((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId()) { 
+						date = Utils.formatDate(obuState.getDateState());
+					}
+				}
+				if (lat != 0 && lon != 0) {
+					double latF = Math.floor(lat/100);
+					double latD = (lat/100 - latF)/0.6;
+					lat = latF + latD;
+					double lonF = Math.floor(lon/100);
+					double lonD = (lon/100 - lonF)/0.6;
+					lon = lonF + lonD;
+					
+					LatLng latlng = new LatLng(lon, lat);
+			        Marker newmarker = map.addMarker(new MarkerOptions().position(latlng).title(getResources().getString(R.string.location_title) + " " + date).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker)));
+			        CameraPosition cameraPosition = new CameraPosition.Builder().target(latlng).zoom(14.0f).build();
+			        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+			        map.moveCamera(cameraUpdate); 
+				}
+
+				sv.setVisibility(View.GONE);
+				lLocation.setVisibility(View.VISIBLE);
+			}
+		});
+		
+		
         ImageView ivSettings = (ImageView)findViewById(R.id.iv_settings);
         ivSettings.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -140,7 +197,6 @@ public class MainActivity extends Activity {
 		});
 
 
-        final ScrollView sv = (ScrollView)findViewById(R.id.scroll_main);
         sv.setOnTouchListener(new View.OnTouchListener() {
            @Override
             public boolean onTouch(View v, MotionEvent ev) {
@@ -318,32 +374,7 @@ public class MainActivity extends Activity {
 		}
 		
 	}
-	
-	
-    void addShowHideListener(int buttonId, final Fragment fragment) {
-        ImageView ivHome = (ImageView)findViewById(R.id.iv_home);
-        ivHome.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) { 
-				System.out.println("HOME");
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.show(mFragment);
-                //ft.hide(lFragment);
-                ft.commit();
-            }
-		});
-		ImageView ivLocation = (ImageView)findViewById(R.id.iv_loction);
-		ivLocation.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) { 
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
-                //ft.show(lFragment);
-                ft.hide(mFragment);
-                ft.commit();
-			}
-		});
-    }
-    
+
     
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -411,13 +442,12 @@ public class MainActivity extends Activity {
 			System.out.println(map.getValue());
 			ObuState obuState = (ObuState)map.getValue();
 			int idState = obuState.getId_state();
-			FrameLayout component = (FrameLayout)findViewById(idState);
-			
 			
 			if (idState == ((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId()) { 
             	tvLastUpdate.setText(getResources().getString(R.string.last_update) + " " + Utils.formatDate(obuState.getDateState()));
-			}			
+			}	
 			else if (idState == ((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()) { 
+				FrameLayout component = (FrameLayout)findViewById(idState);
 				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
 				String geofence = obuState.getValue();
 				cancelAlarmAnimation(component);
@@ -436,6 +466,7 @@ public class MainActivity extends Activity {
 				}
 			}			
 			else if (idState == ((State)Settings.states.get(Settings.STATE_PUMP_STATE)).getId()) { 
+				FrameLayout component = (FrameLayout)findViewById(idState);
 				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
 				String pumpState = obuState.getValue();
 				cancelAlarmAnimation(component);
@@ -456,19 +487,18 @@ public class MainActivity extends Activity {
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ANCHOR_STATE)).getId()) { 
 			}			
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) { 
+				FrameLayout component = (FrameLayout)findViewById(idState);
 				((TextView)component.findViewById(R.id.accu_napetost)).setText(obuState.getValue() + "%");
 			}			
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) { 
-				component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
+				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
 				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
 				((TextView)component.findViewById(R.id.accu_ah)).setText(f + "AH");
 			}	
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) { 
-				System.out.println("1");
-				component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
+				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
 				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
 				((TextView)component.findViewById(R.id.accu_tok)).setText(f + "A");
-				System.out.println("2");			
 			}	
 		}
 	}
@@ -526,12 +556,12 @@ public class MainActivity extends Activity {
 	
 	
 	public void changeAccuStep (View v) {
-		LinearLayout component = (LinearLayout)findViewById(accuComponentId);
-		FrameLayout ll = (FrameLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);	
-		TextView tvAccuNapetost = (TextView)(ll).getChildAt(0);
-		TextView tvAccuAH = (TextView)(ll).getChildAt(1);
-		TextView tvAccuTok = (TextView)(ll).getChildAt(2);
-		ImageView ivStep = (ImageView)(ll).getChildAt(3);
+		FrameLayout component = (FrameLayout)findViewById(accuComponentId);
+		LinearLayout ll = (LinearLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);	
+		TextView tvAccuNapetost = (TextView)component.findViewById(R.id.accu_napetost);
+		TextView tvAccuAH = (TextView)component.findViewById(R.id.accu_ah);
+		TextView tvAccuTok = (TextView)component.findViewById(R.id.accu_tok);
+		ImageView ivStep = (ImageView)component.findViewById(R.id.step);
 		
 		switch (accuStep) {
 		case 0:

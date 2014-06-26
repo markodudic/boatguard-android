@@ -41,6 +41,8 @@ public class Settings {
 
 	public static String STATE_ROW_STATE = "ROW_STATE";
 	public static String STATE_GEO_FENCE = "GEO_FENCE";
+	public static String STATE_LAT = "LAT";
+	public static String STATE_LON = "LON";
 	public static String STATE_PUMP_STATE = "PUMP_STATE";
 	public static String STATE_ACCU_NAPETOST = "ACCU_NAPETOST";
 	public static String STATE_ACCU_AH = "ACCU_AH";
