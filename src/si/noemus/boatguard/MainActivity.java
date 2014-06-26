@@ -25,6 +25,7 @@ import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -34,8 +35,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -49,6 +50,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
@@ -63,6 +65,7 @@ public class MainActivity extends Activity {
 	
 	private int initialPosition;
 	private boolean refreshing = false;
+	private boolean scrollRefresh = false;
     private TextView tvLastUpdate;
     private ImageView ivRefresh;
     private AnimationDrawable refreshAnimation;
@@ -87,6 +90,9 @@ public class MainActivity extends Activity {
 	private float mLastTouchX, mPosX;
     private float mLastTouchY, mPosY;
 
+    private Dialog dialogAlarm = null;
+    private Integer dialogAlarmActive = -1;
+    		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		int theme = Utils.getPrefernciesInt(this, Settings.SETTING_THEME);
@@ -169,9 +175,12 @@ public class MainActivity extends Activity {
              	   		anim=new TranslateAnimation(0,0,0,px);
                 	} else if ((newPosition < initialPosition) || (newPosition==0 && initialPosition==0)) {
              	   		anim=new TranslateAnimation(0,0,200,0);
-             	   		if (newPosition == 0 && !refreshing && (mPosX > 200 || mPosY > 200)) {
+             	   		if (newPosition == 0 && !refreshing && !scrollRefresh && (mPosX > 200 || mPosY > 200)) {
                 			//System.out.println("refresh");
-                			getObudata();
+             	   			scrollRefresh = true;
+             	   			if (Utils.isNetworkConnected(MainActivity.this, true)) {
+             	       			getObudata();
+             	   			}
                 		}
              	   	}
                 	if (anim!=null) {
@@ -197,6 +206,7 @@ public class MainActivity extends Activity {
                 case MotionEvent.ACTION_UP:
                 	mPosX=0;
                 	mPosY=0;
+                	scrollRefresh = false;
                     break;
                 case MotionEvent.ACTION_POINTER_UP:                     
                     final int pointerIndex2 = MotionEventCompat.getActionIndex(ev); 
@@ -216,6 +226,45 @@ public class MainActivity extends Activity {
             }
         });       
         
+        
+		dialogAlarm = new Dialog(this,R.style.Dialog);
+		dialogAlarm.setContentView(R.layout.dialog_alarm); 
+		dialogAlarm.setCanceledOnTouchOutside(false);
+		dialogAlarm.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+    
+		//TextView confirmationTitle = (TextView) dialogConfirmation.findViewById(R.id.confirmation_title);
+		//confirmationTitle.setTypeface(tf);
+		
+	    
+		LinearLayout close = (LinearLayout) dialogAlarm.findViewById(R.id.close);
+		close.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				activeAlarms.remove(dialogAlarmActive);
+				cancelNotification(dialogAlarmActive);
+				dialogAlarmActive = -1;
+				dialogAlarm.dismiss();
+			}
+		}); 
+		 
+		FrameLayout confirm = (FrameLayout) dialogAlarm.findViewById(R.id.confirm);
+		confirm.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+		    	if (Utils.isNetworkConnected(MainActivity.this, true)) {
+		    		String obuId = Utils.getPrefernciesString(MainActivity.this, Settings.SETTING_OBU_ID);
+		       		String urlString = MainActivity.this.getString(R.string.server_url) + "confirmalarm?obuid="+obuId+"&alarmid="+dialogAlarmActive;
+		    		AsyncTask at = new Comm().execute(urlString); 
+		    	}
+		    	
+				activeAlarms.remove(dialogAlarmActive);
+				cancelNotification(dialogAlarmActive);
+				dialogAlarmActive = -1;
+				dialogAlarm.dismiss();
+			}
+		});	
+		
+	
         Settings.getSettings(this);        
         Settings.getObuSettings(this);  
         Settings.getObuComponents(this);  
@@ -224,8 +273,15 @@ public class MainActivity extends Activity {
         
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		getObudata();
+	}
+    
+	
 	private void showObuComponents(){
-        LinearLayout lComponents = (LinearLayout)findViewById(R.id.components);
+		LinearLayout lComponents = (LinearLayout)findViewById(R.id.components);
 
         HashMap<Integer,ObuComponent> obuComponents = Settings.obuComponents;
 		Set set = obuComponents.entrySet(); 
@@ -326,8 +382,11 @@ public class MainActivity extends Activity {
     	   			//System.out.println(obuAlarm.toString());
     	   			obuAlarms.put(obuAlarm.getId_alarm(), obuAlarm);
     	   			if (activeAlarms.indexOf(obuAlarm.getId_alarm()) == -1) {
-    	   				showNotification(obuAlarm.getId_alarm(), obuAlarm.getTitle(), obuAlarm.getMessage(), obuAlarm.getDate_alarm());
+    	   				showNotification(obuAlarm.getId_alarm(), obuAlarm.getTitle(), obuAlarm.getMessage(), obuAlarm.getDate_alarm(), obuAlarm.getVibrate(), obuAlarm.getSound());
     	   				activeAlarms.add(obuAlarm.getId_alarm());
+    	   			}
+    	   			if (dialogAlarmActive == -1) {
+    	   				showAlarmDialog(obuAlarm.getId_alarm(), obuAlarm.getTitle(), obuAlarm.getMessage(), obuAlarm.getAction(), obuAlarm.getType());
     	   			}
     	   		}
     	   		
@@ -421,14 +480,19 @@ public class MainActivity extends Activity {
 		ObjectAnimator colorFade = ObjectAnimator.ofObject((LinearLayout)layout.findViewById(R.id.main), "backgroundColor", 
 				new ArgbEvaluator(), 
 				getResources().getColor(backgroundId), 
-				getResources().getColor(R.color.alarm));
+				getResources().getColor(R.color.alarm_red));
 		colorFade.setDuration(getResources().getInteger(R.integer.animation_interval));
 		colorFade.setRepeatCount(-1);
 		colorFade.setRepeatMode(Animation.REVERSE);
 		colorFade.start();
 				
 		imageView.setImageResource(anim_id);
-				
+		/*Animation anim = new AlphaAnimation(0, 1);
+		anim.setDuration(3000);
+		anim.setRepeatCount(-1);
+		anim.setRepeatMode(Animation.REVERSE);
+		imageView.startAnimation(anim);*/
+		
 		((LinearLayout)layout.findViewById(R.id.line)).setVisibility(View.GONE);
 		((LinearLayout)layout.findViewById(R.id.shadow_top)).setVisibility(View.VISIBLE);
 		((LinearLayout)layout.findViewById(R.id.shadow_bottom)).setVisibility(View.VISIBLE);
@@ -484,7 +548,7 @@ public class MainActivity extends Activity {
 			ivStep.setImageResource(R.drawable.ic_battery_step_3);
 			accuStep = 2;
 			break;
-		case 2:
+		case 2: 
 			tvAccuNapetost.setVisibility(View.VISIBLE);
 			tvAccuAH.setVisibility(View.GONE);
 			tvAccuTok.setVisibility(View.GONE);
@@ -494,7 +558,22 @@ public class MainActivity extends Activity {
 		}
 	}
 	
-	private void showNotification(int id, String title, String message, Timestamp date){
+	private void showAlarmDialog(int id, String msg, String desc, String action, String type){
+		dialogAlarmActive = id;
+		if (type!=null && type.equalsIgnoreCase(Settings.ALARM_GREEN)) {
+			((LinearLayout)dialogAlarm.findViewById(R.id.lAlarm)).setBackgroundColor(getResources().getColor(R.color.alarm_green));
+		}
+		else {
+			((LinearLayout)dialogAlarm.findViewById(R.id.lAlarm)).setBackgroundColor(getResources().getColor(R.color.alarm_red));			
+		}
+		((TextView)dialogAlarm.findViewById(R.id.alarm_msg)).setText(msg.toUpperCase());
+		((TextView)dialogAlarm.findViewById(R.id.alarm_desc)).setText(desc.toUpperCase());
+		((TextView)dialogAlarm.findViewById(R.id.alarm_confirm)).setText(action.toUpperCase());
+		dialogAlarm.show();
+	}
+	
+	
+	private void showNotification(int id, String title, String message, Timestamp date, int vibrate, int sound){
 		Intent resultIntent = new Intent(this, MainActivity.class);
 		
 		PendingIntent pIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -512,16 +591,26 @@ public class MainActivity extends Activity {
 		NotificationManager mNotificationManager =  (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 		mNotificationManager.notify(id, mBuilder.build());
 		
-		beepVibrate();
+		beepVibrate(vibrate, sound);
 	}
 	
-	public void beepVibrate() {
+	
+	public void cancelNotification(int notifyId) {
+	    NotificationManager nMgr = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+	    nMgr.cancel(notifyId);
+	}
+	
+	public void beepVibrate(int vibrate, int sound) {
 	    try {
-	        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-	        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-	        r.play();
+	        if (sound == 1) {
+		    	Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+		        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+		        r.play();
+	        }
 	    } catch (Exception e) {}
-	    ((Vibrator)getSystemService(VIBRATOR_SERVICE)).vibrate(1000);
+	    if (vibrate == 1) {
+	    	((Vibrator)getSystemService(VIBRATOR_SERVICE)).vibrate(1000);
+	    }
 	}
 	
     private Runnable startRefresh = new Runnable() {

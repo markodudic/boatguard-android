@@ -56,7 +56,24 @@
        <item name="android:textColor">?text_content</item>
    </style>	
 	
-	
+   <style name="Dialog" parent="@android:style/Theme.Dialog">
+	    <item name="android:windowNoTitle">true</item>
+   </style>
+   
+   <style name="alarmTitle">
+       <item name="android:textSize">24.0sp</item>
+       <item name="android:textColor">@color/text_alarm_title</item>
+       <item name="android:layout_gravity">center_vertical|center_horizontal</item>
+       <item name="android:gravity">center_vertical|center_horizontal</item>
+       <item name="android:layout_marginLeft">10.0sp</item>
+       <item name="android:layout_marginRight">10.0sp</item>
+   </style>	
+   	
+   <style name="alarmDesc" parent="alarmTitle">
+       <item name="android:textSize">22.0sp</item>
+       <item name="android:textColor">@color/text_alarm_desc</item>
+   </style>
+   
    <style name="Layout">
        <item name="android:background">?background</item>
    </style>	

@@ -14,6 +14,7 @@
     <string name="ok">OK</string>
     <string name="cancel">CANCEL</string>
     <string name="last_update">LAST UPDATE:</string>
+    <string name="alarm">ALARM</string>
     
     
 	<string name="json_error">Nepravilen odgovor strežnika</string> 

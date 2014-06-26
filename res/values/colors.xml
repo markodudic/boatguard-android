@@ -21,8 +21,12 @@
    
     <color name="transparent_color">#00000000</color>
     
-    <color name="alarm">#ffd4451d</color>
-    
+    <color name="alarm_red">#ffd4451d</color>
+    <color name="alarm_green">#ff39a935</color>
+   	<color name="text_alarm_title">#333e48</color> 	
+	<color name="text_alarm_desc">#e8e7e8</color> 	
+	<color name="alarm_gradient">#99303e48</color>
+		
    	<color name="background_day">#d5d6d8</color>
     <color name="vertical_line_day">#b3b3b3</color>
     <color name="horizontal_line_day">#b3b3b3</color>

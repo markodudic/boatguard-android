@@ -54,6 +54,8 @@ public class Settings {
 	public static String APP_STATE_PUMP_PUMPING = "PUMP_PUMPING";
 	public static String APP_STATE_PUMP_CLODGED = "PUMP_CLODGED";
 			
+	public static String ALARM_GREEN = "G";
+	public static String ALARM_RED = "R";
 			
 	public static HashMap<Integer,String> languages = new HashMap<Integer,String>() {{
 																					    put(0, "en");

@@ -14,5 +14,8 @@
     <dimen name="line_height">2dp</dimen>
     <dimen name="components_margin">20dp</dimen>
     <dimen name="component_icon_height">35dp</dimen>
+    <dimen name="dialog_alarm_padding">10dp</dimen>
+    <dimen name="dialog_alarm_width">350dp</dimen>
+    <dimen name="dialog_alarm_height">250dp</dimen>
     
 </resources>

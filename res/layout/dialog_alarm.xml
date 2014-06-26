@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
+    android:layout_width="@dimen/dialog_alarm_width"
+    android:layout_height="@dimen/dialog_alarm_height"
+    android:background="@color/alarm_red"
+    android:id="@+id/lAlarm"
+	android:orientation="vertical"
+    android:padding="@dimen/dialog_alarm_padding" >
+    
+	<LinearLayout
+	    android:id="@+id/close"
+		android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
+	
+	    <FrameLayout
+	        android:layout_width="match_parent"
+			android:layout_height="30dp" >
+		    
+		    <LinearLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="30dp"
+		        android:gravity="center_horizontal"
+		        android:orientation="horizontal" >
+
+		        <ImageView
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:src="@drawable/ic_arrows_right" />
+		        							    
+	        	<si.noemus.boatguard.components.TextViewFont
+	        	    android:id="@+id/alarm_title"
+	        	    style="@style/alarmTitle"
+	        	    boatguard:font_name="@string/font_semibold"
+	    			android:layout_width="wrap_content"
+	        	    android:layout_height="match_parent"
+	        	    android:text="@string/alarm" />
+	        	
+			    <ImageView
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:src="@drawable/ic_arrows_left" />
+	        	
+			</LinearLayout>
+				
+		    <ImageView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="right|center_vertical"
+		        android:layout_weight="1"
+		        android:src="@drawable/ic_close" />
+			
+		</FrameLayout>     
+			
+		<si.noemus.boatguard.components.TextViewFont
+		    android:id="@+id/alarm_msg"
+		    android:layout_width="match_parent"
+		    android:layout_height="60dp"
+		    style="@style/alarmTitle"
+			boatguard:font_name="@string/font_semibold"
+	    	android:text="alarm_msg" />
+	 
+		<si.noemus.boatguard.components.TextViewFont
+		    android:id="@+id/alarm_desc"
+		    android:layout_width="match_parent"
+		    android:layout_height="90dp"
+		    style="@style/alarmDesc"
+		    boatguard:font_name="@string/font_regular"
+	    	android:text="alarm_desc" />
+	</LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/confirm"
+	    android:layout_width="match_parent"
+		android:layout_height="50dp"
+		android:background="@drawable/alarm_confirm" >
+			
+		<si.noemus.boatguard.components.TextViewFont
+		    android:id="@+id/alarm_confirm"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center_vertical"
+		    style="@style/alarmDesc"
+		    boatguard:font_name="@string/font_semibold"
+	    	android:text="alarm_confirm" />
+   </FrameLayout> 
+   
+</LinearLayout>    
