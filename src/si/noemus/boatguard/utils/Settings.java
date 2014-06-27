@@ -149,7 +149,7 @@ public class Settings {
     	   		for (int i=0; i< jsonObuSettings.length(); i++) {
     	   			ObuSetting obuSetting = gson.fromJson(jsonObuSettings.get(i).toString(), ObuSetting.class);
     	   			//System.out.println(obuSetting.toString());
-    	   			obuSettings.put(obuSetting.getIdSetting(), obuSetting);
+    	   			obuSettings.put(obuSetting.getId_setting(), obuSetting);
     	   			if (obuSetting.getCode().equals(SETTING_REFRESH_TIME)) {
     	   				Utils.savePrefernciesInt(context, SETTING_REFRESH_TIME, Integer.parseInt(obuSetting.getValue()));
     	   			}

@@ -610,8 +610,8 @@ public class MainActivity extends Activity {
 		
 		NotificationCompat.Builder mBuilder =
 		        new NotificationCompat.Builder(this)
-		        .setSmallIcon(R.drawable.notification)
-		        .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_icon))
+		        .setSmallIcon(R.drawable.ic_notification)
+		        .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.notification))
 		        .setContentTitle(title)
 		        .setContentText(message)
 		        .setAutoCancel(true)

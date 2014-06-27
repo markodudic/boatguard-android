@@ -150,7 +150,7 @@
    </style>	  
     
    <style name="ComponentAccuText" parent="ComponentText">
-       <item name="android:textSize">30.0sp</item>
+       <item name="android:textSize">28.0sp</item>
        <item name="android:textColor">?text_green</item>
    </style>	   
    
