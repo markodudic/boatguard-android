@@ -87,32 +87,15 @@
 	
 		    </FrameLayout>
 		</LinearLayout>
-	
-	  	<LinearLayout
-	  	    android:id="@+id/line"
-			android:orientation="horizontal"
-			android:layout_width="match_parent"
-	  	    style="@style/ComponentLineLayout" />
-	    
+    
 	</LinearLayout>
 
-	<!-- LinearLayout
-	    android:id="@+id/shadow_top"
-		android:layout_width="match_parent"
-	    android:layout_height="@dimen/shadow"
-	    android:orientation="vertical"
-	    android:layout_gravity="top"
-	    android:background="@drawable/drop_shadow_top"
-	    android:visibility="gone"/>
-
 	<LinearLayout
-	    android:id="@+id/shadow_bottom"
-		android:layout_width="match_parent"
-	    android:layout_height="@dimen/shadow"
-	    android:orientation="vertical"
+	    android:id="@+id/line"
+	    style="@style/ComponentLineLayout"
+	    android:layout_width="match_parent"
 	    android:layout_gravity="bottom"
-	    android:background="@drawable/drop_shadow_bottom"
-		android:visibility="gone"/-->
+	    android:orientation="horizontal" />
 		
     
 </FrameLayout>

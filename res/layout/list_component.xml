@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -50,31 +49,14 @@
 		    </LinearLayout>
 		</LinearLayout>
 
-		<LinearLayout
-	  	    android:id="@+id/line"
-			android:orientation="horizontal"
-			android:layout_width="match_parent"
-	  	    style="@style/ComponentLineLayout" />
 		
 	</LinearLayout>
 		
-	<!-- LinearLayout
-	    android:id="@+id/shadow_top"
-		android:layout_width="match_parent"
-	    android:layout_height="@dimen/shadow"
-	    android:orientation="vertical"
-	    android:layout_gravity="top"
-	    android:background="@drawable/drop_shadow_top"
-	    android:visibility="gone"/>
-
 	<LinearLayout
-	    android:id="@+id/shadow_bottom"
-		android:layout_width="match_parent"
-	    android:layout_height="@dimen/shadow"
-	    android:orientation="vertical"
+	    android:id="@+id/line"
+	    style="@style/ComponentLineLayout"
+	    android:layout_width="match_parent"
 	    android:layout_gravity="bottom"
-	    android:background="@drawable/drop_shadow_bottom"
-	    android:visibility="gone"/-->
-		
+	    android:orientation="horizontal" />
     
 </FrameLayout>

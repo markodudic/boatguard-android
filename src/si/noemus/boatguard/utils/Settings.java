@@ -55,6 +55,7 @@ public class Settings {
 	public static String APP_STATE_PUMP_OK = "PUMP_OK";
 	public static String APP_STATE_PUMP_PUMPING = "PUMP_PUMPING";
 	public static String APP_STATE_PUMP_CLODGED = "PUMP_CLODGED";
+	public static String APP_STATE_BATTERY_ALARM_VALUE = "BATTERY_ALARM_VALUE";
 			
 	public static String ALARM_GREEN = "G";
 	public static String ALARM_RED = "R";
