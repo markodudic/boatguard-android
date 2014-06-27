@@ -91,7 +91,7 @@
    </style>	
  
    <style name="LoginRememberText" parent="LoginText">
-       <item name="android:height">60.0sp</item>
+       <item name="android:height">50.0sp</item>
    </style>	
    
    <style name="LoginEditText" parent="LoginRememberText">
@@ -132,7 +132,7 @@
    </style>   
    
    <style name="ComponentLineLayout">
-       <item name="android:layout_height">2dp</item>
+       <item name="android:layout_height">@dimen/line_height</item>
        <item name="android:background">?horizontal_line</item>
    </style>
    

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
-    android:layout_width="@dimen/dialog_alarm_width"
-    android:layout_height="@dimen/dialog_alarm_height"
-    android:background="@color/alarm_red"
     android:id="@+id/lAlarm"
-	android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dialog_alarm_height"
+    android:layout_marginLeft="@dimen/dialog_alarm_padding"
+    android:layout_marginRight="@dimen/dialog_alarm_padding"
+    android:background="@color/alarm_red"
+    android:orientation="vertical"
     android:padding="@dimen/dialog_alarm_padding" >
     
 	<LinearLayout

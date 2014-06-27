@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import si.noemus.boatguard.components.TextViewFont;
 import si.noemus.boatguard.objects.AppSetting;
 import si.noemus.boatguard.objects.ObuAlarm;
 import si.noemus.boatguard.objects.ObuComponent;
@@ -21,7 +22,6 @@ import si.noemus.boatguard.objects.State;
 import si.noemus.boatguard.utils.Comm;
 import si.noemus.boatguard.utils.Settings;
 import si.noemus.boatguard.utils.Utils;
-import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -32,6 +32,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Ringtone;
@@ -43,17 +45,23 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.MotionEventCompat;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -337,11 +345,14 @@ public class MainActivity extends Activity {
     
 	
 	private void showObuComponents(){
-		LinearLayout lComponents = (LinearLayout)findViewById(R.id.components);
+		TableLayout lComponents = (TableLayout)findViewById(R.id.components);
 
         HashMap<Integer,ObuComponent> obuComponents = Settings.obuComponents;
 		Set set = obuComponents.entrySet(); 
 		Iterator i = set.iterator();
+		int ii = 0;
+		TableRow tr = new TableRow(this);
+		
 		while(i.hasNext()) { 
 			Map.Entry map = (Map.Entry)i.next(); 
 			//System.out.println(map.getValue());
@@ -356,7 +367,24 @@ public class MainActivity extends Activity {
 			LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		    View component = inflater.inflate(lc, null);
 		    component.setId(obuComponent.getId_component());
-			
+		    
+			if (Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
+			    Display display = getWindowManager().getDefaultDisplay();
+			    Point size = new Point();
+			    display.getSize(size);
+			    int width = size.x;
+			    int height = size.y;
+			    component.setLayoutParams(new TableRow.LayoutParams(width/2, width/2));
+			    LinearLayout content = ((LinearLayout)component.findViewById(R.id.content));
+			    content.setOrientation(LinearLayout.VERTICAL);
+			    int pad = Utils.dpToPx(this, (int)getResources().getDimension(R.dimen.components_margin));
+			    int lin = Utils.dpToPx(this, (int)getResources().getDimension(R.dimen.line_height));
+			    content.setLayoutParams(new TableRow.LayoutParams(width/2-pad, width/2-lin));
+			    TextViewFont label = ((TextViewFont)component.findViewById(R.id.label));
+			    label.setLayoutParams(new TableRow.LayoutParams(width/2-pad, width/4));
+			    label.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+			}
+		    
 		    ((TextView)component.findViewById(R.id.label)).setText(obuComponent.getName());
 			
 			if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_GEO)) {
@@ -370,7 +398,30 @@ public class MainActivity extends Activity {
 				accuComponentId = obuComponent.getId_component();
 			} 
 			
-			lComponents.addView(component);
+			if (Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
+				if (ii%2 == 0) {
+					tr = new TableRow(this);
+					tr.setLayoutParams(new LayoutParams( LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
+				}
+				tr.addView(component);
+				if (ii%2 == 1) {
+					lComponents.addView(tr);
+				} else {
+				    TypedArray a = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.horizontal_line});     
+			        int lineId = a.getResourceId(0, 0);       
+	
+			        LinearLayout line = new LinearLayout(this);
+			        line.setBackgroundColor(this.getResources().getColor(lineId));
+			        TableRow.LayoutParams lp = new TableRow.LayoutParams((int)getResources().getDimension(R.dimen.line_height), LayoutParams.MATCH_PARENT);
+			        lp.setMargins(0, (int)getResources().getDimension(R.dimen.components_margin), 0, (int)getResources().getDimension(R.dimen.components_margin));
+			        line.setLayoutParams(lp);
+			        tr.addView(line);
+				}
+				ii++;
+			} 
+			else {
+				lComponents.addView(component);
+			}
 		}
 		
 	}
@@ -507,14 +558,26 @@ public class MainActivity extends Activity {
 	    TypedArray a1 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.component});     
         int backgroundId = a1.getResourceId(0, 0);       
 
-		ObjectAnimator colorFade = ObjectAnimator.ofObject((LinearLayout)layout.findViewById(R.id.main), "backgroundColor", 
+        LinearLayout main = (LinearLayout)layout.findViewById(R.id.main);
+        main.setBackgroundResource(0);
+        //main.setBackgroundColor(Color.TRANSPARENT);
+	    
+        LinearLayout background = (LinearLayout)layout.findViewById(R.id.background);
+        background.setBackgroundResource(R.drawable.alarm_confirm);
+		Animation anim = new AlphaAnimation(0, 1);
+		anim.setDuration(getResources().getInteger(R.integer.animation_interval));
+		anim.setRepeatCount(-1);
+		anim.setRepeatMode(Animation.REVERSE);
+		background.startAnimation(anim);
+        
+        /*ObjectAnimator colorFade = ObjectAnimator.ofObject((LinearLayout)layout.findViewById(R.id.main), "backgroundColor", 
 				new ArgbEvaluator(), 
 				getResources().getColor(backgroundId), 
 				getResources().getColor(R.color.alarm_red));
 		colorFade.setDuration(getResources().getInteger(R.integer.animation_interval));
 		colorFade.setRepeatCount(-1);
 		colorFade.setRepeatMode(Animation.REVERSE);
-		colorFade.start();
+		colorFade.start();*/
 				
 		imageView.setImageResource(anim_id);
 		/*Animation anim = new AlphaAnimation(0, 1);
@@ -523,11 +586,11 @@ public class MainActivity extends Activity {
 		anim.setRepeatMode(Animation.REVERSE);
 		imageView.startAnimation(anim);*/
 		
-		((LinearLayout)layout.findViewById(R.id.line)).setVisibility(View.GONE);
-		((LinearLayout)layout.findViewById(R.id.shadow_top)).setVisibility(View.VISIBLE);
-		((LinearLayout)layout.findViewById(R.id.shadow_bottom)).setVisibility(View.VISIBLE);
+		//((LinearLayout)layout.findViewById(R.id.line)).setVisibility(View.GONE);
+		//((LinearLayout)layout.findViewById(R.id.shadow_top)).setVisibility(View.VISIBLE);
+		//((LinearLayout)layout.findViewById(R.id.shadow_bottom)).setVisibility(View.VISIBLE);
 		
-		alarmAnimaations.put(layout.getId(), colorFade);
+		alarmAnimaations.put(layout.getId(), null);
 		
 	    TypedArray a2 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_logotype_alarm});     
         int logoId = a2.getResourceId(0, 0);       
@@ -536,16 +599,20 @@ public class MainActivity extends Activity {
 	
 	private void cancelAlarmAnimation (FrameLayout layout) {
 		if (alarmAnimaations.containsKey(layout.getId())) {
-	        ObjectAnimator colorFade = (ObjectAnimator)alarmAnimaations.get(layout.getId());
-			colorFade.end();
+	        //ObjectAnimator colorFade = (ObjectAnimator)alarmAnimaations.get(layout.getId());
+			//colorFade.end();
+			
+	        LinearLayout background = (LinearLayout)layout.findViewById(R.id.background);
+	        background.clearAnimation();
+	        //background.setBackgroundResource(0);
 
-		    TypedArray a1 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.component});     
+	        TypedArray a1 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.component});     
 	        int backgroundId = a1.getResourceId(0, 0);       
 	        ((LinearLayout)layout.findViewById(R.id.main)).setBackgroundColor(getResources().getColor(backgroundId));
 	        
-			((LinearLayout)layout.findViewById(R.id.line)).setVisibility(View.VISIBLE);
-			((LinearLayout)layout.findViewById(R.id.shadow_top)).setVisibility(View.GONE);
-			((LinearLayout)layout.findViewById(R.id.shadow_bottom)).setVisibility(View.GONE);
+			//((LinearLayout)layout.findViewById(R.id.line)).setVisibility(View.VISIBLE);
+			//((LinearLayout)layout.findViewById(R.id.shadow_top)).setVisibility(View.GONE);
+			//((LinearLayout)layout.findViewById(R.id.shadow_bottom)).setVisibility(View.GONE);
 			
 		    TypedArray a2 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_logotype});     
 	        int logoId = a2.getResourceId(0, 0);       
