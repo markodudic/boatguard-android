@@ -246,6 +246,7 @@ public class MainActivity extends Activity {
              	   			scrollRefresh = true;
              	   			if (Utils.isNetworkConnected(MainActivity.this, true)) {
              	       			getObudata();
+             	       			sendSMS();
              	   			}
                 		}
              	   	}
@@ -484,6 +485,17 @@ public class MainActivity extends Activity {
    		handler.postDelayed(endRefresh, 1000);
     }	 
     
+	private void sendSMS(){    
+		String urlString = this.getString(R.string.server_url) + "sendSms?user=marko&message=qqq";
+		if (Utils.isNetworkConnected(this, false)) {
+			try {
+				AsyncTask at = new Comm().execute(urlString); 
+
+	        } catch (Exception e) {
+			}
+		}
+	}
+			
 	@SuppressWarnings("deprecation")
 	private void showObuData(){
         Set set = obuStates.entrySet(); 
