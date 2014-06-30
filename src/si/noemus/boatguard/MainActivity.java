@@ -128,6 +128,12 @@ public class MainActivity extends Activity {
         
         tvLastUpdate = (TextView)findViewById(R.id.tv_last_update);
         ivRefresh = (ImageView)findViewById(R.id.iv_refresh);
+		if (theme == R.style.AppThemeDay) {
+			ivRefresh.setBackgroundResource(R.drawable.refresh_animation_day);
+		} 
+		else {
+			ivRefresh.setBackgroundResource(R.drawable.refresh_animation);
+		}
         refreshAnimation = (AnimationDrawable) ivRefresh.getBackground();
 
         final ScrollView sv = (ScrollView)findViewById(R.id.scroll_main);
@@ -538,7 +544,12 @@ public class MainActivity extends Activity {
 					imageView.setImageResource(R.drawable.ic_bilgepump);
 				}
 				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_PUMPING)).getValue())) {
-					showAlarmAnimation(component, imageView, R.drawable.bilge_pumping_animation, 0, false);
+					if (Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
+						showAlarmAnimation(component, imageView, R.drawable.bilge_pumping_animation_day, 0, false);
+					} 
+					else {
+						showAlarmAnimation(component, imageView, R.drawable.bilge_pumping_animation, 0, false);
+					}
 				}
 				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_CLODGED)).getValue())) {
 					showAlarmAnimation(component, imageView, R.drawable.ic_bilgepump_clodged_1, R.drawable.ic_bilgepump_clodged, true);

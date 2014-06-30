@@ -71,7 +71,7 @@ public class LoginActivity extends Activity {
 	        EditText etPassword = (EditText) findViewById(R.id.password);
 	        EditText etObuid = (EditText) findViewById(R.id.obu_id);
 	        PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-   		    TelephonyManager mTelephonyMgr;
+   		    TelephonyManager mTelephonyMgr; 
 	   	    mTelephonyMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
 
 	        String urlString = LoginActivity.this.getString(R.string.server_url) + 
@@ -88,7 +88,7 @@ public class LoginActivity extends Activity {
 			if (mTelephonyMgr!=null && mTelephonyMgr.getLine1Number()!=null && mTelephonyMgr.getLine1Number().length() > 0) {
 				urlString += "&phone_number="+URLEncoder.encode(mTelephonyMgr.getLine1Number());
 			}     
-					
+			
 	        if (Utils.isNetworkConnected(LoginActivity.this, true)) {
 	        	AsyncTask at = new Comm().execute(urlString); 
 	            String res = (String) at.get();

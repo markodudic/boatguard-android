@@ -19,4 +19,26 @@
     <attr name="ic_settings"/> 
     <attr name="ic_home"/> 
     <attr name="ic_location"/> 
+    <attr name="ic_anchor_disabled"/> 
+    
+    <!-- attr name="ic_refresh_step_1" format="reference"/> 
+    <attr name="ic_refresh_step_2" format="reference"/> 
+    <attr name="ic_refresh_step_3" format="reference"/> 
+    <attr name="ic_refresh_step_4" format="reference"/> 
+    <attr name="ic_refresh_step_5" format="reference"/> 
+    <attr name="ic_refresh_step_6" format="reference"/> 
+    <attr name="ic_refresh_step_7" format="reference"/> 
+    <attr name="ic_refresh_step_8" format="reference"/> 
+    <attr name="ic_refresh_step_9" format="reference"/> 
+
+    <attr name="ic_pumping_step_1" format="reference"/> 
+    <attr name="ic_pumping_step_2" format="reference"/> 
+    <attr name="ic_pumping_step_3" format="reference"/> 
+    <attr name="ic_pumping_step_4" format="reference"/> 
+    <attr name="ic_pumping_step_5" format="reference"/> 
+    <attr name="ic_pumping_step_6" format="reference"/> 
+    <attr name="ic_pumping_step_7" format="reference"/> 
+    <attr name="ic_pumping_step_8" format="reference"/> 
+    <attr name="ic_pumping_step_9" format="reference"/--> 
+    
 </resources>

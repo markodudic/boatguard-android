@@ -16,6 +16,27 @@
 	    <item name="ic_settings">@drawable/ic_settings_day</item>    
 	    <item name="ic_home">@drawable/ic_home_day</item>    
 	    <item name="ic_location">@drawable/ic_location_day</item>    
+	    <item name="ic_anchor_disabled">@drawable/ic_anchor_disabled_day</item>    
+
+	    <!-- item name="ic_refresh_step_1">@drawable/ic_refresh_step_1_day</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_2_day</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_3_day</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_4_day</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_5_day</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_6_day</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_7_day</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_8_day</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_9_day</item>    
+
+	    <item name="ic_refresh_step_1">@drawable/ic_pumping_step_1_day</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_pumping_step_2_day</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_pumping_step_3_day</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_pumping_step_4_day</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_pumping_step_5_day</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_pumping_step_6_day</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_pumping_step_7_day</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_pumping_step_8_day</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_pumping_step_9_day</item-->    
 	</style>
    
     
@@ -35,6 +56,27 @@
 	    <item name="ic_settings">@drawable/ic_settings</item>    
 	    <item name="ic_home">@drawable/ic_home</item>    
 	    <item name="ic_location">@drawable/ic_location</item>    
+	    <item name="ic_anchor_disabled">@drawable/ic_anchor_disabled</item>    
+	    
+	    <!-- item name="ic_refresh_step_1">@drawable/ic_refresh_step_1</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_2</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_3</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_4</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_5</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_6</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_7</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_8</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_9</item>    
+
+	    <item name="ic_refresh_step_1">@drawable/ic_pumping_step_1</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_pumping_step_2</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_pumping_step_3</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_pumping_step_4</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_pumping_step_5</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_pumping_step_6</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_pumping_step_7</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_pumping_step_8</item>    
+	    <item name="ic_refresh_step_1">@drawable/ic_pumping_step_9</item-->    
 	</style>
     
 	<style name="MyTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">

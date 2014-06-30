@@ -66,7 +66,7 @@
 		    <ImageView
 		        android:id="@+id/iv_settings"
 		        android:layout_width="match_parent"
-		        android:layout_height="25dp"
+		        android:layout_height="wrap_content"
 		        android:layout_gravity="center_horizontal|center_vertical"
 		        android:clickable="true"
 		        android:layout_weight="1"
@@ -78,7 +78,7 @@
 		    
 		    <ImageView
 		        android:id="@+id/iv_home"
-		        android:layout_height="30dp"
+		        android:layout_height="wrap_content"
 		        android:layout_width="match_parent"
 		        android:src="?ic_home"
 		        android:layout_gravity="center_horizontal|center_vertical"
@@ -91,7 +91,7 @@
 		    
 	    	<ImageView
 		        android:id="@+id/iv_loction"
-		        android:layout_height="30dp"
+		        android:layout_height="wrap_content"
 		        android:layout_width="match_parent"
 		        android:src="?ic_location"
 		        android:layout_gravity="center_horizontal|center_vertical"

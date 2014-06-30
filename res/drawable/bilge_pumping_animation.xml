@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:oneshot="false">
-    <item android:drawable="@drawable/ic_bilgepump_clodged_1" android:duration="300" />
-    <item android:drawable="@drawable/ic_home_day" android:duration="300" />
-    <item android:drawable="@drawable/ic_home" android:duration="300" />
+    <item android:drawable="@drawable/ic_pumping_step_1" android:duration="150" />
+    <item android:drawable="@drawable/ic_pumping_step_2" android:duration="150" />
+    <item android:drawable="@drawable/ic_pumping_step_3" android:duration="150" />
+    <item android:drawable="@drawable/ic_pumping_step_4" android:duration="150" />
+    <item android:drawable="@drawable/ic_pumping_step_5" android:duration="150" />
+    <item android:drawable="@drawable/ic_pumping_step_6" android:duration="150" />
+    <item android:drawable="@drawable/ic_pumping_step_7" android:duration="150" />
+    <item android:drawable="@drawable/ic_pumping_step_8" android:duration="150" />
+    <item android:drawable="@drawable/ic_pumping_step_9" android:duration="150" />
 </animation-list>
