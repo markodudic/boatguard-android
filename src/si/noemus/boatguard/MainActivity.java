@@ -431,6 +431,12 @@ public class MainActivity extends Activity {
 			}
 		}
 		
+        LinearLayout lineV = new LinearLayout(this);
+        lineV.setBackgroundColor(this.getResources().getColor(R.color.transparent_color));
+        lineV.setLayoutParams(new TableRow.LayoutParams(LayoutParams.MATCH_PARENT, 200));
+        lComponents.addView(lineV);
+		
+		
 	}
 
     
