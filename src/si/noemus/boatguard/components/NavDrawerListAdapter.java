@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import si.noemus.boatguard.R;
 import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
  
 public class NavDrawerListAdapter extends BaseAdapter {
@@ -49,12 +51,24 @@ public class NavDrawerListAdapter extends BaseAdapter {
         TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
         TextView txtText = (TextView) convertView.findViewById(R.id.text);
         ImageView img = (ImageView) convertView.findViewById(R.id.iv_forward);
+        LinearLayout item = (LinearLayout) convertView.findViewById(R.id.layout_item);
           
         txtTitle.setText(navDrawerItems.get(position).getTitle());
+        txtTitle.setTextColor(navDrawerItems.get(position).getTitleColor());
         txtText.setText(navDrawerItems.get(position).getText());
-        img.setBackgroundResource(navDrawerItems.get(position).getImage());
+        txtText.setTextColor(navDrawerItems.get(position).getTextColor());
+        img.setImageResource(navDrawerItems.get(position).getImage());
+        item.setBackgroundColor(navDrawerItems.get(position).getColorBackground());
          
         return convertView;
     }
  
+    public void updateData(String str){
+        for (int i=0; i<navDrawerItems.size(); i++){
+        	NavDrawerItem item = navDrawerItems.get(i);
+        	item.setText(str);
+        	navDrawerItems.set(i, item);
+        }
+    	notifyDataSetChanged();
+    }    
 }

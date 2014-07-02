@@ -64,6 +64,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -72,6 +73,7 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -149,9 +151,11 @@ public class MainActivity extends Activity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
         navDrawerItems = new ArrayList<NavDrawerItem>();
-	    TypedArray a = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_forward});     
+	    TypedArray img = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_forward});     
+	    TypedArray background = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.component});     
+	    TypedArray font = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.text_content});     
         for (int i=0; i<navMenuTitles.length; i++) {
-        	navDrawerItems.add(new NavDrawerItem(navMenuTitles[i], "VALUE", a.getResourceId(0, 0)));
+        	navDrawerItems.add(new NavDrawerItem(navMenuTitles[i], "", img.getResourceId(0, 0), getResources().getColor(background.getResourceId(0, 0)), getResources().getColor(font.getResourceId(0, 0)), getResources().getColor(R.color.text_green)));
         }
         adapter = new NavDrawerListAdapter(getApplicationContext(), navDrawerItems);
         mDrawerList.setAdapter(adapter);
@@ -168,13 +172,14 @@ public class MainActivity extends Activity {
             }
  
             public void onDrawerOpened(View drawerView) {
+            	adapter.updateData("VALUE");
                 getActionBar().setTitle(mDrawerTitle);
                 // calling onPrepareOptionsMenu() to hide action bar icons
                 invalidateOptionsMenu();
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         
         
         //last update
@@ -240,7 +245,7 @@ public class MainActivity extends Activity {
 			        Marker newmarker = map.addMarker(new MarkerOptions().position(latlng).title(getResources().getString(R.string.location_title) + " " + date).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker)));
 			        CameraPosition cameraPosition = new CameraPosition.Builder().target(latlng).zoom(14.0f).build();
 			        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-			        map.moveCamera(cameraUpdate); 
+			        map.moveCamera(cameraUpdate);
 				}
 
 				sv.setVisibility(View.GONE);
@@ -399,10 +404,18 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		System.out.println("****="+mDrawerList.findViewById(R.id.iv_forward));
 		getObudata();
 	}
     
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+
+	       @Override
+	       public void onItemClick(AdapterView parent, View view, int position,long id) {	         
+	    	  String text= "menu click... " + position;
+	          Toast.makeText(MainActivity.this, text , Toast.LENGTH_LONG).show();
+	          mDrawerLayout.closeDrawer(mDrawerList);	   
+	       }
+	  }
 	
 	private void showObuComponents(){
 		TableLayout lComponents = (TableLayout)findViewById(R.id.components);

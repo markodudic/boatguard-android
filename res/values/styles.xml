@@ -202,7 +202,7 @@
    
    
    <style name="DrawerTitleText">
-       <item name="android:textSize">20.0sp</item>
+       <item name="android:textSize">16.0sp</item>
        <item name="android:textColor">@color/text_content_day</item>
        <item name="android:paddingLeft">@dimen/drawer_margin</item>
        <item name="android:gravity">bottom</item>
