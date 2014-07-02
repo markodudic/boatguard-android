@@ -15,5 +15,8 @@
     <dimen name="components_margin">20dp</dimen>
     <dimen name="dialog_alarm_padding">10dp</dimen>
     <dimen name="dialog_alarm_height">250dp</dimen>
+    <dimen name="drawer_width">300dp</dimen>
+    <dimen name="drawer_margin">10dp</dimen>
+    <dimen name="drawer_item_height">80dp</dimen>
     
 </resources>

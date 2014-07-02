@@ -1,5 +1,5 @@
 package si.noemus.boatguard;
-
+ 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -13,6 +13,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import si.noemus.boatguard.components.NavDrawerItem;
+import si.noemus.boatguard.components.NavDrawerListAdapter;
 import si.noemus.boatguard.components.TextViewFont;
 import si.noemus.boatguard.objects.AppSetting;
 import si.noemus.boatguard.objects.ObuAlarm;
@@ -20,6 +22,7 @@ import si.noemus.boatguard.objects.ObuComponent;
 import si.noemus.boatguard.objects.ObuState;
 import si.noemus.boatguard.objects.State;
 import si.noemus.boatguard.utils.Comm;
+import si.noemus.boatguard.utils.Comm.OnTaskCompleteListener;
 import si.noemus.boatguard.utils.CyclicTransitionDrawable;
 import si.noemus.boatguard.utils.Settings;
 import si.noemus.boatguard.utils.Utils;
@@ -32,6 +35,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -41,16 +45,18 @@ import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.MotionEventCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -61,6 +67,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -110,7 +117,15 @@ public class MainActivity extends Activity {
     private Integer dialogAlarmActive = -1;
     
     GoogleMap map;
-    		
+    
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;    
+    private CharSequence mDrawerTitle;
+    private ArrayList<NavDrawerItem> navDrawerItems;
+    private NavDrawerListAdapter adapter;
+    private String[] navMenuTitles;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		int theme = Utils.getPrefernciesInt(this, Settings.SETTING_THEME);
@@ -125,7 +140,44 @@ public class MainActivity extends Activity {
         actionBar.setCustomView(R.layout.actionbar_icon);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
         
+        //drawer settings
+        mDrawerTitle = getTitle();
+        navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
+        navDrawerItems = new ArrayList<NavDrawerItem>();
+	    TypedArray a = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_forward});     
+        for (int i=0; i<navMenuTitles.length; i++) {
+        	navDrawerItems.add(new NavDrawerItem(navMenuTitles[i], "VALUE", a.getResourceId(0, 0)));
+        }
+        adapter = new NavDrawerListAdapter(getApplicationContext(), navDrawerItems);
+        mDrawerList.setAdapter(adapter);
+	    TypedArray aa = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_drawer});     
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+        		aa.getResourceId(0, 0), //nav menu toggle icon
+                R.string.app_name, // nav drawer open - description for accessibility
+                R.string.app_name // nav drawer close - description for accessibility
+        ){
+            public void onDrawerClosed(View view) {
+                getActionBar().setTitle(mDrawerTitle);
+                // calling onPrepareOptionsMenu() to show action bar icons
+                invalidateOptionsMenu();
+            }
+ 
+            public void onDrawerOpened(View drawerView) {
+                getActionBar().setTitle(mDrawerTitle);
+                // calling onPrepareOptionsMenu() to hide action bar icons
+                invalidateOptionsMenu();
+            }
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        
+        
+        //last update
         tvLastUpdate = (TextView)findViewById(R.id.tv_last_update);
         ivRefresh = (ImageView)findViewById(R.id.iv_refresh);
 		if (theme == R.style.AppThemeDay) {
@@ -139,6 +191,7 @@ public class MainActivity extends Activity {
         final ScrollView sv = (ScrollView)findViewById(R.id.scroll_main);
         final LinearLayout lLocation = (LinearLayout)findViewById(R.id.lLocation);
 
+        //location
         MapFragment mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragment_location));
         
         map = mapFragment.getMap();
@@ -324,7 +377,7 @@ public class MainActivity extends Activity {
 		    	if (Utils.isNetworkConnected(MainActivity.this, true)) {
 		    		String obuId = Utils.getPrefernciesString(MainActivity.this, Settings.SETTING_OBU_ID);
 		       		String urlString = MainActivity.this.getString(R.string.server_url) + "confirmalarm?obuid="+obuId+"&alarmid="+dialogAlarmActive;
-		    		AsyncTask at = new Comm().execute(urlString); 
+		    		new Comm().execute(urlString); 
 		    	}
 		    	
 				activeAlarms.remove(dialogAlarmActive);
@@ -346,6 +399,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		System.out.println("****="+mDrawerList.findViewById(R.id.iv_forward));
 		getObudata();
 	}
     
@@ -448,18 +502,50 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
-    public void getObudata() {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // toggle nav drawer on selecting action bar app icon/title
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        return super.onPrepareOptionsMenu(menu);
+    }
+	  
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+		mDrawerToggle.syncState();
+    }
+ 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggls
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+    
+    
+	public void getObudata() {
 		refreshing = true;
     	String obuId = Utils.getPrefernciesString(this, Settings.SETTING_OBU_ID);
    		
     	String urlString = this.getString(R.string.server_url) + "getdata?obuid="+obuId;
     	if (Utils.isNetworkConnected(this, false)) {
-  			try {
+  			//try {
   				tvLastUpdate.setVisibility(View.GONE);	
     			ivRefresh.setVisibility(View.VISIBLE);	
     			refreshAnimation.start();
     			
-    			AsyncTask at = new Comm().execute(urlString); 
+            	Comm at = new Comm();
+    			at.setCallbackListener(clGetObuData);
+    			at.execute(urlString); 
+    			/*
 	            String res = (String) at.get();
 	            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
 	    	   	JSONArray jsonStates = (JSONArray)jRes.get("states");
@@ -485,26 +571,59 @@ public class MainActivity extends Activity {
     	   			}
     	   		}
     	   		
+	    	   	showObuData();*/
+
+	        //} catch (Exception e) {
+   	   		//}
+    	}
+   		//handler.postDelayed(endRefresh, 1000);
+    }	 
+    
+    
+    private OnTaskCompleteListener clGetObuData = new OnTaskCompleteListener() {
+
+        @Override
+        public void onComplete(String res) {
+  			try {
+	            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
+	    	   	JSONArray jsonStates = (JSONArray)jRes.get("states");
+	    	   	obuStates.clear();
+		   		for (int i=0; i< jsonStates.length(); i++) {
+		   			ObuState obuState = gson.fromJson(jsonStates.get(i).toString(), ObuState.class);
+		   			//System.out.println(obuState.toString());
+		   			obuStates.put(obuState.getId_state(), obuState);
+		   		}
+	    	   	
+	    	   	JSONArray jsonAlarms = (JSONArray)jRes.get("alarms");
+	    	   	obuAlarms.clear();
+	    	   	for (int i=0; i< jsonAlarms.length(); i++) {
+		   			ObuAlarm obuAlarm = gson.fromJson(jsonAlarms.get(i).toString(), ObuAlarm.class);
+		   			//System.out.println(obuAlarm.toString());
+		   			obuAlarms.put(obuAlarm.getId_alarm(), obuAlarm);
+		   			if (activeAlarms.indexOf(obuAlarm.getId_alarm()) == -1) {
+		   				showNotification(obuAlarm.getId_alarm(), obuAlarm.getTitle(), obuAlarm.getMessage(), obuAlarm.getDate_alarm(), obuAlarm.getVibrate(), obuAlarm.getSound());
+		   				activeAlarms.add(obuAlarm.getId_alarm());
+		   			}
+		   			if (dialogAlarmActive == -1) {
+		   				showAlarmDialog(obuAlarm.getId_alarm(), obuAlarm.getTitle(), obuAlarm.getMessage(), obuAlarm.getAction(), obuAlarm.getType());
+		   			}
+		   		}
+		   		
 	    	   	showObuData();
+	    	   	
+	    	   	//sam za to da se prikaze spinner
+	    	   	handler.postDelayed(endRefresh, 1000);
 
 	        } catch (Exception e) {
-   	        	/*e.printStackTrace();
-   	        	Toast toast = Toast.makeText(this, this.getString(R.string.json_error), Toast.LENGTH_LONG);
-   	        	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
-   	        	toast.show();*/
    	   		}
-    	}
-   		handler.postDelayed(endRefresh, 1000);
-    }	 
+        }
+    };
+    
     
 	private void sendSMS(){    
 		String urlString = this.getString(R.string.server_url) + "sendSms?user=marko&message=qqq";
 		if (Utils.isNetworkConnected(this, false)) {
-			try {
-				AsyncTask at = new Comm().execute(urlString); 
-
-	        } catch (Exception e) {
-			}
+			new Comm().execute(urlString); 
 		}
 	}
 			

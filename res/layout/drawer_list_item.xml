@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/drawer_item_height"
+    android:orientation="horizontal"
+	android:background="@color/component_night">
+	
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="@dimen/drawer_item_height"
+	    android:layout_weight="1"
+        android:orientation="vertical">
+	 
+	    <si.noemus.boatguard.components.TextViewFont
+	        android:id="@+id/title"
+	        style="@style/DrawerTitleText"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        boatguard:font_name="@string/font_semibold" />
+	     
+	    <si.noemus.boatguard.components.TextViewFont
+	        android:id="@+id/text"
+	        style="@style/DrawerTextText"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        boatguard:font_name="@string/font_semibold" />
+	</LinearLayout>
+	
+   	<ImageView
+        android:id="@+id/iv_forward"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:paddingRight="@dimen/drawer_margin"
+        android:layout_weight="5"
+        android:clickable="true" />
+		
+</LinearLayout>

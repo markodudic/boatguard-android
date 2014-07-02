@@ -17,7 +17,9 @@
 	    <item name="ic_home">@drawable/ic_home_day</item>    
 	    <item name="ic_location">@drawable/ic_location_day</item>    
 	    <item name="ic_anchor_disabled">@drawable/ic_anchor_disabled_day</item>    
-
+	    <item name="ic_drawer">@drawable/ic_drawer_day</item>    
+	    <item name="ic_forward">@drawable/ic_forward_day</item>    
+	    	    
 	    <!-- item name="ic_refresh_step_1">@drawable/ic_refresh_step_1_day</item>    
 	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_2_day</item>    
 	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_3_day</item>    
@@ -57,7 +59,9 @@
 	    <item name="ic_home">@drawable/ic_home</item>    
 	    <item name="ic_location">@drawable/ic_location</item>    
 	    <item name="ic_anchor_disabled">@drawable/ic_anchor_disabled</item>    
-	    
+	    <item name="ic_drawer">@drawable/ic_drawer</item>    
+	    <item name="ic_forward">@drawable/ic_forward</item>    
+	    	    	    
 	    <!-- item name="ic_refresh_step_1">@drawable/ic_refresh_step_1</item>    
 	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_2</item>    
 	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_3</item>    
@@ -195,6 +199,19 @@
        <item name="android:textSize">28.0sp</item>
        <item name="android:textColor">@color/text_green</item>
    </style>	   
+   
+   
+   <style name="DrawerTitleText">
+       <item name="android:textSize">20.0sp</item>
+       <item name="android:textColor">@color/text_content_day</item>
+       <item name="android:paddingLeft">@dimen/drawer_margin</item>
+       <item name="android:gravity">bottom</item>
+   </style>	   
+
+   <style name="DrawerTextText" parent="DrawerTitleText">
+       <item name="android:textColor">@color/alarm_green</item>
+       <item name="android:gravity">top</item>
+    </style>	   
    
 </resources>
 

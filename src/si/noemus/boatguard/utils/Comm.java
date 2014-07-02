@@ -11,12 +11,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 
 public class Comm extends AsyncTask<String, String, String> {
+	
+	OnTaskCompleteListener mListener;
 	
 	@Override
     protected String doInBackground(String... params) {
@@ -35,6 +34,21 @@ public class Comm extends AsyncTask<String, String, String> {
        return text;
 	}
 	
+	
+    public void setCallbackListener(OnTaskCompleteListener listener) {
+        this.mListener = listener;
+    }
+
+    @Override
+    protected void onPostExecute(String text) {
+        super.onPostExecute(text);
+        if (mListener != null) mListener.onComplete(text);
+    }
+    
+    public interface OnTaskCompleteListener {
+       public void onComplete(String text);
+    }
+    
 	protected String getASCIIContentFromEntity(HttpEntity entity) throws IllegalStateException, IOException {
 		InputStream in = entity.getContent();
 

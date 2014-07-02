@@ -25,6 +25,16 @@
 	<string name="no_active_connection_title">Internetna povezave</string> 
 	<string name="no_active_connection_msg">Ni internetna povezave. omogočite povezavo za uporabo aplikacije.</string> 
 		
-	
+    <string-array name="nav_drawer_items">
+        <item >GEO FENCE</item>
+        <item >BILGE PUMP</item>
+        <item >ANCHOR DRIFTING</item>
+        <item >BATTERY</item>
+        <item >ALARM CONTACTS</item>
+        <item >ALARM TYPE</item>
+        <item >MY ACCOUNT</item>
+        <item >HISTORY</item>
+        <item >APP APPEARANCE</item>
+   </string-array>	
 	    
 </resources>
