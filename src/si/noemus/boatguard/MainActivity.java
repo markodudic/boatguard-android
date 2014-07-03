@@ -408,14 +408,15 @@ public class MainActivity extends Activity {
 	}
     
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
-
 	       @Override
 	       public void onItemClick(AdapterView parent, View view, int position,long id) {	         
-	    	  String text= "menu click... " + position;
-	          Toast.makeText(MainActivity.this, text , Toast.LENGTH_LONG).show();
+	    	  Intent i = new Intent(MainActivity.this, SettingsActivity.class);
+	    	  i.putExtra("id", position);
+	    	  i.putExtra("title", navMenuTitles[position]);
+	   		  startActivity(i);
 	          mDrawerLayout.closeDrawer(mDrawerList);	   
 	       }
-	  }
+	}
 	
 	private void showObuComponents(){
 		TableLayout lComponents = (TableLayout)findViewById(R.id.components);
@@ -497,13 +498,7 @@ public class MainActivity extends Activity {
 				lComponents.addView(component);
 			}
 		}
-		
-        LinearLayout lineV = new LinearLayout(this);
-        lineV.setBackgroundColor(this.getResources().getColor(R.color.transparent_color));
-        lineV.setLayoutParams(new TableRow.LayoutParams(LayoutParams.MATCH_PARENT, 200));
-        lComponents.addView(lineV);
-		
-		
+
 	}
 
     

@@ -1,15 +1,26 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:clickable="true"
+        android:src="?ic_back" />
+    
 	<si.noemus.boatguard.components.TextViewFont
 	    android:id="@+id/actionbar_text"
-	    android:layout_width="wrap_content"
+	    boatguard:font_name="@string/font_medium"
+	    style="@style/ActionBarText"
+	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="center"
-	    boatguard:font_name="@string/font_semibold"
-	    style="@style/ActionBarText" />
-</LinearLayout>
+	    android:gravity="center_horizontal" />
+
+</FrameLayout>

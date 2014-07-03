@@ -16,6 +16,8 @@
     <string name="last_update">LAST UPDATE:</string>
     <string name="alarm">ALARM</string>
     <string name="location_title">LAST LOCATION:</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
     
     
 	<string name="json_error">Nepravilen odgovor strežnika</string> 
@@ -26,7 +28,7 @@
 	<string name="no_active_connection_msg">Ni internetna povezave. omogočite povezavo za uporabo aplikacije.</string> 
 		
     <string-array name="nav_drawer_items">
-        <item >GEO FENCE</item>
+        <item >GEOFENCE</item>
         <item >BILGE PUMP</item>
         <item >ANCHOR DRIFTING</item>
         <item >BATTERY</item>
@@ -36,5 +38,11 @@
         <item >HISTORY</item>
         <item >APP APPEARANCE</item>
    </string-array>	
-	    
+
+    
+   <string name="geo_fence">GEOFENCE</string>
+   <string name="geo_fence_radius">GEOFENCE RADIUS</string>
+   <string name="geo_fence_current">DEFINE CURRENT LOCATION AS HOME</string>
+   <string name="geo_fence_define">DEFINE</string>
+   
 </resources>

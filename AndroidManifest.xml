@@ -34,6 +34,12 @@
             android:screenOrientation="portrait"
             android:label="" >
         </activity>
+        <activity
+            android:name="si.noemus.boatguard.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:label="" >
+        </activity>
+        
         
         <receiver android:name="si.noemus.boatguard.utils.IncomingSms">   
             <intent-filter>
