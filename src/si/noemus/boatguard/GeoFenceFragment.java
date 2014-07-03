@@ -63,7 +63,10 @@ public class GeoFenceFragment  extends Fragment {
 				SeekBar seekbarGeoFence = (SeekBar) v.findViewById(R.id.seekbar_geo_fence);
 				int progress = seekbarGeoFence.getProgress();
 				System.out.println(checked+":"+progress);
-
+				
+				//set settings
+				
+				Settings.getObuSettings(getActivity());
 			}
 		});	
 
