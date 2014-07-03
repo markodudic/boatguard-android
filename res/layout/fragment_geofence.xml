@@ -25,7 +25,6 @@
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center_vertical|right"
 		    android:layout_weight="2"
-		    android:onClick="onGeoFenceClicked"
 		    android:textOff="@string/off"
 		    android:textOn="@string/on"
 		    android:track="@drawable/switcher" />
@@ -46,7 +45,8 @@
 	        android:text="@string/geo_fence_radius" />
     
 	    <si.noemus.boatguard.components.TextViewFont
-	        style="@style/SettingsValueText"
+	        android:id="@+id/tv_geo_fence"
+ 		    style="@style/SettingsValueText"
 	        boatguard:font_name="@string/font_medium"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
@@ -63,12 +63,7 @@
  		    android:id="@+id/seekbar_geo_fence"
  		    android:layout_width="match_parent"
  		    android:layout_height="wrap_content"
- 		    android:layout_gravity="center_vertical"
- 		    android:progressDrawable="@drawable/seekbar_progress"
- 		    android:thumb="@drawable/seekbar_thumb"
-        	android:max="1000" >
-
-        </SeekBar>	    
+ 		    style="@style/SettingsSeekBar"/>	    
 	</LinearLayout>
 	    
 	<LinearLayout 

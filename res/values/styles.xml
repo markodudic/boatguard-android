@@ -22,7 +22,8 @@
 	    <item name="ic_drawer">@drawable/ic_drawer_day</item>    
 	    <item name="ic_forward">@drawable/ic_forward_day</item>    
 	    <item name="ic_back">@drawable/ic_back_day</item>    
-	    	    	    
+	    <item name="ic_seekbar_thumb">@drawable/ic_seekbar_thumb_day</item>    
+	    	    	    	    
 	    <!-- item name="ic_refresh_step_1">@drawable/ic_refresh_step_1_day</item>    
 	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_2_day</item>    
 	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_3_day</item>    
@@ -67,7 +68,8 @@
 	    <item name="ic_drawer">@drawable/ic_drawer</item>    
 	    <item name="ic_forward">@drawable/ic_forward</item>    
 	    <item name="ic_back">@drawable/ic_back</item>    
-	    	    	    	    
+	    <item name="ic_seekbar_thumb">@drawable/ic_seekbar_thumb</item>    
+	    	    	    	    	    
 	    <!-- item name="ic_refresh_step_1">@drawable/ic_refresh_step_1</item>    
 	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_2</item>    
 	    <item name="ic_refresh_step_1">@drawable/ic_refresh_step_3</item>    
@@ -243,6 +245,15 @@
    <style name="SettingsButtonText" parent="SettingsText">
 	   <item name="android:gravity">center_vertical|center_horizontal</item>
 	   <item name="android:background">?settings_button</item>
+   </style>	   
+   
+   <style name="SettingsSeekBar">
+	   <item name="android:thumb">?ic_seekbar_thumb</item>
+	   <item name="android:max">1000</item>
+	   <item name="android:progressDrawable">@drawable/seekbar_progress</item>
+	   <item name="android:maxHeight">@dimen/seekbar_height</item>
+	   <item name="android:minHeight">@dimen/seekbar_height</item>
+	   <item name="android:layout_gravity">center_vertical</item>
    </style>	   
    
 </resources>

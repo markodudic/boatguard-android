@@ -1,5 +1,9 @@
 package si.noemus.boatguard;
 
+import java.util.HashMap;
+
+import si.noemus.boatguard.objects.ObuSetting;
+import si.noemus.boatguard.objects.State;
 import si.noemus.boatguard.utils.Settings;
 import si.noemus.boatguard.utils.Utils;
 import android.annotation.SuppressLint;
@@ -10,8 +14,11 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SettingsActivity extends Activity {
 
@@ -31,7 +38,7 @@ public class SettingsActivity extends Activity {
 		actionBar.setCustomView(R.layout.actionbar_text);
 		
 		Bundle extras = getIntent().getExtras();
-		
+
 		TextView tvTitle = (TextView) findViewById(R.id.actionbar_text);
         tvTitle.setText(extras.getString("title"));
  
@@ -49,18 +56,7 @@ public class SettingsActivity extends Activity {
 			} 
 		});  
 		
-		
-	}
 
-    public void onGeoFenceClicked(View view) {
-        // Is the toggle on?
-        boolean on = ((Switch) view).isChecked();
-        
-        if (on) {
-            // Enable vibrate
-        } else {
-            // Disable vibrate
-        }
-    }    
+	}  
 
 }

@@ -41,6 +41,7 @@ public class Settings {
 
 	public static String STATE_ROW_STATE = "ROW_STATE";
 	public static String STATE_GEO_FENCE = "GEO_FENCE";
+	public static String STATE_GEO_DISTANCE = "GEO_DISTANCE";
 	public static String STATE_LAT = "LAT";
 	public static String STATE_LON = "LON";
 	public static String STATE_PUMP_STATE = "PUMP_STATE";
@@ -155,7 +156,7 @@ public class Settings {
     	   				Utils.savePrefernciesInt(context, SETTING_REFRESH_TIME, Integer.parseInt(obuSetting.getValue()));
     	   			}
     	   				
-    	   		}
+    	   		}  	        
 	        } catch (Exception e) {
    	        	e.printStackTrace();
    	        	Toast toast = Toast.makeText(context, context.getString(R.string.json_error), Toast.LENGTH_LONG);
@@ -175,7 +176,7 @@ public class Settings {
 	        	AsyncTask at = new Comm().execute(urlString); 
 	            String res = (String) at.get();
 	            JSONArray jsonObuComponents = (JSONArray)new JSONTokener(res).nextValue();
-    	   		obuSettings.clear();
+	            obuComponents.clear();
     	   		for (int i=0; i< jsonObuComponents.length(); i++) {
     	   			ObuComponent obuComponent = gson.fromJson(jsonObuComponents.get(i).toString(), ObuComponent.class);
     	   			//System.out.println(obuComponent.toString());
