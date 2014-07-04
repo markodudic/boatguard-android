@@ -382,7 +382,7 @@ public class MainActivity extends Activity {
 		    	if (Utils.isNetworkConnected(MainActivity.this, true)) {
 		    		String obuId = Utils.getPrefernciesString(MainActivity.this, Settings.SETTING_OBU_ID);
 		       		String urlString = MainActivity.this.getString(R.string.server_url) + "confirmalarm?obuid="+obuId+"&alarmid="+dialogAlarmActive;
-		    		new Comm().execute(urlString); 
+		    		new Comm().execute(urlString, null); 
 		    	}
 		    	
 				activeAlarms.remove(dialogAlarmActive);
@@ -552,7 +552,7 @@ public class MainActivity extends Activity {
     			
             	Comm at = new Comm();
     			at.setCallbackListener(clGetObuData);
-    			at.execute(urlString); 
+    			at.execute(urlString, null); 
     			/*
 	            String res = (String) at.get();
 	            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
@@ -631,7 +631,7 @@ public class MainActivity extends Activity {
 	private void sendSMS(){    
 		String urlString = this.getString(R.string.server_url) + "sendSms?user=marko&message=qqq";
 		if (Utils.isNetworkConnected(this, false)) {
-			new Comm().execute(urlString); 
+			new Comm().execute(urlString, null); 
 		}
 	}
 			

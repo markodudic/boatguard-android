@@ -2,11 +2,13 @@ package si.noemus.boatguard.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
@@ -21,13 +23,31 @@ public class Comm extends AsyncTask<String, String, String> {
     protected String doInBackground(String... params) {
        HttpClient httpClient = new DefaultHttpClient();
        HttpContext localContext = new BasicHttpContext();
-       HttpGet httpGet = new HttpGet(params[0]);
+       HttpPost httpPost = new HttpPost(params[0]);
+       if (params[1] != null && params[1].equals("json")) {
+    	   System.out.println("JSON");
+    	   StringEntity postingString = null;
+			try {
+				postingString = new StringEntity(params[2]);
+			} catch (UnsupportedEncodingException e) {
+				System.out.println("Error1="+e.getLocalizedMessage());
+			}
+    	   //httpPost.setEntity(postingString);
+           //httpPost.setHeader("Content-type", "application/json");
+       }
+       
        String text = null;
        try {
-    	   HttpResponse response = httpClient.execute(httpGet, localContext);
+    	   System.out.println("1");
+    	   HttpResponse response = httpClient.execute(httpPost, localContext);
+    	   System.out.println("11");
     	   HttpEntity entity = response.getEntity();
+    	   System.out.println("111");
     	   text = getASCIIContentFromEntity(entity);
+    	   System.out.println("text="+text);
+    	   
        } catch (Exception e) {
+    	   System.out.println("Error2="+e.getLocalizedMessage());
     	   return e.getLocalizedMessage();
        }
        

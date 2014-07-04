@@ -1,6 +1,10 @@
 package si.noemus.boatguard;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import org.json.JSONObject;
 
 import si.noemus.boatguard.objects.ObuSetting;
 import si.noemus.boatguard.objects.State;
@@ -8,16 +12,18 @@ import si.noemus.boatguard.utils.Comm;
 import si.noemus.boatguard.utils.Settings;
 import si.noemus.boatguard.utils.Utils;
 import android.app.Fragment;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.FrameLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 public class GeoFenceFragment  extends Fragment {
     @Override
@@ -59,14 +65,25 @@ public class GeoFenceFragment  extends Fragment {
 			@Override
 			public void onClick(View v1) {
 				Switch switchGeoFence = (Switch) v.findViewById(R.id.switch_geo_fence);
-				boolean checked = switchGeoFence.isChecked();
 				SeekBar seekbarGeoFence = (SeekBar) v.findViewById(R.id.seekbar_geo_fence);
-				int progress = seekbarGeoFence.getProgress();
-				System.out.println(checked+":"+progress);
 				
 				//set settings
-				
-				Settings.getObuSettings(getActivity());
+		        HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
+		        obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).setValue(switchGeoFence.isChecked()?"1":"0");
+		        obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_DISTANCE)).getId()).setValue(seekbarGeoFence.getProgress()+"");
+		        
+		        List<ObuSetting> list = new ArrayList<ObuSetting>(obuSettings.values());
+		        Gson gson = new Gson();
+		        String data = gson.toJson(list);
+		        
+		        String obuId = Utils.getPrefernciesString(getActivity(), Settings.SETTING_OBU_ID);
+		        
+		       	String urlString = getActivity().getString(R.string.server_url) + "setobusettings?obuid="+obuId;
+		        if (Utils.isNetworkConnected(getActivity(), true)) {
+		        	AsyncTask at = new Comm().execute(urlString, "json", data); 
+		        }
+		        
+		        //Settings.getObuSettings(getActivity());
 			}
 		});	
 
