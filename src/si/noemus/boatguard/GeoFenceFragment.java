@@ -26,7 +26,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 
 public class GeoFenceFragment  extends Fragment {
-    @Override
+    @Override 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /** Inflating the layout for this fragment **/
         final View v = inflater.inflate(R.layout.fragment_geofence, null);

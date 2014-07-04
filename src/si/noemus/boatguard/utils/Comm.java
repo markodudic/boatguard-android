@@ -32,20 +32,16 @@ public class Comm extends AsyncTask<String, String, String> {
 			} catch (UnsupportedEncodingException e) {
 				System.out.println("Error1="+e.getLocalizedMessage());
 			}
-    	   //httpPost.setEntity(postingString);
-           //httpPost.setHeader("Content-type", "application/json");
+			System.out.println("postingString="+postingString);
+			httpPost.setEntity(postingString);
+            httpPost.setHeader("Content-type", "application/json; charset=utf-8");
        }
        
        String text = null;
        try {
-    	   System.out.println("1");
     	   HttpResponse response = httpClient.execute(httpPost, localContext);
-    	   System.out.println("11");
     	   HttpEntity entity = response.getEntity();
-    	   System.out.println("111");
     	   text = getASCIIContentFromEntity(entity);
-    	   System.out.println("text="+text);
-    	   
        } catch (Exception e) {
     	   System.out.println("Error2="+e.getLocalizedMessage());
     	   return e.getLocalizedMessage();
