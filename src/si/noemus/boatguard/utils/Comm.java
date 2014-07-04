@@ -25,12 +25,11 @@ public class Comm extends AsyncTask<String, String, String> {
        HttpContext localContext = new BasicHttpContext();
        HttpPost httpPost = new HttpPost(params[0]);
        if (params[1] != null && params[1].equals("json")) {
-    	   System.out.println("JSON");
     	   StringEntity postingString = null;
 			try {
 				postingString = new StringEntity(params[2]);
 			} catch (UnsupportedEncodingException e) {
-				System.out.println("Error1="+e.getLocalizedMessage());
+				e.getLocalizedMessage();
 			}
 			System.out.println("postingString="+postingString);
 			httpPost.setEntity(postingString);
@@ -43,7 +42,6 @@ public class Comm extends AsyncTask<String, String, String> {
     	   HttpEntity entity = response.getEntity();
     	   text = getASCIIContentFromEntity(entity);
        } catch (Exception e) {
-    	   System.out.println("Error2="+e.getLocalizedMessage());
     	   return e.getLocalizedMessage();
        }
        

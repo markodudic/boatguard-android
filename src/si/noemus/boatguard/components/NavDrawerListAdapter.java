@@ -63,10 +63,10 @@ public class NavDrawerListAdapter extends BaseAdapter {
         return convertView;
     }
  
-    public void updateData(String str){
+    public void updateData(String[] values){
         for (int i=0; i<navDrawerItems.size(); i++){
         	NavDrawerItem item = navDrawerItems.get(i);
-        	item.setText(str);
+        	item.setText(values[i]);
         	navDrawerItems.set(i, item);
         }
     	notifyDataSetChanged();

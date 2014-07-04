@@ -19,6 +19,7 @@ import si.noemus.boatguard.components.TextViewFont;
 import si.noemus.boatguard.objects.AppSetting;
 import si.noemus.boatguard.objects.ObuAlarm;
 import si.noemus.boatguard.objects.ObuComponent;
+import si.noemus.boatguard.objects.ObuSetting;
 import si.noemus.boatguard.objects.ObuState;
 import si.noemus.boatguard.objects.State;
 import si.noemus.boatguard.utils.Comm;
@@ -172,7 +173,20 @@ public class MainActivity extends Activity {
             }
  
             public void onDrawerOpened(View drawerView) {
-            	adapter.updateData("VALUE");
+            	HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
+                String geoFence = obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).getValue();
+                
+                String[] values = new String[navMenuTitles.length];
+                values[0] = geoFence.endsWith("1")?getResources().getString(R.string.on):getResources().getString(R.string.off);
+                values[1] = "value";
+                values[2] = "value";
+                values[3] = "value";
+                values[4] = "value";
+                values[5] = "value";
+                values[6] = "value";
+                values[7] = "value";
+                values[8] = "value";
+            	adapter.updateData(values);
                 getActionBar().setTitle(mDrawerTitle);
                 // calling onPrepareOptionsMenu() to hide action bar icons
                 invalidateOptionsMenu();
