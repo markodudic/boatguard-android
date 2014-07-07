@@ -141,7 +141,7 @@ public class Settings {
     public static void getObuSettings(Context context) {
     	String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
    		
-    	String urlString = context.getString(R.string.server_url) + "getobusettings?obuid="+obuId+"&format=json";
+    	String urlString = context.getString(R.string.server_url) + "getobusettings?obuid="+obuId;
     	if (Utils.isNetworkConnected(context, true)) {
   			try {
 	        	AsyncTask at = new Comm().execute(urlString, null); 
