@@ -153,7 +153,7 @@ public class Settings {
     	   			//System.out.println(obuSetting.toString());
     	   			obuSettings.put(obuSetting.getId_setting(), obuSetting);
     	   			if (obuSetting.getCode().equals(SETTING_REFRESH_TIME)) {
-    	   				Utils.savePrefernciesInt(context, SETTING_REFRESH_TIME, Integer.parseInt(obuSetting.getValue()));
+    	   				Utils.savePrefernciesInt(context, SETTING_REFRESH_TIME, Integer.parseInt(obuSetting.getValue())*60*1000);
     	   			}
     	   				
     	   		}  	        

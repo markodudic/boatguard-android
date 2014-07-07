@@ -74,7 +74,6 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -177,7 +176,7 @@ public class MainActivity extends Activity {
                 String geoFence = obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).getValue();
                 
                 String[] values = new String[navMenuTitles.length];
-                values[0] = geoFence.endsWith("1")?getResources().getString(R.string.on):getResources().getString(R.string.off);
+                values[0] = geoFence.endsWith("D")?getResources().getString(R.string.on):getResources().getString(R.string.off);
                 values[1] = "value";
                 values[2] = "value";
                 values[3] = "value";
