@@ -636,6 +636,7 @@ public class MainActivity extends Activity {
 	    	   	handler.postDelayed(endRefresh, 1000);
 
 	        } catch (Exception e) {
+	        	e.getLocalizedMessage();
    	   		}
         }
     };
@@ -654,7 +655,7 @@ public class MainActivity extends Activity {
 		Iterator i = set.iterator();
 		while(i.hasNext()) { 
 			Map.Entry map = (Map.Entry)i.next(); 
-			System.out.println(map.getValue());
+			System.out.println("="+map.getValue());
 			ObuState obuState = (ObuState)map.getValue();
 			int idState = obuState.getId_state();
 			
@@ -700,11 +701,29 @@ public class MainActivity extends Activity {
 				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_CLODGED)).getValue())) {
 					showAlarmAnimation(component, imageView, R.drawable.ic_bilgepump_clodged_1, R.drawable.ic_bilgepump_clodged, true);
 				}
+				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_DEMAGED)).getValue())) {
+					showAlarmAnimation(component, imageView, R.drawable.ic_bilgepump_demaged_1, R.drawable.ic_bilgepump_demaged, true);
+				}
 				else {
 					imageView.setImageResource(android.R.color.transparent); 
 				}
 			}
-			else if (idState == ((State)Settings.states.get(Settings.STATE_ANCHOR_STATE)).getId()) { 
+			else if (idState == ((State)Settings.states.get(Settings.STATE_ANCHOR)).getId()) { 
+				FrameLayout component = (FrameLayout)findViewById(idState);
+				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
+				String anchorState = obuState.getValue(); 
+				cancelAlarmAnimation(component, null);
+				
+				if (anchorState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_DISABLED)).getValue())) {
+					imageView.setImageResource(R.drawable.ic_anchor_disabled);
+				}			
+				else if (anchorState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_ENABLED)).getValue())) {
+					imageView.setImageResource(R.drawable.ic_anchor);
+					//tukaj se za drfiting
+					if (anchorState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_DRIFTING)).getValue())) {
+						showAlarmAnimation(component, imageView, R.drawable.ic_anchor_alarm_1, R.drawable.ic_anchor_alarm, true);
+					}			
+				}	
 			}			
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) { 
 				FrameLayout component = (FrameLayout)findViewById(idState);

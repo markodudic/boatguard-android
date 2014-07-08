@@ -48,7 +48,8 @@ public class Settings {
 	public static String STATE_ACCU_NAPETOST = "ACCU_NAPETOST";
 	public static String STATE_ACCU_AH = "ACCU_AH";
 	public static String STATE_ACCU_TOK = "ACCU_TOK";
-	public static String STATE_ANCHOR_STATE = "ANCHOR_STATE";
+	public static String STATE_ANCHOR = "ANCHOR";
+	public static String STATE_ANCHOR_DRIFTING = "ANCHOR_DRIFTING";
 	
 	public static String APP_STATE_GEO_FENCE_DISABLED = "GEO_FENCE_DISABLED";
 	public static String APP_STATE_GEO_FENCE_ENABLED = "GEO_FENCE_ENABLED";
@@ -56,7 +57,12 @@ public class Settings {
 	public static String APP_STATE_PUMP_OK = "PUMP_OK";
 	public static String APP_STATE_PUMP_PUMPING = "PUMP_PUMPING";
 	public static String APP_STATE_PUMP_CLODGED = "PUMP_CLODGED";
+	public static String APP_STATE_PUMP_DEMAGED = "PUMP_DEMAGED";
+	public static String APP_STATE_ANCHOR_DISABLED = "ANCHOR_DISABLED";
+	public static String APP_STATE_ANCHOR_ENABLED = "ANCHOR_ENABLED";
+	public static String APP_STATE_ANCHOR_DRIFTING = "ANCHOR_DRIFTING";
 	public static String APP_STATE_BATTERY_ALARM_VALUE = "BATTERY_ALARM_VALUE";
+	public static String APP_STATE_ACCU_DISCONNECT = "ACCU_DISCONNECT";
 			
 	public static String ALARM_GREEN = "G";
 	public static String ALARM_RED = "R";
