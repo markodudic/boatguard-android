@@ -38,7 +38,7 @@ public class GeoFenceFragment  extends Fragment {
         final TextView tvGeoFence = (TextView)v.findViewById(R.id.tv_geo_fence);
         tvGeoFence.setText(geoFenceValue + "m");
 		Switch switchGeoFence = (Switch) v.findViewById(R.id.switch_geo_fence);
-		switchGeoFence.setChecked(geoFence.equals("D"));
+		switchGeoFence.setChecked(geoFence.equals("1"));
         
 		SeekBar seekbarGeoFence = (SeekBar) v.findViewById(R.id.seekbar_geo_fence);
 		seekbarGeoFence.setProgress(Integer.parseInt(geoFenceValue));
@@ -69,7 +69,7 @@ public class GeoFenceFragment  extends Fragment {
 				
 				//set settings
 		        HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
-		        obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).setValue(switchGeoFence.isChecked()?"D":"N");
+		        obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).setValue(switchGeoFence.isChecked()?"1":"0");
 		        obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_DISTANCE)).getId()).setValue(seekbarGeoFence.getProgress()+"");
 		        
 		        List<ObuSetting> list = new ArrayList<ObuSetting>(obuSettings.values());
