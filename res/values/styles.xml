@@ -158,7 +158,7 @@
    </style>	   
    
    <style name="LastUpdateText">
-       <item name="android:textSize">18.0sp</item>
+       <item name="android:textSize">16.0sp</item>
        <item name="android:textColor">?text_default</item>
        <item name="android:gravity">center_vertical|center_horizontal</item>
    </style>	  
@@ -171,9 +171,9 @@
 
         
    <style name="MenuLineLayout">
-       <item name="android:layout_width">2dp</item>
-       <item name="android:layout_marginTop">10.0dp</item>
-       <item name="android:layout_marginBottom">10.0dp</item>
+       <item name="android:layout_width">@dimen/line_height</item>
+       <item name="android:layout_marginTop">@dimen/menu_line_margin</item>
+       <item name="android:layout_marginBottom">@dimen/menu_line_margin</item>
        <item name="android:background">?horizontal_line</item>
    </style>	 
 
@@ -187,7 +187,7 @@
        <item name="android:layout_marginLeft">@dimen/components_margin</item>
        <item name="android:layout_marginRight">@dimen/components_margin</item>
        <item name="android:layout_height">@dimen/line_height</item>
-       <item name="android:background">?horizontal_line</item>
+       <item name="android:background">?vertical_line</item>
    </style>
    
    <style name="Component">
@@ -198,13 +198,13 @@
    </style>	  
       
    <style name="ComponentText">
-       <item name="android:textSize">22.0sp</item>
+       <item name="android:textSize">20.0sp</item>
        <item name="android:textColor">?text_content</item>
        <item name="android:layout_gravity">center_vertical</item>
    </style>	  
     
    <style name="ComponentAccuText" parent="ComponentText">
-       <item name="android:textSize">28.0sp</item>
+       <item name="android:textSize">24.0sp</item>
        <item name="android:textColor">@color/text_green</item>
    </style>	   
    
