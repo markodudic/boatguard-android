@@ -38,10 +38,17 @@
 		        android:onClick="changeAccuStep"
 			    android:layout_width="match_parent"
 			    android:layout_height="match_parent"
-			    android:layout_weight="5"
+			    android:layout_weight="3"
 			    android:orientation="vertical" >
 			    	    
-			    <si.noemus.boatguard.components.TextViewFont
+			    <ImageView
+			        android:id="@+id/accu_disconnected"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_gravity="center_vertical|center_horizontal"
+			        android:visibility="gone" />
+			    
+		        <si.noemus.boatguard.components.TextViewFont
 			        android:id="@+id/accu_napetost"
 			        style="@style/ComponentAccuText"
 			        android:layout_width="wrap_content"

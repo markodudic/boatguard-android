@@ -109,6 +109,7 @@ public class MainActivity extends Activity {
 	
 	private int accuStep = 0;
 	private int accuComponentId = 0;
+	private boolean isAccuConnected = false;
 	
 	private int mActivePointerId = 123456;
 	
@@ -651,6 +652,9 @@ public class MainActivity extends Activity {
 			
 	@SuppressWarnings("deprecation")
 	private void showObuData(){
+		String accuDisconnected = ((ObuState)obuStates.get(((State)Settings.states.get(Settings.STATE_ACCU_DISCONNECT)).getId())).getValue();
+		isAccuConnected = !accuDisconnected.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ACCU_DISCONNECT)).getValue());
+		
         Set set = obuStates.entrySet(); 
 		Iterator i = set.iterator();
 		while(i.hasNext()) { 
@@ -658,6 +662,7 @@ public class MainActivity extends Activity {
 			System.out.println("="+map.getValue());
 			ObuState obuState = (ObuState)map.getValue();
 			int idState = obuState.getId_state();
+		
 			
 			if (idState == ((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId()) { 
             	tvLastUpdate.setText(getResources().getString(R.string.last_update) + " " + Utils.formatDate(obuState.getDateState()));
@@ -719,13 +724,14 @@ public class MainActivity extends Activity {
 				}			
 				else if (anchorState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_ENABLED)).getValue())) {
 					imageView.setImageResource(R.drawable.ic_anchor);
-					//tukaj se za drfiting
-					if (anchorState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_DRIFTING)).getValue())) {
+					int anchorDriftingId = ((State)Settings.states.get(Settings.STATE_ANCHOR_DRIFTING)).getId();
+					String anchorDrifting = ((ObuState) obuStates.get(anchorDriftingId)).getValue();
+					if (anchorDrifting.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_DRIFTING)).getValue())) {
 						showAlarmAnimation(component, imageView, R.drawable.ic_anchor_alarm_1, R.drawable.ic_anchor_alarm, true);
 					}			
 				}	
 			}			
-			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) { 
+			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(idState);
 				((TextView)component.findViewById(R.id.accu_napetost)).setText(obuState.getValue() + "%");
 				cancelAlarmAnimation(component, (TextView)component.findViewById(R.id.accu_napetost));
@@ -733,15 +739,64 @@ public class MainActivity extends Activity {
 					showAlarmAccuAnimation(component, (TextView)component.findViewById(R.id.accu_napetost));
 				}
 			}			
-			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) { 
+			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
 				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
 				((TextView)component.findViewById(R.id.accu_ah)).setText(f + "AH");
 			}	
-			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) { 
+			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
 				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
 				((TextView)component.findViewById(R.id.accu_tok)).setText(f + "A");
+			}	
+			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_DISCONNECT)).getId()) { 
+				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
+				
+				ImageView imageView = (ImageView)component.findViewById(R.id.accu_disconnected);
+				imageView.setVisibility(View.VISIBLE);
+				TextView tvAccuNapetost = (TextView)component.findViewById(R.id.accu_napetost);
+				TextView tvAccuAH = (TextView)component.findViewById(R.id.accu_ah);
+				TextView tvAccuTok = (TextView)component.findViewById(R.id.accu_tok);
+				ImageView ivStep = (ImageView)component.findViewById(R.id.step);
+				FrameLayout fl = (FrameLayout)component.findViewById(R.id.lIcon);
+				
+				String accuDisconnectedState = obuState.getValue();
+				cancelAlarmAnimation(component, null);
+				if (accuDisconnectedState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ACCU_DISCONNECT)).getValue())) {
+					showAlarmAnimation(component, imageView, R.drawable.ic_accu_disconnected_1, R.drawable.ic_accu_disconnected, true);
+				 
+					fl.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 5f));
+					tvAccuNapetost.setVisibility(View.GONE);
+					tvAccuAH.setVisibility(View.GONE);
+					tvAccuTok.setVisibility(View.GONE);
+					ivStep.setVisibility(View.GONE);
+				}
+				else {
+					switch (accuStep) {
+					case 0:
+						tvAccuNapetost.setVisibility(View.VISIBLE);
+						tvAccuAH.setVisibility(View.GONE);
+						tvAccuTok.setVisibility(View.GONE);
+						ivStep.setImageResource(R.drawable.ic_battery_step_1);
+						break;
+					case 1:
+						tvAccuNapetost.setVisibility(View.GONE);
+						tvAccuAH.setVisibility(View.VISIBLE);
+						tvAccuTok.setVisibility(View.GONE);
+						ivStep.setImageResource(R.drawable.ic_battery_step_2);
+						break;
+					case 2: 
+						tvAccuNapetost.setVisibility(View.GONE);
+						tvAccuAH.setVisibility(View.GONE);
+						tvAccuTok.setVisibility(View.VISIBLE);
+						ivStep.setImageResource(R.drawable.ic_battery_step_3);
+						break;
+					}
+
+					fl.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 3f));
+					((ImageView)component.findViewById(R.id.accu_disconnected)).setVisibility(View.GONE);
+					((ImageView)component.findViewById(R.id.step)).setVisibility(View.VISIBLE);
+				}
 			}	
 		}
 	}
@@ -872,6 +927,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void changeAccuStep (View v) {
+		if (!isAccuConnected) return;
 		FrameLayout component = (FrameLayout)findViewById(accuComponentId);
 		LinearLayout ll = (LinearLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);	
 		TextView tvAccuNapetost = (TextView)component.findViewById(R.id.accu_napetost);

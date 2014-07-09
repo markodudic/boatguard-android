@@ -48,6 +48,7 @@ public class Settings {
 	public static String STATE_ACCU_NAPETOST = "ACCU_NAPETOST";
 	public static String STATE_ACCU_AH = "ACCU_AH";
 	public static String STATE_ACCU_TOK = "ACCU_TOK";
+	public static String STATE_ACCU_DISCONNECT = "ACCU_DISCONNECT";
 	public static String STATE_ANCHOR = "ANCHOR";
 	public static String STATE_ANCHOR_DRIFTING = "ANCHOR_DRIFTING";
 	
