@@ -22,8 +22,7 @@
     <attr name="ic_home"/> 
     <attr name="ic_location"/> 
     <attr name="ic_anchor_disabled"/> 
-    <attr name="ic_drawer"/> 
-   	<attr name="ic_forward"/> 
+    <attr name="ic_forward"/> 
    	<attr name="ic_back"/> 
    	<attr name="ic_seekbar_thumb"/> 
    	<attr name="ic_delete"/> 
