@@ -46,8 +46,6 @@ public class LoginActivity extends Activity {
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
 		actionBar.setCustomView(R.layout.actionbar_text);
 		
-		Bundle extras = getIntent().getExtras();
-
 		TextView tvTitle = (TextView) findViewById(R.id.actionbar_text);
         tvTitle.setText(R.string.title_activity_login);
         ImageView ivBack = (ImageView) findViewById(R.id.iv_back);

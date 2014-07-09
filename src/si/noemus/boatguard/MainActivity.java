@@ -86,12 +86,11 @@ public class MainActivity extends Activity {
 	
 	public static HashMap<Integer,ObjectAnimator> alarmAnimaations = new HashMap<Integer,ObjectAnimator>(){};
 
-	//private static MapFragment lFragment;
-    
 	private static Gson gson = new Gson();	
 	
 	private int accuStep = 0;
 	private int accuComponentId = 0;
+	private boolean isAccuConnected = false;
 	
 	private int mActivePointerId = 123456;
 	
@@ -101,7 +100,8 @@ public class MainActivity extends Activity {
     private Dialog dialogAlarm = null;
     private Integer dialogAlarmActive = -1;
     
-    //GoogleMap map;
+    private LinearLayout lMenu;
+    
     /*
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -120,7 +120,7 @@ public class MainActivity extends Activity {
 		}
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		
 		final ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.actionbar_icon);
         actionBar.setDisplayShowTitleEnabled(false);
@@ -177,7 +177,7 @@ public class MainActivity extends Activity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         */
-        
+         	   	
         //last update
         tvLastUpdate = (TextView)findViewById(R.id.tv_last_update);
         ivRefresh = (ImageView)findViewById(R.id.iv_refresh);
@@ -191,22 +191,13 @@ public class MainActivity extends Activity {
 
         final ScrollView sv = (ScrollView)findViewById(R.id.scroll_main);
         final LinearLayout lLocation = (LinearLayout)findViewById(R.id.lLocation);
-
-        //location
-        /*MapFragment mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragment_location));
-        
-        map = mapFragment.getMap();
-        map.getUiSettings().setAllGesturesEnabled(true);
-        map.getUiSettings().setMyLocationButtonEnabled(true);
-        map.setMyLocationEnabled(true);*/
-
         
         ImageView ivHome = (ImageView)findViewById(R.id.iv_home);
         ivHome.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) { 
 				sv.setVisibility(View.VISIBLE);
-				lLocation.setVisibility(View.GONE);
+				//lLocation.setVisibility(View.GONE);
             } 
 		});
 		ImageView ivLocation = (ImageView)findViewById(R.id.iv_loction);
@@ -236,16 +227,16 @@ public class MainActivity extends Activity {
 					double lonF = Math.floor(lon/100);
 					double lonD = (lon/100 - lonF)/0.6;
 					lon = lonF + lonD;
-					
-					/*LatLng latlng = new LatLng(lon, lat);
-			        Marker newmarker = map.addMarker(new MarkerOptions().position(latlng).title(getResources().getString(R.string.location_title) + " " + date).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker)));
-			        CameraPosition cameraPosition = new CameraPosition.Builder().target(latlng).zoom(14.0f).build();
-			        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-			        map.moveCamera(cameraUpdate);*/
 				}
 
-				sv.setVisibility(View.GONE);
-				lLocation.setVisibility(View.VISIBLE);
+				Intent in = new Intent(MainActivity.this, LocationActivity.class);
+		    	in.putExtra("lat", lat);
+		    	in.putExtra("lon", lon);
+		    	in.putExtra("date", date);
+				startActivity(in);				
+				
+				//sv.setVisibility(View.GONE);
+				//lLocation.setVisibility(View.VISIBLE);
 			}
 		});
 		
@@ -293,8 +284,7 @@ public class MainActivity extends Activity {
             
                 	final float scale = MainActivity.this.getResources().getDisplayMetrics().density;
                     int px = (int) (MainActivity.this.getResources().getDimension(R.dimen.menu_height) * scale + 0.5f);
-                    LinearLayout lMenu = (LinearLayout)findViewById(R.id.layout_menu);
-             	   	TranslateAnimation anim = null;
+                    TranslateAnimation anim = null;
                 	int newPosition = sv.getScrollY();
                 	if (newPosition > initialPosition) {
                 		//System.out.println("up="+lMenu.getY()+":"+px);
@@ -388,7 +378,8 @@ public class MainActivity extends Activity {
 			}
 		});	
 		
-	
+        lMenu = (LinearLayout)findViewById(R.id.fragment_menu);
+        
         Settings.getSettings(this);        
         Settings.getObuSettings(this);  
         Settings.getObuComponents(this);  
@@ -425,6 +416,8 @@ public class MainActivity extends Activity {
 		Iterator i = set.iterator();
 		int ii = 0;
 		TableRow tr = new TableRow(this);
+		View component = null;
+		View componentLast = null;
 		
 		while(i.hasNext()) { 
 			Map.Entry map = (Map.Entry)i.next(); 
@@ -438,7 +431,8 @@ public class MainActivity extends Activity {
 			}
 
 			LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		    View component = inflater.inflate(lc, null);
+			componentLast = component;
+		    component = inflater.inflate(lc, null);
 		    component.setId(obuComponent.getId_component());
 		    
 			if (Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
@@ -448,14 +442,27 @@ public class MainActivity extends Activity {
 			    int width = size.x;
 			    int height = size.y;
 			    component.setLayoutParams(new TableRow.LayoutParams(width/2, width/2));
+			    
 			    LinearLayout content = ((LinearLayout)component.findViewById(R.id.content));
 			    content.setOrientation(LinearLayout.VERTICAL);
 			    int pad = Utils.dpToPx(this, (int)getResources().getDimension(R.dimen.components_margin));
 			    int lin = Utils.dpToPx(this, (int)getResources().getDimension(R.dimen.line_height));
 			    content.setLayoutParams(new TableRow.LayoutParams(width/2-pad, width/2-lin));
+			    content.setPadding(0, (int)getResources().getDimension(R.dimen.components_margin), 0, (int)getResources().getDimension(R.dimen.components_margin));
+			    
 			    TextViewFont label = ((TextViewFont)component.findViewById(R.id.label));
-			    label.setLayoutParams(new TableRow.LayoutParams(width/2-pad, width/4));
-			    label.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+			    TableRow.LayoutParams lpV = new TableRow.LayoutParams(width/2-pad, width/6);
+			    //label.setPadding(0, 0, 0, (int)getResources().getDimension(R.dimen.components_margin));
+		        label.setLayoutParams(lpV);
+			    label.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
+			    
+			    ImageView ivStep = (ImageView)component.findViewById(R.id.step);
+			    if (ivStep != null) {
+			    	FrameLayout.LayoutParams lpI = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			    	lpI.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+			    	lpI.setMargins(0, 0, 0, (int)getResources().getDimension(R.dimen.component_step_margin2));
+				    ivStep.setLayoutParams(lpI);		    
+			    }
 			}
 		    
 		    ((TextView)component.findViewById(R.id.label)).setText(obuComponent.getName());
@@ -492,6 +499,13 @@ public class MainActivity extends Activity {
 			} 
 			else {
 				lComponents.addView(component);
+			}
+		}
+		//zadnjo crto skrijem
+		if (component != null) {
+			((LinearLayout)component.findViewById(R.id.line)).setVisibility(View.GONE);
+			if (Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
+				((LinearLayout)componentLast.findViewById(R.id.line)).setVisibility(View.GONE);
 			}
 		}
 
@@ -634,13 +648,19 @@ public class MainActivity extends Activity {
 			
 	@SuppressWarnings("deprecation")
 	private void showObuData(){
+		String accuDisconnected = ((ObuState)obuStates.get(((State)Settings.states.get(Settings.STATE_ACCU_DISCONNECT)).getId())).getValue();
+		if (accuDisconnected != null) {
+			isAccuConnected = !accuDisconnected.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ACCU_DISCONNECT)).getValue());
+		}
+		
         Set set = obuStates.entrySet(); 
 		Iterator i = set.iterator();
 		while(i.hasNext()) { 
 			Map.Entry map = (Map.Entry)i.next(); 
-			System.out.println("="+map.getValue());
+			System.out.println(map.getValue());
 			ObuState obuState = (ObuState)map.getValue();
 			int idState = obuState.getId_state();
+	
 			
 			if (idState == ((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId()) { 
             	tvLastUpdate.setText(getResources().getString(R.string.last_update) + " " + Utils.formatDate(obuState.getDateState()));
@@ -649,7 +669,7 @@ public class MainActivity extends Activity {
 				FrameLayout component = (FrameLayout)findViewById(idState);
 				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
 				String geofence = obuState.getValue();
-				cancelAlarmAnimation(component, null);
+				cancelAlarmAnimation(component, null, false);
 				
 				if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_DISABLED)).getValue())) {
 					imageView.setImageResource(R.drawable.ic_geofence_disabled);
@@ -668,7 +688,7 @@ public class MainActivity extends Activity {
 				FrameLayout component = (FrameLayout)findViewById(idState);
 				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
 				String pumpState = obuState.getValue();
-				cancelAlarmAnimation(component, null);
+				cancelAlarmAnimation(component, null, false);
 				
 				if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_OK)).getValue())) {
 					imageView.setImageResource(R.drawable.ic_bilgepump);
@@ -695,44 +715,91 @@ public class MainActivity extends Activity {
 				FrameLayout component = (FrameLayout)findViewById(idState);
 				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
 				String anchorState = obuState.getValue(); 
-				cancelAlarmAnimation(component, null);
+				cancelAlarmAnimation(component, null, false);
 				
 				if (anchorState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_DISABLED)).getValue())) {
 					imageView.setImageResource(R.drawable.ic_anchor_disabled);
 				}			
 				else if (anchorState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_ENABLED)).getValue())) {
 					imageView.setImageResource(R.drawable.ic_anchor);
-					//tukaj se za drfiting
-					if (anchorState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_DRIFTING)).getValue())) {
+					int anchorDriftingId = ((State)Settings.states.get(Settings.STATE_ANCHOR_DRIFTING)).getId();
+					String anchorDrifting = ((ObuState) obuStates.get(anchorDriftingId)).getValue();
+					if (anchorDrifting.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_DRIFTING)).getValue())) {
 						showAlarmAnimation(component, imageView, R.drawable.ic_anchor_alarm_1, R.drawable.ic_anchor_alarm, true);
 					}			
 				}	
 			}			
-			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) { 
+			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(idState);
 				((TextView)component.findViewById(R.id.accu_napetost)).setText(obuState.getValue() + "%");
-				cancelAlarmAnimation(component, (TextView)component.findViewById(R.id.accu_napetost));
+				cancelAlarmAnimation(component, (TextView)component.findViewById(R.id.accu_napetost), true);
 				if (Integer.parseInt(obuState.getValue()) < Integer.parseInt(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_BATTERY_ALARM_VALUE)).getValue())) {
 					showAlarmAccuAnimation(component, (TextView)component.findViewById(R.id.accu_napetost));
 				}
 			}			
-			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) { 
+			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
 				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
 				((TextView)component.findViewById(R.id.accu_ah)).setText(f + "AH");
 			}	
-			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) { 
+			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
 				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
 				((TextView)component.findViewById(R.id.accu_tok)).setText(f + "A");
+			}	
+			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_DISCONNECT)).getId()) { 
+				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
+				
+				ImageView imageView = (ImageView)component.findViewById(R.id.accu_disconnected);
+				imageView.setVisibility(View.VISIBLE);
+				TextView tvAccuNapetost = (TextView)component.findViewById(R.id.accu_napetost);
+				TextView tvAccuAH = (TextView)component.findViewById(R.id.accu_ah);
+				TextView tvAccuTok = (TextView)component.findViewById(R.id.accu_tok);
+				ImageView ivStep = (ImageView)component.findViewById(R.id.step);
+				FrameLayout fl = (FrameLayout)component.findViewById(R.id.lIcon);
+				
+				String accuDisconnectedState = obuState.getValue();
+				cancelAlarmAnimation(component, null, false);
+				if (accuDisconnectedState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ACCU_DISCONNECT)).getValue())) {
+					showAlarmAnimation(component, imageView, R.drawable.ic_accu_disconnected_1, R.drawable.ic_accu_disconnected, true);
+				 
+					fl.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 5f));
+					tvAccuNapetost.setVisibility(View.GONE);
+					tvAccuAH.setVisibility(View.GONE);
+					tvAccuTok.setVisibility(View.GONE);
+					ivStep.setVisibility(View.GONE);
+				}
+				else {
+					switch (accuStep) {
+					case 0:
+						tvAccuNapetost.setVisibility(View.VISIBLE);
+						tvAccuAH.setVisibility(View.GONE);
+						tvAccuTok.setVisibility(View.GONE);
+						ivStep.setImageResource(R.drawable.ic_battery_step_1);
+						break;
+					case 1:
+						tvAccuNapetost.setVisibility(View.GONE);
+						tvAccuAH.setVisibility(View.VISIBLE);
+						tvAccuTok.setVisibility(View.GONE);
+						ivStep.setImageResource(R.drawable.ic_battery_step_2);
+						break;
+					case 2: 
+						tvAccuNapetost.setVisibility(View.GONE);
+						tvAccuAH.setVisibility(View.GONE);
+						tvAccuTok.setVisibility(View.VISIBLE);
+						ivStep.setImageResource(R.drawable.ic_battery_step_3);
+						break;
+					} 
+
+					fl.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 3f));
+					((ImageView)component.findViewById(R.id.accu_disconnected)).setVisibility(View.GONE);
+					((ImageView)component.findViewById(R.id.step)).setVisibility(View.VISIBLE);
+				}
 			}	
 		}
 	}
 	
 	private void showAlarmAnimation (FrameLayout layout, final ImageView imageView, int anim1, int anim2, boolean transition) {
-	    //TypedArray a1 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.component});     
-        //int backgroundId = a1.getResourceId(0, 0);       
-
         LinearLayout main = (LinearLayout)layout.findViewById(R.id.main);
         main.setBackgroundResource(0);
 	     
@@ -743,16 +810,7 @@ public class MainActivity extends Activity {
 		anim.setRepeatCount(-1);
 		anim.setRepeatMode(Animation.REVERSE);
 		background.startAnimation(anim);
-        
-        /*ObjectAnimator colorFade = ObjectAnimator.ofObject((LinearLayout)layout.findViewById(R.id.main), "backgroundColor", 
-				new ArgbEvaluator(), 
-				getResources().getColor(backgroundId), 
-				getResources().getColor(R.color.alarm_red));
-		colorFade.setDuration(getResources().getInteger(R.integer.animation_interval));
-		colorFade.setRepeatCount(-1);
-		colorFade.setRepeatMode(Animation.REVERSE);
-		colorFade.start();*/
-			
+        			
 		if (imageView != null) {
 			if (transition) {
 				CyclicTransitionDrawable ctd = new CyclicTransitionDrawable(new Drawable[] { 
@@ -766,28 +824,19 @@ public class MainActivity extends Activity {
 				imageView.setImageResource(anim1);
 			}
 		}
-        /*ObjectAnimator colorFade = ObjectAnimator.ofObject(imageView, "srcColor", 
+		
+	    TypedArray a = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.text_content});     
+        ObjectAnimator colorFadeLabel = ObjectAnimator.ofObject((TextView)layout.findViewById(R.id.label), "textColor", 
 				new ArgbEvaluator(), 
-				getResources().getColor(R.color.alarm_red), 
+				getResources().getColor(a.getResourceId(0, 0)), 
 				getResources().getColor(R.color.text_alarm_title));
-		colorFade.setDuration(getResources().getInteger(R.integer.animation_interval));
-		colorFade.setRepeatCount(-1);
-		colorFade.setRepeatMode(Animation.REVERSE);
-		colorFade.start();		*/
-
-		
-		
-		/*Animation anim = new AlphaAnimation(0, 1);
-		anim.setDuration(3000);
-		anim.setRepeatCount(-1);
-		anim.setRepeatMode(Animation.REVERSE);
-		imageView.startAnimation(anim);*/
-		
-		//((LinearLayout)layout.findViewById(R.id.line)).setVisibility(View.GONE);
-		//((LinearLayout)layout.findViewById(R.id.shadow_top)).setVisibility(View.VISIBLE);
-		//((LinearLayout)layout.findViewById(R.id.shadow_bottom)).setVisibility(View.VISIBLE);
+        colorFadeLabel.setDuration(getResources().getInteger(R.integer.animation_interval));
+        colorFadeLabel.setRepeatCount(-1);
+        colorFadeLabel.setRepeatMode(Animation.REVERSE);
+        colorFadeLabel.start();
 		
 		alarmAnimaations.put(layout.getId(), null);
+		alarmAnimaations.put(layout.getId()+1, colorFadeLabel);
 		
 	    TypedArray a2 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_logotype_alarm});     
         int logoId = a2.getResourceId(0, 0);       
@@ -816,45 +865,55 @@ public class MainActivity extends Activity {
 		colorFade.setRepeatMode(Animation.REVERSE);
 		colorFade.start();
 		
+	    TypedArray a = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.text_content});     
+        ObjectAnimator colorFadeLabel = ObjectAnimator.ofObject((TextView)layout.findViewById(R.id.label), "textColor", 
+				new ArgbEvaluator(), 
+				getResources().getColor(a.getResourceId(0, 0)), 
+				getResources().getColor(R.color.text_alarm_title));
+        colorFadeLabel.setDuration(getResources().getInteger(R.integer.animation_interval));
+        colorFadeLabel.setRepeatCount(-1);
+        colorFadeLabel.setRepeatMode(Animation.REVERSE);
+        colorFadeLabel.start();
+		
 		alarmAnimaations.put(layout.getId(), colorFade);
+		alarmAnimaations.put(layout.getId()+1, colorFadeLabel);
 		
 	    TypedArray a2 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_logotype_alarm});     
         int logoId = a2.getResourceId(0, 0);       
 		((ImageView)findViewById(R.id.actionBarLogo)).setImageResource(logoId);
 	}
 
-	private void cancelAlarmAnimation (FrameLayout layout, TextView tv) {
+	private void cancelAlarmAnimation (FrameLayout layout, TextView tv, boolean cancelAccuNapetostAnimation) {
 		if (alarmAnimaations.containsKey(layout.getId())) {
 	        ObjectAnimator colorFade = (ObjectAnimator)alarmAnimaations.get(layout.getId());
-	        if (colorFade != null) {
+	        if (colorFade != null && cancelAccuNapetostAnimation) {
 	        	colorFade.end();
 	        	tv.setTextColor(getResources().getColor(R.color.text_green));
+	        }
+	        ObjectAnimator colorFadeLabel = (ObjectAnimator)alarmAnimaations.get(layout.getId()+1);
+	        if (colorFadeLabel != null) {
+	        	colorFadeLabel.end();
+	    	    TypedArray a = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.text_content});     
+	    	    ((TextView)layout.findViewById(R.id.label)).setTextColor(getResources().getColor(a.getResourceId(0, 0)));
 	        }
 			
 	        LinearLayout background = (LinearLayout)layout.findViewById(R.id.background);
 	        background.clearAnimation();
-	        //background.setBackgroundResource(0);
 
 	        TypedArray a1 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.component});     
 	        int backgroundId = a1.getResourceId(0, 0);       
 	        ((LinearLayout)layout.findViewById(R.id.main)).setBackgroundColor(getResources().getColor(backgroundId));
 	        
-			//((LinearLayout)layout.findViewById(R.id.line)).setVisibility(View.VISIBLE);
-			//((LinearLayout)layout.findViewById(R.id.shadow_top)).setVisibility(View.GONE);
-			//((LinearLayout)layout.findViewById(R.id.shadow_bottom)).setVisibility(View.GONE);
-			
 		    TypedArray a2 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_logotype});     
 	        int logoId = a2.getResourceId(0, 0);       
 			((ImageView)findViewById(R.id.actionBarLogo)).setImageResource(logoId);
 			
 		}
 	}
-	
-	private void showAlarmAccuAnimation (FrameLayout layout, ImageView imageView, int anim_id) {
-	
-	}
+
 	
 	public void changeAccuStep (View v) {
+		if (!isAccuConnected) return;
 		FrameLayout component = (FrameLayout)findViewById(accuComponentId);
 		LinearLayout ll = (LinearLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);	
 		TextView tvAccuNapetost = (TextView)component.findViewById(R.id.accu_napetost);
@@ -898,6 +957,8 @@ public class MainActivity extends Activity {
 		((TextView)dialogAlarm.findViewById(R.id.alarm_msg)).setText(msg.toUpperCase());
 		((TextView)dialogAlarm.findViewById(R.id.alarm_desc)).setText(desc.toUpperCase());
 		((TextView)dialogAlarm.findViewById(R.id.alarm_confirm)).setText(action.toUpperCase());
+		
+		dialogAlarm.getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		dialogAlarm.show();
 	}
 	
