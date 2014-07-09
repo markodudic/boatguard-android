@@ -24,73 +24,118 @@
     
 	    <si.noemus.boatguard.components.TextViewFont
 	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
 	        android:text="@string/username"
 	        boatguard:font_name="@string/font_semibold"
 	    	style="@style/LoginText" />
 	
-	    <si.noemus.boatguard.components.EditTextFont
-	        android:id="@+id/username"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        style="@style/LoginEditText"
-	        boatguard:font_name="@string/font_semibold"
-	    	android:text="marko">
-	        <requestFocus />
-	    </si.noemus.boatguard.components.EditTextFont>
+		<FrameLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="@dimen/login_edit_height">
+		    
+    	    <si.noemus.boatguard.components.EditTextFont
+		        android:id="@+id/username"
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+		        style="@style/LoginEditText"
+		        boatguard:font_name="@string/font_semibold"
+		    	android:text="marko">
+		        <requestFocus />
+		    </si.noemus.boatguard.components.EditTextFont>
+		    
+		    <ImageView
+		        android:id="@+id/iv_username"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="right|center_vertical"
+		        android:clickable="true"
+		        android:focusable="false"
+		        android:src="?ic_delete" />
+		</FrameLayout>
 	
 	    <si.noemus.boatguard.components.TextViewFont
 	        style="@style/LoginText"
 	        boatguard:font_name="@string/font_semibold"
 	    	android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
 	        android:text="@string/password" />
 	    
-	    <si.noemus.boatguard.components.EditTextFont
-	        android:id="@+id/password"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        style="@style/LoginEditText"
-	        boatguard:font_name="@string/font_semibold"
-	    	android:text="dudic" />
-	    
+		<FrameLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="@dimen/login_edit_height">
+		    
+	    	<si.noemus.boatguard.components.EditTextFont
+		        android:id="@+id/password"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        style="@style/LoginEditText"
+		        boatguard:font_name="@string/font_semibold"
+		    	android:text="dudic" />
+	    	
+		    <ImageView
+		        android:id="@+id/iv_password"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="right|center_vertical"
+		        android:clickable="true"
+		        android:focusable="false"
+		        android:src="?ic_delete" />
+		</FrameLayout>	    
+		
 	    <si.noemus.boatguard.components.TextViewFont
 	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
 	        android:text="@string/obu_id"
 	        boatguard:font_name="@string/font_semibold"
 	    	style="@style/LoginText" />
 	
-	    <si.noemus.boatguard.components.EditTextFont
-	        android:id="@+id/obu_id"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        style="@style/LoginEditText"
-	        boatguard:font_name="@string/font_semibold"
-	    	android:text="123456" />
+		<FrameLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="@dimen/login_edit_height">
 	    
+		    <si.noemus.boatguard.components.EditTextFont
+		        android:id="@+id/obu_id"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        style="@style/LoginEditText"
+		        boatguard:font_name="@string/font_semibold"
+		    	android:text="123456" />
+	    
+		    <ImageView
+		        android:id="@+id/iv_obu_id"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="right|center_vertical"
+		        android:clickable="true"
+		        android:focusable="false"
+		        android:src="?ic_delete" />
+		</FrameLayout>
+			    
 	    <si.noemus.boatguard.components.CheckBoxFont
 	        android:id="@+id/checkBox_remember_me"
 	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
 	        android:text="@string/remember_me"
 	        boatguard:font_name="@string/font_semibold"
-	    	style="@style/LoginRememberText" />
+	        style="@style/LoginRememberText" />
 	
-	    <si.noemus.boatguard.components.TextViewFont
-	        android:id="@+id/button_register"
-	        style="@style/LoginButtonText"
-	        boatguard:font_name="@string/font_semibold"
-	    	android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:text="@string/register" />
-	  
-	    <si.noemus.boatguard.components.TextViewFont
-	        android:id="@+id/button_login"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:text="@string/login"
-	        boatguard:font_name="@string/font_semibold"
-	    	style="@style/LoginButtonText" />
+		<LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal">
+		    
+	  	    <si.noemus.boatguard.components.TextViewFont
+		        android:id="@+id/button_register"
+		        style="@style/RegisterButtonText"
+		        boatguard:font_name="@string/font_semibold"
+		    	android:layout_width="match_parent"
+		        android:layout_weight="1"
+		        android:text="@string/register" />
+		  
+		    <si.noemus.boatguard.components.TextViewFont
+		        android:id="@+id/button_login"
+		        style="@style/LoginButtonText"
+		        android:layout_width="match_parent"
+		        android:layout_weight="1"
+		        android:text="@string/login"
+		        boatguard:font_name="@string/font_semibold" />
+
+		</LinearLayout>
 	</LinearLayout>
 </FrameLayout>

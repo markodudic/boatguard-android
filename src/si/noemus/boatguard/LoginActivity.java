@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,15 +39,19 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		
 		final ActionBar actionBar = getActionBar();
-        actionBar.setCustomView(R.layout.actionbar_icon);
+        /*actionBar.setCustomView(R.layout.actionbar_icon);
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowCustomEnabled(true);*/
         
-        //getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
-		//getActionBar().setCustomView(R.layout.actionbar_text);
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
+		actionBar.setCustomView(R.layout.actionbar_text);
 		
-		//TextView tvTitle = (TextView) findViewById(R.id.actionbar_text);
-        //tvTitle.setText(R.string.title_activity_login);
+		Bundle extras = getIntent().getExtras();
+
+		TextView tvTitle = (TextView) findViewById(R.id.actionbar_text);
+        tvTitle.setText(R.string.title_activity_login);
+        ImageView ivBack = (ImageView) findViewById(R.id.iv_back);
+        ivBack.setVisibility(View.GONE);
         
         TextView btnRegister = (TextView) findViewById(R.id.button_register);
 		btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +68,33 @@ public class LoginActivity extends Activity {
 				loginRegister("login");
 			} 
 		});
+
+		ImageView ivUsername = (ImageView) findViewById(R.id.iv_username);
+		ivUsername.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				((EditText) findViewById(R.id.username)).setText("");
+			} 
+		});
+
+		
+		ImageView ivPassword = (ImageView) findViewById(R.id.iv_password);
+		ivPassword.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				((EditText) findViewById(R.id.password)).setText("");
+			} 
+		});
+
+		
+		ImageView ivObuId = (ImageView) findViewById(R.id.iv_obu_id);
+		ivObuId.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				((EditText) findViewById(R.id.obu_id)).setText("");
+			} 
+		});
+		
 	}
 
 	

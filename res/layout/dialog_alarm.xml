@@ -3,7 +3,7 @@
     xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
     android:id="@+id/lAlarm"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dialog_alarm_height"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/dialog_alarm_padding"
     android:layout_marginRight="@dimen/dialog_alarm_padding"
     android:background="@color/alarm_red"
@@ -18,38 +18,42 @@
 	
 	    <FrameLayout
 	        android:layout_width="match_parent"
-			android:layout_height="30dp" >
+			android:layout_height="wrap_content" >
 		    
 		    <LinearLayout
 		        android:layout_width="match_parent"
-		        android:layout_height="30dp"
+		        android:layout_height="wrap_content"
 		        android:gravity="center_horizontal"
 		        android:orientation="horizontal" >
 
 		        <ImageView
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:src="@drawable/ic_arrows_right" />
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_gravity="center_vertical"
+		            android:src="@drawable/ic_arrows_right" />
 		        							    
 	        	<si.noemus.boatguard.components.TextViewFont
 	        	    android:id="@+id/alarm_title"
 	        	    style="@style/alarmTitle"
-	        	    boatguard:font_name="@string/font_semibold"
-	    			android:layout_width="wrap_content"
-	        	    android:layout_height="match_parent"
-	        	    android:text="@string/alarm" />
+	        	    android:layout_width="wrap_content"
+	        	    android:layout_height="wrap_content"
+	        	    android:layout_gravity="center_vertical|center_horizontal"
+	        	    android:gravity="top|center_horizontal"
+	        	    android:text="@string/alarm"
+	        	    boatguard:font_name="@string/font_semibold" />
 	        	
 			    <ImageView
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
-			        android:src="@drawable/ic_arrows_left" />
+			        android:layout_gravity="center_vertical"
+		            android:src="@drawable/ic_arrows_left" />
 	        	
 			</LinearLayout>
 				
 		    <ImageView
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_gravity="right|center_vertical"
+		        android:layout_gravity="right|top"
 		        android:layout_weight="1"
 		        android:src="@drawable/ic_close" />
 			
@@ -57,34 +61,35 @@
 			
 		<si.noemus.boatguard.components.TextViewFont
 		    android:id="@+id/alarm_msg"
+		    style="@style/alarmText"
 		    android:layout_width="match_parent"
-		    android:layout_height="60dp"
-		    style="@style/alarmTitle"
-			boatguard:font_name="@string/font_semibold"
-	    	android:text="alarm_msg" />
+		    android:layout_height="wrap_content"
+		    android:text="alarm_msg"
+		    boatguard:font_name="@string/font_semibold" />
 	 
 		<si.noemus.boatguard.components.TextViewFont
 		    android:id="@+id/alarm_desc"
-		    android:layout_width="match_parent"
-		    android:layout_height="90dp"
 		    style="@style/alarmDesc"
-		    boatguard:font_name="@string/font_regular"
-	    	android:text="alarm_desc" />
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:text="alarm_desc"
+		    boatguard:font_name="@string/font_regular" />
+
 	</LinearLayout>
 
     <FrameLayout
         android:id="@+id/confirm"
 	    android:layout_width="match_parent"
 		android:layout_height="50dp"
-		android:background="@drawable/alarm_confirm" >
+		android:background="@color/text_alarm_title" >
 			
 		<si.noemus.boatguard.components.TextViewFont
 		    android:id="@+id/alarm_confirm"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center_vertical"
-		    style="@style/alarmDesc"
-		    boatguard:font_name="@string/font_semibold"
+		    style="@style/alarmButton"
+		    boatguard:font_name="@string/font_regular"
 	    	android:text="alarm_confirm" />
    </FrameLayout> 
    

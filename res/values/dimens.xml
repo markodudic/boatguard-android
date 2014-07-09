@@ -6,8 +6,12 @@
     <dimen name="line_height">1dp</dimen>
     <dimen name="shadow">15dp</dimen>
     
-    <dimen name="login_edit_margin">3dp</dimen>
+    <dimen name="login_edit_margin_top">10dp</dimen>
+    <dimen name="login_edit_margin_bottom">3dp</dimen>
     <dimen name="login_edit_padding">15dp</dimen>
+    <dimen name="login_edit_height">70dp</dimen>
+    <dimen name="login_text_height">30dp</dimen>
+    <dimen name="login_remember_height">50dp</dimen>
     
     <dimen name="actionbar_height">80dp</dimen>
     <dimen name="actionbar_icon_height">30dp</dimen>
@@ -18,9 +22,12 @@
     
     <dimen name="component_height">85dp</dimen>
     <dimen name="components_margin">40dp</dimen>
+    <dimen name="component_step_margin">-5dp</dimen>
+    <dimen name="component_step_margin2">-20dp</dimen>
     
-    <dimen name="dialog_alarm_padding">10dp</dimen>
-    <dimen name="dialog_alarm_height">250dp</dimen>
+    <dimen name="dialog_alarm_padding">15dp</dimen>
+    <dimen name="dialog_alarm_text_margin">20dp</dimen>
+    <dimen name="dialog_alarm_title_margin">10dp</dimen>
     
     <dimen name="drawer_width">300dp</dimen>
     <dimen name="drawer_margin">10dp</dimen>
