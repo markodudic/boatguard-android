@@ -1,5 +1,7 @@
-package si.noemus.boatguard;
+package si.noemus.boatguard.utils;
 
+import si.noemus.boatguard.R;
+import si.noemus.boatguard.R.string;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;

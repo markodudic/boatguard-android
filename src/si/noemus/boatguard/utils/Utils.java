@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import si.noemus.boatguard.DialogFactory;
 import si.noemus.boatguard.R;
 import android.content.Context;
 import android.content.SharedPreferences;

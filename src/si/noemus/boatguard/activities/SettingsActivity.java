@@ -1,7 +1,14 @@
-package si.noemus.boatguard;
+package si.noemus.boatguard.activities;
 
 import java.util.HashMap;
 
+import si.noemus.boatguard.R;
+import si.noemus.boatguard.R.drawable;
+import si.noemus.boatguard.R.id;
+import si.noemus.boatguard.R.layout;
+import si.noemus.boatguard.R.style;
+import si.noemus.boatguard.fragments.GeoFenceFragment;
+import si.noemus.boatguard.fragments.SettingsFragment;
 import si.noemus.boatguard.objects.ObuSetting;
 import si.noemus.boatguard.objects.State;
 import si.noemus.boatguard.utils.Settings;

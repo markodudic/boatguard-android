@@ -18,7 +18,7 @@
 		    
 			<fragment
 			    android:id="@+id/fragment_main"
-			    android:name="si.noemus.boatguard.MainFragment"
+			    android:name="si.noemus.boatguard.fragments.MainFragment"
 			    android:layout_width="match_parent"
 			    android:layout_height="match_parent" />
 	
@@ -34,7 +34,7 @@
 		
 		<fragment
 		    android:id="@+id/fragment_menu"
-		    android:name="si.noemus.boatguard.MenuFragment"
+		    android:name="si.noemus.boatguard.fragments.MenuFragment"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
     		android:layout_gravity="bottom" />

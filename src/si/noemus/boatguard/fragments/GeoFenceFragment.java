@@ -1,9 +1,13 @@
-package si.noemus.boatguard;
+package si.noemus.boatguard.fragments;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import si.noemus.boatguard.R;
+import si.noemus.boatguard.R.id;
+import si.noemus.boatguard.R.layout;
+import si.noemus.boatguard.R.string;
 import si.noemus.boatguard.objects.ObuSetting;
 import si.noemus.boatguard.objects.State;
 import si.noemus.boatguard.utils.Comm;

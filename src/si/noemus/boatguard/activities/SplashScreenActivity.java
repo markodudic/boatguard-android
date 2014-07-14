@@ -1,4 +1,4 @@
-package si.noemus.boatguard;
+package si.noemus.boatguard.activities;
 
 import java.net.URLEncoder;
 import java.util.Locale;
@@ -6,7 +6,11 @@ import java.util.Locale;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import si.noemus.boatguard.R;
+import si.noemus.boatguard.R.layout;
+import si.noemus.boatguard.R.string;
 import si.noemus.boatguard.utils.Comm;
+import si.noemus.boatguard.utils.DialogFactory;
 import si.noemus.boatguard.utils.Settings;
 import si.noemus.boatguard.utils.Utils;
 import android.app.Activity;

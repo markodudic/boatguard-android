@@ -1,4 +1,4 @@
-package si.noemus.boatguard;
+package si.noemus.boatguard.activities;
  
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
@@ -13,6 +13,16 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import si.noemus.boatguard.R;
+import si.noemus.boatguard.R.attr;
+import si.noemus.boatguard.R.color;
+import si.noemus.boatguard.R.dimen;
+import si.noemus.boatguard.R.drawable;
+import si.noemus.boatguard.R.id;
+import si.noemus.boatguard.R.integer;
+import si.noemus.boatguard.R.layout;
+import si.noemus.boatguard.R.string;
+import si.noemus.boatguard.R.style;
 import si.noemus.boatguard.components.TextViewFont;
 import si.noemus.boatguard.objects.AppSetting;
 import si.noemus.boatguard.objects.ObuAlarm;

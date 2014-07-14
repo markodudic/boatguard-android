@@ -1,5 +1,10 @@
-package si.noemus.boatguard;
+package si.noemus.boatguard.fragments;
 
+import si.noemus.boatguard.R;
+import si.noemus.boatguard.R.attr;
+import si.noemus.boatguard.R.id;
+import si.noemus.boatguard.R.layout;
+import si.noemus.boatguard.activities.SettingsActivity;
 import si.noemus.boatguard.components.TextViewFont;
 import si.noemus.boatguard.utils.Settings;
 import si.noemus.boatguard.utils.Utils;
