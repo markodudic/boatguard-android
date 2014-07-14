@@ -32,11 +32,13 @@
         <activity
             android:name="si.noemus.boatguard.LocationActivity"
             android:screenOrientation="portrait"
-			android:label="" >
+			android:launchMode="singleTop"
+            android:label="" >
         </activity>
         <activity
             android:name="si.noemus.boatguard.LoginActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTop"
             android:label="" >
         </activity>
         <activity

@@ -11,7 +11,9 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -44,10 +46,31 @@ public class SettingsActivity extends Activity {
  
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        GeoFenceFragment fragment = new GeoFenceFragment();
-        fragmentTransaction.add(R.id.fragment_settings, fragment, extras.getString("title"));
-        fragmentTransaction.commit();
         
+    	System.out.println("id="+extras.getInt("id"));
+        switch (extras.getInt("id")) {
+	        case -1:
+	            fragmentTransaction.add(R.id.fragment_settings, new SettingsFragment(), extras.getString("title"));
+	            fragmentTransaction.commit();
+	        	break;
+	        case 0:
+	            fragmentTransaction.add(R.id.fragment_settings, new GeoFenceFragment(), extras.getString("title"));
+	            fragmentTransaction.commit();
+	        	break;
+	        case 8:
+		   		if (theme == R.style.AppThemeDay) {
+					Utils.savePrefernciesInt(this, Settings.SETTING_THEME, R.style.AppThemeNight);
+				} else {
+					Utils.savePrefernciesInt(this, Settings.SETTING_THEME, R.style.AppThemeDay);					
+				}
+				Intent i = new Intent(this, MainActivity.class);
+				startActivity(i);
+				
+				//finish();
+				//startActivity(getIntent());    	
+				break;
+        }
+                
 		ImageView btnBack = (ImageView) findViewById(R.id.iv_back);
 		btnBack.setOnClickListener(new View.OnClickListener() {
 			@Override

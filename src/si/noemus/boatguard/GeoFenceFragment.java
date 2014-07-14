@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.json.JSONObject;
-
 import si.noemus.boatguard.objects.ObuSetting;
 import si.noemus.boatguard.objects.State;
 import si.noemus.boatguard.utils.Comm;
 import si.noemus.boatguard.utils.Settings;
 import si.noemus.boatguard.utils.Utils;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -83,7 +82,7 @@ public class GeoFenceFragment  extends Fragment {
 		        	AsyncTask at = new Comm().execute(urlString, "json", data); 
 		        }
 		        
-		        //Settings.getObuSettings(getActivity());
+		        getActivity().finish();
 			}
 		});	
 

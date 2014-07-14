@@ -6,6 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">LOGIN FORM</string>
     <string name="title_activity_location">LOCATION</string>
+    <string name="menu">MENU</string>
     <string name="username">USERNAME</string>
     <string name="password">PASSWORD</string>
     <string name="obu_id">OBU ID</string>
@@ -28,7 +29,7 @@
 	<string name="no_active_connection_title">Internetna povezave</string> 
 	<string name="no_active_connection_msg">Ni internetna povezave. omogočite povezavo za uporabo aplikacije.</string> 
 		
-    <string-array name="nav_drawer_items">
+    <string-array name="settings_items">
         <item >GEOFENCE</item>
         <item >BILGE PUMP</item>
         <item >ANCHOR DRIFTING</item>

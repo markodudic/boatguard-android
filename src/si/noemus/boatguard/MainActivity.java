@@ -245,15 +245,10 @@ public class MainActivity extends Activity {
         ivSettings.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) { 
-				int theme = Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME);
-				System.out.println("CURR="+theme);
-				if (theme == R.style.AppThemeDay) {
-					Utils.savePrefernciesInt(MainActivity.this, Settings.SETTING_THEME, R.style.AppThemeNight);
-				} else {
-					Utils.savePrefernciesInt(MainActivity.this, Settings.SETTING_THEME, R.style.AppThemeDay);					
-				}
-				finish();
-				startActivity(getIntent());
+				Intent i = new Intent(MainActivity.this, SettingsActivity.class);
+				i.putExtra("id", -1);
+				i.putExtra("title", getResources().getString(R.string.menu));
+				startActivity(i);
 			}
 		});
 
