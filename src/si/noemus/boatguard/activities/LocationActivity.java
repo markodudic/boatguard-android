@@ -1,10 +1,6 @@
 package si.noemus.boatguard.activities;
 
 import si.noemus.boatguard.R;
-import si.noemus.boatguard.R.drawable;
-import si.noemus.boatguard.R.id;
-import si.noemus.boatguard.R.layout;
-import si.noemus.boatguard.R.string;
 import si.noemus.boatguard.utils.Settings;
 import si.noemus.boatguard.utils.Utils;
 import android.annotation.SuppressLint;

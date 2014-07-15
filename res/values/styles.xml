@@ -60,11 +60,11 @@
 	
 	<style name="MyTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
 	  <item name="android:textColor">?text_content</item>
-	  <item name="android:textSize">40.0sp</item>
+	  <item name="android:textSize">@dimen/actionbar_text_size</item>
 	</style>
 	
    <style name="ActionBarText"  parent="@android:style/TextAppearance.Medium">
-       <item name="android:textSize">30.0sp</item>
+       <item name="android:textSize">@dimen/actionbar_text_size</item>
        <item name="android:textColor">?text_default</item>
    </style>	
 	
@@ -73,7 +73,7 @@
    </style>
    
    <style name="alarmTitle">
-       <item name="android:textSize">24.0sp</item>
+       <item name="android:textSize">@dimen/title_text_size</item>
        <item name="android:textColor">@color/text_alarm_title</item>
        <item name="android:layout_gravity">center_vertical|center_horizontal</item>
        <item name="android:gravity">center_vertical|center_horizontal</item>
@@ -90,7 +90,7 @@
    <style name="alarmButton" parent="alarmTitle">
        <item name="android:layout_marginLeft">0dp</item>
        <item name="android:layout_marginRight">0dp</item>
-       <item name="android:textSize">22.0sp</item>
+       <item name="android:textSize">@dimen/button_text_size</item>
        <item name="android:textColor">@color/text_alarm_desc</item>
    </style>
 
@@ -110,7 +110,7 @@
 				
    <style name="LoginText">
        <item name="android:layout_height">@dimen/login_text_height</item>
-       <item name="android:textSize">22.0sp</item>
+       <item name="android:textSize">@dimen/button_text_size</item>
        <item name="android:textColor">?text_default</item>
        <item name="android:gravity">center_vertical</item>
        <item name="android:layout_marginTop">@dimen/login_edit_margin_top</item>
@@ -130,7 +130,7 @@
    </style>	
    
    <style name="RegisterButtonText">
-       <item name="android:textSize">22.0sp</item>
+       <item name="android:textSize">@dimen/button_text_size</item>
        <item name="android:gravity">center_vertical|center_horizontal</item>
        <item name="android:background">?text_content</item>
        <item name="android:textColor">?settings_button</item>
@@ -145,7 +145,7 @@
    </style>	   
    
    <style name="LastUpdateText">
-       <item name="android:textSize">16.0sp</item>
+       <item name="android:textSize">@dimen/small_text_size</item>
        <item name="android:textColor">?text_default</item>
        <item name="android:gravity">center_vertical|center_horizontal</item>
    </style>	  
@@ -185,18 +185,18 @@
    </style>	  
       
    <style name="ComponentText">
-       <item name="android:textSize">20.0sp</item>
+       <item name="android:textSize">@dimen/component_text_size</item>
        <item name="android:textColor">?text_content</item>
        <item name="android:layout_gravity">center_vertical</item>
    </style>	  
     
    <style name="ComponentAccuText" parent="ComponentText">
-       <item name="android:textSize">24.0sp</item>
+       <item name="android:textSize">@dimen/title_text_size</item>
        <item name="android:textColor">@color/text_green</item>
    </style>	   
    
    
-   <style name="DrawerTitleText">
+   <!-- style name="DrawerTitleText">
        <item name="android:textSize">16.0sp</item>
        <item name="android:textColor">?text_default</item>
        <item name="android:gravity">bottom</item>
@@ -205,7 +205,7 @@
    <style name="DrawerTextText" parent="DrawerTitleText">
        <item name="android:textColor">@color/text_green</item>
        <item name="android:gravity">top</item>
-    </style>	   
+    </style-->	   
   
    <style name="SettingsItemsLayout">
 		<item name="android:background">?background</item>
@@ -219,7 +219,7 @@
    </style>	
    
    <style name="SettingsText">
-       <item name="android:textSize">20.0sp</item>
+       <item name="android:textSize">@dimen/component_text_size</item>
        <item name="android:textColor">?text_default</item>
        <item name="android:layout_gravity">center_vertical</item>
        <item name="android:gravity">center_vertical</item>
@@ -233,7 +233,18 @@
    <style name="SettingsButtonText" parent="SettingsText">
 	   <item name="android:gravity">center_vertical|center_horizontal</item>
 	   <item name="android:background">?settings_button</item>
+   </style>	     
+   
+   <style name="SettingsItemTitle">
+       <item name="android:textSize">@dimen/small_text_size</item>
+       <item name="android:textColor">?text_default</item>
+       <item name="android:gravity">bottom</item>
    </style>	   
+
+   <style name="SettingsItemValue" parent="SettingsItemTitle">
+       <item name="android:textColor">@color/text_green</item>
+       <item name="android:gravity">top</item>
+   </style>	     
    
    <style name="SettingsSeekBar">
 	   <item name="android:thumb">?ic_seekbar_thumb</item>

@@ -2,19 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/drawer_item_height"
+    android:layout_height="@dimen/settings_item_height"
     android:orientation="horizontal"
 	android:id="@+id/layout_item">
 	
 	<LinearLayout 
 	    android:layout_width="match_parent"
-	    android:layout_height="@dimen/drawer_item_height"
+	    android:layout_height="@dimen/settings_item_height"
 	    android:layout_weight="1"
         android:orientation="vertical">
 	 
 	    <si.noemus.boatguard.components.TextViewFont
 	        android:id="@+id/title"
-	        style="@style/DrawerTitleText"
+	        style="@style/SettingsItemTitle"
 	        android:layout_width="wrap_content"
 	        android:layout_height="match_parent"
 	        android:layout_weight="1"
@@ -22,7 +22,7 @@
 	     
 	    <si.noemus.boatguard.components.TextViewFont
 	        android:id="@+id/text"
-	        style="@style/DrawerTextText"
+	        style="@style/SettingsItemValue"
 	        android:layout_width="wrap_content"
 	        android:layout_height="match_parent"
 	        android:layout_weight="1"
@@ -33,7 +33,7 @@
         android:id="@+id/iv_forward"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:paddingRight="@dimen/drawer_margin"
+        android:paddingRight="@dimen/settings_margin"
         android:layout_weight="5"
         android:clickable="true"/>"
 		

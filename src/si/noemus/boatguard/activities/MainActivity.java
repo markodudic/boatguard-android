@@ -452,20 +452,37 @@ public class MainActivity extends Activity {
 			    content.setOrientation(LinearLayout.VERTICAL);
 			    int pad = Utils.dpToPx(this, (int)getResources().getDimension(R.dimen.components_margin));
 			    int lin = Utils.dpToPx(this, (int)getResources().getDimension(R.dimen.line_height));
-			    content.setLayoutParams(new TableRow.LayoutParams(width/2-pad, width/2-lin));
+			    content.setLayoutParams(new TableRow.LayoutParams(width/2, width/2-lin));
 			    content.setPadding(0, (int)getResources().getDimension(R.dimen.components_margin), 0, (int)getResources().getDimension(R.dimen.components_margin));
 			    
 			    TextViewFont label = ((TextViewFont)component.findViewById(R.id.label));
-			    TableRow.LayoutParams lpV = new TableRow.LayoutParams(width/2-pad, width/6);
-			    //label.setPadding(0, 0, 0, (int)getResources().getDimension(R.dimen.components_margin));
+			    TableRow.LayoutParams lpV = new TableRow.LayoutParams(width/2-(2*(int)getResources().getDimension(R.dimen.components_margin)), width/6);
 		        label.setLayoutParams(lpV);
 			    label.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
+
+			    FrameLayout icon = ((FrameLayout)component.findViewById(R.id.lIcon));
+			    TableRow.LayoutParams lpIc = new TableRow.LayoutParams(width/2-(2*(int)getResources().getDimension(R.dimen.components_margin)), LayoutParams.MATCH_PARENT);
+			    icon.setLayoutParams(lpIc);
+
+			    FrameLayout.LayoutParams lpAccu = new FrameLayout.LayoutParams(width/2-(2*(int)getResources().getDimension(R.dimen.components_margin)), LayoutParams.MATCH_PARENT);
+			    TextViewFont tvNapetost = ((TextViewFont)component.findViewById(R.id.accu_napetost));
+			    if (tvNapetost != null) {
+			    	tvNapetost.setLayoutParams(lpAccu);
+			    }
+			    TextViewFont tvAh = ((TextViewFont)component.findViewById(R.id.accu_ah));
+			    if (tvAh != null) {
+			    	tvAh.setLayoutParams(lpAccu);
+			    }
+			    TextViewFont tvTok = ((TextViewFont)component.findViewById(R.id.accu_tok));
+			    if (tvTok != null) {
+			    	tvTok.setLayoutParams(lpAccu);
+			    }
 			    
 			    ImageView ivStep = (ImageView)component.findViewById(R.id.step);
 			    if (ivStep != null) {
 			    	FrameLayout.LayoutParams lpI = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			    	lpI.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
-			    	lpI.setMargins(0, 0, 0, (int)getResources().getDimension(R.dimen.component_step_margin2));
+			    	lpI.gravity = Gravity.BOTTOM | Gravity.LEFT;
+			    	lpI.setMargins((int)getResources().getDimension(R.dimen.components_margin)-20, 0, 0, (int)getResources().getDimension(R.dimen.component_step_margin2));
 				    ivStep.setLayoutParams(lpI);		    
 			    }
 			}
