@@ -112,15 +112,6 @@ public class MainActivity extends Activity {
     
     private LinearLayout lMenu;
     
-    /*
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle;    
-    private CharSequence mDrawerTitle;
-    private ArrayList<NavDrawerItem> navDrawerItems;
-    private NavDrawerListAdapter adapter;
-    private String[] navMenuTitles;
-    */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		int theme = Utils.getPrefernciesInt(this, Settings.SETTING_THEME);
@@ -138,56 +129,7 @@ public class MainActivity extends Activity {
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setHomeButtonEnabled(false);
         
-        //drawer settings
-        /*mDrawerTitle = getTitle();
-        navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
-        navDrawerItems = new ArrayList<NavDrawerItem>();
-	    TypedArray img = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_forward});     
-	    TypedArray background = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.component});     
-	    TypedArray font = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.text_content});     
-        for (int i=0; i<navMenuTitles.length; i++) {
-        	navDrawerItems.add(new NavDrawerItem(navMenuTitles[i], "", img.getResourceId(0, 0), getResources().getColor(background.getResourceId(0, 0)), getResources().getColor(font.getResourceId(0, 0)), getResources().getColor(R.color.text_green)));
-        }
-        adapter = new NavDrawerListAdapter(getApplicationContext(), navDrawerItems);
-        mDrawerList.setAdapter(adapter);
-	    TypedArray aa = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_drawer});     
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-        		aa.getResourceId(0, 0), //nav menu toggle icon
-                R.string.app_name, // nav drawer open - description for accessibility
-                R.string.app_name // nav drawer close - description for accessibility
-        ){
-            public void onDrawerClosed(View view) {
-                getActionBar().setTitle(mDrawerTitle);
-                // calling onPrepareOptionsMenu() to show action bar icons
-                invalidateOptionsMenu();
-            }
- 
-            public void onDrawerOpened(View drawerView) {
-            	HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
-                String geoFence = obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).getValue();
-                
-                String[] values = new String[navMenuTitles.length];
-                values[0] = geoFence.endsWith("1")?getResources().getString(R.string.on):getResources().getString(R.string.off);
-                values[1] = "value";
-                values[2] = "value";
-                values[3] = "value";
-                values[4] = "value";
-                values[5] = "value";
-                values[6] = "value";
-                values[7] = "value";
-                values[8] = "value";
-            	adapter.updateData(values);
-                getActionBar().setTitle(mDrawerTitle);
-                // calling onPrepareOptionsMenu() to hide action bar icons
-                invalidateOptionsMenu();
-            }
-        };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        */
-         	   	
+        	   	
         //last update
         tvLastUpdate = (TextView)findViewById(R.id.tv_last_update);
         ivRefresh = (ImageView)findViewById(R.id.iv_refresh);
@@ -398,18 +340,8 @@ public class MainActivity extends Activity {
 		super.onResume();
 		getObudata();
 	}
-    /*
-	private class DrawerItemClickListener implements ListView.OnItemClickListener {
-	       @Override
-	       public void onItemClick(AdapterView parent, View view, int position,long id) {	         
-	    	  Intent i = new Intent(MainActivity.this, SettingsActivity.class);
-	    	  i.putExtra("id", position);
-	    	  i.putExtra("title", navMenuTitles[position]);
-	   		  startActivity(i);
-	          mDrawerLayout.closeDrawer(mDrawerList);	   
-	       }
-	}
-	*/
+
+
 	private void showObuComponents(){
 		TableLayout lComponents = (TableLayout)findViewById(R.id.components);
 
