@@ -93,7 +93,7 @@
 		        android:layout_height="wrap_content"
 		        style="@style/LoginEditText"
 		        boatguard:font_name="@string/font_semibold"
-		    	android:text="123456" />
+		    	android:text="12345" />
 	    
 		    <ImageView
 		        android:id="@+id/iv_obu_id"

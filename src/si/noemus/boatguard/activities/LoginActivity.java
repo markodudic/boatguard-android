@@ -128,7 +128,7 @@ public class LoginActivity extends Activity {
 	        if (Utils.isNetworkConnected(LoginActivity.this, true)) {
 	        	AsyncTask at = new Comm().execute(urlString, null); 
 	            String res = (String) at.get();
-	     	   	JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
+	            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
 	    	   	if (jRes.has("error") && !jRes.getString("error").equals("null")) {
 	    	   		String msg = ((JSONObject)jRes.get("error")).getString("msg");
 	    	   		String name = ((JSONObject)jRes.get("error")).getString("name");
