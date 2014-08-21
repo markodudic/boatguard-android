@@ -28,24 +28,24 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-public class GeoFenceFragment  extends Fragment {
+public class AnchorDriftingFragment  extends Fragment {
     @Override 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /** Inflating the layout for this fragment **/
-        final View v = inflater.inflate(R.layout.fragment_geo_fence, null);
+        final View v = inflater.inflate(R.layout.fragment_anchor_drifting, null);
 
         HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
-        String geoFence = obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).getValue();
-        String geoFenceValue = obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_DISTANCE)).getId()).getValue();
+        String anchorDrifting = obuSettings.get(((State)Settings.states.get(Settings.STATE_ANCHOR)).getId()).getValue();
+        String anchorDriftingValue = obuSettings.get(((State)Settings.states.get(Settings.STATE_ANCHOR_DRIFTING)).getId()).getValue();
         
-        final TextView tvGeoFence = (TextView)v.findViewById(R.id.tv_geo_fence);
-        tvGeoFence.setText(geoFenceValue + "m");
-		Switch switchGeoFence = (Switch) v.findViewById(R.id.switch_geo_fence);
-		switchGeoFence.setChecked(geoFence.equals("1"));
+        final TextView tvanchorDrifting = (TextView)v.findViewById(R.id.tv_anchor_drifting);
+        tvanchorDrifting.setText(anchorDriftingValue + "m");
+		Switch switchanchorDrifting = (Switch) v.findViewById(R.id.switch_anchor_drifting);
+		switchanchorDrifting.setChecked(anchorDrifting.equals("1"));
         
-		SeekBar seekbarGeoFence = (SeekBar) v.findViewById(R.id.seekbar_geo_fence);
-		seekbarGeoFence.setProgress(Integer.parseInt(geoFenceValue));
-		seekbarGeoFence.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+		SeekBar seekbaranchorDrifting = (SeekBar) v.findViewById(R.id.seekbar_anchor_drifting);
+		seekbaranchorDrifting.setProgress(Integer.parseInt(anchorDriftingValue));
+		seekbaranchorDrifting.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			int progressChanged = 0;
 
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
@@ -57,23 +57,23 @@ public class GeoFenceFragment  extends Fragment {
 			}
 
 			public void onStopTrackingTouch(SeekBar seekBar) {
-				tvGeoFence.setText(progressChanged + "m");
+				tvanchorDrifting.setText(progressChanged + "m");
 
 			}
 		});
 		
 		
-		TextView tvDefine = (TextView) v.findViewById(R.id.button_geo_fence_define);
+		TextView tvDefine = (TextView) v.findViewById(R.id.button_anchor_drifting_define);
 		tvDefine.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v1) {
-				Switch switchGeoFence = (Switch) v.findViewById(R.id.switch_geo_fence);
-				SeekBar seekbarGeoFence = (SeekBar) v.findViewById(R.id.seekbar_geo_fence);
+				Switch switchanchorDrifting = (Switch) v.findViewById(R.id.switch_anchor_drifting);
+				SeekBar seekbaranchorDrifting = (SeekBar) v.findViewById(R.id.seekbar_anchor_drifting);
 				
 				//set settings
 		        HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
-		        obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).setValue(switchGeoFence.isChecked()?"1":"0");
-		        obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_DISTANCE)).getId()).setValue(seekbarGeoFence.getProgress()+"");
+		        obuSettings.get(((State)Settings.states.get(Settings.STATE_ANCHOR)).getId()).setValue(switchanchorDrifting.isChecked()?"1":"0");
+		        obuSettings.get(((State)Settings.states.get(Settings.STATE_ANCHOR_DRIFTING)).getId()).setValue(seekbaranchorDrifting.getProgress()+"");
 		        
 		        List<ObuSetting> list = new ArrayList<ObuSetting>(obuSettings.values());
 		        Gson gson = new Gson();

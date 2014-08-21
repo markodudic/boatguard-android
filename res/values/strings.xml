@@ -20,6 +20,8 @@
     <string name="location_title">LAST LOCATION:</string>
     <string name="on">ON</string>
     <string name="off">OFF</string>
+    <string name="day">DAY</string>
+    <string name="night">NIGHT</string>
     
     
 	<string name="json_error">Nepravilen odgovor strežnika</string> 
@@ -46,5 +48,14 @@
    <string name="geo_fence_radius">GEOFENCE RADIUS</string>
    <string name="geo_fence_current">DEFINE CURRENT LOCATION AS HOME</string>
    <string name="geo_fence_define">DEFINE</string>
-   
+
+   <string name="anchor_drifting">ANCHOR DRIFTING</string>
+   <string name="anchor_drifting_radius">ANCHOR RADIUS</string>
+   <string name="anchor_drifting_current">DEFINE CURRENT LOCATION AS ANCHOR</string>
+   <string name="anchor_drifting_define">DEFINE</string>
+
+    <string name="play_sound">PLAY SOUND</string>
+    <string name="vibrate">VIBRATE</string>
+    <string name="pop_up">DISPLAY ALERT POP-UP</string>
+    
 </resources>

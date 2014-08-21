@@ -576,7 +576,7 @@ public class MainActivity extends Activity {
 		   				showNotification(obuAlarm.getId_alarm(), obuAlarm.getTitle(), obuAlarm.getMessage(), obuAlarm.getDate_alarm(), obuAlarm.getVibrate(), obuAlarm.getSound());
 		   				activeAlarms.add(obuAlarm.getId_alarm());
 		   			}
-		   			if (dialogAlarmActive == -1) {
+		   			if ((dialogAlarmActive == -1) && Utils.getPrefernciesBoolean(MainActivity.this, Settings.APP_SETTING_POP_UP, false)) {
 		   				showAlarmDialog(obuAlarm.getId_alarm(), obuAlarm.getTitle(), obuAlarm.getMessage(), obuAlarm.getAction(), obuAlarm.getType());
 		   			}
 		   		}
@@ -946,13 +946,13 @@ public class MainActivity extends Activity {
 	
 	public void beepVibrate(int vibrate, int sound) {
 	    try {
-	        if (sound == 1) {
+	        if (sound == 1 && (Utils.getPrefernciesBoolean(this, Settings.APP_SETTING_PLAY_SOUND, false))) {
 		    	Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 		        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
 		        r.play();
 	        }
 	    } catch (Exception e) {}
-	    if (vibrate == 1) {
+	    if (vibrate == 1 && (Utils.getPrefernciesBoolean(this, Settings.APP_SETTING_VIBRATE, false))) {
 	    	((Vibrator)getSystemService(VIBRATOR_SERVICE)).vibrate(1000);
 	    }
 	}

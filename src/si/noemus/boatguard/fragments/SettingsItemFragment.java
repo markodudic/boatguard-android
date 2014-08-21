@@ -24,7 +24,6 @@ public class SettingsItemFragment  extends Fragment {
 	
     @Override 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        /** Inflating the layout for this fragment **/
         v = inflater.inflate(R.layout.fragment_settings_item, null);
 
         args = getArguments();

@@ -1,16 +1,10 @@
 package si.noemus.boatguard.activities;
 
-import java.util.HashMap;
-
 import si.noemus.boatguard.R;
-import si.noemus.boatguard.R.drawable;
-import si.noemus.boatguard.R.id;
-import si.noemus.boatguard.R.layout;
-import si.noemus.boatguard.R.style;
+import si.noemus.boatguard.fragments.AlarmTypeFragment;
+import si.noemus.boatguard.fragments.AnchorDriftingFragment;
 import si.noemus.boatguard.fragments.GeoFenceFragment;
 import si.noemus.boatguard.fragments.SettingsFragment;
-import si.noemus.boatguard.objects.ObuSetting;
-import si.noemus.boatguard.objects.State;
 import si.noemus.boatguard.utils.Settings;
 import si.noemus.boatguard.utils.Utils;
 import android.annotation.SuppressLint;
@@ -20,14 +14,9 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SettingsActivity extends Activity {
 
@@ -62,6 +51,14 @@ public class SettingsActivity extends Activity {
 	        	break;
 	        case 0:
 	            fragmentTransaction.add(R.id.fragment_settings, new GeoFenceFragment(), extras.getString("title"));
+	            fragmentTransaction.commit();
+	        	break;
+	        case 2:
+	            fragmentTransaction.add(R.id.fragment_settings, new AnchorDriftingFragment(), extras.getString("title"));
+	            fragmentTransaction.commit();
+	        	break;
+	        case 5:
+	            fragmentTransaction.add(R.id.fragment_settings, new AlarmTypeFragment(), extras.getString("title"));
 	            fragmentTransaction.commit();
 	        	break;
 	        case 8:

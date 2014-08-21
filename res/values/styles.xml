@@ -254,7 +254,10 @@
 	   <item name="android:minHeight">@dimen/seekbar_height</item>
 	   <item name="android:layout_gravity">center_vertical</item>
    </style>	   
-   
+
+   <style name="AnchorDriftingSeekBar" parent="SettingsSeekBar">
+	   <item name="android:max">100</item>
+   </style>	   
 </resources>
 
 

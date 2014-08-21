@@ -65,17 +65,24 @@ public class SettingsFragment  extends Fragment {
         super.onResume(); 
 
     	HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
-        String geoFence = obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).getValue();
         String[] values = new String[settingsItems.length];
+        
+        String geoFence = obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).getValue();
         values[0] = geoFence.endsWith("1")?getResources().getString(R.string.on):getResources().getString(R.string.off);
+
         values[1] = "value";
-        values[2] = "value";
+        
+        String anchorDrifting = obuSettings.get(((State)Settings.states.get(Settings.STATE_ANCHOR)).getId()).getValue();
+        values[2] = anchorDrifting.endsWith("1")?getResources().getString(R.string.on):getResources().getString(R.string.off);
+        
         values[3] = "value";
         values[4] = "value";
-        values[5] = "value";
+        values[5] = "";
         values[6] = "value";
         values[7] = "value";
-        values[8] = "value";  
+        
+        int theme = Utils.getPrefernciesInt(getActivity(), Settings.SETTING_THEME);
+        values[8] = theme == R.style.AppThemeDay?getResources().getString(R.string.day):getResources().getString(R.string.night);  
 
         FragmentManager fragmentManager = getFragmentManager();
         for (int i=0; i<settingsItems.length; i++) {

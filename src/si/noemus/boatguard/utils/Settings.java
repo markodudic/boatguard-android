@@ -68,6 +68,10 @@ public class Settings {
 	public static String ALARM_GREEN = "G";
 	public static String ALARM_RED = "R";
 			
+	public static String APP_SETTING_PLAY_SOUND = "PLAY_SOUND";
+	public static String APP_SETTING_VIBRATE = "VIBRATE";
+	public static String APP_SETTING_POP_UP = "POP_UP";
+
 	public static HashMap<Integer,String> languages = new HashMap<Integer,String>() {{
 																					    put(0, "en");
 																					    put(1, "ru");
