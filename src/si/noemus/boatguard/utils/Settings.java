@@ -33,6 +33,9 @@ public class Settings {
 	public static String SETTING_REFRESH_TIME = "REFRESH_TIME";
 	public static String SETTING_SERVER_NUM = "SERVER_NUM";
 	public static String SETTING_THEME = "THEME";
+	public static String SETTING_PLAY_SOUND = "PLAY_SOUND";
+	public static String SETTING_VIBRATE = "VIBRATE";
+	public static String SETTING_POP_UP = "POP_UP";
 
 	public static String COMPONENT_TYPE_ACCU = "ACCU";
 	public static String COMPONENT_TYPE_PUMP = "PUMP";
@@ -68,17 +71,6 @@ public class Settings {
 	public static String ALARM_GREEN = "G";
 	public static String ALARM_RED = "R";
 			
-	public static String APP_SETTING_PLAY_SOUND = "PLAY_SOUND";
-	public static String APP_SETTING_VIBRATE = "VIBRATE";
-	public static String APP_SETTING_POP_UP = "POP_UP";
-
-	public static HashMap<Integer,String> languages = new HashMap<Integer,String>() {{
-																					    put(0, "en");
-																					    put(1, "ru");
-																					    put(2, "hr");
-																					    put(3, "it");
-																					}};
-																					
 	public static HashMap<Integer,Alarm> alarms = new HashMap<Integer,Alarm>(){};
 	public static HashMap<String,AppSetting> appSettings = new HashMap<String,AppSetting>(){};
 	public static HashMap<String,State> states = new HashMap<String,State>(){};
@@ -87,23 +79,8 @@ public class Settings {
 			
 	private static Gson gson = new Gson();																					
     
-	public static void setLanguage(Context context, String lang) {
-    	System.out.println("LANG="+lang);
-        Locale locale = new Locale(lang);
-	    Locale.setDefault(locale);
-	    Configuration config = new Configuration();
-	    config.locale = locale;
-	    context.getResources().updateConfiguration(config, null);
-	    
-	    for (Entry<Integer, String> entry : languages.entrySet()) {
-	        if (entry.getValue().equals(lang)) {
-	        	Utils.savePrefernciesInt(context, Settings.SETTING_LANG, entry.getKey());
-	        }
-    	}
-    }	
-    
-    public static void getSettings(Context context) {
-    	String urlString = context.getString(R.string.server_url) + "getsettings";
+    public static void getSettings(final Context context) {
+		String urlString = context.getString(R.string.server_url) + "getsettings";
     	if (Utils.isNetworkConnected(context, true)) {
   			try {
 		        	AsyncTask at = new Comm().execute(urlString, null); 

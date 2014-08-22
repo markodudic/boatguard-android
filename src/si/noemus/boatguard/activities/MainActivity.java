@@ -115,7 +115,6 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		int theme = Utils.getPrefernciesInt(this, Settings.SETTING_THEME);
-		System.out.println("SET="+theme);
 		if (theme != -1) {
 			setTheme(theme);			
 		}
@@ -576,7 +575,7 @@ public class MainActivity extends Activity {
 		   				showNotification(obuAlarm.getId_alarm(), obuAlarm.getTitle(), obuAlarm.getMessage(), obuAlarm.getDate_alarm(), obuAlarm.getVibrate(), obuAlarm.getSound());
 		   				activeAlarms.add(obuAlarm.getId_alarm());
 		   			}
-		   			if ((dialogAlarmActive == -1) && Utils.getPrefernciesBoolean(MainActivity.this, Settings.APP_SETTING_POP_UP, false)) {
+		   			if ((dialogAlarmActive == -1) && Utils.getPrefernciesBoolean(MainActivity.this, Settings.SETTING_POP_UP, false)) {
 		   				showAlarmDialog(obuAlarm.getId_alarm(), obuAlarm.getTitle(), obuAlarm.getMessage(), obuAlarm.getAction(), obuAlarm.getType());
 		   			}
 		   		}
@@ -946,13 +945,13 @@ public class MainActivity extends Activity {
 	
 	public void beepVibrate(int vibrate, int sound) {
 	    try {
-	        if (sound == 1 && (Utils.getPrefernciesBoolean(this, Settings.APP_SETTING_PLAY_SOUND, false))) {
+	        if (sound == 1 && (Utils.getPrefernciesBoolean(this, Settings.SETTING_PLAY_SOUND, false))) {
 		    	Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 		        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
 		        r.play();
 	        }
 	    } catch (Exception e) {}
-	    if (vibrate == 1 && (Utils.getPrefernciesBoolean(this, Settings.APP_SETTING_VIBRATE, false))) {
+	    if (vibrate == 1 && (Utils.getPrefernciesBoolean(this, Settings.SETTING_VIBRATE, false))) {
 	    	((Vibrator)getSystemService(VIBRATOR_SERVICE)).vibrate(1000);
 	    }
 	}

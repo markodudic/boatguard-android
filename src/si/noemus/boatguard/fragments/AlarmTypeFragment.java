@@ -35,29 +35,29 @@ public class AlarmTypeFragment  extends Fragment {
         final View v = inflater.inflate(R.layout.fragment_alarm_type, null);
 
         final Switch switchPlaySound = (Switch) v.findViewById(R.id.switch_play_sound);
-		switchPlaySound.setChecked(Utils.getPrefernciesBoolean(getActivity(), Settings.APP_SETTING_PLAY_SOUND, false));
+		switchPlaySound.setChecked(Utils.getPrefernciesBoolean(getActivity(), Settings.SETTING_PLAY_SOUND, false));
 		switchPlaySound.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v1) {
-				Utils.savePrefernciesBoolean(getActivity(), Settings.APP_SETTING_PLAY_SOUND, switchPlaySound.isChecked());
+				Utils.savePrefernciesBoolean(getActivity(), Settings.SETTING_PLAY_SOUND, switchPlaySound.isChecked());
 			}
 		});	
 
 		final Switch switchVibrate = (Switch) v.findViewById(R.id.switch_vibrate);
-        switchVibrate.setChecked(Utils.getPrefernciesBoolean(getActivity(), Settings.APP_SETTING_VIBRATE, false));
+        switchVibrate.setChecked(Utils.getPrefernciesBoolean(getActivity(), Settings.SETTING_VIBRATE, false));
         switchVibrate.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v1) {
-				Utils.savePrefernciesBoolean(getActivity(), Settings.APP_SETTING_VIBRATE, switchVibrate.isChecked());
+				Utils.savePrefernciesBoolean(getActivity(), Settings.SETTING_VIBRATE, switchVibrate.isChecked());
 			}
 		});	
 
 		final Switch switchPopUp = (Switch) v.findViewById(R.id.switch_pop_up);
-		switchPopUp.setChecked(Utils.getPrefernciesBoolean(getActivity(), Settings.APP_SETTING_POP_UP, false));
+		switchPopUp.setChecked(Utils.getPrefernciesBoolean(getActivity(), Settings.SETTING_POP_UP, false));
 		switchPopUp.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v1) {
-				Utils.savePrefernciesBoolean(getActivity(), Settings.APP_SETTING_POP_UP, switchPopUp.isChecked());
+				Utils.savePrefernciesBoolean(getActivity(), Settings.SETTING_POP_UP, switchPopUp.isChecked());
 			}
 		});	
 		

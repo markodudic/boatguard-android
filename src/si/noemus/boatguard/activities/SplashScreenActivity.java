@@ -1,7 +1,9 @@
 package si.noemus.boatguard.activities;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map.Entry;
 
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -17,6 +19,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,21 +32,29 @@ public class SplashScreenActivity extends Activity {
  
     private static int SPLASH_TIME_OUT = 200;
  
+	public static HashMap<String,String> languages;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
  
-        int lang = Utils.getPrefernciesInt(SplashScreenActivity.this, Settings.SETTING_LANG);
-        if (lang == -1) {
+    	languages = new HashMap<String,String>() {{
+		    put("en", SplashScreenActivity.this.getString(R.string.language_en));
+		    put("sl", SplashScreenActivity.this.getString(R.string.language_slo));
+		    put("hr", SplashScreenActivity.this.getString(R.string.language_hr));
+		}};
+
+		String lang = Utils.getPrefernciesString(SplashScreenActivity.this, Settings.SETTING_LANG);
+        if (lang == null) {
         	String langDefault = Locale.getDefault().getLanguage();
-        	if (langDefault.equals("ru") || (langDefault.equals("hr")) || (langDefault.equals("it"))){
-        		Settings.setLanguage(SplashScreenActivity.this, langDefault);
+        	if (langDefault.equals("sl") || (langDefault.equals("hr"))){
+        		setLanguage(SplashScreenActivity.this, langDefault);
             } else {
-            	Settings.setLanguage(SplashScreenActivity.this, "en"); 
+            	setLanguage(SplashScreenActivity.this, "en"); 
             };
         } else {
-        	Settings.setLanguage(SplashScreenActivity.this, Settings.languages.get(lang));
+        	setLanguage(SplashScreenActivity.this, lang);
         }
         
 
@@ -105,4 +116,14 @@ public class SplashScreenActivity extends Activity {
         }, SPLASH_TIME_OUT);
     }
  
+	public static void setLanguage(Context context, String lang) {
+    	Locale locale = new Locale(lang);
+	    Locale.setDefault(locale);
+	    Configuration config = new Configuration();
+	    config.locale = locale;
+	    context.getResources().updateConfiguration(config, null);
+	    Utils.savePrefernciesString(context, Settings.SETTING_LANG, lang);
+    }	
+    
+    
 }

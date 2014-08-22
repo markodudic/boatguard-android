@@ -3,6 +3,7 @@ package si.noemus.boatguard.activities;
 import si.noemus.boatguard.R;
 import si.noemus.boatguard.fragments.AlarmTypeFragment;
 import si.noemus.boatguard.fragments.AnchorDriftingFragment;
+import si.noemus.boatguard.fragments.AppAppearanceFragment;
 import si.noemus.boatguard.fragments.GeoFenceFragment;
 import si.noemus.boatguard.fragments.SettingsFragment;
 import si.noemus.boatguard.utils.Settings;
@@ -12,7 +13,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -43,8 +43,7 @@ public class SettingsActivity extends Activity {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         
-    	System.out.println("id="+extras.getInt("id"));
-        switch (extras.getInt("id")) {
+    	switch (extras.getInt("id")) {
 	        case -1:
 	            fragmentTransaction.add(R.id.fragment_settings, new SettingsFragment(), extras.getString("title"));
 	            fragmentTransaction.commit();
@@ -62,16 +61,8 @@ public class SettingsActivity extends Activity {
 	            fragmentTransaction.commit();
 	        	break;
 	        case 8:
-		   		if (theme == R.style.AppThemeDay) {
-					Utils.savePrefernciesInt(this, Settings.SETTING_THEME, R.style.AppThemeNight);
-				} else {
-					Utils.savePrefernciesInt(this, Settings.SETTING_THEME, R.style.AppThemeDay);					
-				}
-				Intent i = new Intent(this, MainActivity.class);
-				startActivity(i);
-				
-				//finish();
-				//startActivity(getIntent());    	
+	            fragmentTransaction.add(R.id.fragment_settings, new AppAppearanceFragment(), extras.getString("title"));
+	            fragmentTransaction.commit();
 				break;
         }
                 

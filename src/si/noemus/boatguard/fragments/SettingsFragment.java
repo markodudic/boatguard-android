@@ -11,6 +11,7 @@ import si.noemus.boatguard.R.array;
 import si.noemus.boatguard.R.id;
 import si.noemus.boatguard.R.layout;
 import si.noemus.boatguard.R.string;
+import si.noemus.boatguard.activities.SplashScreenActivity;
 import si.noemus.boatguard.objects.ObuSetting;
 import si.noemus.boatguard.objects.State;
 import si.noemus.boatguard.utils.Comm;
@@ -82,7 +83,10 @@ public class SettingsFragment  extends Fragment {
         values[7] = "value";
         
         int theme = Utils.getPrefernciesInt(getActivity(), Settings.SETTING_THEME);
-        values[8] = theme == R.style.AppThemeDay?getResources().getString(R.string.day):getResources().getString(R.string.night);  
+        String lang = Utils.getPrefernciesString(getActivity(), Settings.SETTING_LANG);
+        System.out.println("LANG="+lang);
+        values[8] = (theme == R.style.AppThemeDay?getResources().getString(R.string.day):getResources().getString(R.string.night)) + 
+        			(SplashScreenActivity.languages.get(lang)!=null?" / "+SplashScreenActivity.languages.get(lang):"");  
 
         FragmentManager fragmentManager = getFragmentManager();
         for (int i=0; i<settingsItems.length; i++) {
