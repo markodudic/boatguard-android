@@ -80,7 +80,7 @@ public class SplashScreenActivity extends Activity {
 	    	   						"login?type=login" + 
 	    	   						"&username=" + username + 
 	    	   						"&password=" + password +
-	    	   						"&obu_sn=" + obu_id + 
+	    	   						"&obu_sn=" + obu_id +
 									"&app_version=" + URLEncoder.encode(pInfo.versionName) +
 									"&device_name="+URLEncoder.encode(Build.MODEL)+
 									"&device_platform="+Build.VERSION.SDK_INT+

@@ -80,7 +80,7 @@ public class SettingsFragment  extends Fragment {
         values[4] = "value";
         values[5] = "";
         values[6] = "value";
-        values[7] = "value";
+        values[7] = "";
         
         int theme = Utils.getPrefernciesInt(getActivity(), Settings.SETTING_THEME);
         String lang = Utils.getPrefernciesString(getActivity(), Settings.SETTING_LANG);

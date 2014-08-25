@@ -1,0 +1,17 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:padding="6dip" >
+    
+    <si.noemus.boatguard.components.TextViewFont
+        android:id="@+id/tv_history"
+        style="@style/SettingsItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:text="label"
+        boatguard:font_name="@string/font_regular" />
+    
+</LinearLayout>

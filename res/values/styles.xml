@@ -235,9 +235,12 @@
 	   <item name="android:background">?settings_button</item>
    </style>	     
    
-   <style name="SettingsItemTitle">
+   <style name="SettingsItem">
        <item name="android:textSize">@dimen/small_text_size</item>
        <item name="android:textColor">?text_default</item>
+   </style>	   
+   
+   <style name="SettingsItemTitle" parent="SettingsItem">
        <item name="android:gravity">bottom</item>
    </style>	   
 
