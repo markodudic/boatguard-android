@@ -1,7 +1,10 @@
 package si.noemus.boatguard.utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.json.JSONArray;
@@ -15,7 +18,6 @@ import si.noemus.boatguard.objects.ObuComponent;
 import si.noemus.boatguard.objects.ObuSetting;
 import si.noemus.boatguard.objects.State;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.view.Gravity;
 import android.widget.Toast;
@@ -67,6 +69,7 @@ public class Settings {
 	public static String APP_STATE_ANCHOR_DRIFTING = "ANCHOR_DRIFTING";
 	public static String APP_STATE_BATTERY_ALARM_VALUE = "BATTERY_ALARM_VALUE";
 	public static String APP_STATE_ACCU_DISCONNECT = "ACCU_DISCONNECT";
+	public static String APP_STATE_GEO_FENCE_ALARM_REFRESH_TIME = "GEO_FENCE_ALARM_REFRESH_TIME";
 			
 	public static String ALARM_GREEN = "G";
 	public static String ALARM_RED = "R";
@@ -76,6 +79,8 @@ public class Settings {
 	public static HashMap<String,State> states = new HashMap<String,State>(){};
 	public static HashMap<Integer,ObuSetting> obuSettings = new HashMap<Integer,ObuSetting>(){};
 	public static HashMap<Integer,ObuComponent> obuComponents = new HashMap<Integer,ObuComponent>(){};
+	
+	public static int OBU_REFRESH_TIME = 5;
 			
 	private static Gson gson = new Gson();																					
     
@@ -141,7 +146,8 @@ public class Settings {
     	   			//System.out.println(obuSetting.toString());
     	   			obuSettings.put(obuSetting.getId_setting(), obuSetting);
     	   			if (obuSetting.getCode().equals(SETTING_REFRESH_TIME)) {
-    	   				Utils.savePrefernciesInt(context, SETTING_REFRESH_TIME, Integer.parseInt(obuSetting.getValue())*60*1000);
+    	   				OBU_REFRESH_TIME = Integer.parseInt(obuSetting.getValue())*60*1000;
+    	   				Utils.savePrefernciesInt(context, SETTING_REFRESH_TIME, OBU_REFRESH_TIME);
     	   			}
     	   				
     	   		}  	        
@@ -154,6 +160,33 @@ public class Settings {
     	}
     }
     
+    public static Integer getObuSetting(String setting) {
+    	Iterator<Entry<Integer, ObuSetting>> i = obuSettings.entrySet().iterator();
+    	while(i.hasNext()) { 
+			Map.Entry map = (Map.Entry)i.next(); 
+			ObuSetting obuSetting = (ObuSetting) map.getValue();
+			if (obuSetting.getCode().equals(setting)) {
+				return (Integer) map.getKey();
+			}
+    	}
+    	
+    	return null;
+    }
+    
+    
+    public static void setObuSettings(Context context)
+    {
+	    List<ObuSetting> list = new ArrayList<ObuSetting>(obuSettings.values());
+	    Gson gson = new Gson();
+	    String data = gson.toJson(list);
+	    
+	    String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
+	    
+	   	String urlString = context.getString(R.string.server_url) + "setobusettings?obuid="+obuId;
+	    if (Utils.isNetworkConnected(context, true)) {
+	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
+	    }
+    }
     
     public static void getObuComponents(Context context) {
     	String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);

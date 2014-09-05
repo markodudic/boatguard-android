@@ -330,7 +330,7 @@ public class MainActivity extends Activity {
         Settings.getObuSettings(this);  
         Settings.getObuComponents(this);  
         showObuComponents();
-   		handler.postDelayed(startRefresh, 1000);
+   		handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
         
 	}
 
@@ -610,7 +610,7 @@ public class MainActivity extends Activity {
 		Iterator i = set.iterator();
 		while(i.hasNext()) { 
 			Map.Entry map = (Map.Entry)i.next(); 
-			System.out.println(map.getValue());
+			//System.out.println(map.getValue());
 			ObuState obuState = (ObuState)map.getValue();
 			int idState = obuState.getId_state();
 	
@@ -623,6 +623,7 @@ public class MainActivity extends Activity {
 				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
 				String geofence = obuState.getValue();
 				cancelAlarmAnimation(component, null, false);
+				Settings.OBU_REFRESH_TIME = Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_REFRESH_TIME);
 				
 				if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_DISABLED)).getValue())) {
 					imageView.setImageResource(R.drawable.ic_geofence_disabled);
@@ -632,6 +633,9 @@ public class MainActivity extends Activity {
 				} 
 				else if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ALARM)).getValue())) {
 					showAlarmAnimation(component, imageView, R.drawable.ic_geofence_alarm_1, R.drawable.ic_geofence_alarm, true);
+					Settings.OBU_REFRESH_TIME = Integer.parseInt(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ALARM_REFRESH_TIME)).getValue());
+					handler.removeCallbacks(startRefresh);
+					handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
 				}
 				else {
 					imageView.setImageResource(android.R.color.transparent);
@@ -960,7 +964,8 @@ public class MainActivity extends Activity {
 	   @Override
 	   public void run() {
 		   getObudata();
-		   handler.postDelayed(startRefresh, Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_REFRESH_TIME));
+		   System.out.println("****="+Settings.OBU_REFRESH_TIME);
+		   handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
 	   }
 	};
 		

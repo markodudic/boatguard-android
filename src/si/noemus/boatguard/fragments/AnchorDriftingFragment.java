@@ -75,16 +75,7 @@ public class AnchorDriftingFragment  extends Fragment {
 		        obuSettings.get(((State)Settings.states.get(Settings.STATE_ANCHOR)).getId()).setValue(switchanchorDrifting.isChecked()?"1":"0");
 		        obuSettings.get(((State)Settings.states.get(Settings.STATE_ANCHOR_DRIFTING)).getId()).setValue(seekbaranchorDrifting.getProgress()+"");
 		        
-		        List<ObuSetting> list = new ArrayList<ObuSetting>(obuSettings.values());
-		        Gson gson = new Gson();
-		        String data = gson.toJson(list);
-		        
-		        String obuId = Utils.getPrefernciesString(getActivity(), Settings.SETTING_OBU_ID);
-		        
-		       	String urlString = getActivity().getString(R.string.server_url) + "setobusettings?obuid="+obuId;
-		        if (Utils.isNetworkConnected(getActivity(), true)) {
-		        	AsyncTask at = new Comm().execute(urlString, "json", data); 
-		        }
+		        Settings.setObuSettings(getActivity());
 		        
 		        getActivity().finish();
 			}

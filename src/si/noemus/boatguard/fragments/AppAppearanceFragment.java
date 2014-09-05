@@ -1,10 +1,13 @@
 package si.noemus.boatguard.fragments;
 
+import java.util.HashMap;
+
 import si.noemus.boatguard.R;
 import si.noemus.boatguard.activities.MainActivity;
 import si.noemus.boatguard.activities.SettingsActivity;
 import si.noemus.boatguard.activities.SplashScreenActivity;
 import si.noemus.boatguard.components.TextViewFont;
+import si.noemus.boatguard.objects.ObuSetting;
 import si.noemus.boatguard.utils.Settings;
 import si.noemus.boatguard.utils.Utils;
 import android.app.Fragment;
@@ -14,7 +17,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Switch;
 
 public class AppAppearanceFragment  extends Fragment {
@@ -23,6 +30,25 @@ public class AppAppearanceFragment  extends Fragment {
         /** Inflating the layout for this fragment **/
         final View v = inflater.inflate(R.layout.fragment_app_appearance, null);
 
+        final Spinner spinnerRefreshTime = (Spinner) v.findViewById(R.id.spinner_refresh_time);
+        spinnerRefreshTime.setSelection(getIndex(spinnerRefreshTime, Utils.getPrefernciesInt(getActivity(), Settings.SETTING_REFRESH_TIME)/60/1000+""), false);
+        spinnerRefreshTime.setOnItemSelectedListener(new OnItemSelectedListener() {
+ 			@Override
+ 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+ 				String val = (String)spinnerRefreshTime.getSelectedItem();
+		        HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
+		        obuSettings.get(Settings.getObuSetting(Settings.SETTING_REFRESH_TIME)).setValue(val.length()==1?'0'+val:val);
+		        Settings.setObuSettings(getActivity());
+			}
+
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+				
+			}
+		});	
+        
         final Switch switchColorTheme = (Switch) v.findViewById(R.id.switch_color_theme);
         switchColorTheme.setChecked(Utils.getPrefernciesInt(getActivity(), Settings.SETTING_THEME) == R.style.AppThemeDay);
         switchColorTheme.setOnClickListener(new OnClickListener() {
@@ -93,6 +119,19 @@ public class AppAppearanceFragment  extends Fragment {
 
         return v;
     }
+    
+    private int getIndex(Spinner spinner, String myString)
+    {
+     int index = 0;
+
+     for (int i=0;i<spinner.getCount();i++){
+      if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+       index = i;
+       i=spinner.getCount();
+      }
+     }
+     return index;
+    } 
     
     private void changeLanguage(String lang) {
 		SplashScreenActivity.setLanguage(getActivity(), lang); 

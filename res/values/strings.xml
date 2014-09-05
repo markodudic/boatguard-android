@@ -40,7 +40,7 @@
         <item >ALARM TYPE</item>
         <item >MY ACCOUNT</item>
         <item >HISTORY</item>
-        <item >APP APPEARANCE</item>
+        <item >APP SETTINGS</item>
    </string-array>	
 
     
@@ -58,6 +58,15 @@
     <string name="vibrate">VIBRATE</string>
     <string name="pop_up">DISPLAY ALERT POP-UP</string>
 
+    <string name="refresh_time">REFRESH TIME (MIN)</string>
+    <string name="choose_refresh_time">Refresh time</string>
+    <string-array name="refresh">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>30</item>
+        <item>59</item>
+    </string-array>
     <string name="color_theme">COLOR THEME</string>
     <string name="language_en">ENGLISH LANGUAGE</string>
     <string name="language_slo">SLOVENIAN LANGUAGE</string>

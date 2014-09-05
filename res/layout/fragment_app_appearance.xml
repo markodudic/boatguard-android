@@ -16,6 +16,29 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
 	        android:layout_weight="1"
+	        android:text="@string/refresh_time"
+	        boatguard:font_name="@string/font_medium" />
+			    
+		<Spinner
+		    android:id="@+id/spinner_refresh_time"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center_vertical|right"
+		    android:entries="@array/refresh"
+			android:prompt="@string/choose_refresh_time"
+			android:layout_weight="2" />
+    </LinearLayout>
+    
+	<LinearLayout 
+		android:layout_width="match_parent"
+	    android:layout_height="@dimen/settings_height"
+	    android:orientation="horizontal" >
+	    
+	    <si.noemus.boatguard.components.TextViewFont
+	        style="@style/SettingsText"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
 	        android:text="@string/color_theme"
 	        boatguard:font_name="@string/font_medium" />
 			    
