@@ -31,6 +31,7 @@ public class AppAppearanceFragment  extends Fragment {
         final View v = inflater.inflate(R.layout.fragment_app_appearance, null);
 
         final Spinner spinnerRefreshTime = (Spinner) v.findViewById(R.id.spinner_refresh_time);
+        
         spinnerRefreshTime.setSelection(getIndex(spinnerRefreshTime, Utils.getPrefernciesInt(getActivity(), Settings.SETTING_REFRESH_TIME)/60/1000+""), false);
         spinnerRefreshTime.setOnItemSelectedListener(new OnItemSelectedListener() {
  			@Override
@@ -39,6 +40,7 @@ public class AppAppearanceFragment  extends Fragment {
 		        HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
 		        obuSettings.get(Settings.getObuSetting(Settings.SETTING_REFRESH_TIME)).setValue(val.length()==1?'0'+val:val);
 		        Settings.setObuSettings(getActivity());
+		        Utils.savePrefernciesInt(getActivity(), Settings.SETTING_REFRESH_TIME, Integer.parseInt(val)*60*1000);
 			}
 
 

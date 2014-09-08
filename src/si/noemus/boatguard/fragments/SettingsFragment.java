@@ -79,7 +79,14 @@ public class SettingsFragment  extends Fragment {
         
         values[3] = "value";
         values[4] = "value";
-        values[5] = "";
+        
+        boolean playSound = Utils.getPrefernciesBoolean(getActivity(), Settings.SETTING_PLAY_SOUND, false);
+        boolean vibrate = Utils.getPrefernciesBoolean(getActivity(), Settings.SETTING_VIBRATE, false);
+        boolean popUp = Utils.getPrefernciesBoolean(getActivity(), Settings.SETTING_POP_UP, false);
+		values[5] = (playSound?getResources().getString(R.string.play_sound):"") + " / " + 
+					(vibrate?getResources().getString(R.string.vibrate):"") + " / " + 
+					(popUp?getResources().getString(R.string.pop_up):"");
+        
         values[6] = "value";
         values[7] = "";
         

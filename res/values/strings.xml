@@ -54,10 +54,14 @@
    <string name="anchor_drifting_current">DEFINE CURRENT LOCATION AS ANCHOR</string>
    <string name="anchor_drifting_define">DEFINE</string>
 
-    <string name="play_sound">PLAY SOUND</string>
-    <string name="vibrate">VIBRATE</string>
-    <string name="pop_up">DISPLAY ALERT POP-UP</string>
-
+   <string name="alarm_notifications">ALARM NOTIFICATIONS</string>
+   <string name="alarm_settings">ALARM SETTINGS</string>
+   <string name="play_sound">PLAY SOUND</string>
+   <string name="vibrate">VIBRATE</string>
+   <string name="pop_up">DISPLAY ALERT POP-UP</string>
+   <string name="send_email">SEND EMAIL</string>
+   <string name="alarm_friends">ALARM FRIENDS</string>
+   
     <string name="refresh_time">REFRESH TIME (MIN)</string>
     <string name="choose_refresh_time">Refresh time</string>
     <string-array name="refresh">

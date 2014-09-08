@@ -14,6 +14,7 @@ import org.json.JSONTokener;
 import si.noemus.boatguard.R;
 import si.noemus.boatguard.objects.Alarm;
 import si.noemus.boatguard.objects.AppSetting;
+import si.noemus.boatguard.objects.ObuAlarm;
 import si.noemus.boatguard.objects.ObuComponent;
 import si.noemus.boatguard.objects.ObuSetting;
 import si.noemus.boatguard.objects.State;
@@ -79,6 +80,7 @@ public class Settings {
 	public static HashMap<String,State> states = new HashMap<String,State>(){};
 	public static HashMap<Integer,ObuSetting> obuSettings = new HashMap<Integer,ObuSetting>(){};
 	public static HashMap<Integer,ObuComponent> obuComponents = new HashMap<Integer,ObuComponent>(){};
+	public static HashMap<Integer,ObuAlarm> obuAlarms = new HashMap<Integer,ObuAlarm>(){};
 	
 	public static int OBU_REFRESH_TIME = 5;
 			
@@ -210,6 +212,44 @@ public class Settings {
    	        	toast.show();
    	   		}
     	}
+    }    
+    
+    public static void getObuAlarms(Context context) {
+    	String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
+   		
+    	String urlString = context.getString(R.string.server_url) + "getobualarms?obuid="+obuId;
+    	if (Utils.isNetworkConnected(context, true)) {
+  			try {
+	        	AsyncTask at = new Comm().execute(urlString, null); 
+	            String res = (String) at.get();
+	            
+	            JSONArray jsonObuAlarms = (JSONArray)new JSONTokener(res).nextValue();
+	            obuAlarms.clear();
+    	   		for (int i=0; i< jsonObuAlarms.length(); i++) {
+    	   			ObuAlarm obuAlarm = gson.fromJson(jsonObuAlarms.get(i).toString(), ObuAlarm.class);
+    	   			obuAlarms.put(obuAlarm.getId_alarm(), obuAlarm);	
+    	   		}
+	        } catch (Exception e) {
+   	        	e.printStackTrace();
+   	        	Toast toast = Toast.makeText(context, context.getString(R.string.json_error), Toast.LENGTH_LONG);
+   	        	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+   	        	toast.show();
+   	   		}
+    	}
+    }     
+    
+    public static void setObuAlarms(Context context)
+    {
+	    List<ObuAlarm> list = new ArrayList<ObuAlarm>(obuAlarms.values());
+	    Gson gson = new Gson();
+	    String data = gson.toJson(list);
+	    
+	    String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
+	    
+	   	String urlString = context.getString(R.string.server_url) + "setobualarms?obuid="+obuId;
+	    if (Utils.isNetworkConnected(context, true)) {
+	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
+	    }
     }    
 }
 

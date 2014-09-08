@@ -329,6 +329,7 @@ public class MainActivity extends Activity {
         Settings.getSettings(this);        
         Settings.getObuSettings(this);  
         Settings.getObuComponents(this);  
+        Settings.getObuAlarms(this);  
         showObuComponents();
    		handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
         
