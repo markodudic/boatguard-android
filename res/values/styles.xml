@@ -124,6 +124,7 @@
    </style>	
    
    <style name="LoginEditText" parent="LoginRememberText">
+       <item name="android:textColor">@color/text_default_day</item>
        <item name="android:layout_height">@dimen/login_text_height</item>
        <item name="android:paddingLeft">@dimen/login_edit_padding</item>
        <item name="android:background">@drawable/login_background</item>

@@ -14,6 +14,7 @@ import org.json.JSONTokener;
 import si.noemus.boatguard.R;
 import si.noemus.boatguard.objects.Alarm;
 import si.noemus.boatguard.objects.AppSetting;
+import si.noemus.boatguard.objects.Customer;
 import si.noemus.boatguard.objects.ObuAlarm;
 import si.noemus.boatguard.objects.ObuComponent;
 import si.noemus.boatguard.objects.ObuSetting;
@@ -81,6 +82,8 @@ public class Settings {
 	public static HashMap<Integer,ObuSetting> obuSettings = new HashMap<Integer,ObuSetting>(){};
 	public static HashMap<Integer,ObuComponent> obuComponents = new HashMap<Integer,ObuComponent>(){};
 	public static HashMap<Integer,ObuAlarm> obuAlarms = new HashMap<Integer,ObuAlarm>(){};
+	
+	public static Customer customer = new Customer();
 	
 	public static int OBU_REFRESH_TIME = 5;
 			
@@ -250,7 +253,39 @@ public class Settings {
 	    if (Utils.isNetworkConnected(context, true)) {
 	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
 	    }
-    }    
+    }  
+    
+    public static void getCustomer(Context context) {
+    	String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
+   		
+    	String urlString = context.getString(R.string.server_url) + "getcustomer?obuid="+obuId;
+    	if (Utils.isNetworkConnected(context, true)) {
+  			try {
+	        	AsyncTask at = new Comm().execute(urlString, null); 
+	            String res = (String) at.get();
+	            customer = gson.fromJson(res, Customer.class);
+	        } catch (Exception e) {
+   	        	e.printStackTrace();
+   	        	Toast toast = Toast.makeText(context, context.getString(R.string.json_error), Toast.LENGTH_LONG);
+   	        	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+   	        	toast.show();
+   	   		}
+    	}
+    }
+
+    public static void setCustomer(Context context)
+    {
+	    Gson gson = new Gson();
+	    String data = gson.toJson(customer);
+	    
+	    String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
+	    
+	   	String urlString = context.getString(R.string.server_url) + "setcustomer?obuid="+obuId;
+	    if (Utils.isNetworkConnected(context, true)) {
+	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
+	    }
+    }     
+    
 }
 
 

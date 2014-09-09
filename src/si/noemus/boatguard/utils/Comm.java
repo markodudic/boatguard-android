@@ -31,7 +31,7 @@ public class Comm extends AsyncTask<String, String, String> {
 			} catch (UnsupportedEncodingException e) {
 				e.getLocalizedMessage();
 			}
-			System.out.println("postingString="+postingString);
+			System.out.println("postingString="+params[2]);
 			httpPost.setEntity(postingString);
             httpPost.setHeader("Content-type", "application/json; charset=utf-8");
        }

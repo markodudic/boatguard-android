@@ -13,6 +13,10 @@
     <string name="remember_me">REMEMBER ME</string>
     <string name="register">REGISTER</string>
     <string name="login">LOGIN</string>
+    <string name="name">NAME</string>
+    <string name="surname">SURNAME</string>
+    <string name="boatname">BOATNAME</string>
+    <string name="email">E-MAIL</string>
     <string name="ok">OK</string>
     <string name="cancel">CANCEL</string>
     <string name="last_update">LAST UPDATE:</string>
@@ -41,6 +45,7 @@
         <item >MY ACCOUNT</item>
         <item >HISTORY</item>
         <item >APP SETTINGS</item>
+        <item >LOG OUT</item>
    </string-array>	
 
     

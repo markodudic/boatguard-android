@@ -6,6 +6,7 @@ import si.noemus.boatguard.fragments.AnchorDriftingFragment;
 import si.noemus.boatguard.fragments.AppAppearanceFragment;
 import si.noemus.boatguard.fragments.GeoFenceFragment;
 import si.noemus.boatguard.fragments.HistoryFragment;
+import si.noemus.boatguard.fragments.MyAccountFragment;
 import si.noemus.boatguard.fragments.SettingsFragment;
 import si.noemus.boatguard.utils.Settings;
 import si.noemus.boatguard.utils.Utils;
@@ -14,6 +15,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -61,6 +63,10 @@ public class SettingsActivity extends Activity {
 	            fragmentTransaction.add(R.id.fragment_settings, new AlarmTypeFragment(), extras.getString("title"));
 	            fragmentTransaction.commit();
 	        	break;
+	        case 6:
+	            fragmentTransaction.add(R.id.fragment_settings, new MyAccountFragment(), extras.getString("title"));
+	            fragmentTransaction.commit();
+				break;
 	        case 7:
 	            fragmentTransaction.add(R.id.fragment_settings, new HistoryFragment(), extras.getString("title"));
 	            fragmentTransaction.commit();
@@ -68,6 +74,12 @@ public class SettingsActivity extends Activity {
 	        case 8:
 	            fragmentTransaction.add(R.id.fragment_settings, new AppAppearanceFragment(), extras.getString("title"));
 	            fragmentTransaction.commit();
+				break;
+	        case 9:
+    	   		Utils.savePrefernciesBoolean(SettingsActivity.this, Settings.SETTING_REMEMBER_ME, false);
+	   			Intent i = new Intent(SettingsActivity.this, LoginActivity.class);
+	   			startActivity(i);						
+	   			finish();
 				break;
         }
                 
