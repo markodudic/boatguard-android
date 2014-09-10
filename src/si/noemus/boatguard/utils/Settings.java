@@ -15,6 +15,7 @@ import si.noemus.boatguard.R;
 import si.noemus.boatguard.objects.Alarm;
 import si.noemus.boatguard.objects.AppSetting;
 import si.noemus.boatguard.objects.Customer;
+import si.noemus.boatguard.objects.Friend;
 import si.noemus.boatguard.objects.ObuAlarm;
 import si.noemus.boatguard.objects.ObuComponent;
 import si.noemus.boatguard.objects.ObuSetting;
@@ -84,6 +85,7 @@ public class Settings {
 	public static HashMap<Integer,ObuAlarm> obuAlarms = new HashMap<Integer,ObuAlarm>(){};
 	
 	public static Customer customer = new Customer();
+	public static List<Friend> friends = new ArrayList<Friend>();
 	
 	public static int OBU_REFRESH_TIME = 5;
 			
@@ -185,9 +187,7 @@ public class Settings {
 	    Gson gson = new Gson();
 	    String data = gson.toJson(list);
 	    
-	    String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
-	    
-	   	String urlString = context.getString(R.string.server_url) + "setobusettings?obuid="+obuId;
+	    String urlString = context.getString(R.string.server_url) + "setobusettings";
 	    if (Utils.isNetworkConnected(context, true)) {
 	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
 	    }
@@ -247,9 +247,7 @@ public class Settings {
 	    Gson gson = new Gson();
 	    String data = gson.toJson(list);
 	    
-	    String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
-	    
-	   	String urlString = context.getString(R.string.server_url) + "setobualarms?obuid="+obuId;
+	    String urlString = context.getString(R.string.server_url) + "setobualarms";
 	    if (Utils.isNetworkConnected(context, true)) {
 	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
 	    }
@@ -278,14 +276,45 @@ public class Settings {
 	    Gson gson = new Gson();
 	    String data = gson.toJson(customer);
 	    
-	    String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
-	    
-	   	String urlString = context.getString(R.string.server_url) + "setcustomer?obuid="+obuId;
+	    String urlString = context.getString(R.string.server_url) + "setcustomer";
 	    if (Utils.isNetworkConnected(context, true)) {
 	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
 	    }
     }     
+ 
     
+    public static void getFriends(Context context) {
+    	String urlString = context.getString(R.string.server_url) + "getfriends?customerid="+customer.getUid();
+    	if (Utils.isNetworkConnected(context, true)) {
+  			try {
+	        	AsyncTask at = new Comm().execute(urlString, null); 
+	            String res = (String) at.get();
+
+	            JSONArray jsonFriends = (JSONArray)new JSONTokener(res).nextValue();
+	            friends.clear();
+    	   		for (int i=0; i< jsonFriends.length(); i++) {
+    	   			Friend friend = gson.fromJson(jsonFriends.get(i).toString(), Friend.class);
+    	   			friends.add(friend);	
+    	   		}
+	        } catch (Exception e) {
+   	        	e.printStackTrace();
+   	        	Toast toast = Toast.makeText(context, context.getString(R.string.json_error), Toast.LENGTH_LONG);
+   	        	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+   	        	toast.show();
+   	   		}
+    	}
+    }
+
+    public static void setFriends(Context context)
+    {
+	    Gson gson = new Gson();
+	    String data = gson.toJson(friends);
+	    
+	    String urlString = context.getString(R.string.server_url) + "setfriends";
+	    if (Utils.isNetworkConnected(context, true)) {
+	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
+	    }
+    }       
 }
 
 
