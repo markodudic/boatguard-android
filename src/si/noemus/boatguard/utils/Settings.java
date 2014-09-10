@@ -281,7 +281,7 @@ public class Settings {
 	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
 	    }
     }     
- 
+
     
     public static void getFriends(Context context) {
     	String urlString = context.getString(R.string.server_url) + "getfriends?customerid="+customer.getUid();
@@ -290,6 +290,7 @@ public class Settings {
 	        	AsyncTask at = new Comm().execute(urlString, null); 
 	            String res = (String) at.get();
 
+	            System.out.println("RES="+res);
 	            JSONArray jsonFriends = (JSONArray)new JSONTokener(res).nextValue();
 	            friends.clear();
     	   		for (int i=0; i< jsonFriends.length(); i++) {
