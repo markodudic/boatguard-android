@@ -58,7 +58,10 @@ public class SettingsItemFragment  extends Fragment {
 		startActivity(i);
     }
     
-    public void setText(String text){
+    public void setText(String text, int id){
     	((TextViewFont)v.findViewById(R.id.text)).setText(text);
+    	if (id != 0) {
+    		((TextViewFont)v.findViewById(R.id.text)).setTextColor(getResources().getColor(id));
+    	}
     }    
 }

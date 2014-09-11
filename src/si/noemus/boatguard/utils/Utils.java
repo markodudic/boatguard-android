@@ -3,20 +3,13 @@ package si.noemus.boatguard.utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-
-import com.google.gson.Gson;
 
 import si.noemus.boatguard.R;
-import si.noemus.boatguard.objects.ObuSetting;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 
 public class Utils {
     public static final String PREFS_NAME = "si.noemus.boatguard.PREFS_FILE";
@@ -98,3 +91,6 @@ public class Utils {
     
 
 }
+
+
+

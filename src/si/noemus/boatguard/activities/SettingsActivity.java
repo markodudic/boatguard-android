@@ -1,6 +1,7 @@
 package si.noemus.boatguard.activities;
 
 import si.noemus.boatguard.R;
+import si.noemus.boatguard.fragments.AlarmContactsFragment;
 import si.noemus.boatguard.fragments.AlarmTypeFragment;
 import si.noemus.boatguard.fragments.AnchorDriftingFragment;
 import si.noemus.boatguard.fragments.AppAppearanceFragment;
@@ -45,7 +46,7 @@ public class SettingsActivity extends Activity {
  
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        
+       
     	switch (extras.getInt("id")) {
 	        case -1:
 	            fragmentTransaction.add(R.id.fragment_settings, new SettingsFragment(), extras.getString("title"));
@@ -57,6 +58,10 @@ public class SettingsActivity extends Activity {
 	        	break;
 	        case 2:
 	            fragmentTransaction.add(R.id.fragment_settings, new AnchorDriftingFragment(), extras.getString("title"));
+	            fragmentTransaction.commit();
+	        	break;
+	        case 4:
+	            fragmentTransaction.add(R.id.fragment_settings, new AlarmContactsFragment(), extras.getString("title"));
 	            fragmentTransaction.commit();
 	        	break;
 	        case 5:

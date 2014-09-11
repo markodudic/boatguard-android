@@ -138,6 +138,11 @@
        <item name="android:layout_height">@dimen/login_edit_height</item>
        <item name="android:layout_marginRight">@dimen/login_edit_padding</item>
    </style>	   
+
+   <style name="OkButtonText" parent="RegisterButtonText">
+       <item name="android:layout_marginRight">0dp</item>
+       <item name="android:textColor">?text_default</item>
+   </style>	   
    
    <style name="LoginButtonText" parent="RegisterButtonText">
        <item name="android:background">?text_default</item>
@@ -262,6 +267,24 @@
    <style name="AnchorDriftingSeekBar" parent="SettingsSeekBar">
 	   <item name="android:max">100</item>
    </style>	   
+
+   <style name="ReadOnlyTitle">
+       <item name="android:textColor">?text_default</item>
+       <item name="android:textSize">@dimen/component_text_size</item>
+       <item name="android:paddingTop">@dimen/login_edit_padding</item>
+       <item name="android:paddingLeft">@dimen/login_edit_padding</item>
+   </style>	
+   
+   <style name="ReadOnlyText" parent="ReadOnlyTitle">
+       <item name="android:textSize">@dimen/small_text_size</item>
+       <item name="android:paddingTop">0dp</item>
+       <item name="android:paddingBottom">@dimen/login_edit_padding</item>
+       </style>	
+
+   <style name="ReadOnlyBackground">
+       <item name="android:background">@drawable/text_background</item>
+   </style>	
+   
 </resources>
 
 

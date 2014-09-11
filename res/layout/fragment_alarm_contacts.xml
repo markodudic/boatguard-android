@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
+    style="@style/SettingsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    	
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?background"
+        android:id="@+id/lv_alarm_contacts"/>    
+        
+ 	<si.noemus.boatguard.components.TextViewFont
+        android:id="@+id/button_add_contact"
+        style="@style/OkButtonText"
+        boatguard:font_name="@string/font_semibold"
+    	android:layout_marginTop="20dp"
+    	android:layout_width="match_parent"
+        android:text="@string/add_contact" />        
+			
+</LinearLayout>

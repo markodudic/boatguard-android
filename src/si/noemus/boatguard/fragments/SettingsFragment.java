@@ -67,40 +67,58 @@ public class SettingsFragment  extends Fragment {
         super.onResume(); 
 
     	HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
-        String[] values = new String[settingsItems.length];
+        String[] text = new String[settingsItems.length];
+        int[] textColours = new int[settingsItems.length];
         
         String geoFence = obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).getValue();
-        values[0] = geoFence.endsWith("1")?getResources().getString(R.string.on):getResources().getString(R.string.off);
+        if (geoFence.endsWith("1")) {
+        	text[0] = getResources().getString(R.string.on);
+        }
+        else {
+        	text[0] = getResources().getString(R.string.off);
+            textColours[0]= R.color.alarm_red;
+        }
 
-        values[1] = "value";
+        text[1] = "value";
         
         String anchorDrifting = obuSettings.get(((State)Settings.states.get(Settings.STATE_ANCHOR)).getId()).getValue();
-        values[2] = anchorDrifting.endsWith("1")?getResources().getString(R.string.on):getResources().getString(R.string.off);
+        if (anchorDrifting.endsWith("1")) {
+        	text[2] = getResources().getString(R.string.on);
+        }
+        else {
+        	text[2] = getResources().getString(R.string.off);
+            textColours[2]= R.color.alarm_red;
+        }
         
-        values[3] = "value";
-        values[4] = "value";
+        text[3] = "value";
+        
+        String contacts = "";
+        for (int i=0; i<Settings.friends.size(); i++) {
+        	contacts += (contacts.length()>0?" / ":"") + Settings.friends.get(i).getName().toUpperCase() + " " + Settings.friends.get(i).getSurname().toUpperCase();
+        }
+        text[4] = contacts;
         
         boolean playSound = Utils.getPrefernciesBoolean(getActivity(), Settings.SETTING_PLAY_SOUND, false);
         boolean vibrate = Utils.getPrefernciesBoolean(getActivity(), Settings.SETTING_VIBRATE, false);
         boolean popUp = Utils.getPrefernciesBoolean(getActivity(), Settings.SETTING_POP_UP, false);
-		values[5] = (playSound?getResources().getString(R.string.play_sound):"") + " / " + 
-					(vibrate?getResources().getString(R.string.vibrate):"") + " / " + 
+        text[5] = (playSound?getResources().getString(R.string.play_sound):"") + (playSound&&vibrate?" / ":"") + 
+					(vibrate?getResources().getString(R.string.vibrate):"") + (((playSound&&!vibrate)||vibrate)&&popUp?" / ":"") + 
 					(popUp?getResources().getString(R.string.pop_up):"");
         
-        values[6] = Settings.customer.getName().toUpperCase()+" "+Settings.customer.getSurname().toUpperCase()+" / "+Settings.customer.getBoat_name().toUpperCase();
-        values[7] = "";
+        text[6] = Settings.customer.getName().toUpperCase()+" "+Settings.customer.getSurname().toUpperCase()+" / "+Settings.customer.getBoat_name().toUpperCase();
+        text[7] = "";
         
         int refreshTime = Utils.getPrefernciesInt(getActivity(), Settings.SETTING_REFRESH_TIME)/60/1000;
         int theme = Utils.getPrefernciesInt(getActivity(), Settings.SETTING_THEME);
         String lang = Utils.getPrefernciesString(getActivity(), Settings.SETTING_LANG);
-        values[8] = refreshTime +
+        text[8] = refreshTime +
         			(theme == R.style.AppThemeDay?" / "+getResources().getString(R.string.day):" / "+getResources().getString(R.string.night)) + 
         			(SplashScreenActivity.languages.get(lang)!=null?" / "+SplashScreenActivity.languages.get(lang):"");  
 
         FragmentManager fragmentManager = getFragmentManager();
         for (int i=0; i<settingsItems.length; i++) {
         	SettingsItemFragment item = (SettingsItemFragment)fragmentManager.findFragmentByTag(settingsItems[i]);
-        	item.setText(values[i]);
+        	item.setText(text[i],textColours[i]);
         }
         
     }    

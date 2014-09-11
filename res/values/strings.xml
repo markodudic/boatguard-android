@@ -26,6 +26,7 @@
     <string name="off">OFF</string>
     <string name="day">DAY</string>
     <string name="night">NIGHT</string>
+    <string name="add_contact">ADD CONTACT</string>
     
     
 	<string name="json_error">Nepravilen odgovor strežnika</string> 

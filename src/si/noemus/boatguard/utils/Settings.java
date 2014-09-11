@@ -82,7 +82,8 @@ public class Settings {
 	public static HashMap<String,State> states = new HashMap<String,State>(){};
 	public static HashMap<Integer,ObuSetting> obuSettings = new HashMap<Integer,ObuSetting>(){};
 	public static HashMap<Integer,ObuComponent> obuComponents = new HashMap<Integer,ObuComponent>(){};
-	public static HashMap<Integer,ObuAlarm> obuAlarms = new HashMap<Integer,ObuAlarm>(){};
+	//public static HashMap<Integer,ObuAlarm> obuAlarms = new HashMap<Integer,ObuAlarm>(){};
+	public static List<ObuAlarm> obuAlarms = new ArrayList<ObuAlarm>();
 	
 	public static Customer customer = new Customer();
 	public static List<Friend> friends = new ArrayList<Friend>();
@@ -230,7 +231,7 @@ public class Settings {
 	            obuAlarms.clear();
     	   		for (int i=0; i< jsonObuAlarms.length(); i++) {
     	   			ObuAlarm obuAlarm = gson.fromJson(jsonObuAlarms.get(i).toString(), ObuAlarm.class);
-    	   			obuAlarms.put(obuAlarm.getId_alarm(), obuAlarm);	
+    	   			obuAlarms.add(obuAlarm);	
     	   		}
 	        } catch (Exception e) {
    	        	e.printStackTrace();
@@ -243,9 +244,9 @@ public class Settings {
     
     public static void setObuAlarms(Context context)
     {
-	    List<ObuAlarm> list = new ArrayList<ObuAlarm>(obuAlarms.values());
+	    //List<ObuAlarm> list = new ArrayList<ObuAlarm>(obuAlarms.values());
 	    Gson gson = new Gson();
-	    String data = gson.toJson(list);
+	    String data = gson.toJson(obuAlarms);
 	    
 	    String urlString = context.getString(R.string.server_url) + "setobualarms";
 	    if (Utils.isNetworkConnected(context, true)) {
@@ -290,7 +291,6 @@ public class Settings {
 	        	AsyncTask at = new Comm().execute(urlString, null); 
 	            String res = (String) at.get();
 
-	            System.out.println("RES="+res);
 	            JSONArray jsonFriends = (JSONArray)new JSONTokener(res).nextValue();
 	            friends.clear();
     	   		for (int i=0; i< jsonFriends.length(); i++) {
