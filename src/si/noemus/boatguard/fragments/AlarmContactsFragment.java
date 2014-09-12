@@ -1,19 +1,22 @@
 package si.noemus.boatguard.fragments;
 
 import si.noemus.boatguard.R;
+import si.noemus.boatguard.activities.MainActivity;
+import si.noemus.boatguard.activities.SettingsActivity;
 import si.noemus.boatguard.components.TextViewFont;
 import si.noemus.boatguard.utils.Settings;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Switch;
 
 public class AlarmContactsFragment  extends Fragment {
 	protected LayoutInflater inflater;
@@ -25,14 +28,17 @@ public class AlarmContactsFragment  extends Fragment {
         this.inflater = inflater;
 
 	   	final AlarmContactsAdapter adapter = new AlarmContactsAdapter();
-   		ListView lvObuAlarms = (ListView)v.findViewById(R.id.lv_alarm_contacts);
-   		lvObuAlarms.setAdapter(adapter);
+   		ListView lvAlarmContacts = (ListView)v.findViewById(R.id.lv_alarm_contacts);
+   		lvAlarmContacts.setAdapter(adapter);
    		
    		TextViewFont btnAddContact = (TextViewFont) v.findViewById(R.id.button_add_contact);
         btnAddContact.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v1) {
-
+				Intent i = new Intent(getActivity(), SettingsActivity.class);
+				i.putExtra("id", -2);
+				i.putExtra("title", getResources().getString(R.string.phone_contacts));
+				startActivity(i);
 			}
 		});	
 

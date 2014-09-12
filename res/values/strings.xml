@@ -26,8 +26,10 @@
     <string name="off">OFF</string>
     <string name="day">DAY</string>
     <string name="night">NIGHT</string>
+    <string name="phone_contacts">PHONE CONTACTS</string>
+    <string name="alarm_contacts">ALARM CONTACTS</string>
     <string name="add_contact">ADD CONTACT</string>
-    
+    <string name="no_contacts">NO CONTACTS</string>
     
 	<string name="json_error">Nepravilen odgovor strežnika</string> 
 	<string name="json_title">Povezava na strežnik</string> 

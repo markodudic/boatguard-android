@@ -20,8 +20,12 @@ import si.noemus.boatguard.objects.ObuAlarm;
 import si.noemus.boatguard.objects.ObuComponent;
 import si.noemus.boatguard.objects.ObuSetting;
 import si.noemus.boatguard.objects.State;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -87,6 +91,7 @@ public class Settings {
 	
 	public static Customer customer = new Customer();
 	public static List<Friend> friends = new ArrayList<Friend>();
+	public static List<Friend> contacts = new ArrayList<Friend>();
 	
 	public static int OBU_REFRESH_TIME = 5;
 			
@@ -315,7 +320,53 @@ public class Settings {
 	    if (Utils.isNetworkConnected(context, true)) {
 	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
 	    }
-    }       
+    }      
+    
+    public static void readContacts(Context context){
+        ContentResolver cr = context.getContentResolver();
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, Phone.DISPLAY_NAME + " ASC");
+        contacts.clear();
+        	
+        if (cur.getCount() > 0) {
+           while (cur.moveToNext()) {
+        	   Friend contact = new Friend();
+        	   contact.setId_customer(customer.getUid());
+        	   
+               String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+               String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+               if (name == null) continue;
+               if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+            	   contact.setUid(Integer.parseInt(id));
+                   contact.setName(name);
+                   contact.setSurname("");
+                   
+                   Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,
+                                          ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",
+                                          new String[]{id}, null);
+                   while (pCur.moveToNext()) {
+                         String phone = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                         contact.setNumber(phone!=null?phone:"");
+                   }
+                   pCur.close();
+
+                  Cursor emailCur = cr.query(
+                           ContactsContract.CommonDataKinds.Email.CONTENT_URI,
+                           null,
+                           ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?",
+                           new String[]{id}, null);
+                   while (emailCur.moveToNext()) {
+                       String email = emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+                       contact.setEmail(email!=null?email:"");
+                   }
+                   emailCur.close();
+
+                   contacts.add(contact);
+               }
+          }
+      }
+      System.out.println("CONTACTS="+contacts.size());  
+   }
+
 }
 
 

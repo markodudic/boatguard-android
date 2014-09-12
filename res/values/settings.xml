@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources> 
-	<!-- string name="server_url">http://93.103.12.155:8080/boatguard/</string-->
-	<string name="server_url">http://192.168.1.70:8080/boatguard/</string>
+	<string name="server_url">http://93.103.12.155:8080/boatguard/</string>
+	<!-- string name="server_url">http://192.168.1.70:8080/boatguard/</string-->
 	
 	<string name="font_extrabold">fonts/Dosis-ExtraBold.otf</string>
 	<string name="font_bold">fonts/Dosis-Bold.otf</string>

@@ -1,38 +1,20 @@
 package si.noemus.boatguard.fragments;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
-import org.json.JSONObject;
 
 import si.noemus.boatguard.R;
-import si.noemus.boatguard.R.array;
-import si.noemus.boatguard.R.id;
-import si.noemus.boatguard.R.layout;
-import si.noemus.boatguard.R.string;
-import si.noemus.boatguard.activities.MainActivity;
 import si.noemus.boatguard.activities.SplashScreenActivity;
 import si.noemus.boatguard.objects.ObuSetting;
 import si.noemus.boatguard.objects.State;
-import si.noemus.boatguard.utils.Comm;
 import si.noemus.boatguard.utils.Settings;
 import si.noemus.boatguard.utils.Utils;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.Switch;
-import android.widget.TextView;
-
-import com.google.gson.Gson;
 
 public class SettingsFragment  extends Fragment {
 	
