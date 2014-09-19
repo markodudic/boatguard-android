@@ -56,7 +56,7 @@ public class SettingsFragment  extends Fragment {
         String geoFence = obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).getValue();
         if (geoFence.endsWith("1")) {
         	text[0] = getResources().getString(R.string.on);
-            textColours[0]= R.color.alarm_green;
+            textColours[0]= R.color.text_green;
         }
         else {
         	text[0] = getResources().getString(R.string.off);
@@ -68,7 +68,7 @@ public class SettingsFragment  extends Fragment {
         String pumpAlarmLongPeriod = obuSettings.get(((Setting)Settings.settings.get(Settings.STATE_PUMP_ALARM_LONG_PERIOD)).getId()).getValue();
         if (pumpAlarmAlways.endsWith("1")) {
         	text[1] = getResources().getString(R.string.on) + " / " + pumpAlarmShortPeriod + " / " + pumpAlarmLongPeriod;
-            textColours[1]= R.color.alarm_green;
+            textColours[1]= R.color.text_green;
         }
         else {
         	text[1] = getResources().getString(R.string.off) + " / " + pumpAlarmShortPeriod + " / " + pumpAlarmLongPeriod;
@@ -78,7 +78,7 @@ public class SettingsFragment  extends Fragment {
         String anchorDrifting = obuSettings.get(((State)Settings.states.get(Settings.STATE_ANCHOR)).getId()).getValue();
         if (anchorDrifting.endsWith("1")) {
         	text[2] = getResources().getString(R.string.on);
-            textColours[2]= R.color.alarm_green;
+            textColours[2]= R.color.text_green;
         }
         else {
         	text[2] = getResources().getString(R.string.off);
