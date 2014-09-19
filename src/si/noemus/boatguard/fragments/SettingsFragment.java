@@ -61,7 +61,16 @@ public class SettingsFragment  extends Fragment {
             textColours[0]= R.color.alarm_red;
         }
 
-        text[1] = "value";
+        String pumpAlarmAlways = obuSettings.get(((State)Settings.states.get(Settings.STATE_PUMP_ALARM_ALWAYS)).getId()).getValue();
+        String pumpAlarmShortPeriod = obuSettings.get(((State)Settings.states.get(Settings.STATE_PUMP_ALARM_SHORT_PERIOD)).getId()).getValue();
+        String pumpAlarmLongPeriod = obuSettings.get(((State)Settings.states.get(Settings.STATE_PUMP_ALARM_LONG_PERIOD)).getId()).getValue();
+        if (pumpAlarmAlways.endsWith("1")) {
+        	text[1] = getResources().getString(R.string.on) + " / " + pumpAlarmShortPeriod + " / " + pumpAlarmLongPeriod;
+        }
+        else {
+        	text[1] = getResources().getString(R.string.off) + " / " + pumpAlarmShortPeriod + " / " + pumpAlarmLongPeriod;
+            textColours[1]= R.color.alarm_red;
+        }
         
         String anchorDrifting = obuSettings.get(((State)Settings.states.get(Settings.STATE_ANCHOR)).getId()).getValue();
         if (anchorDrifting.endsWith("1")) {

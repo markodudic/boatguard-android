@@ -5,6 +5,7 @@ import si.noemus.boatguard.fragments.AlarmContactsFragment;
 import si.noemus.boatguard.fragments.AlarmTypeFragment;
 import si.noemus.boatguard.fragments.AnchorDriftingFragment;
 import si.noemus.boatguard.fragments.AppAppearanceFragment;
+import si.noemus.boatguard.fragments.BilgePumpFragment;
 import si.noemus.boatguard.fragments.ContactsFragment;
 import si.noemus.boatguard.fragments.GeoFenceFragment;
 import si.noemus.boatguard.fragments.HistoryFragment;
@@ -25,6 +26,8 @@ import android.widget.TextView;
 
 public class SettingsActivity extends Activity {
 
+	int fragmentId = -9;
+	
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +50,9 @@ public class SettingsActivity extends Activity {
  
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-       
-    	switch (extras.getInt("id")) {
+        fragmentId = extras.getInt("id");
+        
+    	switch (fragmentId) {
 	        case -2:
 	            fragmentTransaction.add(R.id.fragment_settings, new ContactsFragment(), extras.getString("title"));
 	            fragmentTransaction.commit();
@@ -59,6 +63,10 @@ public class SettingsActivity extends Activity {
 	        	break;
 	        case 0:
 	            fragmentTransaction.add(R.id.fragment_settings, new GeoFenceFragment(), extras.getString("title"));
+	            fragmentTransaction.commit();
+	        	break;
+	        case 1:
+	            fragmentTransaction.add(R.id.fragment_settings, new BilgePumpFragment(), extras.getString("title"));
 	            fragmentTransaction.commit();
 	        	break;
 	        case 2:
@@ -97,11 +105,22 @@ public class SettingsActivity extends Activity {
 		btnBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				finish();
+		    	if (fragmentId == -1) {
+					Intent i = new Intent(SettingsActivity.this, MainActivity.class);
+					startActivity(i);
+		    	}
+		    	else if (fragmentId == 4) {
+					Intent i = new Intent(SettingsActivity.this, SettingsActivity.class);
+					i.putExtra("id", -1);
+					i.putExtra("title", getResources().getString(R.string.menu));
+					startActivity(i);
+		    	}
+		    	else {
+					finish();
+		    	}
 			} 
 		});  
 		
-
 	}  
 
 }

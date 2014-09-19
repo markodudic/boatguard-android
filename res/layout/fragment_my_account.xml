@@ -32,15 +32,7 @@
 		    	android:text="marko">
 		        <requestFocus />
 		    </si.noemus.boatguard.components.EditTextFont>
-		    
-		    <ImageView
-		        android:id="@+id/iv_username"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_gravity="right|center_vertical"
-		        android:clickable="false"
-		        android:focusable="false"
-		        android:src="?ic_delete" />
+
 		</FrameLayout>
 			
 		
@@ -181,15 +173,7 @@
 		    	android:editable="false" 
 		    	android:text="marko">
 		    </si.noemus.boatguard.components.EditTextFont>
-		    
-		    <ImageView
-		        android:id="@+id/iv_obu_id"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_gravity="right|center_vertical"
-		        android:clickable="true"
-		        android:focusable="false"
-		        android:src="?ic_delete" />
+
 		</FrameLayout>	
 		
 		<LinearLayout

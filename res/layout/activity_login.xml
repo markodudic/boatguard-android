@@ -65,6 +65,7 @@
 		        android:layout_height="wrap_content"
 		        style="@style/LoginEditText"
 		        boatguard:font_name="@string/font_semibold"
+		        android:password="true"
 		    	android:text="dudic" />
 	    	
 		    <ImageView

@@ -33,10 +33,10 @@ public class ContactsFragment extends Fragment {
    		  @Override
    		  public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
    			  Friend contact = (Friend) adapter.getItem(position);
+   			  contact.setId_customer(Settings.customer.getUid());
    			  Settings.friends.add(contact);
    			  Settings.setFriends(getActivity());
-  			  //getActivity().getFragmentManager().popBackStack();
-   			  Intent i = new Intent(getActivity(), SettingsActivity.class);
+  			  Intent i = new Intent(getActivity(), SettingsActivity.class);
    			  i.putExtra("id", 4);
    			  i.putExtra("title", getResources().getString(R.string.alarm_contacts));
    			  startActivity(i);

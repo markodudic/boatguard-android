@@ -21,7 +21,7 @@
 			    
 		<Spinner
 		    android:id="@+id/spinner_refresh_time"
-		    android:layout_width="match_parent"
+		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center_vertical|right"
 		    android:entries="@array/refresh"

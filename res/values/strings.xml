@@ -57,6 +57,26 @@
    <string name="geo_fence_current">DEFINE CURRENT LOCATION AS HOME</string>
    <string name="geo_fence_define">DEFINE</string>
 
+   <string name="bilge_pump_always">ALERT ALWAS WHEN PUMPING:</string>
+   <string name="bilge_pump_short_period">SHORT PERIOD BILGE ALERT:</string>
+   <string name="bilge_pump_short_period_desc">DETERMINES TIME OF CUMULATIVE PUMPING FROM THE LAST 10 MINUTES WHEN THE ALARM IS SENT.</string>
+   <string name="bilge_pump_10_min"> / 10 MINUTES</string>
+   <string name="bilge_pump_long_period">LONG PERIOD BILGE ALERT:</string>
+   <string name="bilge_pump_long_period_desc">DETERMINES TIME OF CUMULATIVE PUMPING FROM THE LAST 12 HOURS WHEN THE ALARM IS SENT.</string>
+   <string name="bilge_pump_100_min"> / 100 MINUTES from 24 H</string>
+   <string-array name="short_period">
+        <item>1</item>
+        <item>2</item>
+        <item>5</item>
+        <item>10</item>
+   </string-array>
+   <string-array name="long_period">
+        <item>5</item>
+        <item>10</item>
+        <item>30</item>
+        <item>60</item>
+   </string-array>
+          
    <string name="anchor_drifting">ANCHOR DRIFTING</string>
    <string name="anchor_drifting_radius">ANCHOR RADIUS</string>
    <string name="anchor_drifting_current">DEFINE CURRENT LOCATION AS ANCHOR</string>

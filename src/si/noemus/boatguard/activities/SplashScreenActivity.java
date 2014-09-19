@@ -58,6 +58,12 @@ public class SplashScreenActivity extends Activity {
         }
         
 
+        new Thread(new Runnable() {
+            public void run() {
+            	 Settings.readContacts(SplashScreenActivity.this);
+            }
+        }).start();
+        
         
         new Handler().postDelayed(new Runnable() {
  

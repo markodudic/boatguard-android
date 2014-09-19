@@ -332,7 +332,6 @@ public class MainActivity extends Activity {
         Settings.getObuAlarms(this); 
         Settings.getCustomer(this);
         Settings.getFriends(this);
-        Settings.readContacts(this);
         showObuComponents();
    		handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
         

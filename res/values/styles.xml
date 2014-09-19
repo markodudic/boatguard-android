@@ -22,7 +22,9 @@
 	    <item name="ic_forward">@drawable/ic_forward_day</item>    
 	    <item name="ic_back">@drawable/ic_back_day</item>    
 	    <item name="ic_seekbar_thumb">@drawable/ic_seekbar_thumb_day</item>    
-	    <item name="ic_delete">@drawable/ic_delete_day</item>     
+	    <item name="ic_delete">@drawable/ic_delete_day</item> 
+	    
+	    <item name="android:spinnerItemStyle">@style/SpinnerText</item>
 	</style>
    
     
@@ -48,7 +50,9 @@
 	    <item name="ic_forward">@drawable/ic_forward</item>    
 	    <item name="ic_back">@drawable/ic_back</item>    
 	    <item name="ic_seekbar_thumb">@drawable/ic_seekbar_thumb</item>    
-	    <item name="ic_delete">@drawable/ic_delete</item>      
+	    <item name="ic_delete">@drawable/ic_delete</item> 
+	    
+	    <item name="android:spinnerItemStyle">@style/SpinnerText</item>
 	</style>
     
 	<style name="MyTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
@@ -141,7 +145,7 @@
 
    <style name="OkButtonText" parent="RegisterButtonText">
        <item name="android:layout_marginRight">0dp</item>
-       <item name="android:textColor">?text_default</item>
+       <item name="android:textColor">?settings_button</item>
    </style>	   
    
    <style name="LoginButtonText" parent="RegisterButtonText">
@@ -213,6 +217,16 @@
        <item name="android:gravity">top</item>
     </style-->	   
   
+   <style name="SpinnerText">
+       <item name="android:textSize">@dimen/component_text_size</item>
+       <item name="android:textColor">?settings_button</item>
+	   <item name="android:background">?text_content</item>
+	   <item name="android:paddingLeft">10dp</item>
+	   <item name="android:paddingRight">10dp</item>
+	   <item name="android:paddingTop">2dp</item>
+	   <item name="android:paddingBottom">2dp</item>
+   </style>     
+   
    <style name="SettingsItemsLayout">
 		<item name="android:background">?background</item>
 		<item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
@@ -229,6 +243,11 @@
        <item name="android:textColor">?text_default</item>
        <item name="android:layout_gravity">center_vertical</item>
        <item name="android:gravity">center_vertical</item>
+   </style> 
+
+   <style name="SettingsTextSmall" parent="SettingsText">
+       <item name="android:textSize">@dimen/small_text_size</item>
+       <item name="android:textColor">?text_content</item>
    </style> 
    
    <style name="SettingsValueText" parent="SettingsText">
@@ -269,7 +288,7 @@
    </style>	   
 
    <style name="ReadOnlyTitle">
-       <item name="android:textColor">?text_default</item>
+       <item name="android:textColor">@color/text_default_day</item>
        <item name="android:textSize">@dimen/component_text_size</item>
        <item name="android:paddingTop">@dimen/login_edit_padding</item>
        <item name="android:paddingLeft">@dimen/login_edit_padding</item>
@@ -282,7 +301,7 @@
        </style>	
 
    <style name="ReadOnlyBackground">
-       <item name="android:background">@drawable/text_background</item>
+       <item name="android:background">@drawable/login_background</item>
    </style>	
    
 </resources>

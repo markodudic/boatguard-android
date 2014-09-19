@@ -51,8 +51,7 @@ public class AlarmContactsFragment  extends Fragment {
     	  
 		@Override 
 		public View getView(final int position, View convertView, ViewGroup parent) {
-			
-			View v = inflater.inflate(R.layout.row_alarm_contact, parent, false);
+	   		View v = inflater.inflate(R.layout.row_alarm_contact, parent, false);
 			
 			TextViewFont tvContact = (TextViewFont)v.findViewById(R.id.tv_contact);
 			tvContact.setText(Settings.friends.get(position).getName().toUpperCase() + " " + Settings.friends.get(position).getSurname().toUpperCase());

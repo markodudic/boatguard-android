@@ -63,6 +63,9 @@ public class Settings {
 	public static String STATE_ACCU_DISCONNECT = "ACCU_DISCONNECT";
 	public static String STATE_ANCHOR = "ANCHOR";
 	public static String STATE_ANCHOR_DRIFTING = "ANCHOR_DRIFTING";
+	public static String STATE_PUMP_ALARM_ALWAYS = "PUMP_ALARM_ALWAYS";
+	public static String STATE_PUMP_ALARM_SHORT_PERIOD = "PUMP_ALARM_SHORT_PERIOD";
+	public static String STATE_PUMP_ALARM_LONG_PERIOD = "PUMP_ALARM_LONG_PERIOD";
 	
 	public static String APP_STATE_GEO_FENCE_DISABLED = "GEO_FENCE_DISABLED";
 	public static String APP_STATE_GEO_FENCE_ENABLED = "GEO_FENCE_ENABLED";
@@ -364,7 +367,6 @@ public class Settings {
                }
           }
       }
-      System.out.println("CONTACTS="+contacts.size());  
    }
 
 }
