@@ -19,6 +19,7 @@ import si.noemus.boatguard.objects.Friend;
 import si.noemus.boatguard.objects.ObuAlarm;
 import si.noemus.boatguard.objects.ObuComponent;
 import si.noemus.boatguard.objects.ObuSetting;
+import si.noemus.boatguard.objects.Setting;
 import si.noemus.boatguard.objects.State;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -87,6 +88,7 @@ public class Settings {
 	public static HashMap<Integer,Alarm> alarms = new HashMap<Integer,Alarm>(){};
 	public static HashMap<String,AppSetting> appSettings = new HashMap<String,AppSetting>(){};
 	public static HashMap<String,State> states = new HashMap<String,State>(){};
+	public static HashMap<String,Setting> settings = new HashMap<String,Setting>(){};
 	public static HashMap<Integer,ObuSetting> obuSettings = new HashMap<Integer,ObuSetting>(){};
 	public static HashMap<Integer,ObuComponent> obuComponents = new HashMap<Integer,ObuComponent>(){};
 	//public static HashMap<Integer,ObuAlarm> obuAlarms = new HashMap<Integer,ObuAlarm>(){};
@@ -135,6 +137,14 @@ public class Settings {
 		    	   			State state = gson.fromJson(jsonStates.get(i).toString(), State.class);
 		    	   			//System.out.println(state.toString());
 		    	   			states.put(state.getCode(), state);
+		    	   		}
+
+		    	   		JSONArray jsonSettings = (JSONArray)jRes.get("settings");
+		    	   		settings.clear();
+		    	   		for (int i=0; i< jsonSettings.length(); i++) {
+		    	   			Setting setting = gson.fromJson(jsonSettings.get(i).toString(), Setting.class);
+		    	   			//System.out.println(appSetting.toString());
+		    	   			settings.put(setting.getName(), setting);
 		    	   		}
 		    	   		
 		    	   	}
