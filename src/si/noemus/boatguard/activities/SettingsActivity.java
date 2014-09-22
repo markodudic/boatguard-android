@@ -5,6 +5,7 @@ import si.noemus.boatguard.fragments.AlarmContactsFragment;
 import si.noemus.boatguard.fragments.AlarmTypeFragment;
 import si.noemus.boatguard.fragments.AnchorDriftingFragment;
 import si.noemus.boatguard.fragments.AppAppearanceFragment;
+import si.noemus.boatguard.fragments.BatteryFragment;
 import si.noemus.boatguard.fragments.BilgePumpFragment;
 import si.noemus.boatguard.fragments.ContactsFragment;
 import si.noemus.boatguard.fragments.GeoFenceFragment;
@@ -73,6 +74,10 @@ public class SettingsActivity extends Activity {
 	            fragmentTransaction.add(R.id.fragment_settings, new AnchorDriftingFragment(), extras.getString("title"));
 	            fragmentTransaction.commit();
 	        	break;
+	        case 3:
+	            fragmentTransaction.add(R.id.fragment_settings, new BatteryFragment(), extras.getString("title"));
+	            fragmentTransaction.commit();
+	        	break;
 	        case 4:
 	            fragmentTransaction.add(R.id.fragment_settings, new AlarmContactsFragment(), extras.getString("title"));
 	            fragmentTransaction.commit();
@@ -105,7 +110,11 @@ public class SettingsActivity extends Activity {
 		btnBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-		    	if (fragmentId == -1) {
+		    	if ((fragmentId == 1) || (fragmentId == 3)) {
+		    		Settings.setObuSettings(SettingsActivity.this);
+		    		finish();
+		    	}
+		    	else if (fragmentId == -1) {
 					Intent i = new Intent(SettingsActivity.this, MainActivity.class);
 					startActivity(i);
 		    	}

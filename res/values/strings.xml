@@ -81,7 +81,10 @@
    <string name="anchor_drifting_radius">ANCHOR RADIUS</string>
    <string name="anchor_drifting_current">DEFINE CURRENT LOCATION AS ANCHOR</string>
    <string name="anchor_drifting_define">DEFINE</string>
-
+   
+   <string name="battery_capacity">BATTERY CAPACITY:</string>
+   <string name="battery_alarm_level">SEND ALARM WHEN BATTERY LEVEL IS AT:</string>
+   
    <string name="alarm_notifications">ALARM NOTIFICATIONS</string>
    <string name="alarm_settings">ALARM SETTINGS</string>
    <string name="play_sound">PLAY SOUND</string>

@@ -63,7 +63,7 @@
  		    android:id="@+id/seekbar_anchor_drifting"
  		    android:layout_width="match_parent"
  		    android:layout_height="wrap_content"
- 		    style="@style/AnchorDriftingSeekBar"/>	    
+ 		    style="@style/SettingsSeekBarSmall"/>	    
 	</LinearLayout>
 	    
 	<LinearLayout 

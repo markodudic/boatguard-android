@@ -34,7 +34,6 @@ public class BilgePumpFragment  extends Fragment {
 				//set settings
 		        HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
 		        obuSettings.get(((Setting)Settings.settings.get(Settings.STATE_PUMP_ALARM_ALWAYS)).getId()).setValue(switchPumpAlarmAlways.isChecked()?"1":"0");
-		        Settings.setObuSettings(getActivity());
 			}
 		});	
 
@@ -48,7 +47,6 @@ public class BilgePumpFragment  extends Fragment {
  				String val = (String)spinnerAlarmShortPeriod.getSelectedItem();
 		        HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
 		        obuSettings.get(((Setting)Settings.settings.get(Settings.STATE_PUMP_ALARM_SHORT_PERIOD)).getId()).setValue(val);
-		        Settings.setObuSettings(getActivity());
 			}
 
 
@@ -69,7 +67,6 @@ public class BilgePumpFragment  extends Fragment {
  				String val = (String)spinnerAlarmLongPeriod.getSelectedItem();
 		        HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
 		        obuSettings.get(((Setting)Settings.settings.get(Settings.STATE_PUMP_ALARM_LONG_PERIOD)).getId()).setValue(val);
-		        Settings.setObuSettings(getActivity());
 			}
 
 

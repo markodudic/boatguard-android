@@ -1,0 +1,75 @@
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+   	xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
+   	style="@style/SettingsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <si.noemus.boatguard.components.TextViewFont
+        android:layout_width="wrap_content"
+        android:text="@string/battery_capacity"
+        boatguard:font_name="@string/font_semibold"
+    	style="@style/LoginText" />
+
+	<FrameLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="@dimen/login_edit_height">
+	    
+   	    <si.noemus.boatguard.components.EditTextFont
+	        android:id="@+id/battery_capacity"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        style="@style/LoginEditText"
+	        boatguard:font_name="@string/font_semibold"
+	        android:editable="true" 
+	    	android:text="marko"
+	    	android:numeric="integer" 
+	    	android:inputType="phone" 
+	    	android:digits="1234567890"/>
+
+	    <ImageView
+	        android:id="@+id/iv_battery_capacity"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="right|center_vertical"
+	        android:clickable="true"
+	        android:focusable="false"
+	        android:src="?ic_delete" />
+  	</FrameLayout>
+		
+	<LinearLayout 
+		android:layout_width="match_parent"
+	    android:layout_height="@dimen/settings_height"
+	    android:orientation="horizontal" >
+	    
+	    <si.noemus.boatguard.components.TextViewFont
+	        style="@style/SettingsText"
+	        boatguard:font_name="@string/font_medium"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:text="@string/battery_alarm_level" />
+    
+	    <si.noemus.boatguard.components.TextViewFont
+	        android:id="@+id/tv_battery_alarm_level"
+ 		    style="@style/SettingsValueText"
+	        boatguard:font_name="@string/font_medium"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="3"
+	        android:text="100" />
+	</LinearLayout>
+    
+	<LinearLayout 
+		android:layout_width="match_parent"
+	    android:layout_height="@dimen/settings_height"
+	    android:orientation="horizontal" >
+	    
+ 		<SeekBar
+ 		    android:id="@+id/seekbar_battery_alarm_level"
+ 		    android:layout_width="match_parent"
+ 		    android:layout_height="wrap_content"
+ 		    style="@style/SettingsSeekBarSmall"/>	    
+	</LinearLayout>		
+</LinearLayout>

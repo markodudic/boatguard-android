@@ -85,7 +85,9 @@ public class SettingsFragment  extends Fragment {
             textColours[2]= R.color.alarm_red;
         }
         
-        text[3] = "value";
+        String batteryCapacity = obuSettings.get(((Setting)Settings.settings.get(Settings.STATE_BATTERY_CAPACITY)).getId()).getValue();
+        String batteryAlarmLevel = obuSettings.get(((Setting)Settings.settings.get(Settings.STATE_BATTERY_ALARM_LEVEL)).getId()).getValue();
+        text[3] = batteryCapacity + "Ah / " + batteryAlarmLevel + "%";
         
         String contacts = "";
         for (int i=0; i<Settings.friends.size(); i++) {
