@@ -511,7 +511,6 @@ public class MainActivity extends Activity {
    		
     	String urlString = this.getString(R.string.server_url) + "getdata?obuid="+obuId;
     	if (Utils.isNetworkConnected(this, false)) {
-  			//try {
   				tvLastUpdate.setVisibility(View.GONE);	
     			ivRefresh.setVisibility(View.VISIBLE);	
     			refreshAnimation.start();
@@ -519,38 +518,7 @@ public class MainActivity extends Activity {
             	Comm at = new Comm();
     			at.setCallbackListener(clGetObuData);
     			at.execute(urlString, null); 
-    			/*
-	            String res = (String) at.get();
-	            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
-	    	   	JSONArray jsonStates = (JSONArray)jRes.get("states");
-	    	   	obuStates.clear();
-    	   		for (int i=0; i< jsonStates.length(); i++) {
-    	   			ObuState obuState = gson.fromJson(jsonStates.get(i).toString(), ObuState.class);
-    	   			//System.out.println(obuState.toString());
-    	   			obuStates.put(obuState.getId_state(), obuState);
-    	   		}
-	    	   	
-	    	   	JSONArray jsonAlarms = (JSONArray)jRes.get("alarms");
-	    	   	obuAlarms.clear();
-	    	   	for (int i=0; i< jsonAlarms.length(); i++) {
-    	   			ObuAlarm obuAlarm = gson.fromJson(jsonAlarms.get(i).toString(), ObuAlarm.class);
-    	   			//System.out.println(obuAlarm.toString());
-    	   			obuAlarms.put(obuAlarm.getId_alarm(), obuAlarm);
-    	   			if (activeAlarms.indexOf(obuAlarm.getId_alarm()) == -1) {
-    	   				showNotification(obuAlarm.getId_alarm(), obuAlarm.getTitle(), obuAlarm.getMessage(), obuAlarm.getDate_alarm(), obuAlarm.getVibrate(), obuAlarm.getSound());
-    	   				activeAlarms.add(obuAlarm.getId_alarm());
-    	   			}
-    	   			if (dialogAlarmActive == -1) {
-    	   				showAlarmDialog(obuAlarm.getId_alarm(), obuAlarm.getTitle(), obuAlarm.getMessage(), obuAlarm.getAction(), obuAlarm.getType());
-    	   			}
-    	   		}
-    	   		
-	    	   	showObuData();*/
-
-	        //} catch (Exception e) {
-   	   		//}
     	}
-   		//handler.postDelayed(endRefresh, 1000);
     }	 
     
     
@@ -604,6 +572,8 @@ public class MainActivity extends Activity {
 			
 	@SuppressWarnings("deprecation")
 	private void showObuData(){
+		boolean alarm = false;
+		
 		String accuDisconnected = ((ObuState)obuStates.get(((State)Settings.states.get(Settings.STATE_ACCU_DISCONNECT)).getId())).getValue();
 		if (accuDisconnected != null) {
 			isAccuConnected = !accuDisconnected.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ACCU_DISCONNECT)).getValue());
@@ -626,7 +596,6 @@ public class MainActivity extends Activity {
 				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
 				String geofence = obuState.getValue();
 				cancelAlarmAnimation(component, null, false);
-				Settings.OBU_REFRESH_TIME = Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_REFRESH_TIME);
 				
 				if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_DISABLED)).getValue())) {
 					imageView.setImageResource(R.drawable.ic_geofence_disabled);
@@ -635,10 +604,8 @@ public class MainActivity extends Activity {
 					imageView.setImageResource(R.drawable.ic_geofence_home);
 				} 
 				else if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ALARM)).getValue())) {
+					alarm = true;
 					showAlarmAnimation(component, imageView, R.drawable.ic_geofence_alarm_1, R.drawable.ic_geofence_alarm, true);
-					Settings.OBU_REFRESH_TIME = Integer.parseInt(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ALARM_REFRESH_TIME)).getValue());
-					handler.removeCallbacks(startRefresh);
-					handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
 				}
 				else {
 					imageView.setImageResource(android.R.color.transparent);
@@ -654,6 +621,7 @@ public class MainActivity extends Activity {
 					imageView.setImageResource(R.drawable.ic_bilgepump);
 				}
 				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_PUMPING)).getValue())) {
+					alarm = true;
 					if (Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
 						showAlarmAnimation(component, imageView, R.drawable.bilge_pumping_animation_day, 0, false);
 					} 
@@ -662,9 +630,11 @@ public class MainActivity extends Activity {
 					}
 				}
 				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_CLODGED)).getValue())) {
+					alarm = true;
 					showAlarmAnimation(component, imageView, R.drawable.ic_bilgepump_clodged_1, R.drawable.ic_bilgepump_clodged, true);
 				}
 				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_DEMAGED)).getValue())) {
+					alarm = true;
 					showAlarmAnimation(component, imageView, R.drawable.ic_bilgepump_demaged_1, R.drawable.ic_bilgepump_demaged, true);
 				}
 				else {
@@ -685,6 +655,7 @@ public class MainActivity extends Activity {
 					int anchorDriftingId = ((State)Settings.states.get(Settings.STATE_ANCHOR_DRIFTING)).getId();
 					String anchorDrifting = ((ObuState) obuStates.get(anchorDriftingId)).getValue();
 					if (anchorDrifting.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_DRIFTING)).getValue())) {
+						alarm = true;
 						showAlarmAnimation(component, imageView, R.drawable.ic_anchor_alarm_1, R.drawable.ic_anchor_alarm, true);
 					}			
 				}	
@@ -694,6 +665,7 @@ public class MainActivity extends Activity {
 				((TextView)component.findViewById(R.id.accu_napetost)).setText(obuState.getValue() + "%");
 				cancelAlarmAnimation(component, (TextView)component.findViewById(R.id.accu_napetost), true);
 				if (Integer.parseInt(obuState.getValue()) < Integer.parseInt(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_BATTERY_ALARM_VALUE)).getValue())) {
+					alarm = true;
 					showAlarmAccuAnimation(component, (TextView)component.findViewById(R.id.accu_napetost));
 				}
 			}			
@@ -756,6 +728,15 @@ public class MainActivity extends Activity {
 					((ImageView)component.findViewById(R.id.step)).setVisibility(View.VISIBLE);
 				}
 			}	
+		}
+		
+		if (alarm) {
+			Settings.OBU_REFRESH_TIME = Integer.parseInt(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ALARM_REFRESH_TIME)).getValue());
+			handler.removeCallbacks(startRefresh);
+			handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
+		}
+		else {
+			Settings.OBU_REFRESH_TIME = Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_REFRESH_TIME);
 		}
 	}
 	

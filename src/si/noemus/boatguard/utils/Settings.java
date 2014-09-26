@@ -82,7 +82,7 @@ public class Settings {
 	public static String APP_STATE_ANCHOR_DRIFTING = "ANCHOR_DRIFTING";
 	public static String APP_STATE_BATTERY_ALARM_VALUE = "BATTERY_ALARM_VALUE";
 	public static String APP_STATE_ACCU_DISCONNECT = "ACCU_DISCONNECT";
-	public static String APP_STATE_GEO_FENCE_ALARM_REFRESH_TIME = "GEO_FENCE_ALARM_REFRESH_TIME";
+	public static String APP_STATE_ALARM_REFRESH_TIME = "ALARM_REFRESH_TIME";
 			
 	public static String ALARM_GREEN = "G";
 	public static String ALARM_RED = "R";
