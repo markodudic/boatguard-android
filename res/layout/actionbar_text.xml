@@ -16,7 +16,7 @@
     
 	<si.noemus.boatguard.components.TextViewFont
 	    android:id="@+id/actionbar_text"
-	    boatguard:font_name="@string/font_extrabold"
+	    boatguard:font_name="@string/font_semibold"
 	    style="@style/ActionBarText"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
