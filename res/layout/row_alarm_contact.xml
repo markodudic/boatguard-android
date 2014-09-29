@@ -36,7 +36,7 @@
 	        android:id="@+id/iv_contact"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_gravity="right|center_vertical"
+			style="@style/DeleteImageView"
 	        android:clickable="true"
 	        android:focusable="false"
 	        android:src="?ic_delete" />

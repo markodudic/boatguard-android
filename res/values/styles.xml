@@ -11,8 +11,8 @@
 	    <item name="text_content">@color/text_content_day</item>
 	    <item name="text_input">@color/text_input_day</item>    
 	    <item name="component">@color/component_day</item>    
-	    <item name="settings_button">@color/settings_button_day</item>    
-	    	    
+	    <item name="settings_button">@color/settings_button_day</item>      
+	    	    	    
 	    <item name="ic_logotype">@drawable/ic_logotype_day</item>    
 	    <item name="ic_logotype_alarm">@drawable/ic_logotype_alarm_day</item>    
 	    <item name="ic_settings">@drawable/ic_settings_day</item>    
@@ -21,7 +21,7 @@
 	    <item name="ic_anchor_disabled">@drawable/ic_anchor_disabled_day</item>    
 	    <item name="ic_forward">@drawable/ic_forward_day</item>    
 	    <item name="ic_back">@drawable/ic_back_day</item>    
-	    <item name="ic_seekbar_thumb">@drawable/ic_seekbar_thumb_day</item>    
+	    <item name="ic_seekbar_thumb">@drawable/ic_seekbar_day</item>    
 	    <item name="ic_delete">@drawable/ic_delete_day</item> 
 	    
 	    <item name="android:spinnerItemStyle">@style/SpinnerText</item>
@@ -39,8 +39,8 @@
 	    <item name="text_content">@color/text_content_night</item>
 	    <item name="text_input">@color/text_input_night</item>    
 	    <item name="component">@color/component_night</item>  
-	    <item name="settings_button">@color/settings_button_night</item>    
-	    	      
+	    <item name="settings_button">@color/settings_button_night</item>     
+	    	    	      
 	    <item name="ic_logotype">@drawable/ic_logotype</item>    
 	    <item name="ic_logotype_alarm">@drawable/ic_logotype_alarm</item>    
 	    <item name="ic_settings">@drawable/ic_settings</item>    
@@ -49,7 +49,7 @@
 	    <item name="ic_anchor_disabled">@drawable/ic_anchor_disabled</item>    
 	    <item name="ic_forward">@drawable/ic_forward</item>    
 	    <item name="ic_back">@drawable/ic_back</item>    
-	    <item name="ic_seekbar_thumb">@drawable/ic_seekbar_thumb</item>    
+	    <item name="ic_seekbar_thumb">@drawable/ic_seekbar_night</item>    
 	    <item name="ic_delete">@drawable/ic_delete</item> 
 	    
 	    <item name="android:spinnerItemStyle">@style/SpinnerText</item>
@@ -75,6 +75,11 @@
    <style name="Dialog" parent="@android:style/Theme.Dialog">
 	    <item name="android:windowNoTitle">true</item>
    </style>
+
+    <style name="DeleteImageView">
+       <item name="android:layout_gravity">right|center_vertical</item>
+       <item name="android:layout_marginRight">@dimen/delete_image_view_right</item>
+   </style>	
    
    <style name="alarmTitle">
        <item name="android:textSize">@dimen/title_text_size</item>
@@ -140,17 +145,17 @@
        <item name="android:background">?text_content</item>
        <item name="android:textColor">?settings_button</item>
        <item name="android:layout_height">@dimen/login_edit_height</item>
-       <item name="android:layout_marginRight">@dimen/login_edit_padding</item>
+       <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
    </style>	   
 
    <style name="OkButtonText" parent="RegisterButtonText">
        <item name="android:layout_marginRight">0dp</item>
-       <item name="android:textColor">?settings_button</item>
+       <item name="android:textColor">@color/text_default_night</item>
+       <item name="android:background">@color/settings_button_night</item>       
    </style>	   
-   
+	   
    <style name="LoginButtonText" parent="RegisterButtonText">
        <item name="android:background">?text_default</item>
-       <item name="android:layout_marginLeft">@dimen/login_edit_padding</item>
        <item name="android:layout_marginRight">0dp</item>
    </style>	   
    
@@ -184,7 +189,7 @@
        <item name="android:layout_marginLeft">@dimen/components_margin</item>
        <item name="android:layout_marginRight">@dimen/components_margin</item>
        <item name="android:layout_height">@dimen/line_height</item>
-       <item name="android:background">?vertical_line</item>
+       <item name="android:background">?horizontal_line</item>
    </style>
    
    <style name="Component">
@@ -256,12 +261,13 @@
    </style> 
 
    <style name="SettingsButtonText" parent="SettingsText">
-	   <item name="android:gravity">center_vertical|center_horizontal</item>
-	   <item name="android:background">?settings_button</item>
+       <item name="android:textColor">@color/text_default_night</item>
+       <item name="android:gravity">center_vertical|center_horizontal</item>
+	   <item name="android:background">@color/settings_button_night</item>
    </style>	     
    
    <style name="SettingsItem">
-       <item name="android:textSize">@dimen/small_text_size</item>
+       <item name="android:textSize">@dimen/component_text_size</item>
        <item name="android:textColor">?text_default</item>
    </style>	   
    
@@ -290,20 +296,20 @@
    <style name="ReadOnlyTitle">
        <item name="android:textColor">@color/text_default_day</item>
        <item name="android:textSize">@dimen/component_text_size</item>
-       <item name="android:paddingTop">@dimen/login_edit_padding</item>
-       <item name="android:paddingLeft">@dimen/login_edit_padding</item>
+       <item name="android:paddingTop">@dimen/settings_text_padding</item>
+       <item name="android:paddingLeft">@dimen/settings_text_padding</item>
    </style>	
    
    <style name="ReadOnlyText" parent="ReadOnlyTitle">
        <item name="android:textSize">@dimen/small_text_size</item>
        <item name="android:paddingTop">0dp</item>
-       <item name="android:paddingBottom">@dimen/login_edit_padding</item>
+       <item name="android:paddingBottom">@dimen/settings_text_padding</item>
        </style>	
 
    <style name="ReadOnlyBackground">
        <item name="android:background">@drawable/login_background</item>
    </style>	
-   
+
 </resources>
 
 

@@ -128,7 +128,6 @@ public class MainActivity extends Activity {
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setHomeButtonEnabled(false);
         
-        	   	
         //last update
         tvLastUpdate = (TextView)findViewById(R.id.tv_last_update);
         ivRefresh = (ImageView)findViewById(R.id.iv_refresh);

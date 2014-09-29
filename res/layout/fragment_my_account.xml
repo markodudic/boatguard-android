@@ -15,7 +15,7 @@
 	    <si.noemus.boatguard.components.TextViewFont
 	        android:layout_width="wrap_content"
 	        android:text="@string/username"
-	        boatguard:font_name="@string/font_semibold"
+	        boatguard:font_name="@string/font_medium"
 	    	style="@style/LoginText" />
 	
 		<FrameLayout
@@ -27,7 +27,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="match_parent"
 		        style="@style/LoginEditText"
-		        boatguard:font_name="@string/font_semibold"
+		        boatguard:font_name="@string/font_medium"
 		        android:editable="false" 
 		    	android:text="marko">
 		        <requestFocus />
@@ -39,7 +39,7 @@
 		<si.noemus.boatguard.components.TextViewFont
 	        android:layout_width="wrap_content"
 	        android:text="@string/name"
-	        boatguard:font_name="@string/font_semibold"
+	        boatguard:font_name="@string/font_medium"
 	    	style="@style/LoginText" />
 	
 		<FrameLayout
@@ -51,7 +51,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="match_parent"
 		        style="@style/LoginEditText"
-		        boatguard:font_name="@string/font_semibold"
+		        boatguard:font_name="@string/font_medium"
 		    	android:text="marko">
 		    </si.noemus.boatguard.components.EditTextFont>
 		    
@@ -59,7 +59,7 @@
 		        android:id="@+id/iv_name"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_gravity="right|center_vertical"
+		        style="@style/DeleteImageView"
 		        android:clickable="true"
 		        android:focusable="false"
 		        android:src="?ic_delete" />
@@ -68,7 +68,7 @@
 		<si.noemus.boatguard.components.TextViewFont
 	        android:layout_width="wrap_content"
 	        android:text="@string/surname"
-	        boatguard:font_name="@string/font_semibold"
+	        boatguard:font_name="@string/font_medium"
 	    	style="@style/LoginText" />
 	
 		<FrameLayout
@@ -80,7 +80,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="match_parent"
 		        style="@style/LoginEditText"
-		        boatguard:font_name="@string/font_semibold"
+		        boatguard:font_name="@string/font_medium"
 		    	android:text="marko">
 		    </si.noemus.boatguard.components.EditTextFont>
 		    
@@ -88,7 +88,7 @@
 		        android:id="@+id/iv_surname"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_gravity="right|center_vertical"
+		        style="@style/DeleteImageView"
 		        android:clickable="true"
 		        android:focusable="false"
 		        android:src="?ic_delete" />
@@ -97,7 +97,7 @@
 		<si.noemus.boatguard.components.TextViewFont
 	        android:layout_width="wrap_content"
 	        android:text="@string/email"
-	        boatguard:font_name="@string/font_semibold"
+	        boatguard:font_name="@string/font_medium"
 	    	style="@style/LoginText" />
 	
 		<FrameLayout
@@ -109,7 +109,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="match_parent"
 		        style="@style/LoginEditText"
-		        boatguard:font_name="@string/font_semibold"
+		        boatguard:font_name="@string/font_medium"
 		    	android:inputType="textEmailAddress"
 		    	android:text="marko">
 		    </si.noemus.boatguard.components.EditTextFont>
@@ -118,7 +118,7 @@
 		        android:id="@+id/iv_email"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_gravity="right|center_vertical"
+		        style="@style/DeleteImageView"
 		        android:clickable="true"
 		        android:focusable="false"
 		        android:src="?ic_delete" />
@@ -127,7 +127,7 @@
 		<si.noemus.boatguard.components.TextViewFont
 	        android:layout_width="wrap_content"
 	        android:text="@string/boatname"
-	        boatguard:font_name="@string/font_semibold"
+	        boatguard:font_name="@string/font_medium"
 	    	style="@style/LoginText" />
 	
 		<FrameLayout
@@ -139,7 +139,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="match_parent"
 		        style="@style/LoginEditText"
-		        boatguard:font_name="@string/font_semibold"
+		        boatguard:font_name="@string/font_medium"
 		    	android:text="marko">
 		    </si.noemus.boatguard.components.EditTextFont>
 		    
@@ -147,7 +147,7 @@
 		        android:id="@+id/iv_boatname"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_gravity="right|center_vertical"
+		        style="@style/DeleteImageView"
 		        android:clickable="true"
 		        android:focusable="false"
 		        android:src="?ic_delete" />
@@ -157,7 +157,7 @@
 		<si.noemus.boatguard.components.TextViewFont
 	        android:layout_width="wrap_content"
 	        android:text="@string/obu_id"
-	        boatguard:font_name="@string/font_semibold"
+	        boatguard:font_name="@string/font_medium"
 	    	style="@style/LoginText" />
 	
 		<FrameLayout
@@ -169,7 +169,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="match_parent"
 		        style="@style/LoginEditText"
-		        boatguard:font_name="@string/font_semibold"
+		        boatguard:font_name="@string/font_medium"
 		    	android:editable="false" 
 		    	android:text="marko">
 		    </si.noemus.boatguard.components.EditTextFont>
@@ -185,7 +185,7 @@
 	  	    <si.noemus.boatguard.components.TextViewFont
 		        android:id="@+id/button_cancel"
 		        style="@style/RegisterButtonText"
-		        boatguard:font_name="@string/font_semibold"
+		        boatguard:font_name="@string/font_medium"
 		    	android:layout_width="match_parent"
 		        android:layout_weight="1"
 		        android:text="@string/cancel" />
@@ -196,7 +196,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_weight="1"
 		        android:text="@string/ok"
-		        boatguard:font_name="@string/font_semibold" />
+		        boatguard:font_name="@string/font_medium" />
 	
 		</LinearLayout>	
 	</LinearLayout>

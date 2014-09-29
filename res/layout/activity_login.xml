@@ -22,7 +22,7 @@
 	    <si.noemus.boatguard.components.TextViewFont
 	        android:layout_width="wrap_content"
 	        android:text="@string/username"
-	        boatguard:font_name="@string/font_semibold"
+	        boatguard:font_name="@string/font_medium"
 	    	style="@style/LoginText" />
 	
 		<FrameLayout
@@ -34,7 +34,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="match_parent"
 		        style="@style/LoginEditText"
-		        boatguard:font_name="@string/font_semibold"
+		        boatguard:font_name="@string/font_medium"
 		    	android:text="marko">
 		        <requestFocus />
 		    </si.noemus.boatguard.components.EditTextFont>
@@ -43,15 +43,16 @@
 		        android:id="@+id/iv_username"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_gravity="right|center_vertical"
 		        android:clickable="true"
 		        android:focusable="false"
+		        style="@style/DeleteImageView"
 		        android:src="?ic_delete" />
+
 		</FrameLayout>
 	
 	    <si.noemus.boatguard.components.TextViewFont
 	        style="@style/LoginText"
-	        boatguard:font_name="@string/font_semibold"
+	        boatguard:font_name="@string/font_medium"
 	    	android:layout_width="wrap_content"
 	        android:text="@string/password" />
 	    
@@ -64,7 +65,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        style="@style/LoginEditText"
-		        boatguard:font_name="@string/font_semibold"
+		        boatguard:font_name="@string/font_medium"
 		        android:password="true"
 		    	android:text="dudic" />
 	    	
@@ -72,7 +73,7 @@
 		        android:id="@+id/iv_password"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_gravity="right|center_vertical"
+		        style="@style/DeleteImageView"
 		        android:clickable="true"
 		        android:focusable="false"
 		        android:src="?ic_delete" />
@@ -81,7 +82,7 @@
 	    <si.noemus.boatguard.components.TextViewFont
 	        android:layout_width="wrap_content"
 	        android:text="@string/obu_id"
-	        boatguard:font_name="@string/font_semibold"
+	        boatguard:font_name="@string/font_medium"
 	    	style="@style/LoginText" />
 	
 		<FrameLayout
@@ -93,14 +94,14 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        style="@style/LoginEditText"
-		        boatguard:font_name="@string/font_semibold"
+		        boatguard:font_name="@string/font_medium"
 		    	android:text="12345" />
 	    
 		    <ImageView
 		        android:id="@+id/iv_obu_id"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_gravity="right|center_vertical"
+		        style="@style/DeleteImageView"
 		        android:clickable="true"
 		        android:focusable="false"
 		        android:src="?ic_delete" />
@@ -110,7 +111,8 @@
 	        android:id="@+id/checkBox_remember_me"
 	        android:layout_width="wrap_content"
 	        android:text="@string/remember_me"
-	        boatguard:font_name="@string/font_semibold"
+			android:paddingLeft="@dimen/activity_vertical_margin"
+	        boatguard:font_name="@string/font_medium"
 	        style="@style/LoginRememberText" />
 	
 		<LinearLayout
@@ -121,7 +123,7 @@
 	  	    <si.noemus.boatguard.components.TextViewFont
 		        android:id="@+id/button_register"
 		        style="@style/RegisterButtonText"
-		        boatguard:font_name="@string/font_semibold"
+		        boatguard:font_name="@string/font_medium"
 		    	android:layout_width="match_parent"
 		        android:layout_weight="1"
 		        android:text="@string/register" />
@@ -132,7 +134,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_weight="1"
 		        android:text="@string/login"
-		        boatguard:font_name="@string/font_semibold" />
+		        boatguard:font_name="@string/font_medium" />
 
 		</LinearLayout>
 	</LinearLayout>

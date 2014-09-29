@@ -6,9 +6,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import si.noemus.boatguard.R;
-import si.noemus.boatguard.R.id;
-import si.noemus.boatguard.R.layout;
-import si.noemus.boatguard.R.string;
+import si.noemus.boatguard.components.TextViewFont;
 import si.noemus.boatguard.utils.Comm;
 import si.noemus.boatguard.utils.DialogFactory;
 import si.noemus.boatguard.utils.Settings;
@@ -18,7 +16,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,17 +41,15 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		
 		final ActionBar actionBar = getActionBar();
-        /*actionBar.setCustomView(R.layout.actionbar_icon);
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);*/
-        
+
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
 		actionBar.setCustomView(R.layout.actionbar_text);
 		
-		TextView tvTitle = (TextView) findViewById(R.id.actionbar_text);
+		TextViewFont tvTitle = (TextViewFont) findViewById(R.id.actionbar_text);
         tvTitle.setText(R.string.title_activity_login);
         ImageView ivBack = (ImageView) findViewById(R.id.iv_back);
         ivBack.setVisibility(View.GONE);
+        //tvTitle.setLetterSpacing(13);
         
         TextView btnRegister = (TextView) findViewById(R.id.button_register);
 		btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +93,13 @@ public class LoginActivity extends Activity {
 			} 
 		});
 		
+		CheckBox cbRememberMe = (CheckBox) findViewById(R.id.checkBox_remember_me);
+		if (Utils.getPrefernciesInt(LoginActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
+			cbRememberMe.setButtonDrawable(R.drawable.btn_check_holo_light);
+		}
+		else {
+			cbRememberMe.setButtonDrawable(R.drawable.btn_check_holo_light_day);			
+		}
 	}
 
 	

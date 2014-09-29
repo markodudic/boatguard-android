@@ -2,7 +2,8 @@
 <resources> 
      <declare-styleable name="boatguard"> 
         <attr name="font_name" format="string" /> 
-    </declare-styleable>  
+        <attr name="letter_spacing" format="float" /> 
+     </declare-styleable>  
     
    
 		
@@ -15,6 +16,7 @@
     <attr name="text_input" format="reference"/> 
     <attr name="component" format="reference"/> 
     <attr name="settings_button" format="reference"/> 
+    <attr name="define_button" format="reference"/> 
     
     <attr name="ic_logotype"/> 
     <attr name="ic_logotype_alarm"/> 

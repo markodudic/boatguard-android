@@ -5,17 +5,20 @@
     <dimen name="activity_vertical_margin">17dp</dimen>
     <dimen name="line_height">1dp</dimen>
     <dimen name="shadow">17dp</dimen>
-    
+    <dimen name="spinner_width">100dp</dimen>
+        
     <dimen name="actionbar_text_size">30sp</dimen>
+    <dimen name="actionbar_margin_left">-20dp</dimen>
     <dimen name="title_text_size">26sp</dimen>
     <dimen name="button_text_size">26sp</dimen>
     <dimen name="small_text_size">18sp</dimen>
     <dimen name="component_text_size">20sp</dimen>   
-
+    <dimen name="delete_image_view_right">10dp</dimen>
+    
     <dimen name="login_edit_height">72dp</dimen>
     <dimen name="login_edit_margin_top">12dp</dimen>
     <dimen name="login_edit_margin_bottom">3dp</dimen>
-    <dimen name="login_edit_padding">17dp</dimen>
+    <dimen name="login_edit_padding">27dp</dimen>
     <dimen name="login_text_height">33dp</dimen>
     <dimen name="login_remember_height">55dp</dimen>
     
@@ -45,6 +48,6 @@
     <dimen name="settings_item_height">55dp</dimen>
     <dimen name="settings_margin">11dp</dimen>
     <dimen name="seekbar_height">6dp</dimen>
-        
+	<dimen name="settings_text_padding">18dp</dimen>        
 </resources>
 
