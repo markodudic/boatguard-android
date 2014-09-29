@@ -1,6 +1,7 @@
 package si.noemus.boatguard.activities;
 
 import si.noemus.boatguard.R;
+import si.noemus.boatguard.components.TextViewFont;
 import si.noemus.boatguard.utils.Settings;
 import si.noemus.boatguard.utils.Utils;
 import android.annotation.SuppressLint;
@@ -9,7 +10,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -41,9 +41,10 @@ public class LocationActivity extends Activity {
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
 		actionBar.setCustomView(R.layout.actionbar_text);
 		
-		TextView tvTitle = (TextView) findViewById(R.id.actionbar_text);
+		TextViewFont tvTitle = (TextViewFont) findViewById(R.id.actionbar_text);
         tvTitle.setText(R.string.title_activity_location);
-
+        tvTitle.setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_big));
+        
         //location
         MapFragment mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragment_location));
         

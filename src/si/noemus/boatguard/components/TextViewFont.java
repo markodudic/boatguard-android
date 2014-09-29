@@ -29,6 +29,7 @@ public class TextViewFont extends TextView {
     	
         originalText = super.getText();
         letterSpacing = array.getFloat(R.styleable.boatguard_letter_spacing, getResources().getInteger(R.integer.letter_spacing_small));
+        //System.out.println(originalText+":"+letterSpacing);
         if (letterSpacing != 0) {
         	applyLetterSpacing();
         }
@@ -45,6 +46,7 @@ public class TextViewFont extends TextView {
 
     public void setLetterSpacing(float letterSpacing) {
         this.letterSpacing = letterSpacing;
+        //System.out.println(originalText+"-"+letterSpacing);
         if (letterSpacing != 0) {
         	applyLetterSpacing();
         }

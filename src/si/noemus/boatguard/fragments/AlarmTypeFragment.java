@@ -71,7 +71,8 @@ public class AlarmTypeFragment  extends Fragment {
 			
 			TextViewFont tvAlarmMessage = (TextViewFont)v.findViewById(R.id.tv_alarm_message_short);
 			tvAlarmMessage.setText(((ObuAlarm)getItem(position)).getMessage_short().toUpperCase());
-
+			tvAlarmMessage.setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
+			
 	   		final Switch alarmEnabled = (Switch)v.findViewById(R.id.switch_alarm_enabled);
 			alarmEnabled.setChecked(Settings.obuAlarms.get(position).getActive()==1);
 			alarmEnabled.setOnClickListener(new AdapterView.OnClickListener() {

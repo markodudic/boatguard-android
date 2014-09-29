@@ -28,7 +28,9 @@ public class SettingsItemFragment  extends Fragment {
 
         args = getArguments();
         ((TextViewFont)v.findViewById(R.id.title)).setText(args.getString("title"));
+        ((TextViewFont)v.findViewById(R.id.title)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
         ((TextViewFont)v.findViewById(R.id.text)).setText(args.getString("text"));
+        ((TextViewFont)v.findViewById(R.id.text)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
         
         TypedArray img = getActivity().getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(getActivity(), Settings.SETTING_THEME), new int[] {R.attr.ic_forward});     
         ImageView ivForward = (ImageView)v.findViewById(R.id.iv_forward);

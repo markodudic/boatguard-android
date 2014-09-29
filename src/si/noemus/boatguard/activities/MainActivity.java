@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
 	private int initialPosition;
 	private boolean refreshing = false;
 	private boolean scrollRefresh = false;
-    private TextView tvLastUpdate;
+    private TextViewFont tvLastUpdate;
     private ImageView ivRefresh;
     private AnimationDrawable refreshAnimation;
     private Handler handler = new Handler();
@@ -129,7 +129,7 @@ public class MainActivity extends Activity {
         actionBar.setHomeButtonEnabled(false);
         
         //last update
-        tvLastUpdate = (TextView)findViewById(R.id.tv_last_update);
+        tvLastUpdate = (TextViewFont)findViewById(R.id.tv_last_update);
         ivRefresh = (ImageView)findViewById(R.id.iv_refresh);
 		if (theme == R.style.AppThemeDay) {
 			ivRefresh.setBackgroundResource(R.drawable.refresh_animation_day);
@@ -421,6 +421,8 @@ public class MainActivity extends Activity {
 			}
 		    
 		    ((TextView)component.findViewById(R.id.label)).setText(obuComponent.getName());
+		    ((TextViewFont)component.findViewById(R.id.label)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
+	        
 			
 			if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_GEO)) {
 				((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_geofence_disabled);
@@ -589,6 +591,8 @@ public class MainActivity extends Activity {
 			
 			if (idState == ((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId()) { 
             	tvLastUpdate.setText(getResources().getString(R.string.last_update) + " " + Utils.formatDate(obuState.getDateState()));
+            	tvLastUpdate.setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
+
 			}	
 			else if (idState == ((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()) { 
 				FrameLayout component = (FrameLayout)findViewById(idState);
@@ -661,7 +665,8 @@ public class MainActivity extends Activity {
 			}			
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(idState);
-				((TextView)component.findViewById(R.id.accu_napetost)).setText(obuState.getValue() + "%");
+				((TextViewFont)component.findViewById(R.id.accu_napetost)).setText(obuState.getValue() + "%");
+		        ((TextViewFont)component.findViewById(R.id.accu_napetost)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
 				cancelAlarmAnimation(component, (TextView)component.findViewById(R.id.accu_napetost), true);
 				if (Integer.parseInt(obuState.getValue()) < Integer.parseInt(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_BATTERY_ALARM_VALUE)).getValue())) {
 					alarm = true;
@@ -671,12 +676,14 @@ public class MainActivity extends Activity {
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
 				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
-				((TextView)component.findViewById(R.id.accu_ah)).setText(f + "AH");
+				((TextViewFont)component.findViewById(R.id.accu_ah)).setText(f + "AH");
+		        ((TextViewFont)component.findViewById(R.id.accu_ah)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
 			}	
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
 				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
-				((TextView)component.findViewById(R.id.accu_tok)).setText(f + "A");
+				((TextViewFont)component.findViewById(R.id.accu_tok)).setText(f + "A");
+		        ((TextViewFont)component.findViewById(R.id.accu_tok)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
 			}	
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_DISCONNECT)).getId()) { 
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());

@@ -49,7 +49,7 @@ public class LoginActivity extends Activity {
         tvTitle.setText(R.string.title_activity_login);
         ImageView ivBack = (ImageView) findViewById(R.id.iv_back);
         ivBack.setVisibility(View.GONE);
-        //tvTitle.setLetterSpacing(13);
+        tvTitle.setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_big));
         
         TextView btnRegister = (TextView) findViewById(R.id.button_register);
 		btnRegister.setOnClickListener(new View.OnClickListener() {

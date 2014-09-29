@@ -1,6 +1,7 @@
 package si.noemus.boatguard.activities;
 
 import si.noemus.boatguard.R;
+import si.noemus.boatguard.components.TextViewFont;
 import si.noemus.boatguard.fragments.AlarmContactsFragment;
 import si.noemus.boatguard.fragments.AlarmTypeFragment;
 import si.noemus.boatguard.fragments.AnchorDriftingFragment;
@@ -23,7 +24,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class SettingsActivity extends Activity {
 
@@ -46,9 +46,10 @@ public class SettingsActivity extends Activity {
 		
 		Bundle extras = getIntent().getExtras();
 
-		TextView tvTitle = (TextView) findViewById(R.id.actionbar_text);
+		TextViewFont tvTitle = (TextViewFont) findViewById(R.id.actionbar_text);
         tvTitle.setText(extras.getString("title"));
- 
+        tvTitle.setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_big));
+         
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentId = extras.getInt("id");
