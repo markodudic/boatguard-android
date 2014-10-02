@@ -1,20 +1,21 @@
-package si.noemus.boatguard.activities;
+package com.boatguard.boatguard.activities;
 
-import si.noemus.boatguard.R;
-import si.noemus.boatguard.components.TextViewFont;
-import si.noemus.boatguard.fragments.AlarmContactsFragment;
-import si.noemus.boatguard.fragments.AlarmTypeFragment;
-import si.noemus.boatguard.fragments.AnchorDriftingFragment;
-import si.noemus.boatguard.fragments.AppAppearanceFragment;
-import si.noemus.boatguard.fragments.BatteryFragment;
-import si.noemus.boatguard.fragments.BilgePumpFragment;
-import si.noemus.boatguard.fragments.ContactsFragment;
-import si.noemus.boatguard.fragments.GeoFenceFragment;
-import si.noemus.boatguard.fragments.HistoryFragment;
-import si.noemus.boatguard.fragments.MyAccountFragment;
-import si.noemus.boatguard.fragments.SettingsFragment;
-import si.noemus.boatguard.utils.Settings;
-import si.noemus.boatguard.utils.Utils;
+import com.boatguard.boatguard.R;
+
+import com.boatguard.boatguard.components.TextViewFont;
+import com.boatguard.boatguard.fragments.AlarmContactsFragment;
+import com.boatguard.boatguard.fragments.AlarmTypeFragment;
+import com.boatguard.boatguard.fragments.AnchorDriftingFragment;
+import com.boatguard.boatguard.fragments.AppAppearanceFragment;
+import com.boatguard.boatguard.fragments.BatteryFragment;
+import com.boatguard.boatguard.fragments.BilgePumpFragment;
+import com.boatguard.boatguard.fragments.ContactsFragment;
+import com.boatguard.boatguard.fragments.GeoFenceFragment;
+import com.boatguard.boatguard.fragments.HistoryFragment;
+import com.boatguard.boatguard.fragments.MyAccountFragment;
+import com.boatguard.boatguard.fragments.SettingsFragment;
+import com.boatguard.boatguard.utils.Settings;
+import com.boatguard.boatguard.utils.Utils;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;

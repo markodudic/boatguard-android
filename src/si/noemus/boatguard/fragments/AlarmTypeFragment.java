@@ -1,10 +1,11 @@
-package si.noemus.boatguard.fragments;
+package com.boatguard.boatguard.fragments;
 
-import si.noemus.boatguard.R;
-import si.noemus.boatguard.components.TextViewFont;
-import si.noemus.boatguard.objects.ObuAlarm;
-import si.noemus.boatguard.utils.Settings;
-import si.noemus.boatguard.utils.Utils;
+import com.boatguard.boatguard.R;
+
+import com.boatguard.boatguard.components.TextViewFont;
+import com.boatguard.boatguard.objects.ObuAlarm;
+import com.boatguard.boatguard.utils.Settings;
+import com.boatguard.boatguard.utils.Utils;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;

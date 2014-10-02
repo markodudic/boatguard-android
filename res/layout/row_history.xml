@@ -1,10 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
+    xmlns:boatguard="http://schemas.android.com/apk/res/com.boatguard.boatguard"
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:padding="6dip" >
     
-    <si.noemus.boatguard.components.TextViewFont
+    <com.boatguard.boatguard.components.TextViewFont
         android:id="@+id/tv_history"
         style="@style/SettingsItem"
         android:layout_width="match_parent"

@@ -1,13 +1,14 @@
-package si.noemus.boatguard.fragments;
+package com.boatguard.boatguard.fragments;
 
-import si.noemus.boatguard.R;
-import si.noemus.boatguard.R.attr;
-import si.noemus.boatguard.R.id;
-import si.noemus.boatguard.R.layout;
-import si.noemus.boatguard.activities.SettingsActivity;
-import si.noemus.boatguard.components.TextViewFont;
-import si.noemus.boatguard.utils.Settings;
-import si.noemus.boatguard.utils.Utils;
+import com.boatguard.boatguard.R;
+import com.boatguard.boatguard.R.attr;
+import com.boatguard.boatguard.R.id;
+import com.boatguard.boatguard.R.layout;
+
+import com.boatguard.boatguard.activities.SettingsActivity;
+import com.boatguard.boatguard.components.TextViewFont;
+import com.boatguard.boatguard.utils.Settings;
+import com.boatguard.boatguard.utils.Utils;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.TypedArray;

@@ -1,18 +1,19 @@
-package si.noemus.boatguard.utils;
+package com.boatguard.boatguard.utils;
 
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import si.noemus.boatguard.R;
+import com.boatguard.boatguard.R;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 public class Utils {
-    public static final String PREFS_NAME = "si.noemus.boatguard.PREFS_FILE";
+    public static final String PREFS_NAME = "com.boatguard.boatguard.PREFS_FILE";
 
     public static void savePrefernciesString(Context context, String paramString1, String paramString2)
     {

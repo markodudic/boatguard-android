@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
+    xmlns:boatguard="http://schemas.android.com/apk/res/com.boatguard.boatguard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?component" >
@@ -24,7 +24,7 @@
 		    android:layout_height="@dimen/component_height"
 		    android:orientation="horizontal" >
 		    
-		    <si.noemus.boatguard.components.TextViewFont
+		    <com.boatguard.boatguard.components.TextViewFont
 		        android:id="@+id/label"
 		        style="@style/ComponentText"
 		        boatguard:font_name="@string/font_regular"
@@ -48,7 +48,7 @@
 			        android:layout_gravity="center_vertical|center_horizontal"
 			        android:visibility="gone" />
 			    
-		        <si.noemus.boatguard.components.TextViewFont
+		        <com.boatguard.boatguard.components.TextViewFont
 			        android:id="@+id/accu_napetost"
 			        style="@style/ComponentAccuText"
 			        android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
 			        android:text="100%"
 			        boatguard:font_name="@string/font_medium" />
 			    
-			    <si.noemus.boatguard.components.TextViewFont
+			    <com.boatguard.boatguard.components.TextViewFont
 			        android:id="@+id/accu_ah"
 			        style="@style/ComponentAccuText"
 			        android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
 			        boatguard:font_name="@string/font_medium"
 			        android:visibility="gone" />
 	
-			    <si.noemus.boatguard.components.TextViewFont
+			    <com.boatguard.boatguard.components.TextViewFont
 			        android:id="@+id/accu_tok"
 			        style="@style/ComponentAccuText"
 			        android:layout_width="wrap_content"

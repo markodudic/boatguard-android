@@ -1,4 +1,4 @@
-package si.noemus.boatguard.activities;
+package com.boatguard.boatguard.activities;
 
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -8,13 +8,14 @@ import java.util.Map.Entry;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import si.noemus.boatguard.R;
-import si.noemus.boatguard.R.layout;
-import si.noemus.boatguard.R.string;
-import si.noemus.boatguard.utils.Comm;
-import si.noemus.boatguard.utils.DialogFactory;
-import si.noemus.boatguard.utils.Settings;
-import si.noemus.boatguard.utils.Utils;
+import com.boatguard.boatguard.R;
+import com.boatguard.boatguard.R.layout;
+import com.boatguard.boatguard.R.string;
+
+import com.boatguard.boatguard.utils.Comm;
+import com.boatguard.boatguard.utils.DialogFactory;
+import com.boatguard.boatguard.utils.Settings;
+import com.boatguard.boatguard.utils.Utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

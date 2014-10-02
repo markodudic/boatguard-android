@@ -1,5 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
+    xmlns:boatguard="http://schemas.android.com/apk/res/com.boatguard.boatguard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -14,7 +14,7 @@
         android:clickable="true"
         android:src="?ic_back" />
     
-	<si.noemus.boatguard.components.TextViewFont
+	<com.boatguard.boatguard.components.TextViewFont
 	    android:id="@+id/actionbar_text"
 	    boatguard:font_name="@string/font_extrabold"
 	    style="@style/ActionBarText"

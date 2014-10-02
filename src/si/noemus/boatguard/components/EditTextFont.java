@@ -1,6 +1,7 @@
-package si.noemus.boatguard.components;
+package com.boatguard.boatguard.components;
 
-import si.noemus.boatguard.R;
+import com.boatguard.boatguard.R;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;

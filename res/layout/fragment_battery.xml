@@ -1,12 +1,12 @@
 <LinearLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
-   	xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
+   	xmlns:boatguard="http://schemas.android.com/apk/res/com.boatguard.boatguard"
    	style="@style/SettingsLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <si.noemus.boatguard.components.TextViewFont
+    <com.boatguard.boatguard.components.TextViewFont
         android:layout_width="wrap_content"
         android:text="@string/battery_capacity"
         boatguard:font_name="@string/font_semibold"
@@ -16,7 +16,7 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="@dimen/login_edit_height">
 	    
-   	    <si.noemus.boatguard.components.EditTextFont
+   	    <com.boatguard.boatguard.components.EditTextFont
 	        android:id="@+id/battery_capacity"
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
@@ -43,7 +43,7 @@
 	    android:layout_height="@dimen/settings_height"
 	    android:orientation="horizontal" >
 	    
-	    <si.noemus.boatguard.components.TextViewFont
+	    <com.boatguard.boatguard.components.TextViewFont
 	        style="@style/SettingsText"
 	        boatguard:font_name="@string/font_medium"
 	        android:layout_width="match_parent"
@@ -51,7 +51,7 @@
 	        android:layout_weight="1"
 	        android:text="@string/battery_alarm_level" />
     
-	    <si.noemus.boatguard.components.TextViewFont
+	    <com.boatguard.boatguard.components.TextViewFont
 	        android:id="@+id/tv_battery_alarm_level"
  		    style="@style/SettingsValueText"
 	        boatguard:font_name="@string/font_medium"

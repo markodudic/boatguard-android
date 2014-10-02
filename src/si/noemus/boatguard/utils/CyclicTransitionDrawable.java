@@ -1,4 +1,4 @@
-package si.noemus.boatguard.utils;
+package com.boatguard.boatguard.utils;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;

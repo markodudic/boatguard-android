@@ -1,4 +1,4 @@
-package si.noemus.boatguard.activities;
+package com.boatguard.boatguard.activities;
  
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
@@ -13,27 +13,17 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import si.noemus.boatguard.R;
-import si.noemus.boatguard.R.attr;
-import si.noemus.boatguard.R.color;
-import si.noemus.boatguard.R.dimen;
-import si.noemus.boatguard.R.drawable;
-import si.noemus.boatguard.R.id;
-import si.noemus.boatguard.R.integer;
-import si.noemus.boatguard.R.layout;
-import si.noemus.boatguard.R.string;
-import si.noemus.boatguard.R.style;
-import si.noemus.boatguard.components.TextViewFont;
-import si.noemus.boatguard.objects.AppSetting;
-import si.noemus.boatguard.objects.ObuAlarm;
-import si.noemus.boatguard.objects.ObuComponent;
-import si.noemus.boatguard.objects.ObuState;
-import si.noemus.boatguard.objects.State;
-import si.noemus.boatguard.utils.Comm;
-import si.noemus.boatguard.utils.Comm.OnTaskCompleteListener;
-import si.noemus.boatguard.utils.CyclicTransitionDrawable;
-import si.noemus.boatguard.utils.Settings;
-import si.noemus.boatguard.utils.Utils;
+import com.boatguard.boatguard.components.TextViewFont;
+import com.boatguard.boatguard.objects.AppSetting;
+import com.boatguard.boatguard.objects.ObuAlarm;
+import com.boatguard.boatguard.objects.ObuComponent;
+import com.boatguard.boatguard.objects.ObuState;
+import com.boatguard.boatguard.objects.State;
+import com.boatguard.boatguard.utils.Comm;
+import com.boatguard.boatguard.utils.Comm.OnTaskCompleteListener;
+import com.boatguard.boatguard.utils.CyclicTransitionDrawable;
+import com.boatguard.boatguard.utils.Settings;
+import com.boatguard.boatguard.utils.Utils;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.ActionBar;
@@ -78,6 +68,16 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.boatguard.boatguard.R;
+import com.boatguard.boatguard.R.attr;
+import com.boatguard.boatguard.R.color;
+import com.boatguard.boatguard.R.dimen;
+import com.boatguard.boatguard.R.drawable;
+import com.boatguard.boatguard.R.id;
+import com.boatguard.boatguard.R.integer;
+import com.boatguard.boatguard.R.layout;
+import com.boatguard.boatguard.R.string;
+import com.boatguard.boatguard.R.style;
 import com.google.gson.Gson;
 
 public class MainActivity extends Activity {

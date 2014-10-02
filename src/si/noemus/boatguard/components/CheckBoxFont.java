@@ -1,7 +1,8 @@
-package si.noemus.boatguard.components;
+package com.boatguard.boatguard.components;
 
-import si.noemus.boatguard.R;
-import si.noemus.boatguard.components.TextViewFont.LetterSpacing;
+import com.boatguard.boatguard.R;
+
+import com.boatguard.boatguard.components.TextViewFont.LetterSpacing;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;

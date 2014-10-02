@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
+    xmlns:boatguard="http://schemas.android.com/apk/res/com.boatguard.boatguard"
     android:id="@+id/lAlarm"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
 		            android:layout_gravity="center_vertical"
 		            android:src="@drawable/ic_arrows_right" />
 		        							    
-	        	<si.noemus.boatguard.components.TextViewFont
+	        	<com.boatguard.boatguard.components.TextViewFont
 	        	    android:id="@+id/alarm_title"
 	        	    style="@style/alarmTitle"
 	        	    android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
 			
 		</FrameLayout>     
 			
-		<si.noemus.boatguard.components.TextViewFont
+		<com.boatguard.boatguard.components.TextViewFont
 		    android:id="@+id/alarm_msg"
 		    style="@style/alarmText"
 		    android:layout_width="match_parent"
@@ -67,7 +67,7 @@
 		    android:text="alarm_msg"
 		    boatguard:font_name="@string/font_semibold" />
 	 
-		<si.noemus.boatguard.components.TextViewFont
+		<com.boatguard.boatguard.components.TextViewFont
 		    android:id="@+id/alarm_desc"
 		    style="@style/alarmDesc"
 		    android:layout_width="match_parent"
@@ -83,7 +83,7 @@
 		android:layout_height="50dp"
 		android:background="@color/text_alarm_title" >
 			
-		<si.noemus.boatguard.components.TextViewFont
+		<com.boatguard.boatguard.components.TextViewFont
 		    android:id="@+id/alarm_confirm"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"

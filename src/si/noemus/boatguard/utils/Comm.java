@@ -1,4 +1,4 @@
-package si.noemus.boatguard.utils;
+package com.boatguard.boatguard.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,14 +1,15 @@
-package si.noemus.boatguard.fragments;
+package com.boatguard.boatguard.fragments;
 
 import java.util.HashMap;
 
-import si.noemus.boatguard.R;
-import si.noemus.boatguard.activities.SplashScreenActivity;
-import si.noemus.boatguard.objects.ObuSetting;
-import si.noemus.boatguard.objects.Setting;
-import si.noemus.boatguard.objects.State;
-import si.noemus.boatguard.utils.Settings;
-import si.noemus.boatguard.utils.Utils;
+import com.boatguard.boatguard.R;
+
+import com.boatguard.boatguard.activities.SplashScreenActivity;
+import com.boatguard.boatguard.objects.ObuSetting;
+import com.boatguard.boatguard.objects.Setting;
+import com.boatguard.boatguard.objects.State;
+import com.boatguard.boatguard.utils.Settings;
+import com.boatguard.boatguard.utils.Utils;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;

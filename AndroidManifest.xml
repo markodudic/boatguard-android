@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="si.noemus.boatguard"
+    package="com.boatguard.boatguard"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppThemeDay" >
         <activity
-            android:name="si.noemus.boatguard.activities.SplashScreenActivity"
+            android:name="com.boatguard.boatguard.activities.SplashScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
             <intent-filter>
@@ -24,31 +24,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="si.noemus.boatguard.activities.MainActivity"
+            android:name="com.boatguard.boatguard.activities.MainActivity"
             android:screenOrientation="portrait"
 			android:launchMode="singleTop"
             android:label="" >
         </activity>
         <activity
-            android:name="si.noemus.boatguard.activities.LocationActivity"
+            android:name="com.boatguard.boatguard.activities.LocationActivity"
             android:screenOrientation="portrait"
 			android:launchMode="singleTop"
             android:label="" >
         </activity>
         <activity
-            android:name="si.noemus.boatguard.activities.LoginActivity"
+            android:name="com.boatguard.boatguard.activities.LoginActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:label="" >
         </activity>
         <activity
-            android:name="si.noemus.boatguard.activities.SettingsActivity"
+            android:name="com.boatguard.boatguard.activities.SettingsActivity"
             android:screenOrientation="portrait"
             android:label="" >
         </activity>
         
         
-        <receiver android:name="si.noemus.boatguard.utils.IncomingSms">   
+        <receiver android:name="com.boatguard.boatguard.utils.IncomingSms">   
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>

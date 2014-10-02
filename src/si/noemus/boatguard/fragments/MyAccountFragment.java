@@ -1,8 +1,9 @@
-package si.noemus.boatguard.fragments;
+package com.boatguard.boatguard.fragments;
 
-import si.noemus.boatguard.R;
-import si.noemus.boatguard.objects.Customer;
-import si.noemus.boatguard.utils.Settings;
+import com.boatguard.boatguard.R;
+
+import com.boatguard.boatguard.objects.Customer;
+import com.boatguard.boatguard.utils.Settings;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;

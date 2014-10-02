@@ -1,18 +1,17 @@
-package si.noemus.boatguard.fragments;
+package com.boatguard.boatguard.fragments;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import si.noemus.boatguard.R;
-import si.noemus.boatguard.components.TextViewFont;
-import si.noemus.boatguard.objects.ObuState;
-import si.noemus.boatguard.objects.State;
-import si.noemus.boatguard.utils.Comm;
-import si.noemus.boatguard.utils.Comm.OnTaskCompleteListener;
-import si.noemus.boatguard.utils.Settings;
-import si.noemus.boatguard.utils.Utils;
+import com.boatguard.boatguard.components.TextViewFont;
+import com.boatguard.boatguard.objects.ObuState;
+import com.boatguard.boatguard.objects.State;
+import com.boatguard.boatguard.utils.Comm;
+import com.boatguard.boatguard.utils.Comm.OnTaskCompleteListener;
+import com.boatguard.boatguard.utils.Settings;
+import com.boatguard.boatguard.utils.Utils;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -23,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.boatguard.boatguard.R;
 import com.google.gson.Gson;
 
 public class HistoryFragment  extends Fragment {

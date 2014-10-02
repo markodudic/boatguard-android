@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
+    xmlns:boatguard="http://schemas.android.com/apk/res/com.boatguard.boatguard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -10,7 +10,7 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="@dimen/menu_height" >
     
-	    <si.noemus.boatguard.components.TextViewFont
+	    <com.boatguard.boatguard.components.TextViewFont
 	        android:id="@+id/tv_last_update"
 	        style="@style/LastUpdateText"
 	        android:layout_width="match_parent"

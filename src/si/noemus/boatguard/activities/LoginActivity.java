@@ -1,16 +1,17 @@
-package si.noemus.boatguard.activities;
+package com.boatguard.boatguard.activities;
 
 import java.net.URLEncoder;
 
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import si.noemus.boatguard.R;
-import si.noemus.boatguard.components.TextViewFont;
-import si.noemus.boatguard.utils.Comm;
-import si.noemus.boatguard.utils.DialogFactory;
-import si.noemus.boatguard.utils.Settings;
-import si.noemus.boatguard.utils.Utils;
+import com.boatguard.boatguard.R;
+
+import com.boatguard.boatguard.components.TextViewFont;
+import com.boatguard.boatguard.utils.Comm;
+import com.boatguard.boatguard.utils.DialogFactory;
+import com.boatguard.boatguard.utils.Settings;
+import com.boatguard.boatguard.utils.Utils;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;

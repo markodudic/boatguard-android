@@ -1,4 +1,4 @@
-package si.noemus.boatguard.utils;
+package com.boatguard.boatguard.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,16 +11,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import si.noemus.boatguard.R;
-import si.noemus.boatguard.objects.Alarm;
-import si.noemus.boatguard.objects.AppSetting;
-import si.noemus.boatguard.objects.Customer;
-import si.noemus.boatguard.objects.Friend;
-import si.noemus.boatguard.objects.ObuAlarm;
-import si.noemus.boatguard.objects.ObuComponent;
-import si.noemus.boatguard.objects.ObuSetting;
-import si.noemus.boatguard.objects.Setting;
-import si.noemus.boatguard.objects.State;
+import com.boatguard.boatguard.objects.Alarm;
+import com.boatguard.boatguard.objects.AppSetting;
+import com.boatguard.boatguard.objects.Customer;
+import com.boatguard.boatguard.objects.Friend;
+import com.boatguard.boatguard.objects.ObuAlarm;
+import com.boatguard.boatguard.objects.ObuComponent;
+import com.boatguard.boatguard.objects.ObuSetting;
+import com.boatguard.boatguard.objects.Setting;
+import com.boatguard.boatguard.objects.State;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -30,6 +29,7 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.boatguard.boatguard.R;
 import com.google.gson.Gson;
 
 

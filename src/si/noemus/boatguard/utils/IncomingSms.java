@@ -1,7 +1,7 @@
-package si.noemus.boatguard.utils;
+package com.boatguard.boatguard.utils;
 
-import si.noemus.boatguard.activities.MainActivity;
-import si.noemus.boatguard.activities.SplashScreenActivity;
+import com.boatguard.boatguard.activities.MainActivity;
+import com.boatguard.boatguard.activities.SplashScreenActivity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

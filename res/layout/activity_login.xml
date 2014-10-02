@@ -1,5 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:boatguard="http://schemas.android.com/apk/res/si.noemus.boatguard"
+    xmlns:boatguard="http://schemas.android.com/apk/res/com.boatguard.boatguard"
     style="@style/Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
@@ -19,7 +19,7 @@
 		android:paddingRight="@dimen/activity_horizontal_margin"
 		android:paddingTop="@dimen/activity_vertical_margin" >
     
-	    <si.noemus.boatguard.components.TextViewFont
+	    <com.boatguard.boatguard.components.TextViewFont
 	        android:layout_width="wrap_content"
 	        android:text="@string/username"
 	        boatguard:font_name="@string/font_medium"
@@ -29,7 +29,7 @@
 		    android:layout_width="match_parent"
 		    android:layout_height="@dimen/login_edit_height">
 		    
-    	    <si.noemus.boatguard.components.EditTextFont
+    	    <com.boatguard.boatguard.components.EditTextFont
 		        android:id="@+id/username"
 		        android:layout_width="match_parent"
 		        android:layout_height="match_parent"
@@ -37,7 +37,7 @@
 		        boatguard:font_name="@string/font_medium"
 		    	android:text="marko">
 		        <requestFocus />
-		    </si.noemus.boatguard.components.EditTextFont>
+		    </com.boatguard.boatguard.components.EditTextFont>
 		    
 		    <ImageView
 		        android:id="@+id/iv_username"
@@ -50,7 +50,7 @@
 
 		</FrameLayout>
 	
-	    <si.noemus.boatguard.components.TextViewFont
+	    <com.boatguard.boatguard.components.TextViewFont
 	        style="@style/LoginText"
 	        boatguard:font_name="@string/font_medium"
 	    	android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
 		    android:layout_width="match_parent"
 		    android:layout_height="@dimen/login_edit_height">
 		    
-	    	<si.noemus.boatguard.components.EditTextFont
+	    	<com.boatguard.boatguard.components.EditTextFont
 		        android:id="@+id/password"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
 		        android:src="?ic_delete" />
 		</FrameLayout>	    
 		
-	    <si.noemus.boatguard.components.TextViewFont
+	    <com.boatguard.boatguard.components.TextViewFont
 	        android:layout_width="wrap_content"
 	        android:text="@string/obu_id"
 	        boatguard:font_name="@string/font_medium"
@@ -89,7 +89,7 @@
 		    android:layout_width="match_parent"
 		    android:layout_height="@dimen/login_edit_height">
 	    
-		    <si.noemus.boatguard.components.EditTextFont
+		    <com.boatguard.boatguard.components.EditTextFont
 		        android:id="@+id/obu_id"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
 		        android:src="?ic_delete" />
 		</FrameLayout>
 			    
-	    <si.noemus.boatguard.components.CheckBoxFont
+	    <com.boatguard.boatguard.components.CheckBoxFont
 	        android:id="@+id/checkBox_remember_me"
 	        style="@style/LoginRememberText"
 	        android:layout_width="wrap_content"
@@ -120,7 +120,7 @@
 		    android:layout_height="wrap_content"
 		    android:orientation="horizontal">
 		    
-	  	    <si.noemus.boatguard.components.TextViewFont
+	  	    <com.boatguard.boatguard.components.TextViewFont
 		        android:id="@+id/button_register"
 		        style="@style/RegisterButtonText"
 		        boatguard:font_name="@string/font_medium"
@@ -128,7 +128,7 @@
 		        android:layout_weight="1"
 		        android:text="@string/register" />
 		  
-		    <si.noemus.boatguard.components.TextViewFont
+		    <com.boatguard.boatguard.components.TextViewFont
 		        android:id="@+id/button_login"
 		        style="@style/LoginButtonText"
 		        android:layout_width="match_parent"
