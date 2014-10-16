@@ -244,7 +244,7 @@
    </style>	
    
    <style name="SettingsText">
-       <item name="android:textSize">@dimen/component_text_size</item>
+       <item name="android:textSize">@dimen/small_text_size</item>
        <item name="android:textColor">?text_default</item>
        <item name="android:layout_gravity">center_vertical</item>
        <item name="android:gravity">center_vertical</item>
@@ -267,7 +267,7 @@
    </style>	     
    
    <style name="SettingsItem">
-       <item name="android:textSize">@dimen/component_text_size</item>
+       <item name="android:textSize">@dimen/small_text_size</item>
        <item name="android:textColor">?text_default</item>
    </style>	   
    
