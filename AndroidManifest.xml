@@ -61,6 +61,19 @@
 		    android:name="com.google.android.maps.v2.API_KEY"
 		    android:value="AIzaSyCBeCTM7K3E01znRBB2mX7NqnIdIqrTKyE"/>        
   
+		
+        <receiver android:name="com.boatguard.boatguard.widget.BoatGuardWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widgetinfo" />
+        </receiver>
+
+        <provider
+            android:name="com.boatguard.boatguard.widget.BoatGuardDataProvider"
+            android:authorities="com.boatguard.boatguard.widget.provider" />
     </application>
 
     <uses-permission android:name="android.permission.VIBRATE" />

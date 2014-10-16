@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:boatguard="http://schemas.android.com/apk/res/com.boatguard.boatguard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?component" >
+		 
+	<FrameLayout 
+		android:id="@+id/lIcon"
+        android:onClick="changeAccuStep"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_weight="3"
+	    android:orientation="vertical" >
+	    	    
+	    <ImageView
+	        android:id="@+id/accu_disconnected"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_vertical|center_horizontal"
+	        android:visibility="gone" />
+	    
+        <com.boatguard.boatguard.components.TextViewFont
+	        android:id="@+id/accu_napetost"
+	        style="@style/ComponentAccuText"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_gravity="center_vertical|center_horizontal"
+	        android:layout_weight="1"
+	        android:gravity="center_vertical|center_horizontal"
+	        android:text="100%"
+	        boatguard:font_name="@string/font_medium" />
+	    
+	    <com.boatguard.boatguard.components.TextViewFont
+	        android:id="@+id/accu_ah"
+	        style="@style/ComponentAccuText"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_gravity="center_vertical|center_horizontal"
+	        android:layout_weight="1"
+	        android:gravity="center_vertical|center_horizontal"
+	        android:text="100%"
+	        boatguard:font_name="@string/font_medium"
+	        android:visibility="gone" />
+
+	    <com.boatguard.boatguard.components.TextViewFont
+	        android:id="@+id/accu_tok"
+	        style="@style/ComponentAccuText"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_gravity="center_vertical|center_horizontal"
+	        android:layout_weight="1"
+	        android:gravity="center_vertical|center_horizontal"
+	        android:text="100%"
+	        boatguard:font_name="@string/font_medium"
+	        android:visibility="gone" />
+	    		    		    
+	    <ImageView
+	        android:id="@+id/step"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="bottom|center_horizontal"
+	        android:layout_marginBottom="@dimen/component_step_margin"
+	        android:layout_weight="9"
+	        android:src="@drawable/ic_battery_step_1" />
+
+    </FrameLayout>
+ 
+</FrameLayout>
