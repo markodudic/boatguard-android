@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:boatguard="http://schemas.android.com/apk/res/com.boatguard.boatguard"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:background="@color/background_day"
+    android:orientation="vertical" >
+
+    <com.boatguard.boatguard.components.TextViewFont
+        android:id="@+id/tv_last_update"
+        style="@style/LastUpdateText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+   		android:text="@string/last_update"
+        boatguard:font_name="@string/font_regular" />
+	    
+	<LinearLayout 
+		android:id="@+id/components"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal" />
+		
+	<ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical" />
+</RelativeLayout>

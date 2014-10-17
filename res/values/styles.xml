@@ -164,8 +164,7 @@
        <item name="android:textColor">?text_default</item>
        <item name="android:gravity">center_vertical|center_horizontal</item>
    </style>	  
-   
-   
+      
    <style name="RefreshImage">
        <item name="android:layout_gravity">center_horizontal|center_vertical</item>
        <item name="android:background">@drawable/refresh_animation</item>
@@ -310,6 +309,11 @@
        <item name="android:background">@drawable/login_background</item>
    </style>	
 
+   
+   <style name="WidgetLastUpdateText" parent="LastUpdateText">
+       <item name="android:textColor">@color/text_default_day</item>
+   </style>	  
+      
 </resources>
 
 
