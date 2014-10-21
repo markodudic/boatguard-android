@@ -1,0 +1,13 @@
+<com.boatguard.boatguard.components.TextViewFont xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:boatguard="http://schemas.android.com/apk/res/com.boatguard.boatguard"
+    android:id="@+id/tv_history_row"
+    style="@style/SettingsItem"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:text="label"
+    boatguard:font_name="@string/font_regular" />
+

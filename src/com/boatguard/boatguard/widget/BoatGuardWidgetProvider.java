@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.boatguard.boatguard.R;
+import com.boatguard.boatguard.activities.MainActivity;
 import com.boatguard.boatguard.objects.AppSetting;
 import com.boatguard.boatguard.objects.ObuComponent;
 import com.boatguard.boatguard.objects.ObuState;
@@ -66,7 +67,7 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 	public static final String TAG = "BoatGuardWidgetProvider";
 	
 	public static final String REFRESH_ACTION = "com.boatguard.boatguard.widget.REFRESH";
-
+	
     private Handler handler = new Handler();
     private RemoteViews rv = null;
 	private Context context;
@@ -133,11 +134,14 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 //   		handler.postDelayed(startRefresh, Utils.getPrefernciesInt(context, Settings.SETTING_REFRESH_TIME));
    		handler.postDelayed(startRefresh, 10000);
         
-        // refresh
-        /*final Intent refreshIntent = new Intent(context, BoatGuardWidgetProvider.class);
-        refreshIntent.setAction(BoatGuardWidgetProvider.REFRESH_ACTION);
-        final PendingIntent refreshPendingIntent = PendingIntent.getBroadcast(context, 0,  refreshIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-        rv.setOnClickPendingIntent(R.id.lIcon, refreshPendingIntent);*/
+        // open app
+        final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+        final ComponentName cn = new ComponentName(context, BoatGuardWidgetProvider.class);
+        final Intent intent = new Intent(context, MainActivity.class);
+        final PendingIntent rpIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        rv.setOnClickPendingIntent(R.id.lWidget, rpIntent);
+        mgr.updateAppWidget(mgr.getAppWidgetIds(cn), rv);
+
 
         return rv;
     }
@@ -325,14 +329,14 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) && (isAccuConnected)) { 
 				RemoteViews rvComponent = obuRemoteViews.get(((State)Settings.states.get(Settings.STATE_ACCU_AH)).getIdComponent());
 				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
-				rvComponent.setTextViewText(R.id.accu_ah, f + "%");
+				rvComponent.setTextViewText(R.id.accu_ah, f + "AH");
 				rv.setViewVisibility(R.id.accu_ah, View.GONE);
 				//rv.addView(R.id.components, rvComponent);
 			}	
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) && (isAccuConnected)) { 
 				RemoteViews rvComponent = obuRemoteViews.get(((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getIdComponent());
 				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
-				rvComponent.setTextViewText(R.id.accu_tok, f + "%");
+				rvComponent.setTextViewText(R.id.accu_tok, f + "A");
 				rv.setViewVisibility(R.id.accu_tok, View.GONE);
 				//rv.addView(R.id.components, rvComponent);
 			}	
