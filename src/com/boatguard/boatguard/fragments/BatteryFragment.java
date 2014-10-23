@@ -3,10 +3,11 @@ package com.boatguard.boatguard.fragments;
 import java.util.HashMap;
 
 import com.boatguard.boatguard.R;
-
 import com.boatguard.boatguard.objects.ObuSetting;
 import com.boatguard.boatguard.objects.Setting;
+import com.boatguard.boatguard.objects.State;
 import com.boatguard.boatguard.utils.Settings;
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,9 +15,11 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
@@ -67,6 +70,16 @@ public class BatteryFragment  extends Fragment {
 		        obuSettings.get(((Setting)Settings.settings.get(Settings.STATE_BATTERY_ALARM_LEVEL)).getId()).setValue(progressChanged+"");
 			}
 		});
+		
+		TextView tvDefine = (TextView) v.findViewById(R.id.button_battery_energy_reset);
+		tvDefine.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v1) {
+				//set settings
+		        Settings.obuSettings.get(((Setting)Settings.settings.get(Settings.STATE_BATTERY_ENERGY_RESET)).getId()).setValue("1");
+			}
+		});	
+		
 		
 		
    		return v;

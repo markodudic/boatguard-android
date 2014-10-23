@@ -30,6 +30,7 @@
     <string name="alarm_contacts">ALARM CONTACTS</string>
     <string name="add_contact">ADD CONTACT</string>
     <string name="no_contacts">NO CONTACTS</string>
+    <string name="reset">RESET</string>
     
 	<string name="json_error">Nepravilen odgovor strežnika</string> 
 	<string name="json_title">Povezava na strežnik</string> 
@@ -84,6 +85,7 @@
    
    <string name="battery_capacity">BATTERY CAPACITY:</string>
    <string name="battery_alarm_level">SEND ALARM WHEN BATTERY LEVEL IS AT:</string>
+   <string name="battery_energy_reset">RESET BATTERY ENERGY:</string>
    
    <string name="alarm_notifications">ALARM NOTIFICATIONS</string>
    <string name="alarm_settings">ALARM SETTINGS</string>
