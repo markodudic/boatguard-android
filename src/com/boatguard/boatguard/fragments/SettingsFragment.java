@@ -103,7 +103,9 @@ public class SettingsFragment  extends Fragment {
 					(vibrate?getResources().getString(R.string.vibrate):"") + (((playSound&&!vibrate)||vibrate)&&popUp?" / ":"") + 
 					(popUp?getResources().getString(R.string.pop_up):"");
         
-        text[6] = Settings.customer.getName().toUpperCase()+" "+Settings.customer.getSurname().toUpperCase()+" / "+Settings.customer.getBoat_name().toUpperCase();
+        text[6] = (Settings.customer.getName()!=null?Settings.customer.getName().toUpperCase():"")+" "+
+        		(Settings.customer.getSurname()!=null?Settings.customer.getSurname().toUpperCase():"")+" "+
+        		(Settings.customer.getBoat_name()!=null?Settings.customer.getBoat_name().toUpperCase():"");
         text[7] = "";
         
         int refreshTime = Utils.getPrefernciesInt(getActivity(), Settings.SETTING_REFRESH_TIME)/60/1000;
