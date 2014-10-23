@@ -18,7 +18,6 @@ import android.animation.ObjectAnimator;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -63,7 +62,9 @@ import com.boatguard.boatguard.components.TextViewFont;
 import com.boatguard.boatguard.objects.AppSetting;
 import com.boatguard.boatguard.objects.ObuAlarm;
 import com.boatguard.boatguard.objects.ObuComponent;
+import com.boatguard.boatguard.objects.ObuSetting;
 import com.boatguard.boatguard.objects.ObuState;
+import com.boatguard.boatguard.objects.Setting;
 import com.boatguard.boatguard.objects.State;
 import com.boatguard.boatguard.utils.Comm;
 import com.boatguard.boatguard.utils.Comm.OnTaskCompleteListener;
@@ -672,7 +673,8 @@ public class MainActivity extends Activity {
 				((TextViewFont)component.findViewById(R.id.accu_napetost)).setText(obuState.getValue() + "%");
 		        ((TextViewFont)component.findViewById(R.id.accu_napetost)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
 				cancelAlarmAnimation(component, (TextView)component.findViewById(R.id.accu_napetost), true);
-				if (Integer.parseInt(obuState.getValue()) < Integer.parseInt(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_BATTERY_ALARM_VALUE)).getValue())) {
+				String alarmLevel = Settings.obuSettings.get(((Setting)Settings.settings.get(Settings.STATE_BATTERY_ALARM_LEVEL)).getId()).getValue();
+				if (Integer.parseInt(obuState.getValue()) < Integer.parseInt(alarmLevel)) {
 					alarm = true;
 					showAlarmAccuAnimation(component, (TextView)component.findViewById(R.id.accu_napetost));
 				}
