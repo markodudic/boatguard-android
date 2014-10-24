@@ -127,9 +127,6 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
         
         showObuComponents();
 
-        
-        //Cursor c = context.getContentResolver().query(MojTelekomDataProvider.CONTENT_URI, null, gsm_num_sel, null, null);
-
         if (firstTime) {
             getObudata();
         	firstTime = false;
@@ -144,7 +141,7 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
         final Intent refreshIntent = new Intent(context, BoatGuardWidgetProvider.class);
         refreshIntent.setAction(BoatGuardWidgetProvider.REFRESH_ACTION);
         final PendingIntent refreshPendingIntent = PendingIntent.getBroadcast(context, 0,  refreshIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-        rv.setOnClickPendingIntent(R.id.lIcon, refreshPendingIntent);
+        rv.setOnClickPendingIntent(R.id.lAccu, refreshPendingIntent);
         
         // open app
         final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
