@@ -135,7 +135,7 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
         	firstTime = false;
         }
    		//handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
-   		handler.postDelayed(startRefresh, 15000);
+   		handler.postDelayed(startRefresh, 150000);
 
    		//showObuData();
         changeAccuStep();
@@ -285,7 +285,7 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 			isAccuConnected = !accuDisconnected.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ACCU_DISCONNECT)).getValue());
 		}
         
-		//rv.removeAllViews(R.id.components);
+		rv.removeAllViews(R.id.components);
 		
         Set set = obuStates.entrySet(); 
 		Iterator i = set.iterator();
@@ -425,7 +425,7 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 	   public void run() {
 		   getObudata();
 		   //handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
-		   handler.postDelayed(startRefresh, 15000);
+		   handler.postDelayed(startRefresh, 150000);
 	   }
 	};
 
