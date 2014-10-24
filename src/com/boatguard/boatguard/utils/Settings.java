@@ -62,6 +62,7 @@ public class Settings {
 	public static String STATE_ACCU_AH = "ACCU_AH";
 	public static String STATE_ACCU_TOK = "ACCU_TOK";
 	public static String STATE_ACCU_DISCONNECT = "ACCU_DISCONNECT";
+	public static String STATE_ACCU_EMPTY = "ACCU_EMPTY";
 	public static String STATE_ANCHOR = "ANCHOR";
 	public static String STATE_ANCHOR_DRIFTING = "ANCHOR_DRIFTING";
 	public static String STATE_PUMP_ALARM_ALWAYS = "PUMP_ALARM_ALWAYS";
@@ -84,6 +85,7 @@ public class Settings {
 	public static String APP_STATE_BATTERY_ALARM_VALUE = "BATTERY_ALARM_VALUE";
 	public static String APP_STATE_ACCU_DISCONNECT = "ACCU_DISCONNECT";
 	public static String APP_STATE_ALARM_REFRESH_TIME = "ALARM_REFRESH_TIME";
+	public static String APP_STATE_ALARM_BATTERY_EMPTY = "BATTERY_EMPTY";
 			
 	public static String ALARM_GREEN = "G";
 	public static String ALARM_RED = "R";

@@ -667,17 +667,23 @@ public class MainActivity extends Activity {
 						showAlarmAnimation(component, imageView, R.drawable.ic_anchor_alarm_1, R.drawable.ic_anchor_alarm, true);
 					}			
 				}	
-			}			
+			}		
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(idState);
 				((TextViewFont)component.findViewById(R.id.accu_napetost)).setText(obuState.getValue() + "%");
 		        ((TextViewFont)component.findViewById(R.id.accu_napetost)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
 				cancelAlarmAnimation(component, (TextView)component.findViewById(R.id.accu_napetost), true);
-				String alarmLevel = Settings.obuSettings.get(((Setting)Settings.settings.get(Settings.STATE_BATTERY_ALARM_LEVEL)).getId()).getValue();
-				if (Integer.parseInt(obuState.getValue()) < Integer.parseInt(alarmLevel)) {
+				
+				String accuEmpty = ((ObuState)obuStates.get(((State)Settings.states.get(Settings.STATE_ACCU_EMPTY)).getId())).getValue();
+				if (accuEmpty.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ALARM_BATTERY_EMPTY)).getValue())) {
 					alarm = true;
 					showAlarmAccuAnimation(component, (TextView)component.findViewById(R.id.accu_napetost));
 				}
+				/*String alarmLevel = Settings.obuSettings.get(((Setting)Settings.settings.get(Settings.STATE_BATTERY_ALARM_LEVEL)).getId()).getValue();
+				if (Integer.parseInt(obuState.getValue()) < Integer.parseInt(alarmLevel)) {
+					alarm = true;
+					showAlarmAccuAnimation(component, (TextView)component.findViewById(R.id.accu_napetost));
+				}*/
 			}			
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());

@@ -71,9 +71,6 @@
                 android:resource="@xml/widgetinfo" />
         </receiver>
 
-        <!-- provider
-            android:name="com.boatguard.boatguard.widget.BoatGuardDataProvider"
-            android:authorities="com.boatguard.boatguard.widget.provider" /-->
     </application>
 
     <uses-permission android:name="android.permission.VIBRATE" />

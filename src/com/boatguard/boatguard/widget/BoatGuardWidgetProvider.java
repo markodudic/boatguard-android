@@ -18,6 +18,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -94,6 +95,7 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
         Log.d(TAG,"ACTION="+action);
         final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
         final ComponentName cn = new ComponentName(context, BoatGuardWidgetProvider.class);
+	    handler.removeCallbacks(startRefresh);
 
         if (action.equals(REFRESH_ACTION)) {
     		switch (accuStep) {
@@ -108,6 +110,7 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
     			break;
     		}
     		onUpdate(context, AppWidgetManager.getInstance(context), mgr.getAppWidgetIds(cn));
+            //changeAccuStep();
         } 
         else if (action.equals(AppWidgetManager.ACTION_APPWIDGET_DELETED)) {
         } 
@@ -123,23 +126,33 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
         rv = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
         
         showObuComponents();
+
+        
+        //Cursor c = context.getContentResolver().query(MojTelekomDataProvider.CONTENT_URI, null, gsm_num_sel, null, null);
+
         if (firstTime) {
-        	getObudata();
+            getObudata();
         	firstTime = false;
         }
-        showObuData();
+   		//handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
+   		handler.postDelayed(startRefresh, 15000);
+
+   		//showObuData();
         changeAccuStep();
         
-        handler.removeCallbacks(startRefresh);
-//   		handler.postDelayed(startRefresh, Utils.getPrefernciesInt(context, Settings.SETTING_REFRESH_TIME));
-   		handler.postDelayed(startRefresh, 10000);
+        // accu step
+        final Intent refreshIntent = new Intent(context, BoatGuardWidgetProvider.class);
+        refreshIntent.setAction(BoatGuardWidgetProvider.REFRESH_ACTION);
+        final PendingIntent refreshPendingIntent = PendingIntent.getBroadcast(context, 0,  refreshIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        rv.setOnClickPendingIntent(R.id.lIcon, refreshPendingIntent);
         
         // open app
         final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
         final ComponentName cn = new ComponentName(context, BoatGuardWidgetProvider.class);
         final Intent intent = new Intent(context, MainActivity.class);
         final PendingIntent rpIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        rv.setOnClickPendingIntent(R.id.lWidget, rpIntent);
+        rv.setOnClickPendingIntent(R.id.tv_last_update, rpIntent);
+        rv.setOnClickPendingIntent(R.id.logo, rpIntent);
         mgr.updateAppWidget(mgr.getAppWidgetIds(cn), rv);
 
 
@@ -147,14 +160,11 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
     }
 
 	private void showObuComponents(){
-		System.out.println("showObuComponents");
 		Settings.getObuComponents(context);
 		HashMap<Integer,ObuComponent> obuComponents = Settings.obuComponents;
-		System.out.println("showObuComponents="+obuComponents.size());
 		Set set = obuComponents.entrySet(); 
 		Iterator i = set.iterator();
-		System.out.println("showObuComponents");
-        Settings.getSettings(context);        
+		Settings.getSettings(context);        
         obuRemoteViews.clear();
         
 		while(i.hasNext()) { 
@@ -199,8 +209,6 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager,
                                           int appWidgetId, Bundle newOptions) {
-        Log.d(TAG, "onAppWidgetOptionsChanged");
-
     }
 
 	public void getObudata() {
@@ -210,18 +218,43 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
     	System.out.println("urlString="+urlString);
 		
     	if (Utils.isNetworkConnected(context, false)) {
-			Comm at = new Comm();
+			/*Comm at = new Comm();
 			at.setCallbackListener(clGetObuData);
-			at.execute(urlString, null); 
+			at.execute(urlString, null); */
+    		
+  			try {
+			
+	            AsyncTask at = new Comm().execute(urlString, null);
+	            String res = (String) at.get();
+	            
+	            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
+	    	   	JSONArray jsonStates = (JSONArray)jRes.get("states");
+	    	   	obuStates.clear();
+		   		for (int i=0; i< jsonStates.length(); i++) {
+		   			ObuState obuState = gson.fromJson(jsonStates.get(i).toString(), ObuState.class);
+		   			obuStates.put(obuState.getId_state(), obuState);
+		   		}
+		   		
+		        final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+		        final ComponentName cn = new ComponentName(context, BoatGuardWidgetProvider.class);
+	
+	        	showObuData();  
+	        	//onUpdate(context, AppWidgetManager.getInstance(context), mgr.getAppWidgetIds(cn));
+	        } catch (Exception e) {
+	        	e.printStackTrace();
+	        	e.getLocalizedMessage();
+   	   		}	        	
+			
     	}
     }	 
-
+/*
     private OnTaskCompleteListener clGetObuData = new OnTaskCompleteListener() {
 
         @Override
         public void onComplete(String res) {
   			try {
   				System.out.println("onComplete");
+  		        handler.removeCallbacks(startRefresh);
   				
 	            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
 	    	   	JSONArray jsonStates = (JSONArray)jRes.get("states");
@@ -234,9 +267,8 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 		        final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
 		        final ComponentName cn = new ComponentName(context, BoatGuardWidgetProvider.class);
 
-		        onUpdate(context, AppWidgetManager.getInstance(context), mgr.getAppWidgetIds(cn));
-		                
-	    	   	//showObuData();
+	        	onUpdate(context, AppWidgetManager.getInstance(context), mgr.getAppWidgetIds(cn));
+	        	//showObuData();
 
 	        } catch (Exception e) {
 	        	e.printStackTrace();
@@ -244,20 +276,21 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
    	   		}
         }
     };
-    
+    */
 	private void showObuData(){
-		System.out.println("showObuData");
+        System.out.println("showObuData1");
 		if (obuStates.size() == 0) return;
 		String accuDisconnected = ((ObuState)obuStates.get(((State)Settings.states.get(Settings.STATE_ACCU_DISCONNECT)).getId())).getValue();
 		if (accuDisconnected != null) {
 			isAccuConnected = !accuDisconnected.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ACCU_DISCONNECT)).getValue());
 		}
-		
-		rv.removeAllViews(R.id.components);
+        
+		//rv.removeAllViews(R.id.components);
 		
         Set set = obuStates.entrySet(); 
 		Iterator i = set.iterator();
 		while(i.hasNext()) { 
+	        System.out.println("showObuData3");
 			Map.Entry map = (Map.Entry)i.next(); 
 			ObuState obuState = (ObuState)map.getValue();
 			int idState = obuState.getId_state();			
@@ -318,7 +351,9 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) && (isAccuConnected)) { 
 				RemoteViews rvComponent = obuRemoteViews.get(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getIdComponent());
 				rvComponent.setTextViewText(R.id.accu_napetost, obuState.getValue() + "%");
-				if (Integer.parseInt(obuState.getValue()) < Integer.parseInt(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_BATTERY_ALARM_VALUE)).getValue())) {
+				String accuEmpty = ((ObuState)obuStates.get(((State)Settings.states.get(Settings.STATE_ACCU_EMPTY)).getId())).getValue();
+				if (accuEmpty.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ALARM_BATTERY_EMPTY)).getValue())) {
+				//if (Integer.parseInt(obuState.getValue()) < Integer.parseInt(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_BATTERY_ALARM_VALUE)).getValue())) {
 					rvComponent.setTextColor(R.id.accu_napetost, context.getResources().getColor(R.color.alarm_red));
 				}
 				else {
@@ -389,7 +424,8 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 	   @Override
 	   public void run() {
 		   getObudata();
-		   handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
+		   //handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
+		   handler.postDelayed(startRefresh, 15000);
 	   }
 	};
 
