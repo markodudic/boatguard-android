@@ -313,7 +313,10 @@
    <style name="WidgetLastUpdateText" parent="LastUpdateText">
        <item name="android:textColor">@color/text_default_day</item>
    </style>	  
-      
+    
+   <style name="WidgetComponentAccuText" parent="ComponentAccuText">
+       <item name="android:textSize">@dimen/actionbar_text_size</item>
+   </style>	   
 </resources>
 
 

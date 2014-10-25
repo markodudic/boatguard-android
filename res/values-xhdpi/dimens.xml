@@ -52,7 +52,7 @@
          
 	
     <dimen name="max_height">40dp</dimen>	
-    <dimen name="widget_component_width">92dp</dimen>
+    <dimen name="widget_component_width">85dp</dimen>
     <dimen name="widget_title_height">30dp</dimen>
 </resources>
 

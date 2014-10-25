@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/lAccu"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" >
+    android:layout_height="match_parent" >
 		 
 	<LinearLayout 
 		android:id="@+id/lIcon"
@@ -20,7 +20,7 @@
 	    
         <TextView
 	        android:id="@+id/accu_napetost"
-	        style="@style/ComponentAccuText"
+	        style="@style/WidgetComponentAccuText"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_vertical|center_horizontal"
@@ -30,7 +30,7 @@
 	    
 	    <TextView
 	        android:id="@+id/accu_ah"
-	        style="@style/ComponentAccuText"
+	        style="@style/WidgetComponentAccuText"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_vertical|center_horizontal"
@@ -41,7 +41,7 @@
 
 	    <TextView
 	        android:id="@+id/accu_tok"
-	        style="@style/ComponentAccuText"
+	        style="@style/WidgetComponentAccuText"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_vertical|center_horizontal"
@@ -50,14 +50,14 @@
 	        android:text="100%"
 	        android:visibility="gone" />
 	    		    		    
-	    <ImageView
+	    <!-- ImageView
 	        android:id="@+id/step"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="bottom|center_horizontal"
 	        android:layout_marginBottom="@dimen/component_step_margin"
 	        android:layout_weight="6"
-	        android:src="@drawable/ic_battery_step_1" />
+	        android:src="@drawable/ic_battery_step_1" /-->
 
     </LinearLayout>
  

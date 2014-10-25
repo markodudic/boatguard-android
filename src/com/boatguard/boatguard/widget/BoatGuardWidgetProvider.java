@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -21,6 +22,7 @@ import android.database.ContentObserver;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -32,7 +34,6 @@ import com.boatguard.boatguard.objects.ObuComponent;
 import com.boatguard.boatguard.objects.ObuState;
 import com.boatguard.boatguard.objects.State;
 import com.boatguard.boatguard.utils.Comm;
-import com.boatguard.boatguard.utils.Comm.OnTaskCompleteListener;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
 import com.google.gson.Gson;
@@ -52,12 +53,7 @@ class BoatGuardDataProviderObserver extends ContentObserver {
     }
 
     @Override
-    public void onChange(boolean selfChange) {
-        // The data has changed, so notify the widget that the collection view needs to be updated.
-        // In response, the factory's onDataSetChanged() will be called which will requery the
-        // cursor for the new data.
-    	System.out.println("BoatGuardDataProviderObserver");
-		
+    public void onChange(boolean selfChange) {	
     }
 }
 
@@ -69,15 +65,13 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 	
 	public static final String REFRESH_ACTION = "com.boatguard.boatguard.widget.REFRESH";
 	
-    private Handler handler = new Handler();
     private RemoteViews rv = null;
 	private Context context;
 	public static HashMap<Integer,ObuState> obuStates = new HashMap<Integer,ObuState>(){};
 	public static HashMap<Integer,RemoteViews> obuRemoteViews = new HashMap<Integer,RemoteViews>(){};
 	private static Gson gson = new Gson();	
 	private boolean isAccuConnected = false;
-	private boolean firstTime = true;
-	private int accuStep = 0;	
+	//private int accuStep = 0;	
 	
     public BoatGuardWidgetProvider() {
     }
@@ -95,10 +89,11 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
         Log.d(TAG,"ACTION="+action);
         final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
         final ComponentName cn = new ComponentName(context, BoatGuardWidgetProvider.class);
-	    handler.removeCallbacks(startRefresh);
+	    //handler.removeCallbacks(startRefresh);
 
         if (action.equals(REFRESH_ACTION)) {
-    		switch (accuStep) {
+        	onUpdate(context, AppWidgetManager.getInstance(context), mgr.getAppWidgetIds(cn));
+        	/*switch (accuStep) {
     		case 0:
     			accuStep = 1;
     			break;
@@ -108,9 +103,8 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
     		case 2: 
     			accuStep = 0;
     			break;
-    		}
-    		onUpdate(context, AppWidgetManager.getInstance(context), mgr.getAppWidgetIds(cn));
-            //changeAccuStep();
+    		}*/
+    		//changeAccuStep();
         } 
         else if (action.equals(AppWidgetManager.ACTION_APPWIDGET_DELETED)) {
         } 
@@ -126,30 +120,29 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
         rv = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
         
         showObuComponents();
-
-        if (firstTime) {
-            getObudata();
-        	firstTime = false;
-        }
-   		//handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
-   		handler.postDelayed(startRefresh, 150000);
-
-   		//showObuData();
-        changeAccuStep();
+        getObudata();
+    	showObuData();  
+        
+        
+        final Intent refreshIntent = new Intent(context, BoatGuardWidgetProvider.class);
+        refreshIntent.setAction(BoatGuardWidgetProvider.REFRESH_ACTION);
+        final PendingIntent pending = PendingIntent.getBroadcast(context, 0,  refreshIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        final AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarm.cancel(pending);
+        alarm.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()+Settings.OBU_REFRESH_TIME, pending);
         
         // accu step
-        final Intent refreshIntent = new Intent(context, BoatGuardWidgetProvider.class);
+        /*final Intent refreshIntent = new Intent(context, BoatGuardWidgetProvider.class);
         refreshIntent.setAction(BoatGuardWidgetProvider.REFRESH_ACTION);
         final PendingIntent refreshPendingIntent = PendingIntent.getBroadcast(context, 0,  refreshIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         rv.setOnClickPendingIntent(R.id.lAccu, refreshPendingIntent);
-        
+        */
         // open app
         final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
         final ComponentName cn = new ComponentName(context, BoatGuardWidgetProvider.class);
         final Intent intent = new Intent(context, MainActivity.class);
         final PendingIntent rpIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        rv.setOnClickPendingIntent(R.id.tv_last_update, rpIntent);
-        rv.setOnClickPendingIntent(R.id.logo, rpIntent);
+        rv.setOnClickPendingIntent(R.id.lWidget, rpIntent);
         mgr.updateAppWidget(mgr.getAppWidgetIds(cn), rv);
 
 
@@ -186,8 +179,6 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 				rvComponent = new RemoteViews(context.getPackageName(), R.layout.widget_list_component_accu);
 			}
 			obuRemoteViews.put(obuComponent.getId_component(), rvComponent);
-			//rv.addView(R.id.components, rvComponent);
-			
 		}
 	}
 
@@ -215,10 +206,6 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
     	System.out.println("urlString="+urlString);
 		
     	if (Utils.isNetworkConnected(context, false)) {
-			/*Comm at = new Comm();
-			at.setCallbackListener(clGetObuData);
-			at.execute(urlString, null); */
-    		
   			try {
 			
 	            AsyncTask at = new Comm().execute(urlString, null);
@@ -235,8 +222,6 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 		        final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
 		        final ComponentName cn = new ComponentName(context, BoatGuardWidgetProvider.class);
 	
-	        	showObuData();  
-	        	//onUpdate(context, AppWidgetManager.getInstance(context), mgr.getAppWidgetIds(cn));
 	        } catch (Exception e) {
 	        	e.printStackTrace();
 	        	e.getLocalizedMessage();
@@ -244,39 +229,9 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 			
     	}
     }	 
-/*
-    private OnTaskCompleteListener clGetObuData = new OnTaskCompleteListener() {
 
-        @Override
-        public void onComplete(String res) {
-  			try {
-  				System.out.println("onComplete");
-  		        handler.removeCallbacks(startRefresh);
-  				
-	            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
-	    	   	JSONArray jsonStates = (JSONArray)jRes.get("states");
-	    	   	obuStates.clear();
-		   		for (int i=0; i< jsonStates.length(); i++) {
-		   			ObuState obuState = gson.fromJson(jsonStates.get(i).toString(), ObuState.class);
-		   			obuStates.put(obuState.getId_state(), obuState);
-		   		}
-		   		
-		        final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
-		        final ComponentName cn = new ComponentName(context, BoatGuardWidgetProvider.class);
-
-	        	onUpdate(context, AppWidgetManager.getInstance(context), mgr.getAppWidgetIds(cn));
-	        	//showObuData();
-
-	        } catch (Exception e) {
-	        	e.printStackTrace();
-	        	e.getLocalizedMessage();
-   	   		}
-        }
-    };
-    */
 	private void showObuData(){
-        System.out.println("showObuData1");
-		if (obuStates.size() == 0) return;
+        if (obuStates.size() == 0) return;
 		String accuDisconnected = ((ObuState)obuStates.get(((State)Settings.states.get(Settings.STATE_ACCU_DISCONNECT)).getId())).getValue();
 		if (accuDisconnected != null) {
 			isAccuConnected = !accuDisconnected.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ACCU_DISCONNECT)).getValue());
@@ -286,9 +241,8 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 		
         Set set = obuStates.entrySet(); 
 		Iterator i = set.iterator();
-		while(i.hasNext()) { 
-	        System.out.println("showObuData3");
-			Map.Entry map = (Map.Entry)i.next(); 
+		while(i.hasNext()) {
+	        Map.Entry map = (Map.Entry)i.next(); 
 			ObuState obuState = (ObuState)map.getValue();
 			int idState = obuState.getId_state();			
 			
@@ -383,14 +337,14 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 					rv.addView(R.id.components, rvComponent);
 				}
 				else {
-					changeAccuStep();
+					//changeAccuStep();
 					rvComponent.setViewVisibility(R.id.accu_disconnected, View.GONE);
 					rvComponent.setViewVisibility(R.id.lIcon, View.VISIBLE);
 				}
 			}	
 		}
 	}
-
+/*
 	public void changeAccuStep () {
 		if (!isAccuConnected) return;
 		RemoteViews rvComponent = obuRemoteViews.get(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getIdComponent());
@@ -416,14 +370,5 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 			break;
 		}
 	}
-	
-	private Runnable startRefresh = new Runnable() {
-	   @Override
-	   public void run() {
-		   getObudata();
-		   //handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
-		   handler.postDelayed(startRefresh, 150000);
-	   }
-	};
-
+*/
 }
