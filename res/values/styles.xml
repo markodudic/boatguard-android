@@ -315,7 +315,12 @@
    </style>	  
     
    <style name="WidgetComponentAccuText" parent="ComponentAccuText">
-       <item name="android:textSize">@dimen/actionbar_text_size</item>
+       <item name="android:textSize">@dimen/widget_text_size</item>
+   </style>	
+   
+   <style name="WidgetMenuLineLayout">
+       <item name="android:layout_width">@dimen/line_height</item>
+       <item name="android:background">@color/horizontal_line_day</item>
    </style>	   
 </resources>
 

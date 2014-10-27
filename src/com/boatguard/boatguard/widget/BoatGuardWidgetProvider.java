@@ -1,9 +1,9 @@
 package com.boatguard.boatguard.widget;
 
 
-import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -64,10 +64,11 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 	public static final String TAG = "BoatGuardWidgetProvider";
 	
 	public static final String REFRESH_ACTION = "com.boatguard.boatguard.widget.REFRESH";
+	public static final String REFRESH_OPEN_ACTION = "com.boatguard.boatguard.widget.REFRESH_OPEN";
 	
     private RemoteViews rv = null;
 	private Context context;
-	public static HashMap<Integer,ObuState> obuStates = new HashMap<Integer,ObuState>(){};
+	public static LinkedHashMap<Integer,ObuState> obuStates = new LinkedHashMap<Integer,ObuState>(){};
 	public static HashMap<Integer,RemoteViews> obuRemoteViews = new HashMap<Integer,RemoteViews>(){};
 	private static Gson gson = new Gson();	
 	private boolean isAccuConnected = false;
@@ -93,6 +94,7 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 
         if (action.equals(REFRESH_ACTION)) {
         	onUpdate(context, AppWidgetManager.getInstance(context), mgr.getAppWidgetIds(cn));
+            
         	/*switch (accuStep) {
     		case 0:
     			accuStep = 1;
@@ -105,6 +107,12 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
     			break;
     		}*/
     		//changeAccuStep();
+        } 
+        else if (action.equals(REFRESH_OPEN_ACTION)) {
+        	onUpdate(context, AppWidgetManager.getInstance(context), mgr.getAppWidgetIds(cn));
+        	final Intent intent1 = new Intent(context, MainActivity.class);
+        	intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        	context.startActivity(intent1);
         } 
         else if (action.equals(AppWidgetManager.ACTION_APPWIDGET_DELETED)) {
         } 
@@ -137,15 +145,21 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
         final PendingIntent refreshPendingIntent = PendingIntent.getBroadcast(context, 0,  refreshIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         rv.setOnClickPendingIntent(R.id.lAccu, refreshPendingIntent);
         */
+        
         // open app
-        final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+        /*final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
         final ComponentName cn = new ComponentName(context, BoatGuardWidgetProvider.class);
         final Intent intent = new Intent(context, MainActivity.class);
         final PendingIntent rpIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         rv.setOnClickPendingIntent(R.id.lWidget, rpIntent);
         mgr.updateAppWidget(mgr.getAppWidgetIds(cn), rv);
-
-
+*/
+        //open app and refresh
+        final Intent refreshIntent1 = new Intent(context, BoatGuardWidgetProvider.class);
+        refreshIntent1.setAction(BoatGuardWidgetProvider.REFRESH_OPEN_ACTION);
+        final PendingIntent refreshPendingIntent = PendingIntent.getBroadcast(context, 0,  refreshIntent1, PendingIntent.FLAG_CANCEL_CURRENT);
+        rv.setOnClickPendingIntent(R.id.lWidget, refreshPendingIntent);
+        
         return rv;
     }
 
@@ -234,7 +248,7 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
         if (obuStates.size() == 0) return;
 		String accuDisconnected = ((ObuState)obuStates.get(((State)Settings.states.get(Settings.STATE_ACCU_DISCONNECT)).getId())).getValue();
 		if (accuDisconnected != null) {
-			isAccuConnected = !accuDisconnected.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ACCU_DISCONNECT)).getValue());
+			isAccuConnected = accuDisconnected.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ACCU_DISCONNECT)).getValue());
 		}
         
 		rv.removeAllViews(R.id.components);
@@ -299,9 +313,10 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 				}	
 				rv.addView(R.id.components, rvComponent);
 			}			
-			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) && (isAccuConnected)) { 
+			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) && (!isAccuConnected)) { 
 				RemoteViews rvComponent = obuRemoteViews.get(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getIdComponent());
 				rvComponent.setTextViewText(R.id.accu_napetost, obuState.getValue() + "%");
+				rvComponent.setViewVisibility(R.id.accu_napetost, View.VISIBLE);
 				String accuEmpty = ((ObuState)obuStates.get(((State)Settings.states.get(Settings.STATE_ACCU_EMPTY)).getId())).getValue();
 				if (accuEmpty.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ALARM_BATTERY_EMPTY)).getValue())) {
 				//if (Integer.parseInt(obuState.getValue()) < Integer.parseInt(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_BATTERY_ALARM_VALUE)).getValue())) {
@@ -312,25 +327,24 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 				}
 				rv.addView(R.id.components, rvComponent);
 			}			
-			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) && (isAccuConnected)) { 
+			/*else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) && (!isAccuConnected)) { 
 				RemoteViews rvComponent = obuRemoteViews.get(((State)Settings.states.get(Settings.STATE_ACCU_AH)).getIdComponent());
 				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
 				rvComponent.setTextViewText(R.id.accu_ah, f + "AH");
 				rv.setViewVisibility(R.id.accu_ah, View.GONE);
 				//rv.addView(R.id.components, rvComponent);
 			}	
-			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) && (isAccuConnected)) { 
+			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) && (!isAccuConnected)) { 
 				RemoteViews rvComponent = obuRemoteViews.get(((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getIdComponent());
 				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
 				rvComponent.setTextViewText(R.id.accu_tok, f + "A");
 				rv.setViewVisibility(R.id.accu_tok, View.GONE);
 				//rv.addView(R.id.components, rvComponent);
-			}	
+			}	*/
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_DISCONNECT)).getId()) { 
 				RemoteViews rvComponent = obuRemoteViews.get(((State)Settings.states.get(Settings.STATE_ACCU_DISCONNECT)).getIdComponent());
 				
-				String accuDisconnectedState = obuState.getValue();
-				if (accuDisconnectedState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ACCU_DISCONNECT)).getValue())) {
+				if (isAccuConnected) {
 					rvComponent.setImageViewResource(R.id.accu_disconnected, R.drawable.ic_accu_disconnected_1);
 					rvComponent.setViewVisibility(R.id.accu_disconnected, View.VISIBLE);
 
@@ -339,7 +353,7 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 				else {
 					//changeAccuStep();
 					rvComponent.setViewVisibility(R.id.accu_disconnected, View.GONE);
-					rvComponent.setViewVisibility(R.id.lIcon, View.VISIBLE);
+					//rvComponent.setViewVisibility(R.id.lIcon, View.VISIBLE);
 				}
 			}	
 		}

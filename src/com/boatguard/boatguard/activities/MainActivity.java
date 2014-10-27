@@ -339,7 +339,9 @@ public class MainActivity extends Activity {
    		String urlString = MainActivity.this.getString(R.string.server_url) + "confirmalarm?obuid="+obuId+"&alarmid="+alarmId;
    		new Comm().execute(urlString, null); 
    		
-   		activeAlarms.remove(activeAlarms.indexOf(alarmId));
+   		if (activeAlarms.indexOf(alarmId) != -1) {
+   			activeAlarms.remove(activeAlarms.indexOf(alarmId));
+   		}
 		cancelNotification(alarmId);
 		dialogAlarmActive = -1;
 		dialogAlarm.dismiss();

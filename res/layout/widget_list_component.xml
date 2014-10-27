@@ -9,5 +9,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|center_horizontal"
         android:src="@drawable/ic_icon" />
-		
+
+   	<LinearLayout
+        android:layout_height="match_parent"
+		style="@style/WidgetMenuLineLayout" />
+    		
 </LinearLayout>
