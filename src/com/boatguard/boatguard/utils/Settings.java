@@ -3,6 +3,7 @@ package com.boatguard.boatguard.utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -11,15 +12,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import com.boatguard.boatguard.objects.Alarm;
-import com.boatguard.boatguard.objects.AppSetting;
-import com.boatguard.boatguard.objects.Customer;
-import com.boatguard.boatguard.objects.Friend;
-import com.boatguard.boatguard.objects.ObuAlarm;
-import com.boatguard.boatguard.objects.ObuComponent;
-import com.boatguard.boatguard.objects.ObuSetting;
-import com.boatguard.boatguard.objects.Setting;
-import com.boatguard.boatguard.objects.State;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -30,6 +22,15 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import com.boatguard.boatguard.R;
+import com.boatguard.boatguard.objects.Alarm;
+import com.boatguard.boatguard.objects.AppSetting;
+import com.boatguard.boatguard.objects.Customer;
+import com.boatguard.boatguard.objects.Friend;
+import com.boatguard.boatguard.objects.ObuAlarm;
+import com.boatguard.boatguard.objects.ObuComponent;
+import com.boatguard.boatguard.objects.ObuSetting;
+import com.boatguard.boatguard.objects.Setting;
+import com.boatguard.boatguard.objects.State;
 import com.google.gson.Gson;
 
 
@@ -95,7 +96,7 @@ public class Settings {
 	public static HashMap<String,State> states = new HashMap<String,State>(){};
 	public static HashMap<String,Setting> settings = new HashMap<String,Setting>(){};
 	public static HashMap<Integer,ObuSetting> obuSettings = new HashMap<Integer,ObuSetting>(){};
-	public static HashMap<Integer,ObuComponent> obuComponents = new HashMap<Integer,ObuComponent>(){};
+	public static LinkedHashMap<Integer,ObuComponent> obuComponents = new LinkedHashMap<Integer,ObuComponent>(){};
 	//public static HashMap<Integer,ObuAlarm> obuAlarms = new HashMap<Integer,ObuAlarm>(){};
 	public static List<ObuAlarm> obuAlarms = new ArrayList<ObuAlarm>();
 	
@@ -229,7 +230,6 @@ public class Settings {
 	            obuComponents.clear();
     	   		for (int i=0; i< jsonObuComponents.length(); i++) {
     	   			ObuComponent obuComponent = gson.fromJson(jsonObuComponents.get(i).toString(), ObuComponent.class);
-    	   			//System.out.println(obuComponent.toString());
     	   			obuComponents.put(obuComponent.getId_component(), obuComponent);	
     	   		}
 	        } catch (Exception e) {
