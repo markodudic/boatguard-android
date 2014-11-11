@@ -137,7 +137,9 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
         final PendingIntent pending = PendingIntent.getBroadcast(context, 0,  refreshIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         final AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarm.cancel(pending);
-        alarm.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()+Settings.OBU_REFRESH_TIME, pending);
+        //dam osvezevanje kar fiksno na 30 min
+        alarm.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()+(30*60*1000), pending);
+        //alarm.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()+Settings.OBU_REFRESH_TIME, pending);
         
         // accu step
         /*final Intent refreshIntent = new Intent(context, BoatGuardWidgetProvider.class);

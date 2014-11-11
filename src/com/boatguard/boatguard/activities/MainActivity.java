@@ -105,6 +105,7 @@ public class MainActivity extends Activity {
     private int notificationAlarmId = -1;
     
     private LinearLayout lMenu;
+    private TypedArray stylesAttributes = null;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +113,15 @@ public class MainActivity extends Activity {
 		if (theme != -1) {
 			setTheme(theme);			
 		}
-		super.onCreate(savedInstanceState);
+		stylesAttributes = getTheme().obtainStyledAttributes(
+	    		Utils.getPrefernciesInt(this, Settings.SETTING_THEME), 
+	    		new int[] {R.attr.horizontal_line,
+	    					R.attr.text_content, 
+	    					R.attr.component, 
+	    					R.attr.ic_logotype,
+	    					R.attr.ic_logotype_alarm});     
+
+	    super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
 		final ActionBar actionBar = getActionBar();
@@ -350,8 +359,8 @@ public class MainActivity extends Activity {
 	private void showObuComponents(){
 		TableLayout lComponents = (TableLayout)findViewById(R.id.components);
 
-	    TypedArray a = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.horizontal_line});     
-        int lineId = a.getResourceId(0, 0);       
+	    //TypedArray a = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.horizontal_line});     
+        int lineId = stylesAttributes.getResourceId(0, 0);       
 
         HashMap<Integer,ObuComponent> obuComponents = Settings.obuComponents;
 		Set set = obuComponents.entrySet(); 
@@ -681,11 +690,6 @@ public class MainActivity extends Activity {
 					alarm = true;
 					showAlarmAccuAnimation(component, (TextView)component.findViewById(R.id.accu_napetost));
 				}
-				/*String alarmLevel = Settings.obuSettings.get(((Setting)Settings.settings.get(Settings.STATE_BATTERY_ALARM_LEVEL)).getId()).getValue();
-				if (Integer.parseInt(obuState.getValue()) < Integer.parseInt(alarmLevel)) {
-					alarm = true;
-					showAlarmAccuAnimation(component, (TextView)component.findViewById(R.id.accu_napetost));
-				}*/
 			}			
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
@@ -786,10 +790,10 @@ public class MainActivity extends Activity {
 			}
 		}
 		
-	    TypedArray a = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.text_content});     
+	    //TypedArray a = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.text_content});     
         ObjectAnimator colorFadeLabel = ObjectAnimator.ofObject((TextView)layout.findViewById(R.id.label), "textColor", 
 				new ArgbEvaluator(), 
-				getResources().getColor(a.getResourceId(0, 0)), 
+				getResources().getColor(stylesAttributes.getResourceId(1, 0)), 
 				getResources().getColor(R.color.text_alarm_title));
         colorFadeLabel.setDuration(getResources().getInteger(R.integer.animation_interval));
         colorFadeLabel.setRepeatCount(-1);
@@ -799,8 +803,8 @@ public class MainActivity extends Activity {
 		alarmAnimaations.put(layout.getId(), null);
 		alarmAnimaations.put(layout.getId()+1, colorFadeLabel);
 		
-	    TypedArray a2 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_logotype_alarm});     
-        int logoId = a2.getResourceId(0, 0);       
+	    //TypedArray a2 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_logotype_alarm});     
+        int logoId = stylesAttributes.getResourceId(4, 0);       
 		((ImageView)findViewById(R.id.actionBarLogo)).setImageResource(logoId);
 	}
 
@@ -826,10 +830,10 @@ public class MainActivity extends Activity {
 		colorFade.setRepeatMode(Animation.REVERSE);
 		colorFade.start();
 		
-	    TypedArray a = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.text_content});     
+	    //TypedArray a = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.text_content});     
         ObjectAnimator colorFadeLabel = ObjectAnimator.ofObject((TextView)layout.findViewById(R.id.label), "textColor", 
 				new ArgbEvaluator(), 
-				getResources().getColor(a.getResourceId(0, 0)), 
+				getResources().getColor(stylesAttributes.getResourceId(1, 0)), 
 				getResources().getColor(R.color.text_alarm_title));
         colorFadeLabel.setDuration(getResources().getInteger(R.integer.animation_interval));
         colorFadeLabel.setRepeatCount(-1);
@@ -839,8 +843,8 @@ public class MainActivity extends Activity {
 		alarmAnimaations.put(layout.getId(), colorFade);
 		alarmAnimaations.put(layout.getId()+1, colorFadeLabel);
 		
-	    TypedArray a2 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_logotype_alarm});     
-        int logoId = a2.getResourceId(0, 0);       
+	    //TypedArray a2 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_logotype_alarm});     
+        int logoId = stylesAttributes.getResourceId(4, 0);       
 		((ImageView)findViewById(R.id.actionBarLogo)).setImageResource(logoId);
 	}
 
@@ -851,24 +855,24 @@ public class MainActivity extends Activity {
 	        	colorFade.end();
 	        	tv.setTextColor(getResources().getColor(R.color.text_green));
 	        }
+	        
 	        ObjectAnimator colorFadeLabel = (ObjectAnimator)alarmAnimaations.get(layout.getId()+1);
 	        if (colorFadeLabel != null) {
 	        	colorFadeLabel.end();
-	    	    TypedArray a = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.text_content});     
-	    	    ((TextView)layout.findViewById(R.id.label)).setTextColor(getResources().getColor(a.getResourceId(0, 0)));
+	    	    //TypedArray a = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.text_content});     
+	    	    ((TextView)layout.findViewById(R.id.label)).setTextColor(getResources().getColor(stylesAttributes.getResourceId(1, 0)));
 	        }
 			
 	        LinearLayout background = (LinearLayout)layout.findViewById(R.id.background);
 	        background.clearAnimation();
 
-	        TypedArray a1 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.component});     
-	        int backgroundId = a1.getResourceId(0, 0);       
+	        //TypedArray a1 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.component});     
+	        int backgroundId = stylesAttributes.getResourceId(2, 0);       
 	        ((LinearLayout)layout.findViewById(R.id.main)).setBackgroundColor(getResources().getColor(backgroundId));
 	        
-		    TypedArray a2 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_logotype});     
-	        int logoId = a2.getResourceId(0, 0);       
+		    //TypedArray a2 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_logotype});     
+	        int logoId = stylesAttributes.getResourceId(3, 0);       
 			((ImageView)findViewById(R.id.actionBarLogo)).setImageResource(logoId);
-			
 		}
 	}
 
