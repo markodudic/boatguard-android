@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources> 
 	<integer name="animation_interval">3000</integer>		
-    <integer name="letter_spacing_big">10</integer>
+    <integer name="letter_spacing_big">4</integer>
     <integer name="letter_spacing_small_set">6</integer>
     <integer name="letter_spacing_small">1</integer>
 </resources> 
