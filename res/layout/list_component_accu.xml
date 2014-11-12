@@ -38,7 +38,7 @@
 		        android:onClick="changeAccuStep"
 			    android:layout_width="match_parent"
 			    android:layout_height="match_parent"
-			    android:layout_weight="3"
+			    android:layout_weight="5"
 			    android:orientation="vertical" >
 			    	    
 			    <ImageView
@@ -89,8 +89,8 @@
 			        android:layout_height="wrap_content"
 			        android:layout_gravity="bottom|center_horizontal"
 			        android:layout_marginBottom="@dimen/component_step_margin"
-			        android:layout_weight="9"
-			        android:src="@drawable/ic_battery_step_1" />
+			        android:layout_weight="1"
+			        android:src="@drawable/ic_battery_step_1"  />
 	
 		    </FrameLayout>
 		</LinearLayout>

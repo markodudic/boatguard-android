@@ -431,20 +431,44 @@ public class MainActivity extends Activity {
 				    ivStep.setLayoutParams(lpI);		    
 			    }
 			}
-		    
-		    ((TextView)component.findViewById(R.id.label)).setText(obuComponent.getName());
+			TextView label = ((TextView)component.findViewById(R.id.label));
+			label.setText(obuComponent.getName());
 		    ((TextViewFont)component.findViewById(R.id.label)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
 	        
 			
 			if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_GEO)) {
 				((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_geofence_disabled);
+				label.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) { 
+						showSetting(0);
+					}
+				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_PUMP)) {
 			    ((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_bilgepump);
+				label.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) { 
+						showSetting(1);
+					}
+				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ANCHOR)) { 
 			    ((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_anchor_disabled); 
+				label.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) { 
+						showSetting(2);
+					}
+				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ACCU)) { 
 				((TextView)component.findViewById(R.id.accu_napetost)).setText("");
 				accuComponentId = obuComponent.getId_component();
+				label.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) { 
+						showSetting(3);
+					}
+				});
 			} 
 			
 			if (Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
@@ -480,7 +504,14 @@ public class MainActivity extends Activity {
 
 	}
 
-    
+	private void showSetting(int item) {
+		Intent i = new Intent(MainActivity.this, SettingsActivity.class);
+		i.putExtra("id", item);
+		i.putExtra("title", getResources().getStringArray(R.array.settings_items)[item]);
+		startActivity(i);
+	}
+	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -677,7 +708,7 @@ public class MainActivity extends Activity {
 						alarm = true;
 						showAlarmAnimation(component, imageView, R.drawable.ic_anchor_alarm_1, R.drawable.ic_anchor_alarm, true);
 					}			
-				}	
+				}
 			}		
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(idState);
@@ -712,14 +743,14 @@ public class MainActivity extends Activity {
 				TextView tvAccuAH = (TextView)component.findViewById(R.id.accu_ah);
 				TextView tvAccuTok = (TextView)component.findViewById(R.id.accu_tok);
 				ImageView ivStep = (ImageView)component.findViewById(R.id.step);
-				FrameLayout fl = (FrameLayout)component.findViewById(R.id.lIcon);
+				//FrameLayout fl = (FrameLayout)component.findViewById(R.id.lIcon);
 				
 				String accuDisconnectedState = obuState.getValue();
 				cancelAlarmAnimation(component, null, false);
 				if (accuDisconnectedState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ACCU_DISCONNECT)).getValue())) {
 					showAlarmAnimation(component, imageView, R.drawable.ic_accu_disconnected_1, R.drawable.ic_accu_disconnected, true);
 				 
-					fl.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 5f));
+					//fl.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 5f));
 					tvAccuNapetost.setVisibility(View.GONE);
 					tvAccuAH.setVisibility(View.GONE);
 					tvAccuTok.setVisibility(View.GONE);
@@ -747,7 +778,7 @@ public class MainActivity extends Activity {
 						break;
 					} 
 
-					fl.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 3f));
+					//fl.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 5f));
 					((ImageView)component.findViewById(R.id.accu_disconnected)).setVisibility(View.GONE);
 					((ImageView)component.findViewById(R.id.step)).setVisibility(View.VISIBLE);
 				}
