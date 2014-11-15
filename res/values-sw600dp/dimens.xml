@@ -1,0 +1,58 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">17dp</dimen>
+    <dimen name="activity_vertical_margin">17dp</dimen>
+    <dimen name="line_height">1dp</dimen>
+    <dimen name="shadow">17dp</dimen>
+    <dimen name="spinner_width">100dp</dimen>
+        
+    <dimen name="actionbar_text_size">38sp</dimen>
+    <dimen name="actionbar_margin_left">-20dp</dimen>
+    <dimen name="title_text_size">32sp</dimen>
+    <dimen name="button_text_size">32sp</dimen>
+    <dimen name="small_text_size">24sp</dimen>
+    <dimen name="component_text_size">26sp</dimen>   
+    <dimen name="delete_image_view_right">10dp</dimen>
+    
+    <dimen name="login_edit_height">72dp</dimen>
+    <dimen name="login_edit_margin_top">12dp</dimen>
+    <dimen name="login_edit_margin_bottom">3dp</dimen>
+    <dimen name="login_edit_padding">27dp</dimen>
+    <dimen name="login_text_height">33dp</dimen>
+    <dimen name="login_remember_height">55dp</dimen>
+    
+    <dimen name="actionbar_height">90dp</dimen>
+    <dimen name="actionbar_icon_height">33dp</dimen>
+    
+    <dimen name="menu_height">100dp</dimen>
+    <dimen name="menu_icon_height">33dp</dimen>
+    <dimen name="menu_line_margin">22dp</dimen>
+    
+    <dimen name="component_height">146dp</dimen>
+    <dimen name="components_margin">44dp</dimen>
+    <dimen name="component_step_margin">-5dp</dimen>
+    <dimen name="component_step_margin2">-22dp</dimen>
+    
+    <dimen name="dialog_alarm_padding">17dp</dimen>
+    <dimen name="dialog_alarm_text_margin">22dp</dimen>
+    <dimen name="dialog_alarm_title_margin">11dp</dimen>
+    
+    <!-- dimen name="drawer_width">300dp</dimen>
+    <dimen name="drawer_margin">10dp</dimen>
+    <dimen name="drawer_item_height">50dp</dimen-->
+
+    <dimen name="settings_height">70dp</dimen>
+    <dimen name="settings_switcher_width">80dp</dimen>
+    <dimen name="settings_switcher_height">44dp</dimen>
+    <dimen name="settings_item_height">70dp</dimen>
+    <dimen name="settings_margin">11dp</dimen>
+    <dimen name="seekbar_height">6dp</dimen>
+	<dimen name="settings_text_padding">18dp</dimen>    
+	
+    <dimen name="max_height">45dp</dimen>	
+    <dimen name="widget_component_width">90dp</dimen>
+    <dimen name="widget_title_height">33dp</dimen>
+    <dimen name="widget_text_size">28sp</dimen>	
+</resources>
+
