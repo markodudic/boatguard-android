@@ -230,7 +230,9 @@ public class Settings {
 	            obuComponents.clear();
     	   		for (int i=0; i< jsonObuComponents.length(); i++) {
     	   			ObuComponent obuComponent = gson.fromJson(jsonObuComponents.get(i).toString(), ObuComponent.class);
-    	   			obuComponents.put(obuComponent.getId_component(), obuComponent);	
+    	   			if (obuComponent.getShow() != 0) {
+    	   				obuComponents.put(obuComponent.getId_component(), obuComponent);
+    	   			}
     	   		}
 	        } catch (Exception e) {
    	        	e.printStackTrace();

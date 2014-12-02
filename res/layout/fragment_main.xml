@@ -28,30 +28,38 @@
 	        android:visibility="gone" />
 
 	</FrameLayout>
-	
-	<FrameLayout
+		    
+	<!-- android.support.v4.widget.SwipeRefreshLayout
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content" >
+	    android:layout_height="match_parent"
+	    android:id="@+id/swipe"-->	
 	    
-		<TableLayout 
-			android:id="@+id/components"
-	        android:layout_width="match_parent"
-		    android:layout_height="wrap_content" />
-
-		<LinearLayout
+	    <FrameLayout
+		    android:id="@+id/fl_components"
 		    android:layout_width="match_parent"
-		    android:layout_height="@dimen/shadow"
-		    android:orientation="vertical"
-		    android:layout_gravity="top"
-		    android:background="@drawable/drop_shadow_top"/>
+		    android:layout_height="wrap_content" >
+			
+			<ListView 
+				android:id="@+id/components"
+		        android:background="?background"
+	        	android:layout_width="match_parent"
+			    android:layout_height="wrap_content" />
 	
-		<LinearLayout
-		    android:layout_width="match_parent"
-		    android:layout_height="@dimen/shadow"
-		    android:orientation="vertical"
-		    android:layout_gravity="bottom"
-		    android:background="@drawable/drop_shadow_bottom"/>
-	</FrameLayout>
+			<LinearLayout
+			    android:layout_width="match_parent"
+			    android:layout_height="@dimen/shadow"
+			    android:orientation="vertical"
+			    android:layout_gravity="top"
+			    android:background="@drawable/drop_shadow_top"/>
+		
+			<LinearLayout
+			    android:layout_width="match_parent"
+			    android:layout_height="@dimen/shadow"
+			    android:orientation="vertical"
+			    android:layout_gravity="bottom"
+			    android:background="@drawable/drop_shadow_bottom"/>
+		</FrameLayout>
+	<!-- /android.support.v4.widget.SwipeRefreshLayout-->
 	
 	<LinearLayout
 	    android:layout_width="match_parent"

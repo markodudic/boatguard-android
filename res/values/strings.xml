@@ -58,7 +58,7 @@
    <string name="geo_fence_current">DEFINE CURRENT LOCATION AS HOME</string>
    <string name="geo_fence_define">DEFINE</string>
 
-   <string name="bilge_pump_always">ALERT ALWAS WHEN PUMPING:</string>
+   <string name="bilge_pump_always">ALERT ALWAYS WHEN PUMPING:</string>
    <string name="bilge_pump_short_period">SHORT PERIOD BILGE ALERT:</string>
    <string name="bilge_pump_short_period_desc">DETERMINES TIME OF CUMULATIVE PUMPING FROM THE LAST 10 MINUTES WHEN THE ALARM IS SENT.</string>
    <string name="bilge_pump_10_min"> / 10 MINUTES</string>

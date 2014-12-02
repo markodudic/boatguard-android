@@ -292,6 +292,11 @@
 	   <item name="android:max">100</item>
    </style>	   
 
+   <style name="HistoryItem">
+       <item name="android:textSize">@dimen/history_text_size</item>
+       <item name="android:textColor">?text_default</item>
+   </style>	 
+   
    <style name="ReadOnlyTitle">
        <item name="android:textColor">@color/text_default_day</item>
        <item name="android:textSize">@dimen/component_text_size</item>

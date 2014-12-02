@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,20 +15,16 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.boatguard.boatguard.R;
@@ -93,10 +90,10 @@ public class HistoryFragment  extends Fragment {
 	        	for (int i=0; i< jsonStates.length(); i++) {
 	    	   		JSONArray jsonState = (JSONArray)jsonStates.get(i);
     	   			//System.out.println("jsonState="+jsonState.toString());
-	    	   		HashMap<Integer,ObuState> obuStates = new HashMap<Integer,ObuState>(){};
+	    	   		LinkedHashMap<Integer,ObuState> obuStates = new LinkedHashMap<Integer,ObuState>(){};
 	    	   		for (int ii=0; ii< jsonState.length(); ii++) {
 	    	   			ObuState obuState = gson.fromJson(jsonState.get(ii).toString(), ObuState.class);
-	    	   			System.out.println(obuState.getDateState());
+	    	   			//System.out.println(obuState.getId_state()+":"+obuState.getDateState());
 	    	   			obuStates.put(obuState.getId_state(), obuState);
 	    	   		}
     	   			history.add(obuStates);
@@ -113,7 +110,7 @@ public class HistoryFragment  extends Fragment {
     	  
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-        	HashMap<Integer,ObuState> obuStates = (HashMap<Integer,ObuState>) getItem(position);
+        	LinkedHashMap<Integer,ObuState> obuStates = (LinkedHashMap<Integer,ObuState>) getItem(position);
             View v = inflater.inflate(R.layout.row_history, parent, false);
 
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(70, LayoutParams.MATCH_PARENT);

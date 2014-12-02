@@ -7,12 +7,11 @@
     
     <com.boatguard.boatguard.components.TextViewFont
         android:id="@+id/tv_last_update"
-        style="@style/SettingsItem"
-        android:layout_width="150dp"
+        style="@style/HistoryItem"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
-        android:text="label"
         boatguard:font_name="@string/font_regular" />
     
 	<LinearLayout 

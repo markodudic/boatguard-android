@@ -15,6 +15,7 @@ import org.json.JSONTokener;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
@@ -25,7 +26,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -37,24 +37,23 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.MotionEventCompat;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.boatguard.boatguard.R;
@@ -62,9 +61,7 @@ import com.boatguard.boatguard.components.TextViewFont;
 import com.boatguard.boatguard.objects.AppSetting;
 import com.boatguard.boatguard.objects.ObuAlarm;
 import com.boatguard.boatguard.objects.ObuComponent;
-import com.boatguard.boatguard.objects.ObuSetting;
 import com.boatguard.boatguard.objects.ObuState;
-import com.boatguard.boatguard.objects.Setting;
 import com.boatguard.boatguard.objects.State;
 import com.boatguard.boatguard.utils.Comm;
 import com.boatguard.boatguard.utils.Comm.OnTaskCompleteListener;
@@ -73,7 +70,7 @@ import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
 import com.google.gson.Gson;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity { // implements OnRefreshListener {
 	
 	private int initialPosition;
 	private boolean refreshing = false;
@@ -106,7 +103,12 @@ public class MainActivity extends Activity {
     
     private LinearLayout lMenu;
     private TypedArray stylesAttributes = null;
-    
+ 
+	//private SwipeRefreshLayout swipeLayout;
+	private ListView lvComponents = null;
+	private ComponentsAdapter componentsAdapter;
+
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		int theme = Utils.getPrefernciesInt(this, Settings.SETTING_THEME);
@@ -206,7 +208,9 @@ public class MainActivity extends Activity {
 		});
 
 
-        sv.setOnTouchListener(new View.OnTouchListener() {
+    	
+        lvComponents = (ListView)findViewById(R.id.components);
+        lvComponents.setOnTouchListener(new View.OnTouchListener() {
            @Override
             public boolean onTouch(View v, MotionEvent ev) {
         	   	final int action = MotionEventCompat.getActionMasked(ev); 
@@ -242,7 +246,7 @@ public class MainActivity extends Activity {
                 			scrollRefresh = true;
              	   			if (Utils.isNetworkConnected(MainActivity.this, true)) {
              	       			getObudata();
-             	       			sendSMS();
+             	       			//sendSMS();
              	   			}
                 		}
              	   	}
@@ -317,18 +321,55 @@ public class MainActivity extends Activity {
 		});	
 		
         lMenu = (LinearLayout)findViewById(R.id.fragment_menu);
-        
-        Settings.getSettings(this);        
+        /*
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe);
+        swipeLayout.setOnRefreshListener(this);
+	    swipeLayout.setColorSchemeResources(android.R.color.holo_green_dark, 
+	            android.R.color.holo_red_dark, 
+	            android.R.color.holo_blue_dark, 
+	            android.R.color.holo_orange_dark);
+	    */
+	    Settings.getSettings(this);        
         Settings.getObuSettings(this);  
         Settings.getObuComponents(this);  
         Settings.getObuAlarms(this); 
         Settings.getCustomer(this);
         Settings.getFriends(this);
-        showObuComponents();
-   		handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
+        //showObuComponents();
+   		
+        componentsAdapter = new ComponentsAdapter();
+        lvComponents.setAdapter(componentsAdapter);
+   		
+        handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
+        
+        /*lvComponents.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+     
+            }
+     
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                    if (firstVisibleItem == 0)
+                    	swipeLayout.setEnabled(true);
+                    else
+                    	swipeLayout.setEnabled(false);
+            }
+        });*/
         
 	}
-
+/*
+	@Override
+    public void onRefresh() {
+        Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+            	swipeLayout.setRefreshing(false);
+            }
+        }, 2000);
+    }
+	*/
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -355,7 +396,8 @@ public class MainActivity extends Activity {
 		dialogAlarmActive = -1;
 		dialogAlarm.dismiss();
 	}
-	
+	/*
+	@SuppressLint("NewApi")
 	private void showObuComponents(){
 		TableLayout lComponents = (TableLayout)findViewById(R.id.components);
 
@@ -368,7 +410,7 @@ public class MainActivity extends Activity {
 		int ii = 0;
 		TableRow tr = new TableRow(this);
 		View component = null;
-		View componentLast = null;
+		//View componentLast = null;
 		
 		while(i.hasNext()) { 
 			Map.Entry map = (Map.Entry)i.next(); 
@@ -381,7 +423,7 @@ public class MainActivity extends Activity {
 			}
 
 			LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			componentLast = component;
+			//componentLast = component;
 		    component = inflater.inflate(lc, null);
 		    component.setId(obuComponent.getId_component());
 		    
@@ -431,6 +473,7 @@ public class MainActivity extends Activity {
 				    ivStep.setLayoutParams(lpI);		    
 			    }
 			}
+			    
 			TextView label = ((TextView)component.findViewById(R.id.label));
 			label.setText(obuComponent.getName());
 		    ((TextViewFont)component.findViewById(R.id.label)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
@@ -503,7 +546,7 @@ public class MainActivity extends Activity {
 		}
 
 	}
-
+*/
 	private void showSetting(int item) {
 		Intent i = new Intent(MainActivity.this, SettingsActivity.class);
 		i.putExtra("id", item);
@@ -612,13 +655,14 @@ public class MainActivity extends Activity {
     };
     
     
-	private void sendSMS(){    
+	/*private void sendSMS(){    
 		String urlString = this.getString(R.string.server_url) + "sendSms?user=marko&message=qqq";
 		if (Utils.isNetworkConnected(this, false)) {
 			new Comm().execute(urlString, null); 
 		}
-	}
+	}*/
 			
+	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
 	private void showObuData(){
 		boolean alarm = false;
@@ -1019,6 +1063,88 @@ public class MainActivity extends Activity {
 	};	    
 
 	
+    public class ComponentsAdapter extends BaseAdapter {
+  	  
+        @SuppressLint("NewApi")
+		@Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+        	LayoutInflater inflater = getLayoutInflater();
+        	
+			View component = null;
+			
+			ObuComponent obuComponent = (ObuComponent)getItem(position);
+			int lc = R.layout.list_component;
+			if (obuComponent.getType().equals("ACCU")) { 
+				lc = R.layout.list_component_accu;
+			}
+
+			component = inflater.inflate(lc, null);
+		    component.setId(obuComponent.getId_component());
+
+			TextView label = ((TextView)component.findViewById(R.id.label));
+			label.setText(obuComponent.getName());
+		    ((TextViewFont)component.findViewById(R.id.label)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
+	        
+			
+			if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_GEO)) {
+				((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_geofence_disabled);
+				label.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) { 
+						showSetting(0);
+					}
+				});
+			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_PUMP)) {
+			    ((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_bilgepump);
+				label.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) { 
+						showSetting(1);
+					}
+				});
+			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ANCHOR)) { 
+			    ((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_anchor_disabled); 
+				label.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) { 
+						showSetting(2);
+					}
+				});
+			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ACCU)) { 
+				((TextView)component.findViewById(R.id.accu_napetost)).setText("");
+				accuComponentId = obuComponent.getId_component();
+				label.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) { 
+						showSetting(3);
+					}
+				});
+			} 
+		    
+			if (position == getCount()) {
+				((LinearLayout)component.findViewById(R.id.line)).setVisibility(View.GONE);
+			}
+
+			
+            return component;
+        }
+
+		@Override
+		public int getCount() {
+			return Settings.obuComponents.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+	        Integer key = (Integer) Settings.obuComponents.keySet().toArray()[position]; 
+			return Settings.obuComponents.get(key);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+    }
 
 
 }

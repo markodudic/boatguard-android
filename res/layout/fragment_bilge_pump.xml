@@ -65,7 +65,7 @@
         style="@style/SettingsTextSmall"
         boatguard:font_name="@string/font_medium"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/settings_height"
+        android:layout_height="@dimen/settings_text_height"
         android:text="@string/bilge_pump_short_period_desc" />	
 
     <com.boatguard.boatguard.components.TextViewFont
@@ -102,7 +102,7 @@
         style="@style/SettingsTextSmall"
         boatguard:font_name="@string/font_medium"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/settings_height"
+        android:layout_height="@dimen/settings_text_height"
         android:text="@string/bilge_pump_long_period_desc" />	
 
 				
