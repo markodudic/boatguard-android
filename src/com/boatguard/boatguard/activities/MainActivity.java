@@ -220,21 +220,28 @@ public class MainActivity extends Activity { // implements OnRefreshListener {
                 	break;
                 case MotionEvent.ACTION_MOVE:
                 	
-                    final int pointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);  
+                    /*final int pointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);  
                 
 		            final float x = MotionEventCompat.getX(ev, pointerIndex);
-		            final float y = MotionEventCompat.getY(ev, pointerIndex);
+		            final float y = MotionEventCompat.getY(ev, pointerIndex);*/
+		            final float x = ev.getX();
+		            final float y = ev.getY();
+		            
+		            if (y - mLastTouchY < 0) break;
 		                
 		            // Calculate the distance moved
 		            final float dx = x - mLastTouchX;
 		            final float dy = y - mLastTouchY;
+		            
 		            mPosX += dx;
 		            mPosY += dy;
 
 		            mLastTouchX = x;
 		            mLastTouchY = y;
             
-                	final float scale = MainActivity.this.getResources().getDisplayMetrics().density;
+		            v.setY(mPosY);
+		            
+		            final float scale = MainActivity.this.getResources().getDisplayMetrics().density;
                     int px = (int) (MainActivity.this.getResources().getDimension(R.dimen.menu_height) * scale + 0.5f);
                     TranslateAnimation anim = null;
                 	int newPosition = sv.getScrollY();
@@ -242,7 +249,7 @@ public class MainActivity extends Activity { // implements OnRefreshListener {
                 		anim=new TranslateAnimation(0,0,0,px);
                 	} else if ((newPosition < initialPosition) || (newPosition==0 && initialPosition==0)) {
              	   		anim=new TranslateAnimation(0,0,200,0);
-             	   		if (newPosition == 0 && !refreshing && !scrollRefresh && (mPosX > 200 || mPosY > 200)) {
+             	   		if (newPosition == 0 && !refreshing && !scrollRefresh && (mPosX > 100 || mPosY > 100)) {
                 			scrollRefresh = true;
              	   			if (Utils.isNetworkConnected(MainActivity.this, true)) {
              	       			getObudata();
@@ -274,6 +281,10 @@ public class MainActivity extends Activity { // implements OnRefreshListener {
                 	mPosX=0;
                 	mPosY=0;
                 	scrollRefresh = false;
+                	
+                	v.setY(0);
+		            
+                	
                     break;
                 case MotionEvent.ACTION_POINTER_UP:                     
                     final int pointerIndex2 = MotionEventCompat.getActionIndex(ev); 
