@@ -72,7 +72,7 @@ import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
 import com.google.gson.Gson;
 
-public class MainActivity extends Activity { // implements OnRefreshListener {
+public class MainActivity extends Activity {
 	
 	private int initialPosition;
 	private boolean refreshing = false;
@@ -697,6 +697,8 @@ public class MainActivity extends Activity { // implements OnRefreshListener {
 					else {
 						showAlarmAnimation(component, imageView, R.drawable.bilge_pumping_animation, 0, false);
 					}
+					//imageView.setBackgroundResource(R.drawable.bilge_pumping_animation);
+					//imageView.setImageResource(R.drawable.bilge_pumping_animation);
 				}
 				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_CLODGED)).getValue())) {
 					alarm = true;
