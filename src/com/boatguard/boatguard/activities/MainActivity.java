@@ -48,6 +48,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -104,7 +106,6 @@ public class MainActivity extends Activity { // implements OnRefreshListener {
     private LinearLayout lMenu;
     private TypedArray stylesAttributes = null;
  
-	//private SwipeRefreshLayout swipeLayout;
 	private ListView lvComponents = null;
 	private ComponentsAdapter componentsAdapter;
 
@@ -226,8 +227,7 @@ public class MainActivity extends Activity { // implements OnRefreshListener {
 		            final float y = MotionEventCompat.getY(ev, pointerIndex);*/
 		            final float x = ev.getX();
 		            final float y = ev.getY();
-		            
-		            if (y - mLastTouchY < 0) break;
+		            //if (y <= 0 || mLastTouchY <= 0 || y - mLastTouchY <= 0) break;
 		                
 		            // Calculate the distance moved
 		            final float dx = x - mLastTouchX;
@@ -239,7 +239,7 @@ public class MainActivity extends Activity { // implements OnRefreshListener {
 		            mLastTouchX = x;
 		            mLastTouchY = y;
             
-		            v.setY(mPosY);
+		            //v.setY(mPosY);
 		            
 		            final float scale = MainActivity.this.getResources().getDisplayMetrics().density;
                     int px = (int) (MainActivity.this.getResources().getDimension(R.dimen.menu_height) * scale + 0.5f);
@@ -280,12 +280,10 @@ public class MainActivity extends Activity { // implements OnRefreshListener {
                 case MotionEvent.ACTION_UP:
                 	mPosX=0;
                 	mPosY=0;
+             	    mLastTouchY = 0;
                 	scrollRefresh = false;
-                	
                 	v.setY(0);
-		            
-                	
-                    break;
+		            break;
                 case MotionEvent.ACTION_POINTER_UP:                     
                     final int pointerIndex2 = MotionEventCompat.getActionIndex(ev); 
                     final int pointerId = MotionEventCompat.getPointerId(ev, pointerIndex2); 
@@ -332,14 +330,7 @@ public class MainActivity extends Activity { // implements OnRefreshListener {
 		});	
 		
         lMenu = (LinearLayout)findViewById(R.id.fragment_menu);
-        /*
-        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe);
-        swipeLayout.setOnRefreshListener(this);
-	    swipeLayout.setColorSchemeResources(android.R.color.holo_green_dark, 
-	            android.R.color.holo_red_dark, 
-	            android.R.color.holo_blue_dark, 
-	            android.R.color.holo_orange_dark);
-	    */
+ 
 	    Settings.getSettings(this);        
         Settings.getObuSettings(this);  
         Settings.getObuComponents(this);  
@@ -352,35 +343,8 @@ public class MainActivity extends Activity { // implements OnRefreshListener {
         lvComponents.setAdapter(componentsAdapter);
    		
         handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
-        
-        /*lvComponents.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-     
-            }
-     
-            @Override
-            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                    if (firstVisibleItem == 0)
-                    	swipeLayout.setEnabled(true);
-                    else
-                    	swipeLayout.setEnabled(false);
-            }
-        });*/
-        
 	}
-/*
-	@Override
-    public void onRefresh() {
-        Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-            	swipeLayout.setRefreshing(false);
-            }
-        }, 2000);
-    }
-	*/
+
 	@Override
 	protected void onResume() {
 		super.onResume();
