@@ -26,7 +26,6 @@
 	        android:layout_gravity="center_vertical|center_horizontal"
 	        android:clickable="false"
 	        android:visibility="gone" />
-
 	</FrameLayout>
 
 	    

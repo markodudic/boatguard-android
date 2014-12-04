@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,6 +38,7 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.MotionEventCompat;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,8 +50,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -145,6 +145,7 @@ public class MainActivity extends Activity {
 		}
         refreshAnimation = (AnimationDrawable) ivRefresh.getBackground();
 
+        
         final ScrollView sv = (ScrollView)findViewById(R.id.scroll_main);
         final LinearLayout lLocation = (LinearLayout)findViewById(R.id.lLocation);
         
@@ -697,8 +698,6 @@ public class MainActivity extends Activity {
 					else {
 						showAlarmAnimation(component, imageView, R.drawable.bilge_pumping_animation, 0, false);
 					}
-					//imageView.setBackgroundResource(R.drawable.bilge_pumping_animation);
-					//imageView.setImageResource(R.drawable.bilge_pumping_animation);
 				}
 				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_CLODGED)).getValue())) {
 					alarm = true;
@@ -834,11 +833,13 @@ public class MainActivity extends Activity {
 						  getResources().getDrawable(anim1),
 						  getResources().getDrawable(anim2)
 				});
-				imageView.setImageDrawable(ctd);
+				imageView.setBackgroundDrawable(ctd);
 				ctd.startTransition(getResources().getInteger(R.integer.animation_interval), 0);
 			}
 			else {
-				imageView.setImageResource(anim1);
+				imageView.setBackgroundResource(anim1);
+				AnimationDrawable imageViewAnimation = (AnimationDrawable) imageView.getBackground();
+				imageViewAnimation.start();
 			}
 		}
 		
@@ -1064,7 +1065,7 @@ public class MainActivity extends Activity {
 	        
 			
 			if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_GEO)) {
-				((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_geofence_disabled);
+				((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_geofence_disabled);
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
@@ -1072,15 +1073,15 @@ public class MainActivity extends Activity {
 					}
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_PUMP)) {
-			    ((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_bilgepump);
-				label.setOnClickListener(new View.OnClickListener() {
+			    ((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_bilgepump_disabled);
+			    label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
 						showSetting(1);
 					}
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ANCHOR)) { 
-			    ((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_anchor_disabled); 
+			    ((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_anchor_disabled); 
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
