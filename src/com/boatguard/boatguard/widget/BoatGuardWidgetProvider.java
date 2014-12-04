@@ -19,6 +19,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -288,7 +289,7 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 					rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_bilgepump);
 				}
 				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_PUMPING)).getValue())) {
-					rvComponent.setImageViewResource(R.id.logo, R.drawable.bilge_pumping_animation_day);
+					rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_pumping_step_9_day);
 				}
 				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_CLODGED)).getValue())) {
 					rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_bilgepump_clodged_1);

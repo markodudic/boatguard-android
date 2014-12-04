@@ -161,7 +161,7 @@ public class MainActivity extends Activity {
 		ivLocation.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) { 
-				double lat=0, lon=0;
+				/*double lat=0, lon=0;
 				String date = "";
 		        Set set = obuStates.entrySet(); 
 				Iterator i = set.iterator();
@@ -184,12 +184,12 @@ public class MainActivity extends Activity {
 					double lonF = Math.floor(lon/100);
 					double lonD = (lon/100 - lonF)/0.6;
 					lon = lonF + lonD;
-				}
+				}*/
 
 				Intent in = new Intent(MainActivity.this, LocationActivity.class);
-		    	in.putExtra("lat", lat);
+		    	/*in.putExtra("lat", lat);
 		    	in.putExtra("lon", lon);
-		    	in.putExtra("date", date);
+		    	in.putExtra("date", date);*/
 				startActivity(in);				
 				
 				//sv.setVisibility(View.GONE);

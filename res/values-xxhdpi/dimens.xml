@@ -9,9 +9,9 @@
         
     <dimen name="actionbar_text_size">28sp</dimen>
     <dimen name="actionbar_margin_left">-20dp</dimen>
-    <dimen name="title_text_size">26sp</dimen>
-    <dimen name="button_text_size">22sp</dimen>
-    <dimen name="small_text_size">18sp</dimen>
+    <dimen name="title_text_size">24sp</dimen>
+    <dimen name="button_text_size">20sp</dimen>
+    <dimen name="small_text_size">16sp</dimen>
     <dimen name="history_text_size">16sp</dimen>
     <dimen name="component_text_size">20sp</dimen>   
     <dimen name="delete_image_view_right">10dp</dimen>
@@ -31,7 +31,7 @@
     <dimen name="menu_line_margin">22dp</dimen>
     
     <dimen name="component_height">95dp</dimen>
-    <dimen name="components_margin">44dp</dimen>
+    <dimen name="components_margin">34dp</dimen>
     <dimen name="component_step_margin">-5dp</dimen>
     <dimen name="component_step_margin2">-22dp</dimen>
     
