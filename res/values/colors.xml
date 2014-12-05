@@ -27,7 +27,10 @@
 	<color name="text_alarm_desc">#e8e7e8</color> 	
 	<color name="alarm_gradient">#99303e48</color>
 	<color name="text_green">#39a935</color> 
-					
+	<color name="location_fill">#22ff0000</color> 
+	<color name="location_stroke">#66ff0000</color> 
+	<color name="location_history">#39a935</color> 
+							
    	<color name="background_day">#d5d6d8</color>
     <color name="vertical_line_day">#b3b3b3</color>
     <color name="horizontal_line_day">#b3b3b3</color>

@@ -2,6 +2,8 @@ package com.boatguard.boatguard.activities;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,6 +32,8 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 public class LocationActivity extends Activity {
 
@@ -62,18 +66,28 @@ public class LocationActivity extends Activity {
         map.getUiSettings().setAllGesturesEnabled(true);
         map.getUiSettings().setMyLocationButtonEnabled(true);
         map.setMyLocationEnabled(true);
-        
-		/*Bundle extras = getIntent().getExtras();
-		double lat = extras.getDouble("lat");
-		double lon = extras.getDouble("lon");
-		String date = extras.getString("date");*/
 
+				
+		ImageView btnBack = (ImageView) findViewById(R.id.iv_back);
+		btnBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			} 
+		});          
+	}  
+
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
 		
+		//last position
 		HashMap<Integer,ObuState> obuStates = MainActivity.obuStates;
 
 		double lat=0, lon=0;
 		String date = "";
-        Set set = obuStates.entrySet(); 
+	    Set set = obuStates.entrySet(); 
 		Iterator i = set.iterator();
 		while(i.hasNext()) { 
 			Map.Entry map = (Map.Entry)i.next(); 
@@ -83,7 +97,8 @@ public class LocationActivity extends Activity {
 			}
 			else if (obuState.getId_state() == ((State)Settings.states.get(Settings.STATE_LON)).getId()) { 
 		        lon = Double.parseDouble(obuState.getValue());
-			} else if (obuState.getId_state() == ((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId()) { 
+			} 
+			else if (obuState.getId_state() == ((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId()) { 
 				date = Utils.formatDate(obuState.getDateState());
 			}
 		}
@@ -94,38 +109,79 @@ public class LocationActivity extends Activity {
 			double lonF = Math.floor(lon/100);
 			double lonD = (lon/100 - lonF)/0.6;
 			lon = lonF + lonD;
-
+	
 			LatLng latlng = new LatLng(lon, lat);
-	        Marker newmarker = map.addMarker(new MarkerOptions().position(latlng).title(getResources().getString(R.string.location_title) + " " + date).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker)));
+	        Marker newmarker = map.addMarker(new MarkerOptions().anchor(0.5f, 0.5f).position(latlng).title(getResources().getString(R.string.location_title) + " " + date).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker)));
 	        CameraPosition cameraPosition = new CameraPosition.Builder().target(latlng).zoom(14.0f).build();
 	        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
 	        map.moveCamera(cameraUpdate);
 		}  
-        
-		// Instantiates a new CircleOptions object and defines the center and radius
+		
+		//geo fence radius
 		HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
-        String geoFence = obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).getValue();
-        double geoFenceValue = Double.parseDouble(obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_DISTANCE)).getId()).getValue());
-        
-        if (geoFence.equals("1")) {
-			CircleOptions circleOptions = new CircleOptions()
-			    .center(new LatLng(lat, lon))
+	    String geoFence = obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).getValue();
+	    double geoFenceValue = Double.parseDouble(obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_DISTANCE)).getId()).getValue());
+	    
+	    if (geoFence.equals("1")) {
+	    	CircleOptions circleOptions = new CircleOptions()
+			    .center(new LatLng(lon, lat))
 			    .radius(geoFenceValue); // In meters
 	
 			// Get back the mutable Circle
 			Circle circle = map.addCircle(circleOptions);
-			circle.setFillColor(getResources().getColor(R.color.alarm_red));
-			circle.setStrokeColor(getResources().getColor(R.color.alarm_green));
-			circle.setStrokeWidth(2.0f);
-        }
-		
-		ImageView btnBack = (ImageView) findViewById(R.id.iv_back);
-		btnBack.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			} 
-		});          
-	}  
+			circle.setFillColor(getResources().getColor(R.color.location_fill));
+			circle.setStrokeColor(getResources().getColor(R.color.location_stroke));
+			circle.setStrokeWidth(4.0f);
+	    }
 
+	    //history positions
+		double latLast=0, lonLast=0;
+		PolylineOptions rectOptions = new PolylineOptions();
+		List<HashMap> obuHistory = MainActivity.history;
+        for (int ii=0; ii<obuHistory.size(); ii++) {
+        	LinkedHashMap<Integer,ObuState> obuHistoryStates = (LinkedHashMap<Integer,ObuState>) obuHistory.get(ii);
+        	lat = 0; lon = 0;
+        	ObuState os = obuHistoryStates.get(((State)Settings.states.get(Settings.STATE_LAT)).getId());
+        	if (os != null){
+        		lat = Double.parseDouble(os.getValue());	
+        	}
+        	os = obuHistoryStates.get(((State)Settings.states.get(Settings.STATE_LON)).getId());
+        	if (os != null){
+        		lon = Double.parseDouble(os.getValue());	
+        	}
+        	date = Utils.formatDate(obuHistoryStates.get(((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId()).getDateState());
+
+        	if ((Math.abs(latLast - lat) < 0.1) || (Math.abs(lonLast - lon) < 0.1)) {
+        		continue;
+        	}
+    		latLast = lat;
+    		lonLast = lon;
+        	
+    		if (lat != 0 && lon != 0) {
+    			double latF = Math.floor(lat/100);
+    			double latD = (lat/100 - latF)/0.6;
+    			lat = latF + latD;
+    			double lonF = Math.floor(lon/100);
+    			double lonD = (lon/100 - lonF)/0.6;
+    			lon = lonF + lonD;
+    			LatLng latlng = new LatLng(lon, lat);
+    			rectOptions.add(latlng);
+    			
+    			CircleOptions circleOptions = new CircleOptions()
+			    .center(latlng)
+			    .radius(10.0f);
+    			
+    			Circle circle = map.addCircle(circleOptions);
+    			circle.setFillColor(getResources().getColor(R.color.location_history));
+    			circle.setStrokeColor(getResources().getColor(R.color.location_history));
+    		}  
+        }
+        
+        Polyline polyline = map.addPolyline(rectOptions);
+        polyline.setColor(getResources().getColor(R.color.location_history));
+        polyline.setWidth(3.0f);
+        
+        
+        
+	}
 }

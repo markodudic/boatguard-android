@@ -1,20 +1,13 @@
 package com.boatguard.boatguard.fragments;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
 import android.app.Fragment;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,11 +21,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.boatguard.boatguard.R;
+import com.boatguard.boatguard.activities.MainActivity;
 import com.boatguard.boatguard.objects.AppSetting;
 import com.boatguard.boatguard.objects.ObuState;
 import com.boatguard.boatguard.objects.State;
-import com.boatguard.boatguard.utils.Comm;
-import com.boatguard.boatguard.utils.Comm.OnTaskCompleteListener;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
 import com.google.gson.Gson;
@@ -40,7 +32,6 @@ import com.google.gson.Gson;
 public class HistoryFragment  extends Fragment {
 	private static Gson gson = new Gson();	
 	private ListView lvHistory = null;
-	private List<HashMap> history = new ArrayList<HashMap>();
 	private HistoryAdapter historyAdapter;
 	private LayoutInflater inflater;
     
@@ -60,51 +51,10 @@ public class HistoryFragment  extends Fragment {
         historyAdapter = new HistoryAdapter();
    		lvHistory.setAdapter(historyAdapter);
    		
-        getObuHistoryData();
-
         return v;
     }
 
-	public void getObuHistoryData() {
-    	String obuId = Utils.getPrefernciesString(getActivity(), Settings.SETTING_OBU_ID);
-   		
-    	String urlString = this.getString(R.string.server_url) + "gethistorydata?obuid="+obuId;
-    	if (Utils.isNetworkConnected(getActivity(), false)) {
-            	Comm at = new Comm();
-    			at.setCallbackListener(clGetObuHistoryData);
-    			at.execute(urlString, null); 
-    	}
-	}
-	
-    private OnTaskCompleteListener clGetObuHistoryData = new OnTaskCompleteListener() {
 
-        @Override
-        public void onComplete(String res) {
-        	//System.out.println("RES="+res);
-        	 
-        	JSONObject jRes;
-			try {
-				jRes = (JSONObject)new JSONTokener(res).nextValue();
-	    	   	JSONArray jsonStates = (JSONArray)jRes.get("states");
-	    	   	history.clear();
-	        	for (int i=0; i< jsonStates.length(); i++) {
-	    	   		JSONArray jsonState = (JSONArray)jsonStates.get(i);
-    	   			//System.out.println("jsonState="+jsonState.toString());
-	    	   		LinkedHashMap<Integer,ObuState> obuStates = new LinkedHashMap<Integer,ObuState>(){};
-	    	   		for (int ii=0; ii< jsonState.length(); ii++) {
-	    	   			ObuState obuState = gson.fromJson(jsonState.get(ii).toString(), ObuState.class);
-	    	   			//System.out.println(obuState.getId_state()+":"+obuState.getDateState());
-	    	   			obuStates.put(obuState.getId_state(), obuState);
-	    	   		}
-    	   			history.add(obuStates);
-		   		}
-	        	historyAdapter.notifyDataSetChanged();	        	
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        }
-    };
     
     public class HistoryAdapter extends BaseAdapter {
     	  
@@ -123,7 +73,7 @@ public class HistoryFragment  extends Fragment {
     			int idState = obuState.getId_state();			
     			
     			if (idState == ((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId()) { 
-    	            ((TextView) v.findViewById(R.id.tv_last_update)).setText(Utils.formatDate((obuStates.get(((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId())).getDateState()));
+    	            ((TextView) v.findViewById(R.id.tv_last_update)).setText(Utils.formatDate((obuStates.get(((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId())).getDateState())+":");
     			}	
     			else if (idState == ((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()) { 
     	            ImageView img = new ImageView(getActivity());
@@ -148,7 +98,7 @@ public class HistoryFragment  extends Fragment {
     		            img.setImageResource(R.drawable.ic_bilgepump);
     				}
     				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_PUMPING)).getValue())) {
-    		            img.setImageResource(R.drawable.bilge_pumping_animation_day);
+    		            img.setImageResource(R.drawable.ic_pumping_step_9_day);
     				}
     				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_CLODGED)).getValue())) {
     		            img.setImageResource(R.drawable.ic_bilgepump_clodged_1);
@@ -220,12 +170,12 @@ public class HistoryFragment  extends Fragment {
 
 		@Override
 		public int getCount() {
-			return history.size();
+			return MainActivity.history.size();
 		}
 
 		@Override
 		public Object getItem(int position) {
-			return history.get(position);
+			return MainActivity.history.get(position);
 		}
 
 		@Override

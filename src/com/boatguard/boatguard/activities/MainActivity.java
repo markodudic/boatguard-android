@@ -5,12 +5,14 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -85,6 +87,7 @@ public class MainActivity extends Activity {
     
 	public static HashMap<Integer,ObuState> obuStates = new HashMap<Integer,ObuState>(){};
 	public static HashMap<Integer,ObuAlarm> obuAlarms = new HashMap<Integer,ObuAlarm>(){};
+	public static List<HashMap> history = new ArrayList<HashMap>();
 	
 	public static HashMap<Integer,ObjectAnimator> alarmAnimaations = new HashMap<Integer,ObjectAnimator>(){};
 
@@ -254,6 +257,7 @@ public class MainActivity extends Activity {
                 			scrollRefresh = true;
              	   			if (Utils.isNetworkConnected(MainActivity.this, true)) {
              	       			getObudata();
+             	       			getObuHistoryData();
              	       			//sendSMS();
              	   			}
                 		}
@@ -350,6 +354,7 @@ public class MainActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 		getObudata();
+		getObuHistoryData();
 	}
 	 
 	@Override
@@ -630,6 +635,45 @@ public class MainActivity extends Activity {
         }
     };
     
+	public void getObuHistoryData() {
+    	String obuId = Utils.getPrefernciesString(this, Settings.SETTING_OBU_ID);
+   		
+    	String urlString = this.getString(R.string.server_url) + "gethistorydata?obuid="+obuId;
+    	if (Utils.isNetworkConnected(this, false)) {
+            	Comm at = new Comm();
+    			at.setCallbackListener(clGetObuHistoryData);
+    			at.execute(urlString, null); 
+    	}
+	}
+	
+    private OnTaskCompleteListener clGetObuHistoryData = new OnTaskCompleteListener() {
+
+        @Override
+        public void onComplete(String res) {
+        	//System.out.println("RES="+res);
+        	 
+        	JSONObject jRes;
+			try {
+				jRes = (JSONObject)new JSONTokener(res).nextValue();
+	    	   	JSONArray jsonStates = (JSONArray)jRes.get("states");
+	    	   	history.clear();
+	        	for (int i=0; i< jsonStates.length(); i++) {
+	    	   		JSONArray jsonState = (JSONArray)jsonStates.get(i);
+    	   			//System.out.println("jsonState="+jsonState.toString());
+	    	   		LinkedHashMap<Integer,ObuState> obuStates = new LinkedHashMap<Integer,ObuState>(){};
+	    	   		for (int ii=0; ii< jsonState.length(); ii++) {
+	    	   			ObuState obuState = gson.fromJson(jsonState.get(ii).toString(), ObuState.class);
+	    	   			//System.out.println(obuState.getId_state()+":"+obuState.getDateState());
+	    	   			obuStates.put(obuState.getId_state(), obuState);
+	    	   		}
+    	   			history.add(obuStates);
+		   		}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+    };
     
 	/*private void sendSMS(){    
 		String urlString = this.getString(R.string.server_url) + "sendSms?user=marko&message=qqq";
@@ -1026,6 +1070,7 @@ public class MainActivity extends Activity {
 	   @Override
 	   public void run() {
 		   getObudata();
+		   getObuHistoryData();
 		   handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
 	   }
 	};
