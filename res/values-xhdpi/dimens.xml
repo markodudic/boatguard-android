@@ -14,6 +14,7 @@
     <dimen name="small_text_size">16sp</dimen>
     <dimen name="history_text_size">14sp</dimen>
     <dimen name="component_text_size">18sp</dimen>   
+    <dimen name="chart_text_size">5sp</dimen>   
     <dimen name="delete_image_view_right">10dp</dimen>
     
     <dimen name="login_edit_height">70dp</dimen>

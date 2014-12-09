@@ -89,7 +89,13 @@ public class Utils {
     	DateFormat df = new SimpleDateFormat("MMM/dd/yyyy HH:mm");
 		return df.format(d).toUpperCase();
     }
-    
+ 
+    public static String formatDateShort(String dateToConvert)
+    {
+    	Date d = new Date(dateToConvert);
+    	DateFormat df = new SimpleDateFormat("MM/dd");
+		return df.format(d).toUpperCase();
+    }    
 
 }
 

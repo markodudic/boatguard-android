@@ -660,7 +660,7 @@ public class MainActivity extends Activity {
 	        	for (int i=0; i< jsonStates.length(); i++) {
 	    	   		JSONArray jsonState = (JSONArray)jsonStates.get(i);
     	   			//System.out.println("jsonState="+jsonState.toString());
-	    	   		LinkedHashMap<Integer,ObuState> obuStates = new LinkedHashMap<Integer,ObuState>(){};
+	    	   		//LinkedHashMap<Integer,ObuState> obuStates = new LinkedHashMap<Integer,ObuState>(){};
 	    	   		for (int ii=0; ii< jsonState.length(); ii++) {
 	    	   			ObuState obuState = gson.fromJson(jsonState.get(ii).toString(), ObuState.class);
 	    	   			//System.out.println(obuState.getId_state()+":"+obuState.getDateState());
