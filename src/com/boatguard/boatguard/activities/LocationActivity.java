@@ -179,9 +179,8 @@ public class LocationActivity extends Activity {
         
         Polyline polyline = map.addPolyline(rectOptions);
         polyline.setColor(getResources().getColor(R.color.location_history));
+        polyline.setGeodesic(true);
         polyline.setWidth(3.0f);
-        
-        
-        
 	}
+		
 }

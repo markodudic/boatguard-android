@@ -660,7 +660,7 @@ public class MainActivity extends Activity {
 	        	for (int i=0; i< jsonStates.length(); i++) {
 	    	   		JSONArray jsonState = (JSONArray)jsonStates.get(i);
     	   			//System.out.println("jsonState="+jsonState.toString());
-	    	   		//LinkedHashMap<Integer,ObuState> obuStates = new LinkedHashMap<Integer,ObuState>(){};
+	    	   		LinkedHashMap<Integer,ObuState> obuStates = new LinkedHashMap<Integer,ObuState>(){};
 	    	   		for (int ii=0; ii< jsonState.length(); ii++) {
 	    	   			ObuState obuState = gson.fromJson(jsonState.get(ii).toString(), ObuState.class);
 	    	   			//System.out.println(obuState.getId_state()+":"+obuState.getDateState());
@@ -712,17 +712,17 @@ public class MainActivity extends Activity {
 				cancelAlarmAnimation(component, null, false);
 				
 				if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_DISABLED)).getValue())) {
-					imageView.setImageResource(R.drawable.ic_geofence_disabled);
+					imageView.setBackgroundResource(R.drawable.ic_geofence_disabled);
 				} 
 				else if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ENABLED)).getValue())) {
-					imageView.setImageResource(R.drawable.ic_geofence_home);
+					imageView.setBackgroundResource(R.drawable.ic_geofence_home);
 				} 
 				else if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ALARM)).getValue())) {
 					alarm = true;
 					showAlarmAnimation(component, imageView, R.drawable.ic_geofence_alarm_1, R.drawable.ic_geofence_alarm, true);
 				}
 				else {
-					imageView.setImageResource(android.R.color.transparent);
+					imageView.setBackgroundResource(android.R.color.transparent);
 				}
 			}			
 			else if (idState == ((State)Settings.states.get(Settings.STATE_PUMP_STATE)).getId()) { 
@@ -732,7 +732,7 @@ public class MainActivity extends Activity {
 				cancelAlarmAnimation(component, null, false);
 				
 				if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_OK)).getValue())) {
-					imageView.setImageResource(R.drawable.ic_bilgepump);
+					imageView.setBackgroundResource(R.drawable.ic_bilgepump);
 				}
 				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_PUMPING)).getValue())) {
 					alarm = true;
@@ -752,7 +752,7 @@ public class MainActivity extends Activity {
 					showAlarmAnimation(component, imageView, R.drawable.ic_bilgepump_demaged_1, R.drawable.ic_bilgepump_demaged, true);
 				}
 				else {
-					imageView.setImageResource(android.R.color.transparent); 
+					imageView.setBackgroundResource(android.R.color.transparent); 
 				}
 			}
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ANCHOR)).getId()) { 
@@ -762,10 +762,10 @@ public class MainActivity extends Activity {
 				cancelAlarmAnimation(component, null, false);
 				
 				if (anchorState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_DISABLED)).getValue())) {
-					imageView.setImageResource(R.drawable.ic_anchor_disabled);
+					imageView.setBackgroundResource(R.drawable.ic_anchor_disabled);
 				}			
 				else if (anchorState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_ENABLED)).getValue())) {
-					imageView.setImageResource(R.drawable.ic_anchor);
+					imageView.setBackgroundResource(R.drawable.ic_anchor);
 					int anchorDriftingId = ((State)Settings.states.get(Settings.STATE_ANCHOR_DRIFTING)).getId();
 					String anchorDrifting = ((ObuState) obuStates.get(anchorDriftingId)).getValue();
 					if (anchorDrifting.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_DRIFTING)).getValue())) {

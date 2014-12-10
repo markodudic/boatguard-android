@@ -1,5 +1,5 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:boatguard="http://schemas.android.com/apk/res/com.boatguard.boatguard"
     style="@style/SettingsLayout"
     android:layout_width="match_parent"
@@ -61,12 +61,12 @@
 	        android:text="@string/bilge_pump_10_min" />
 	</LinearLayout>
 	
-    <com.boatguard.boatguard.components.TextViewFont
+    <!-- com.boatguard.boatguard.components.TextViewFont
         style="@style/SettingsTextSmall"
         boatguard:font_name="@string/font_medium"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settings_text_height"
-        android:text="@string/bilge_pump_short_period_desc" />	
+        android:text="@string/bilge_pump_short_period_desc" /-->	
 
     <com.boatguard.boatguard.components.TextViewFont
         style="@style/SettingsText"
@@ -98,12 +98,19 @@
 	</LinearLayout>
 	
 	
-    <com.boatguard.boatguard.components.TextViewFont
+    <!-- com.boatguard.boatguard.components.TextViewFont
         style="@style/SettingsTextSmall"
         boatguard:font_name="@string/font_medium"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settings_text_height"
-        android:text="@string/bilge_pump_long_period_desc" />	
+        android:text="@string/bilge_pump_long_period_desc" /-->	
 
-				
+	<com.github.mikephil.charting.charts.LineChart
+	    android:id="@+id/chart"
+	    android:layout_width="match_parent"
+	    android:layout_height="@dimen/chart_height"
+	    android:layout_marginLeft="-10dp"
+	    android:layout_marginRight="-10dp"
+	    android:layout_marginTop="10dp" />¸
+	    				
 </LinearLayout>

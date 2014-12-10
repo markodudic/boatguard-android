@@ -102,37 +102,40 @@ public class BatteryFragment  extends Fragment {
 	    ArrayList<Entry> valsComp = new ArrayList<Entry>();
 	    ArrayList<String> xVals = new ArrayList<String>();
 	    List<HashMap> history = MainActivity.history;
+	    int historySize = history.size();
 	    int[] colors = new int[history.size()];
 	    
-	    for (int i=0; i<history.size(); i++) 
+	    for (int i=historySize-1; i>-1; i--) 
 	    {
 	    	@SuppressWarnings("unchecked")
-			//HashMap<Integer, ObuState> obuStates = history.get(i);
-	    	//System.out.println(rec.toString());
-	    	LinkedHashMap<Integer,ObuState> obuStates = (LinkedHashMap<Integer, ObuState>) history.get(i);
+			LinkedHashMap<Integer,ObuState> obuStates = (LinkedHashMap<Integer, ObuState>) history.get(i);
 	    	ObuState state = obuStates.get(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
-	    	System.out.println(state.getDateState()+":"+state.getValue());
-	    	Entry c1e = new Entry(Float.parseFloat(state.getValue()), i);
+	    	if (state==null) continue;
+	    	Entry c1e = new Entry(Float.parseFloat(state.getValue()), historySize-1-i);
 		    valsComp.add(c1e);
 		    xVals.add(Utils.formatDateShort(state.getDateState()));
 		    if (Float.parseFloat(state.getValue()) > Float.parseFloat(batteryAlarmLevel)) {
-		    	colors[i]=getResources().getColor(R.color.text_green);
+		    	colors[historySize-1-i]=getResources().getColor(R.color.text_green);
 		    }
 		    else {
-		    	colors[i]=getResources().getColor(R.color.alarm_red);
+		    	colors[historySize-1-i]=getResources().getColor(R.color.alarm_red);
 		    }
 	    }
 	    
 	    LineDataSet setComp = new LineDataSet(valsComp, "battery");
+	    //setComp.setColor(getResources().getColor(R.color.text_green));
+	    setComp.setCircleColors(colors);
 	    setComp.setColors(colors);
-
+	    setComp.setCircleSize(5f);
+	    setComp.setLineWidth(2f);
+	    
 	    ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
 	    dataSets.add(setComp);
 	    
 	    LineData data = new LineData(xVals, dataSets);
 	    LimitLine ll = new LimitLine(Float.parseFloat(batteryAlarmLevel));
 	    ll.setLineColor(Color.RED);
-	    ll.setLineWidth(1f);
+	    ll.setLineWidth(2f);
 	    data.addLimitLine(ll);
 
 	    chart.setData(data);

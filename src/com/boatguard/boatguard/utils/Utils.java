@@ -4,13 +4,14 @@ package com.boatguard.boatguard.utils;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import com.boatguard.boatguard.R;
+import java.util.concurrent.TimeUnit;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
+import com.boatguard.boatguard.R;
 
 public class Utils {
     public static final String PREFS_NAME = "com.boatguard.boatguard.PREFS_FILE";
@@ -97,6 +98,18 @@ public class Utils {
 		return df.format(d).toUpperCase();
     }    
 
+    public static int getDateDif(String dateFrom, String dateTo)
+    {
+    	Date d1 = new Date(dateFrom);
+    	Date d2 = new Date(dateTo);
+    	long diffInMs = (d2.getTime() - d1.getTime());
+        long diffInMins = TimeUnit.MILLISECONDS.toMinutes(diffInMs);
+    	DateFormat df = new SimpleDateFormat("dd");
+    	if (!df.format(d1).equals(df.format(d2))) {
+			diffInMins = 0;
+		}
+        return (int)diffInMins;
+    }     
 }
 
 
