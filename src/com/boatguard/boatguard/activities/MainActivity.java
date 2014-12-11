@@ -252,7 +252,7 @@ public class MainActivity extends Activity {
                 	if (newPosition > initialPosition) {
                 		anim=new TranslateAnimation(0,0,0,px);
                 	} else if ((newPosition < initialPosition) || (newPosition==0 && initialPosition==0)) {
-             	   		anim=new TranslateAnimation(0,0,200,0);
+                		anim=new TranslateAnimation(0,0,px,0);
              	   		if (newPosition == 0 && !refreshing && !scrollRefresh && (mPosX > 100 || mPosY > 100)) {
                 			scrollRefresh = true;
              	   			if (Utils.isNetworkConnected(MainActivity.this, true)) {
@@ -263,7 +263,7 @@ public class MainActivity extends Activity {
                 		}
              	   	}
                 	if (anim!=null) {
-	                	anim.setDuration(1000);
+                		anim.setDuration(1000);
 	             	    anim.setFillAfter(true);
 	             	    lMenu.setAnimation(anim);
                 	}
@@ -288,6 +288,7 @@ public class MainActivity extends Activity {
              	    mLastTouchY = 0;
                 	scrollRefresh = false;
                 	v.setY(getResources().getDimension(R.dimen.menu_height));
+                	anim=null;
 		            break;
                 case MotionEvent.ACTION_POINTER_UP:                     
                     final int pointerIndex2 = MotionEventCompat.getActionIndex(ev); 

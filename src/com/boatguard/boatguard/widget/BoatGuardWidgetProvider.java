@@ -26,6 +26,8 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RemoteViews;
 
 import com.boatguard.boatguard.R;
@@ -359,6 +361,51 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 					//rvComponent.setViewVisibility(R.id.lIcon, View.VISIBLE);
 				}
 			}	
+			else if (idState == ((State)Settings.states.get(Settings.STATE_LIGHT)).getId()) { 
+				RemoteViews rvComponent = obuRemoteViews.get(((State)Settings.states.get(Settings.STATE_LIGHT)).getIdComponent());
+				String light = obuState.getValue();
+				
+				if (light.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_LIGHT_OFF)).getValue())) {
+					rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_light_off);
+				} 
+				else if (light.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_LIGHT_ON)).getValue())) {
+					rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_light_off);
+				} 
+				else {
+					rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_light_disabled);
+				}
+				rv.addView(R.id.components, rvComponent);
+			}			
+			else if (idState == ((State)Settings.states.get(Settings.STATE_FAN)).getId()) { 
+				RemoteViews rvComponent = obuRemoteViews.get(((State)Settings.states.get(Settings.STATE_LIGHT)).getIdComponent());
+				String fan = obuState.getValue();
+				
+				if (fan.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_LIGHT_OFF)).getValue())) {
+					rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_fan_off);
+				} 
+				else if (fan.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_LIGHT_ON)).getValue())) {
+					rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_fan_on);
+				} 
+				else {
+					rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_fan_disabled);
+				}
+				rv.addView(R.id.components, rvComponent);
+			}			
+			else if (idState == ((State)Settings.states.get(Settings.STATE_DOOR)).getId()) { 
+				RemoteViews rvComponent = obuRemoteViews.get(((State)Settings.states.get(Settings.STATE_DOOR)).getIdComponent());
+				String door = obuState.getValue();
+				
+				if (door.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_DOOR_OK)).getValue())) {
+					rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_door_ok);
+				} 
+				else if (door.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_DOOR_ALARM)).getValue())) {
+					rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_door_alarm_1);
+				} 
+				else {
+					rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_door_disabled);
+				}
+				rv.addView(R.id.components, rvComponent);
+			}			
 		}
 	}
 /*
