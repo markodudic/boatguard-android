@@ -52,6 +52,9 @@ public class Settings {
 	public static String COMPONENT_TYPE_PUMP = "PUMP";
 	public static String COMPONENT_TYPE_GEO = "GEO";
 	public static String COMPONENT_TYPE_ANCHOR = "ANCHOR";
+	public static String COMPONENT_TYPE_LIGHT = "LIGHT";
+	public static String COMPONENT_TYPE_FAN = "FAN";
+	public static String COMPONENT_TYPE_DOOR = "DOOR";
 
 	public static String STATE_ROW_STATE = "ROW_STATE";
 	public static String STATE_GEO_FENCE = "GEO_FENCE";
@@ -72,6 +75,9 @@ public class Settings {
 	public static String STATE_BATTERY_CAPACITY = "BATTERY_CAPACITY";
 	public static String STATE_BATTERY_ALARM_LEVEL = "BATTERY_ALARM_LEVEL";
 	public static String STATE_BATTERY_ENERGY_RESET = "BATTERY_ENERGY_RESET";
+	public static String STATE_LIGHT = "LIGHT";
+	public static String STATE_FAN = "FAN";
+	public static String STATE_DOOR = "DOOR";
 		
 	public static String APP_STATE_GEO_FENCE_DISABLED = "GEO_FENCE_DISABLED";
 	public static String APP_STATE_GEO_FENCE_ENABLED = "GEO_FENCE_ENABLED";
@@ -87,6 +93,12 @@ public class Settings {
 	public static String APP_STATE_ACCU_DISCONNECT = "ACCU_DISCONNECT";
 	public static String APP_STATE_ALARM_REFRESH_TIME = "ALARM_REFRESH_TIME";
 	public static String APP_STATE_ALARM_BATTERY_EMPTY = "BATTERY_EMPTY";
+	public static String APP_STATE_LIGHT_OFF = "LIGHT_OFF";
+	public static String APP_STATE_LIGHT_ON = "LIGHT_ON";
+	public static String APP_STATE_FAN_OFF = "FAN_OFF";
+	public static String APP_STATE_FAN_ON = "FAN_ON";
+	public static String APP_STATE_DOOR_OK = "DOOR_OK";
+	public static String APP_STATE_DOOR_ALARM = "DOOR_ALARM";
 			
 	public static String ALARM_GREEN = "G";
 	public static String ALARM_RED = "R";

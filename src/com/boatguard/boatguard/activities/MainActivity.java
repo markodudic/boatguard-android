@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -40,24 +39,25 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.MotionEventCompat;
-import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.Switch;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.boatguard.boatguard.R;
@@ -65,6 +65,7 @@ import com.boatguard.boatguard.components.TextViewFont;
 import com.boatguard.boatguard.objects.AppSetting;
 import com.boatguard.boatguard.objects.ObuAlarm;
 import com.boatguard.boatguard.objects.ObuComponent;
+import com.boatguard.boatguard.objects.ObuSetting;
 import com.boatguard.boatguard.objects.ObuState;
 import com.boatguard.boatguard.objects.State;
 import com.boatguard.boatguard.utils.Comm;
@@ -109,8 +110,7 @@ public class MainActivity extends Activity {
     private LinearLayout lMenu;
     private TypedArray stylesAttributes = null;
  
-	private ListView lvComponents = null;
-	private ComponentsAdapter componentsAdapter;
+	//private ComponentsAdapter componentsAdapter;
 
 	
 	@Override
@@ -214,8 +214,8 @@ public class MainActivity extends Activity {
 
 
     	
-        lvComponents = (ListView)findViewById(R.id.components);
-        lvComponents.setOnTouchListener(new View.OnTouchListener() {
+        //ListView lvComponents = (ListView)findViewById(R.id.components);
+        sv.setOnTouchListener(new View.OnTouchListener() {
            @Override
             public boolean onTouch(View v, MotionEvent ev) {
         	   	final int action = MotionEventCompat.getActionMasked(ev); 
@@ -225,10 +225,10 @@ public class MainActivity extends Activity {
                 	break;
                 case MotionEvent.ACTION_MOVE:
                 	
-                    /*final int pointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);  
+                    //final int pointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);  
                 
-		            final float x = MotionEventCompat.getX(ev, pointerIndex);
-		            final float y = MotionEventCompat.getY(ev, pointerIndex);*/
+		            //final float x = MotionEventCompat.getX(ev, pointerIndex);
+		            //final float y = MotionEventCompat.getY(ev, pointerIndex);
 		            final float x = ev.getX();
 		            final float y = ev.getY();
 		            //if (y <= 0 || mLastTouchY <= 0 || y - mLastTouchY <= 0) break;
@@ -287,7 +287,7 @@ public class MainActivity extends Activity {
                 	mPosY=0;
              	    mLastTouchY = 0;
                 	scrollRefresh = false;
-                	v.setY(0);
+                	v.setY(getResources().getDimension(R.dimen.menu_height));
 		            break;
                 case MotionEvent.ACTION_POINTER_UP:                     
                     final int pointerIndex2 = MotionEventCompat.getActionIndex(ev); 
@@ -336,16 +336,16 @@ public class MainActivity extends Activity {
 		
         lMenu = (LinearLayout)findViewById(R.id.fragment_menu);
  
-	    Settings.getSettings(this);        
+        Settings.getSettings(this);        
         Settings.getObuSettings(this);  
         Settings.getObuComponents(this);  
         Settings.getObuAlarms(this); 
-        Settings.getCustomer(this);
+        Settings.getCustomer(this); 
         Settings.getFriends(this);
-        //showObuComponents();
-   		
-        componentsAdapter = new ComponentsAdapter();
-        lvComponents.setAdapter(componentsAdapter);
+        showObuComponents();
+        
+        //componentsAdapter = new ComponentsAdapter();
+        //lvComponents.setAdapter(componentsAdapter);
    		
         handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
 	}
@@ -377,7 +377,7 @@ public class MainActivity extends Activity {
 		dialogAlarmActive = -1;
 		dialogAlarm.dismiss();
 	}
-	/*
+	
 	@SuppressLint("NewApi")
 	private void showObuComponents(){
 		TableLayout lComponents = (TableLayout)findViewById(R.id.components);
@@ -402,13 +402,22 @@ public class MainActivity extends Activity {
 			if (obuComponent.getType().equals("ACCU")) { 
 				lc = R.layout.list_component_accu;
 			}
-
+			
 			LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			//componentLast = component;
 		    component = inflater.inflate(lc, null);
 		    component.setId(obuComponent.getId_component());
 		    
-			if (Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
+		    System.out.println(obuComponent.getType());
+			if (obuComponent.getType().equals("LIGHT") || obuComponent.getType().equals("FAN")) { 
+				((Switch) component.findViewById(R.id.switch_comp)).setVisibility(View.VISIBLE);
+				((ImageView)component.findViewById(R.id.logo)).setVisibility(View.INVISIBLE);
+			} else if (obuComponent.getType().equals("GEO") || obuComponent.getType().equals("PUMP") || obuComponent.getType().equals("ANCHOR") || obuComponent.getType().equals("DOOR")) {
+				((Switch) component.findViewById(R.id.switch_comp)).setVisibility(View.INVISIBLE);
+				((ImageView)component.findViewById(R.id.logo)).setVisibility(View.VISIBLE);
+			}
+
+			/*if (Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
 			    Display display = getWindowManager().getDefaultDisplay();
 			    Point size = new Point();
 			    display.getSize(size);
@@ -453,7 +462,7 @@ public class MainActivity extends Activity {
 			    	lpI.setMargins((int)getResources().getDimension(R.dimen.components_margin)-20, 0, 0, (int)getResources().getDimension(R.dimen.component_step_margin2));
 				    ivStep.setLayoutParams(lpI);		    
 			    }
-			}
+			}*/
 			    
 			TextView label = ((TextView)component.findViewById(R.id.label));
 			label.setText(obuComponent.getName());
@@ -461,7 +470,7 @@ public class MainActivity extends Activity {
 	        
 			
 			if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_GEO)) {
-				((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_geofence_disabled);
+				((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_geofence_disabled);
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
@@ -469,7 +478,7 @@ public class MainActivity extends Activity {
 					}
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_PUMP)) {
-			    ((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_bilgepump);
+			    ((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_bilgepump);
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
@@ -477,7 +486,7 @@ public class MainActivity extends Activity {
 					}
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ANCHOR)) { 
-			    ((ImageView)component.findViewById(R.id.logo)).setImageResource(R.drawable.ic_anchor_disabled); 
+			    ((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_anchor_disabled); 
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
@@ -493,9 +502,44 @@ public class MainActivity extends Activity {
 						showSetting(3);
 					}
 				});
-			} 
-			
-			if (Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
+			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_LIGHT)) { 
+				//((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_light_disabled);
+				//ImageView imageView = (ImageView)component.findViewById(R.id.logo);
+				final Switch switch_comp = ((Switch) component.findViewById(R.id.switch_comp));
+				switch_comp.setVisibility(View.INVISIBLE);
+				switch_comp.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView,	boolean isChecked) {
+						//set settings
+				        HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
+				        obuSettings.get(((State)Settings.states.get(Settings.STATE_LIGHT)).getId()).setValue(switch_comp.isChecked()?"1":"0");
+				        Settings.setObuSettings(MainActivity.this);
+						
+					}
+				});
+			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_FAN)) { 
+				//((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_fan_disabled);
+				//ImageView imageView = (ImageView)component.findViewById(R.id.logo);
+				final Switch switch_comp = ((Switch) component.findViewById(R.id.switch_comp));
+				switch_comp.setVisibility(View.INVISIBLE);
+				switch_comp.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView,	boolean isChecked) {
+				        HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
+				        obuSettings.get(((State)Settings.states.get(Settings.STATE_FAN)).getId()).setValue(switch_comp.isChecked()?"1":"0");
+				        Settings.setObuSettings(MainActivity.this);
+					}
+				});
+			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_DOOR)) { 
+				((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_door_disabled);
+				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
+				label.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) { 
+					}
+				});
+			} 			
+			/*if (Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
 				if (ii%2 == 0) {
 					tr = new TableRow(this);
 					tr.setLayoutParams(new LayoutParams( LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
@@ -514,20 +558,20 @@ public class MainActivity extends Activity {
 				}
 				ii++;
 			} 
-			else {
+			else {*/
 				lComponents.addView(component);
-			}
+			//}
 		}
 		//zadnjo crto skrijem
 		if (component != null) {
 			((LinearLayout)component.findViewById(R.id.line)).setVisibility(View.GONE);
-			if (Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
+			/*if (Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
 				((LinearLayout)componentLast.findViewById(R.id.line)).setVisibility(View.GONE);
-			}
+			}*/
 		}
 
 	}
-*/
+
 	private void showSetting(int item) {
 		Intent i = new Intent(MainActivity.this, SettingsActivity.class);
 		i.putExtra("id", item);
@@ -698,8 +742,7 @@ public class MainActivity extends Activity {
 			Map.Entry map = (Map.Entry)i.next(); 
 			ObuState obuState = (ObuState)map.getValue();
 			int idState = obuState.getId_state();
-	
-			
+
 			if (idState == ((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId()) { 
             	tvLastUpdate.setText(getResources().getString(R.string.last_update) + " " + Utils.formatDate(obuState.getDateState()));
             	tvLastUpdate.setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
@@ -707,146 +750,216 @@ public class MainActivity extends Activity {
 			}	
 			else if (idState == ((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()) { 
 				FrameLayout component = (FrameLayout)findViewById(idState);
-				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
-				String geofence = obuState.getValue();
-				cancelAlarmAnimation(component, null, false);
-				
-				if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_DISABLED)).getValue())) {
-					imageView.setBackgroundResource(R.drawable.ic_geofence_disabled);
-				} 
-				else if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ENABLED)).getValue())) {
-					imageView.setBackgroundResource(R.drawable.ic_geofence_home);
-				} 
-				else if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ALARM)).getValue())) {
-					alarm = true;
-					showAlarmAnimation(component, imageView, R.drawable.ic_geofence_alarm_1, R.drawable.ic_geofence_alarm, true);
-				}
-				else {
-					imageView.setBackgroundResource(android.R.color.transparent);
+				if (component != null) {
+					ImageView imageView = (ImageView)component.findViewById(R.id.logo);
+					String geofence = obuState.getValue();
+					cancelAlarmAnimation(component, null, false);
+					
+					if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_DISABLED)).getValue())) {
+						imageView.setBackgroundResource(R.drawable.ic_geofence_disabled);
+					} 
+					else if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ENABLED)).getValue())) {
+						imageView.setBackgroundResource(R.drawable.ic_geofence_home);
+					} 
+					else if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ALARM)).getValue())) {
+						alarm = true;
+						showAlarmAnimation(component, imageView, R.drawable.ic_geofence_alarm_1, R.drawable.ic_geofence_alarm, true);
+					}
+					else {
+						imageView.setBackgroundResource(android.R.color.transparent);
+					}
 				}
 			}			
 			else if (idState == ((State)Settings.states.get(Settings.STATE_PUMP_STATE)).getId()) { 
 				FrameLayout component = (FrameLayout)findViewById(idState);
-				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
-				String pumpState = obuState.getValue();
-				cancelAlarmAnimation(component, null, false);
-				
-				if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_OK)).getValue())) {
-					imageView.setBackgroundResource(R.drawable.ic_bilgepump);
-				}
-				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_PUMPING)).getValue())) {
-					alarm = true;
-					if (Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
-						showAlarmAnimation(component, imageView, R.drawable.bilge_pumping_animation_day, 0, false);
-					} 
-					else {
-						showAlarmAnimation(component, imageView, R.drawable.bilge_pumping_animation, 0, false);
+				if (component != null) {
+					ImageView imageView = (ImageView)component.findViewById(R.id.logo);
+					String pumpState = obuState.getValue();
+					cancelAlarmAnimation(component, null, false);
+					
+					if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_OK)).getValue())) {
+						imageView.setBackgroundResource(R.drawable.ic_bilgepump);
 					}
-				}
-				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_CLODGED)).getValue())) {
-					alarm = true;
-					showAlarmAnimation(component, imageView, R.drawable.ic_bilgepump_clodged_1, R.drawable.ic_bilgepump_clodged, true);
-				}
-				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_DEMAGED)).getValue())) {
-					alarm = true;
-					showAlarmAnimation(component, imageView, R.drawable.ic_bilgepump_demaged_1, R.drawable.ic_bilgepump_demaged, true);
-				}
-				else {
-					imageView.setBackgroundResource(android.R.color.transparent); 
+					else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_PUMPING)).getValue())) {
+						alarm = true;
+						if (Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
+							showAlarmAnimation(component, imageView, R.drawable.bilge_pumping_animation_day, 0, false);
+						} 
+						else {
+							showAlarmAnimation(component, imageView, R.drawable.bilge_pumping_animation, 0, false);
+						}
+					}
+					else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_CLODGED)).getValue())) {
+						alarm = true;
+						showAlarmAnimation(component, imageView, R.drawable.ic_bilgepump_clodged_1, R.drawable.ic_bilgepump_clodged, true);
+					}
+					else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_DEMAGED)).getValue())) {
+						alarm = true;
+						showAlarmAnimation(component, imageView, R.drawable.ic_bilgepump_demaged_1, R.drawable.ic_bilgepump_demaged, true);
+					}
+					else {
+						imageView.setBackgroundResource(android.R.color.transparent); 
+					}
 				}
 			}
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ANCHOR)).getId()) { 
 				FrameLayout component = (FrameLayout)findViewById(idState);
-				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
-				String anchorState = obuState.getValue(); 
-				cancelAlarmAnimation(component, null, false);
-				
-				if (anchorState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_DISABLED)).getValue())) {
-					imageView.setBackgroundResource(R.drawable.ic_anchor_disabled);
-				}			
-				else if (anchorState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_ENABLED)).getValue())) {
-					imageView.setBackgroundResource(R.drawable.ic_anchor);
-					int anchorDriftingId = ((State)Settings.states.get(Settings.STATE_ANCHOR_DRIFTING)).getId();
-					String anchorDrifting = ((ObuState) obuStates.get(anchorDriftingId)).getValue();
-					if (anchorDrifting.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_DRIFTING)).getValue())) {
-						alarm = true;
-						showAlarmAnimation(component, imageView, R.drawable.ic_anchor_alarm_1, R.drawable.ic_anchor_alarm, true);
+				if (component != null) {
+					ImageView imageView = (ImageView)component.findViewById(R.id.logo);
+					String anchorState = obuState.getValue(); 
+					cancelAlarmAnimation(component, null, false);
+					
+					if (anchorState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_DISABLED)).getValue())) {
+						imageView.setBackgroundResource(R.drawable.ic_anchor_disabled);
 					}			
+					else if (anchorState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_ENABLED)).getValue())) {
+						imageView.setBackgroundResource(R.drawable.ic_anchor);
+						int anchorDriftingId = ((State)Settings.states.get(Settings.STATE_ANCHOR_DRIFTING)).getId();
+						String anchorDrifting = ((ObuState) obuStates.get(anchorDriftingId)).getValue();
+						if (anchorDrifting.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_DRIFTING)).getValue())) {
+							alarm = true;
+							showAlarmAnimation(component, imageView, R.drawable.ic_anchor_alarm_1, R.drawable.ic_anchor_alarm, true);
+						}			
+					}
 				}
 			}		
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(idState);
-				((TextViewFont)component.findViewById(R.id.accu_napetost)).setText(obuState.getValue() + "%");
-		        ((TextViewFont)component.findViewById(R.id.accu_napetost)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
-				cancelAlarmAnimation(component, (TextView)component.findViewById(R.id.accu_napetost), true);
-				
-				String accuEmpty = ((ObuState)obuStates.get(((State)Settings.states.get(Settings.STATE_ACCU_EMPTY)).getId())).getValue();
-				if (accuEmpty.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ALARM_BATTERY_EMPTY)).getValue())) {
-					alarm = true;
-					showAlarmAccuAnimation(component, (TextView)component.findViewById(R.id.accu_napetost));
+				if (component != null) {
+					((TextViewFont)component.findViewById(R.id.accu_napetost)).setText(obuState.getValue() + "%");
+			        ((TextViewFont)component.findViewById(R.id.accu_napetost)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
+					cancelAlarmAnimation(component, (TextView)component.findViewById(R.id.accu_napetost), true);
+					
+					String accuEmpty = ((ObuState)obuStates.get(((State)Settings.states.get(Settings.STATE_ACCU_EMPTY)).getId())).getValue();
+					if (accuEmpty.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ALARM_BATTERY_EMPTY)).getValue())) {
+						alarm = true;
+						showAlarmAccuAnimation(component, (TextView)component.findViewById(R.id.accu_napetost));
+					}
 				}
 			}			
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
-				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
-				((TextViewFont)component.findViewById(R.id.accu_ah)).setText(f + "AH");
-		        ((TextViewFont)component.findViewById(R.id.accu_ah)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
+				if (component != null) {
+					String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
+					((TextViewFont)component.findViewById(R.id.accu_ah)).setText(f + "AH");
+			        ((TextViewFont)component.findViewById(R.id.accu_ah)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
+				}
 			}	
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
-				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
-				((TextViewFont)component.findViewById(R.id.accu_tok)).setText(f + "A");
-		        ((TextViewFont)component.findViewById(R.id.accu_tok)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
+				if (component != null) {
+					String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
+					((TextViewFont)component.findViewById(R.id.accu_tok)).setText(f + "A");
+			        ((TextViewFont)component.findViewById(R.id.accu_tok)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
+				}
 			}	
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_DISCONNECT)).getId()) { 
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
-				
-				ImageView imageView = (ImageView)component.findViewById(R.id.accu_disconnected);
-				imageView.setVisibility(View.VISIBLE);
-				TextView tvAccuNapetost = (TextView)component.findViewById(R.id.accu_napetost);
-				TextView tvAccuAH = (TextView)component.findViewById(R.id.accu_ah);
-				TextView tvAccuTok = (TextView)component.findViewById(R.id.accu_tok);
-				ImageView ivStep = (ImageView)component.findViewById(R.id.step);
-				//FrameLayout fl = (FrameLayout)component.findViewById(R.id.lIcon);
-				
-				String accuDisconnectedState = obuState.getValue();
-				cancelAlarmAnimation(component, null, false);
-				if (accuDisconnectedState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ACCU_DISCONNECT)).getValue())) {
-					showAlarmAnimation(component, imageView, R.drawable.ic_accu_disconnected_1, R.drawable.ic_accu_disconnected, true);
-				 
-					//fl.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 5f));
-					tvAccuNapetost.setVisibility(View.GONE);
-					tvAccuAH.setVisibility(View.GONE);
-					tvAccuTok.setVisibility(View.GONE);
-					ivStep.setVisibility(View.GONE);
-				}
-				else {
-					switch (accuStep) {
-					case 0:
-						tvAccuNapetost.setVisibility(View.VISIBLE);
-						tvAccuAH.setVisibility(View.GONE);
-						tvAccuTok.setVisibility(View.GONE);
-						ivStep.setImageResource(R.drawable.ic_battery_step_1);
-						break;
-					case 1:
-						tvAccuNapetost.setVisibility(View.GONE);
-						tvAccuAH.setVisibility(View.VISIBLE);
-						tvAccuTok.setVisibility(View.GONE);
-						ivStep.setImageResource(R.drawable.ic_battery_step_2);
-						break;
-					case 2: 
+				if (component != null) {				
+					ImageView imageView = (ImageView)component.findViewById(R.id.accu_disconnected);
+					imageView.setVisibility(View.VISIBLE);
+					TextView tvAccuNapetost = (TextView)component.findViewById(R.id.accu_napetost);
+					TextView tvAccuAH = (TextView)component.findViewById(R.id.accu_ah);
+					TextView tvAccuTok = (TextView)component.findViewById(R.id.accu_tok);
+					ImageView ivStep = (ImageView)component.findViewById(R.id.step);
+					//FrameLayout fl = (FrameLayout)component.findViewById(R.id.lIcon);
+					
+					String accuDisconnectedState = obuState.getValue();
+					cancelAlarmAnimation(component, null, false);
+					if (accuDisconnectedState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ACCU_DISCONNECT)).getValue())) {
+						showAlarmAnimation(component, imageView, R.drawable.ic_accu_disconnected_1, R.drawable.ic_accu_disconnected, true);
+					 
+						//fl.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 5f));
 						tvAccuNapetost.setVisibility(View.GONE);
 						tvAccuAH.setVisibility(View.GONE);
-						tvAccuTok.setVisibility(View.VISIBLE);
-						ivStep.setImageResource(R.drawable.ic_battery_step_3);
-						break;
-					} 
-
-					//fl.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 5f));
-					((ImageView)component.findViewById(R.id.accu_disconnected)).setVisibility(View.GONE);
-					((ImageView)component.findViewById(R.id.step)).setVisibility(View.VISIBLE);
+						tvAccuTok.setVisibility(View.GONE);
+						ivStep.setVisibility(View.GONE);
+					}
+					else {
+						switch (accuStep) {
+						case 0:
+							tvAccuNapetost.setVisibility(View.VISIBLE);
+							tvAccuAH.setVisibility(View.GONE);
+							tvAccuTok.setVisibility(View.GONE);
+							ivStep.setImageResource(R.drawable.ic_battery_step_1);
+							break;
+						case 1:
+							tvAccuNapetost.setVisibility(View.GONE);
+							tvAccuAH.setVisibility(View.VISIBLE);
+							tvAccuTok.setVisibility(View.GONE);
+							ivStep.setImageResource(R.drawable.ic_battery_step_2);
+							break;
+						case 2: 
+							tvAccuNapetost.setVisibility(View.GONE);
+							tvAccuAH.setVisibility(View.GONE);
+							tvAccuTok.setVisibility(View.VISIBLE);
+							ivStep.setImageResource(R.drawable.ic_battery_step_3);
+							break;
+						} 
+	
+						//fl.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 5f));
+						((ImageView)component.findViewById(R.id.accu_disconnected)).setVisibility(View.GONE);
+						((ImageView)component.findViewById(R.id.step)).setVisibility(View.VISIBLE);
+					}
 				}
 			}	
+			else if (idState == ((State)Settings.states.get(Settings.STATE_LIGHT)).getId()) { 
+				FrameLayout component = (FrameLayout)findViewById(idState);
+				if (component != null) {
+					String light = obuState.getValue();
+					Switch switch_comp = ((Switch) component.findViewById(R.id.switch_comp));
+					
+					if (light.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_LIGHT_OFF)).getValue())) {
+						switch_comp.setVisibility(View.VISIBLE);
+						switch_comp.setChecked(false);
+					} 
+					else if (light.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_LIGHT_ON)).getValue())) {
+						switch_comp.setVisibility(View.VISIBLE);
+						switch_comp.setChecked(true);
+					} 
+					else {
+						((Switch) component.findViewById(R.id.switch_comp)).setVisibility(View.INVISIBLE);
+					}
+				}
+			}	
+			else if (idState == ((State)Settings.states.get(Settings.STATE_FAN)).getId()) { 
+				FrameLayout component = (FrameLayout)findViewById(idState);
+				if (component != null) {
+					String light = obuState.getValue();
+					Switch switch_comp = ((Switch) component.findViewById(R.id.switch_comp));
+					
+					if (light.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_FAN_OFF)).getValue())) {
+						switch_comp.setVisibility(View.VISIBLE);
+						switch_comp.setChecked(false);
+					} 
+					else if (light.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_FAN_ON)).getValue())) {
+						switch_comp.setVisibility(View.VISIBLE);
+						switch_comp.setChecked(true);
+					} 
+					else {
+						((Switch) component.findViewById(R.id.switch_comp)).setVisibility(View.INVISIBLE);
+					}
+				}
+			}	
+			else if (idState == ((State)Settings.states.get(Settings.STATE_DOOR)).getId()) { 
+				FrameLayout component = (FrameLayout)findViewById(idState);
+				if (component != null) {
+					ImageView imageView = (ImageView)component.findViewById(R.id.logo);
+					String door = obuState.getValue();
+					cancelAlarmAnimation(component, null, false);
+					
+					if (door.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_DOOR_OK)).getValue())) {
+						imageView.setBackgroundResource(R.drawable.ic_door_ok);
+					} 
+					else if (door.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_DOOR_ALARM)).getValue())) {
+						alarm = true;
+						showAlarmAnimation(component, imageView, R.drawable.ic_door_alarm_1, R.drawable.ic_door_alarm, true);
+					}
+					else {
+						imageView.setBackgroundResource(R.drawable.ic_door_disabled);
+					}
+				}
+			}
 		}
 		
 		if (alarm) {
@@ -1085,7 +1198,7 @@ public class MainActivity extends Activity {
 	   }
 	};	    
 
-	
+	/*
     public class ComponentsAdapter extends BaseAdapter {
   	  
         @SuppressLint("NewApi")
@@ -1103,7 +1216,7 @@ public class MainActivity extends Activity {
 
 			component = inflater.inflate(lc, null);
 		    component.setId(obuComponent.getId_component());
-
+		    
 			TextView label = ((TextView)component.findViewById(R.id.label));
 			label.setText(obuComponent.getName());
 		    ((TextViewFont)component.findViewById(R.id.label)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
@@ -1142,13 +1255,35 @@ public class MainActivity extends Activity {
 						showSetting(3);
 					}
 				});
+			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_LIGHT)) { 
+				((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_light_disabled);
+				label.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) { 
+					}
+				});
+			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_FAN)) { 
+				((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_fan_disabled);
+				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
+				label.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) { 
+					}
+				});
+			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_DOOR)) { 
+				((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_door_disabled);
+				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
+				label.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) { 
+					}
+				});
 			} 
 		    
 			if (position == getCount()) {
 				((LinearLayout)component.findViewById(R.id.line)).setVisibility(View.GONE);
 			}
 
-			
             return component;
         }
 
@@ -1167,7 +1302,9 @@ public class MainActivity extends Activity {
 		public long getItemId(int position) {
 			return position;
 		}
-    }
+		
+	
+    }*/
 
 
 }

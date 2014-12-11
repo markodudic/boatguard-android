@@ -26,35 +26,46 @@
 	        android:layout_gravity="center_vertical|center_horizontal"
 	        android:clickable="false"
 	        android:visibility="gone" />
-	</FrameLayout>
-
 	    
-    <FrameLayout
-	    android:id="@+id/fl_components"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content" >
-		
-		<ListView 
-			android:id="@+id/components"
-	        android:background="?background"
-        	android:layout_width="match_parent"
-		    android:layout_height="wrap_content" />
-
-		<LinearLayout
-		    android:layout_width="match_parent"
-		    android:layout_height="@dimen/shadow"
-		    android:orientation="vertical"
-		    android:layout_gravity="top"
-		    android:background="@drawable/drop_shadow_top"/>
-	
-		<LinearLayout
-		    android:layout_width="match_parent"
-		    android:layout_height="@dimen/shadow"
-		    android:orientation="vertical"
-		    android:layout_gravity="bottom"
-		    android:background="@drawable/drop_shadow_bottom"/>
+	    	    
 	</FrameLayout>
 
+	<ScrollView 
+	        android:id="@+id/scroll_main"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:fillViewport="true" >
+	
+	    <FrameLayout
+		    android:id="@+id/fl_components"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content" >
+			
+			<!-- ListView 
+				android:id="@+id/components"
+		        android:background="?background"
+	        	android:layout_width="match_parent"
+			    android:layout_height="wrap_content" /-->
+			<TableLayout 
+				android:id="@+id/components"
+		        android:layout_width="match_parent"
+			    android:layout_height="wrap_content" />
+
+			<LinearLayout
+			    android:layout_width="match_parent"
+			    android:layout_height="@dimen/shadow"
+			    android:orientation="vertical"
+			    android:layout_gravity="top"
+			    android:background="@drawable/drop_shadow_top"/>
+			
+			<LinearLayout
+			    android:layout_width="match_parent"
+			    android:layout_height="@dimen/shadow"
+			    android:orientation="vertical"
+			    android:layout_gravity="bottom"
+			    android:background="@drawable/drop_shadow_bottom"/>
+		</FrameLayout>
+	</ScrollView>
 	
 	<LinearLayout
 	    android:layout_width="match_parent"
