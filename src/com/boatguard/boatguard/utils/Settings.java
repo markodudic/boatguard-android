@@ -111,6 +111,8 @@ public class Settings {
 	public static LinkedHashMap<Integer,ObuComponent> obuComponents = new LinkedHashMap<Integer,ObuComponent>(){};
 	//public static HashMap<Integer,ObuAlarm> obuAlarms = new HashMap<Integer,ObuAlarm>(){};
 	public static List<ObuAlarm> obuAlarms = new ArrayList<ObuAlarm>();
+	public static String[] obuLights = new String[]{"MAIN", "FIRST ROOM", "SECOND ROOM", "BATHROOM"};
+	public static String[] obuFans = new String[]{"MAIN", "FIRST ROOM", "SECOND ROOM", "BATHROOM"};
 	
 	public static Customer customer = new Customer();
 	public static List<Friend> friends = new ArrayList<Friend>();

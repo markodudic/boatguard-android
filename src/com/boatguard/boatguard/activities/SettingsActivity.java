@@ -1,7 +1,16 @@
 package com.boatguard.boatguard.activities;
 
-import com.boatguard.boatguard.R;
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
+import com.boatguard.boatguard.R;
 import com.boatguard.boatguard.components.TextViewFont;
 import com.boatguard.boatguard.fragments.AlarmContactsFragment;
 import com.boatguard.boatguard.fragments.AlarmTypeFragment;
@@ -13,18 +22,11 @@ import com.boatguard.boatguard.fragments.ContactsFragment;
 import com.boatguard.boatguard.fragments.GeoFenceFragment;
 import com.boatguard.boatguard.fragments.HistoryFragment;
 import com.boatguard.boatguard.fragments.MyAccountFragment;
+import com.boatguard.boatguard.fragments.SensorsFragment;
 import com.boatguard.boatguard.fragments.SettingsFragment;
+import com.boatguard.boatguard.objects.AppSetting;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
 
 public class SettingsActivity extends Activity {
 
@@ -54,8 +56,8 @@ public class SettingsActivity extends Activity {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentId = extras.getInt("id");
-        
-    	switch (fragmentId) {
+
+        switch (fragmentId) {
 	        case -2:
 	            fragmentTransaction.add(R.id.fragment_settings, new ContactsFragment(), extras.getString("title"));
 	            fragmentTransaction.commit();
@@ -105,6 +107,26 @@ public class SettingsActivity extends Activity {
 	   			Intent i = new Intent(SettingsActivity.this, LoginActivity.class);
 	   			startActivity(i);						
 	   			finish();
+				break;
+	        case 10:
+	        	Bundle bundleLight = new Bundle();
+	        	bundleLight.putString("type", Settings.STATE_LIGHT);
+	        	bundleLight.putStringArray("sensors", Settings.obuLights);
+	        	SensorsFragment fragLight = new SensorsFragment();
+	        	fragLight.setArguments(bundleLight);
+	        	
+	            fragmentTransaction.add(R.id.fragment_settings, fragLight, extras.getString("title"));
+	            fragmentTransaction.commit();
+				break;
+	        case 11:
+	        	Bundle bundleFan = new Bundle();
+	        	bundleFan.putString("type", Settings.STATE_FAN);
+	        	bundleFan.putStringArray("sensors", Settings.obuFans);
+	        	SensorsFragment fragFan = new SensorsFragment();
+	        	fragFan.setArguments(bundleFan);
+	        	
+	        	fragmentTransaction.add(R.id.fragment_settings, fragFan, extras.getString("title"));
+	            fragmentTransaction.commit();
 				break;
         }
                 

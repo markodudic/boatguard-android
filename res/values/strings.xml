@@ -52,7 +52,21 @@
         <item >LOG OUT</item>
    </string-array>	
 
-    
+    <string-array name="settings_items_titles">
+        <item >GEOFENCE</item>
+        <item >BILGE PUMP</item>
+        <item >ANCHOR DRIFTING</item>
+        <item >BATTERY</item>
+        <item >ALARM CONTACTS</item>
+        <item >ALARM TYPE</item>
+        <item >MY ACCOUNT</item>
+        <item >HISTORY</item>
+        <item >APP SETTINGS</item>
+        <item >LOG OUT</item>
+        <item >LIGHTS</item>
+        <item >FANS</item>
+   </string-array>
+       
    <string name="geo_fence">GEOFENCE</string>
    <string name="geo_fence_radius">GEOFENCE RADIUS</string>
    <string name="geo_fence_current">DEFINE CURRENT LOCATION AS HOME</string>

@@ -47,14 +47,14 @@
 			        android:layout_height="wrap_content"
 			        android:layout_gravity="center_vertical|center_horizontal" />
 	
-				<Switch
+				<!-- Switch
 				    android:id="@+id/switch_comp"
 				    android:layout_width="match_parent"
 				    android:layout_height="wrap_content"
 				    android:layout_gravity="center_vertical|center_horizontal"
 				    android:textOff="@string/off"
 				    android:textOn="@string/on"
-				    android:track="@drawable/switcher" />			    
+				    android:track="@drawable/switcher" /-->			    
 		    </FrameLayout>
 		</LinearLayout>
 

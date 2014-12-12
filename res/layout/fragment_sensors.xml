@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:boatguard="http://schemas.android.com/apk/res/com.boatguard.boatguard"
+    style="@style/SettingsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+	<LinearLayout 
+		android:layout_width="match_parent"
+	    android:layout_height="@dimen/settings_height"
+	    android:orientation="horizontal" >
+	    
+	    <com.boatguard.boatguard.components.TextViewFont
+	        style="@style/SettingsText"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:id="@+id/sensor_title"
+        	boatguard:font_name="@string/font_medium" />
+    </LinearLayout>
+    
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?background"
+        android:id="@+id/lv_obu_sensors"/>    
+ 			
+</LinearLayout>

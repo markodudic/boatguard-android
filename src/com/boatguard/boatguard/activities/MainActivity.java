@@ -409,14 +409,13 @@ public class MainActivity extends Activity {
 		    component = inflater.inflate(lc, null);
 		    component.setId(obuComponent.getId_component());
 		    
-		    System.out.println(obuComponent.getType());
-			if (obuComponent.getType().equals("LIGHT") || obuComponent.getType().equals("FAN")) { 
+		    /*if (obuComponent.getType().equals("LIGHT") || obuComponent.getType().equals("FAN")) { 
 				((Switch) component.findViewById(R.id.switch_comp)).setVisibility(View.VISIBLE);
 				((ImageView)component.findViewById(R.id.logo)).setVisibility(View.INVISIBLE);
 			} else if (obuComponent.getType().equals("GEO") || obuComponent.getType().equals("PUMP") || obuComponent.getType().equals("ANCHOR") || obuComponent.getType().equals("DOOR")) {
 				((Switch) component.findViewById(R.id.switch_comp)).setVisibility(View.INVISIBLE);
 				((ImageView)component.findViewById(R.id.logo)).setVisibility(View.VISIBLE);
-			}
+			}*/
 
 			/*if (Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
 			    Display display = getWindowManager().getDefaultDisplay();
@@ -496,7 +495,6 @@ public class MainActivity extends Activity {
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ACCU)) { 
 				((TextView)component.findViewById(R.id.accu_napetost)).setText("");
-				accuComponentId = obuComponent.getId_component();
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
@@ -504,9 +502,14 @@ public class MainActivity extends Activity {
 					}
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_LIGHT)) { 
-				//((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_light_disabled);
-				//ImageView imageView = (ImageView)component.findViewById(R.id.logo);
-				final Switch switch_comp = ((Switch) component.findViewById(R.id.switch_comp));
+				((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_light_disabled);
+				label.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) { 
+						showSetting(10);
+					}
+				});				
+				/*final Switch switch_comp = ((Switch) component.findViewById(R.id.switch_comp));
 				switch_comp.setVisibility(View.INVISIBLE);
 				switch_comp.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 					@Override
@@ -517,11 +520,16 @@ public class MainActivity extends Activity {
 				        Settings.setObuSettings(MainActivity.this);
 						
 					}
-				});
+				});*/
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_FAN)) { 
-				//((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_fan_disabled);
-				//ImageView imageView = (ImageView)component.findViewById(R.id.logo);
-				final Switch switch_comp = ((Switch) component.findViewById(R.id.switch_comp));
+				((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_fan_disabled);
+				label.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) { 
+						showSetting(11);
+					}
+				});	
+				/*final Switch switch_comp = ((Switch) component.findViewById(R.id.switch_comp));
 				switch_comp.setVisibility(View.INVISIBLE);
 				switch_comp.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 					@Override
@@ -530,10 +538,9 @@ public class MainActivity extends Activity {
 				        obuSettings.get(((State)Settings.states.get(Settings.STATE_FAN)).getId()).setValue(switch_comp.isChecked()?"1":"0");
 				        Settings.setObuSettings(MainActivity.this);
 					}
-				});
+				});*/
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_DOOR)) { 
 				((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_door_disabled);
-				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
@@ -576,10 +583,11 @@ public class MainActivity extends Activity {
 	private void showSetting(int item) {
 		Intent i = new Intent(MainActivity.this, SettingsActivity.class);
 		i.putExtra("id", item);
-		i.putExtra("title", getResources().getStringArray(R.array.settings_items)[item]);
+		i.putExtra("title", getResources().getStringArray(R.array.settings_items_titles)[item]);
 		startActivity(i);
 	}
-	
+
+
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -907,8 +915,20 @@ public class MainActivity extends Activity {
 			else if (idState == ((State)Settings.states.get(Settings.STATE_LIGHT)).getId()) { 
 				FrameLayout component = (FrameLayout)findViewById(idState);
 				if (component != null) {
+					ImageView imageView = (ImageView)component.findViewById(R.id.logo);
 					String light = obuState.getValue();
-					Switch switch_comp = ((Switch) component.findViewById(R.id.switch_comp));
+					
+					if (light.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_LIGHT_OFF)).getValue())) {
+						imageView.setBackgroundResource(R.drawable.ic_light_off);
+					} 
+					else if (light.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_LIGHT_ON)).getValue())) {
+						imageView.setBackgroundResource(R.drawable.ic_light_on);
+					} 
+					else {
+						imageView.setBackgroundResource(R.drawable.ic_light_disabled);
+					}
+					
+					/*Switch switch_comp = ((Switch) component.findViewById(R.id.switch_comp));
 					
 					if (light.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_LIGHT_OFF)).getValue())) {
 						switch_comp.setVisibility(View.VISIBLE);
@@ -920,25 +940,23 @@ public class MainActivity extends Activity {
 					} 
 					else {
 						((Switch) component.findViewById(R.id.switch_comp)).setVisibility(View.INVISIBLE);
-					}
+					}*/
 				}
 			}	
 			else if (idState == ((State)Settings.states.get(Settings.STATE_FAN)).getId()) { 
 				FrameLayout component = (FrameLayout)findViewById(idState);
 				if (component != null) {
-					String light = obuState.getValue();
-					Switch switch_comp = ((Switch) component.findViewById(R.id.switch_comp));
+					ImageView imageView = (ImageView)component.findViewById(R.id.logo);
+					String fan = obuState.getValue();
 					
-					if (light.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_FAN_OFF)).getValue())) {
-						switch_comp.setVisibility(View.VISIBLE);
-						switch_comp.setChecked(false);
+					if (fan.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_FAN_OFF)).getValue())) {
+						imageView.setBackgroundResource(R.drawable.ic_fan_off);
 					} 
-					else if (light.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_FAN_ON)).getValue())) {
-						switch_comp.setVisibility(View.VISIBLE);
-						switch_comp.setChecked(true);
+					else if (fan.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_FAN_ON)).getValue())) {
+						imageView.setBackgroundResource(R.drawable.ic_fan_on);
 					} 
 					else {
-						((Switch) component.findViewById(R.id.switch_comp)).setVisibility(View.INVISIBLE);
+						imageView.setBackgroundResource(R.drawable.ic_fan_disabled);
 					}
 				}
 			}	
