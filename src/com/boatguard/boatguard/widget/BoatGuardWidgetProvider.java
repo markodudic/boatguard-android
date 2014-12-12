@@ -19,15 +19,13 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
-import android.graphics.drawable.AnimationDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.RemoteViews;
 
 import com.boatguard.boatguard.R;
@@ -57,6 +55,8 @@ class BoatGuardDataProviderObserver extends ContentObserver {
 
     @Override
     public void onChange(boolean selfChange) {	
+        mAppWidgetManager.notifyAppWidgetViewDataChanged(
+                mAppWidgetManager.getAppWidgetIds(mComponentName), R.id.components);
     }
 }
 
@@ -125,14 +125,25 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
         } catch (Exception e) {};
     }
 
-    private RemoteViews buildLayout(Context context, int appWidgetId, boolean largeLayout) {
-        Log.d(TAG, "buildLayout="+largeLayout+":"+appWidgetId);
+    @SuppressWarnings("deprecation")
+	private RemoteViews buildLayout(Context context, int appWidgetId, boolean largeLayout) {
+        Log.d(TAG, "buildLayout1="+largeLayout+":"+appWidgetId);
         this.context = context;
         rv = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
         
-        showObuComponents();
+        Intent intent = new Intent(context, BoatGuardWidgetService.class);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+        rv.setRemoteAdapter(R.id.components, intent);
+        //rv.setEmptyView(R.id.components, R.id.empty_view);
+        //rv.setInt(R.id.components, "setNumColumns", 2); 
+
+        
+        
+        
+        //showObuComponents();
         getObudata();
-    	showObuData();  
+    	//showObuData();  
         
         
         final Intent refreshIntent = new Intent(context, BoatGuardWidgetProvider.class);
@@ -192,6 +203,12 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 					rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_bilgepump_disabled);
 				} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ANCHOR)) { 
 					rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_anchor_disabled);
+				} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_LIGHT)) { 
+					rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_light_disabled);
+				} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_FAN)) { 
+					rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_fan_disabled);
+				} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_DOOR)) { 
+					rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_door_disabled);
 				}				
 			}
 			else {
@@ -208,8 +225,10 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
         Log.d(TAG, "onUpdate");
         for (int i = 0; i < appWidgetIds.length; ++i) {
             RemoteViews layout = buildLayout(context, appWidgetIds[i], false);
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds[i], R.id.components);            
             appWidgetManager.updateAppWidget(appWidgetIds[i], layout);
         }
+        
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
@@ -266,7 +285,7 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
 			int idState = obuState.getId_state();			
 			
 			if (idState == ((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId()) { 
-				rv.setTextViewText(R.id.tv_last_update, context.getResources().getString(R.string.last_update) + " " + Utils.formatDate(obuState.getDateState()));
+				rv.setTextViewText(R.id.tv_last_update, Utils.formatDate(obuState.getDateState()));
 			}	
 			else if (idState == ((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()) { 
 				RemoteViews rvComponent = obuRemoteViews.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getIdComponent());

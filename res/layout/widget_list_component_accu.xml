@@ -3,7 +3,7 @@
     android:id="@+id/lAccu"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-	android:orientation="horizontal" >
+    android:orientation="vertical" >
 		 
     <ImageView
         android:id="@+id/accu_disconnected"
@@ -56,7 +56,7 @@
         android:src="@drawable/ic_battery_step_1" /-->
 
    	<LinearLayout
-        android:layout_height="match_parent"
-		style="@style/WidgetMenuLineLayout" />
+        style="@style/WidgetMenuLineLayout" />
+
 		
 </LinearLayout>

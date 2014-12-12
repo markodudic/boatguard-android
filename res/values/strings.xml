@@ -122,5 +122,6 @@
     <string name="language_en">ENGLISH LANGUAGE</string>
     <string name="language_slo">SLOVENIAN LANGUAGE</string>
     <string name="language_hr">CROATIAN LANGUAGE</string>
-    
+
+    <string name="sensors_title">LOCATION OF THE SENSORS</string>
 </resources>

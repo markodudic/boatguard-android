@@ -1,7 +1,7 @@
 package com.boatguard.boatguard.fragments;
 
 import java.util.HashMap;
-
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Switch;
-
 import com.boatguard.boatguard.R;
 import com.boatguard.boatguard.components.TextViewFont;
 import com.boatguard.boatguard.objects.ObuSetting;
@@ -32,7 +31,7 @@ public class SensorsFragment  extends Fragment {
         type = getArguments().getString("type");    
         sensors = getArguments().getStringArray("sensors");    
         		
-		ObuAlarmAdapter adapter = new ObuAlarmAdapter();
+        ObuSensorsAdapter adapter = new ObuSensorsAdapter();
    		ListView lvObuAlarms = (ListView)v.findViewById(R.id.lv_obu_sensors);
    		lvObuAlarms.setAdapter(adapter);
    		
@@ -41,8 +40,9 @@ public class SensorsFragment  extends Fragment {
     
 
 	
-    public class ObuAlarmAdapter extends BaseAdapter {
+    public class ObuSensorsAdapter extends BaseAdapter {
     	  
+		@SuppressLint("NewApi")
 		@Override 
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			
@@ -50,7 +50,7 @@ public class SensorsFragment  extends Fragment {
 			
 			TextViewFont tvAlarmMessage = (TextViewFont)v.findViewById(R.id.tv_sensor_message_short);
 			tvAlarmMessage.setText(sensors[position]);
-			//tvAlarmMessage.setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
+			tvAlarmMessage.setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
 			
 	   		final Switch sensorSwitch = (Switch)v.findViewById(R.id.switch_sensor_enabled);
 	   		sensorSwitch.setChecked(((ObuSetting)Settings.obuSettings.get(((State)Settings.states.get(type)).getId())).getValue().equals("1"));

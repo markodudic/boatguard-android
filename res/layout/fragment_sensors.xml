@@ -16,8 +16,8 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
 	        android:layout_weight="1"
-	        android:id="@+id/sensor_title"
-        	boatguard:font_name="@string/font_medium" />
+	        android:text="@string/sensors_title"
+	        boatguard:font_name="@string/font_medium" />
     </LinearLayout>
     
     <ListView
