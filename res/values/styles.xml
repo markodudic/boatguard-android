@@ -23,7 +23,10 @@
 	    <item name="ic_back">@drawable/ic_back_day</item>    
 	    <item name="ic_seekbar_thumb">@drawable/ic_seekbar_day</item>    
 	    <item name="ic_delete">@drawable/ic_delete_day</item> 
-	    
+	    <item name="ic_light_disabled">@drawable/ic_light_disabled_day</item>    
+	    <item name="ic_door_disabled">@drawable/ic_door_disabled_day</item>    
+	    <item name="ic_fan_disabled">@drawable/ic_fan_disabled_day</item>    
+	    	    	    
 	    <item name="android:spinnerItemStyle">@style/SpinnerText</item>
 	</style>
    
@@ -51,7 +54,10 @@
 	    <item name="ic_back">@drawable/ic_back</item>    
 	    <item name="ic_seekbar_thumb">@drawable/ic_seekbar_night</item>    
 	    <item name="ic_delete">@drawable/ic_delete</item> 
-	    
+	    <item name="ic_light_disabled">@drawable/ic_light_disabled</item>    
+	    <item name="ic_door_disabled">@drawable/ic_door_disabled</item>    
+	    <item name="ic_fan_disabled">@drawable/ic_fan_disabled</item>    
+	    	    	    	    
 	    <item name="android:spinnerItemStyle">@style/SpinnerText</item>
 	</style>
     
@@ -327,7 +333,8 @@
        <item name="android:layout_width">match_parent</item>
        <item name="android:layout_height">@dimen/line_height</item>
        <item name="android:background">@color/horizontal_line_day</item>
-   </style>	   
+   </style>	 
+   
 </resources>
 
 

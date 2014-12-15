@@ -58,6 +58,7 @@
 	<dimen name="max_height">45dp</dimen>	
     <dimen name="widget_title_size">16sp</dimen>
     <dimen name="widget_component_width">90dp</dimen>
+    <dimen name="widget_component_height">55dp</dimen>
     <dimen name="widget_title_height">33dp</dimen>
     <dimen name="widget_text_size">28sp</dimen>	
 </resources>

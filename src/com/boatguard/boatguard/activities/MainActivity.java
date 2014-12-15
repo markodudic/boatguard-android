@@ -919,10 +919,10 @@ public class MainActivity extends Activity {
 					String light = obuState.getValue();
 					
 					if (light.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_LIGHT_OFF)).getValue())) {
-						imageView.setBackgroundResource(R.drawable.ic_light_off);
+						imageView.setBackgroundResource(R.drawable.ic_light_disabled);
 					} 
 					else if (light.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_LIGHT_ON)).getValue())) {
-						imageView.setBackgroundResource(R.drawable.ic_light_on);
+						imageView.setBackgroundResource(R.drawable.ic_light);
 					} 
 					else {
 						imageView.setBackgroundResource(R.drawable.ic_light_disabled);
@@ -950,10 +950,10 @@ public class MainActivity extends Activity {
 					String fan = obuState.getValue();
 					
 					if (fan.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_FAN_OFF)).getValue())) {
-						imageView.setBackgroundResource(R.drawable.ic_fan_off);
+						imageView.setBackgroundResource(R.drawable.ic_fan_disabled);
 					} 
 					else if (fan.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_FAN_ON)).getValue())) {
-						imageView.setBackgroundResource(R.drawable.ic_fan_on);
+						imageView.setBackgroundResource(R.drawable.ic_fan);
 					} 
 					else {
 						imageView.setBackgroundResource(R.drawable.ic_fan_disabled);
@@ -968,7 +968,7 @@ public class MainActivity extends Activity {
 					cancelAlarmAnimation(component, null, false);
 					
 					if (door.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_DOOR_OK)).getValue())) {
-						imageView.setBackgroundResource(R.drawable.ic_door_ok);
+						imageView.setBackgroundResource(R.drawable.ic_door);
 					} 
 					else if (door.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_DOOR_ALARM)).getValue())) {
 						alarm = true;

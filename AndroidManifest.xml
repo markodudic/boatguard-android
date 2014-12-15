@@ -71,6 +71,10 @@
                 android:resource="@xml/widgetinfo" />
         </receiver>
 
+	    <service
+	        android:name="com.boatguard.boatguard.widget.BoatGuardWidgetService"
+	        android:exported="false"
+	        android:permission="android.permission.BIND_REMOTEVIEWS" />        
     </application>
 
     <uses-permission android:name="android.permission.VIBRATE" />

@@ -50,5 +50,8 @@
     <color name="text_input_night">#303e48</color> 	    
     <color name="component_night">#303e48</color> 	
     <color name="settings_button_night">#333e48</color>
+    
+   	<color name="background_widget">#66d5d6d8</color>
+    
 </resources>
 

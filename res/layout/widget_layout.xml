@@ -3,7 +3,7 @@
     android:id="@+id/lWidget"
 	android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_day"
+    android:background="@color/background_widget"
     android:orientation="vertical" >
 
     <TextView
@@ -11,28 +11,21 @@
         style="@style/WidgetLastUpdateText"
         android:layout_width="match_parent"
         android:layout_height="@dimen/widget_title_height"
+    	android:background="@color/background_day"
         android:ellipsize="none"
         android:scrollHorizontally="false"
         android:maxLines="2"
         android:text="@string/last_update" />
 		    
-    <!-- LinearLayout 
-		android:id="@+id/components"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="vertical" /-->
-    
-    <!-- GridView
+    <GridView
         android:id="@+id/components"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:minHeight="64dp"
         android:verticalSpacing="0dp"
-        android:columnWidth="192dp"
-        android:numColumns="auto_fit"/-->    
+        android:numColumns="2"/>    
         
-	<ListView 
+	<!-- ListView 
 		android:id="@+id/components"
 	  	android:layout_width="match_parent"
-	  	android:layout_height="match_parent"/>    
+	  	android:layout_height="match_parent"/-->    
 </LinearLayout>

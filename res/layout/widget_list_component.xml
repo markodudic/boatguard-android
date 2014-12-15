@@ -7,11 +7,11 @@
     <ImageView
         android:id="@+id/logo"
         android:layout_width="@dimen/widget_component_width"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/widget_component_height"
         android:layout_gravity="center_vertical|center_horizontal"
         android:src="@drawable/ic_icon" />
 
    	<LinearLayout
         style="@style/WidgetMenuLineLayout" />
-    		
+
 </LinearLayout>
