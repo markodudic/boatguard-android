@@ -144,7 +144,7 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
         final AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarm.cancel(pending);
         //dam osvezevanje kar fiksno na 30 min
-        alarm.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()+(30*1000), pending);
+        alarm.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()+(30*60*1000), pending);
         //alarm.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()+Settings.OBU_REFRESH_TIME, pending);
         
         // accu step
