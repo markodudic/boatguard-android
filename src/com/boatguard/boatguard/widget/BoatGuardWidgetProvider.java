@@ -133,11 +133,6 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
         	rv.setTextViewText(R.id.tv_last_update, Utils.formatDate(obuState.getDateState()));
         }
         
-        //showObuComponents();
-        //getObudata();
-    	//showObuData();  
-        
-        
         final Intent refreshIntent = new Intent(context, BoatGuardWidgetProvider.class);
         refreshIntent.setAction(BoatGuardWidgetProvider.REFRESH_ACTION);
         final PendingIntent pending = PendingIntent.getBroadcast(context, 0,  refreshIntent, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -146,27 +141,17 @@ public class BoatGuardWidgetProvider extends AppWidgetProvider {
         //dam osvezevanje kar fiksno na 30 min
         alarm.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()+(30*60*1000), pending);
         //alarm.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()+Settings.OBU_REFRESH_TIME, pending);
-        
-        // accu step
-        /*final Intent refreshIntent = new Intent(context, BoatGuardWidgetProvider.class);
-        refreshIntent.setAction(BoatGuardWidgetProvider.REFRESH_ACTION);
-        final PendingIntent refreshPendingIntent = PendingIntent.getBroadcast(context, 0,  refreshIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-        rv.setOnClickPendingIntent(R.id.lAccu, refreshPendingIntent);
-        */
-        
-        // open app
-        /*final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
-        final ComponentName cn = new ComponentName(context, BoatGuardWidgetProvider.class);
-        final Intent intent = new Intent(context, MainActivity.class);
-        final PendingIntent rpIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        rv.setOnClickPendingIntent(R.id.lWidget, rpIntent);
-        mgr.updateAppWidget(mgr.getAppWidgetIds(cn), rv);
-*/
+
         //open app and refresh
         final Intent refreshIntent1 = new Intent(context, BoatGuardWidgetProvider.class);
         refreshIntent1.setAction(BoatGuardWidgetProvider.REFRESH_OPEN_ACTION);
         final PendingIntent refreshPendingIntent = PendingIntent.getBroadcast(context, 0,  refreshIntent1, PendingIntent.FLAG_CANCEL_CURRENT);
         rv.setOnClickPendingIntent(R.id.lWidget, refreshPendingIntent);
+        
+        Intent clickIntent = new Intent(context, MainActivity.class);
+        PendingIntent clickPI = PendingIntent.getActivity(context, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        rv.setPendingIntentTemplate(R.id.components, clickPI);
+        
         
         return rv;
     }

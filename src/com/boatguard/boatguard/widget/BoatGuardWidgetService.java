@@ -1,34 +1,12 @@
 package com.boatguard.boatguard.widget;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -38,11 +16,7 @@ import com.boatguard.boatguard.objects.AppSetting;
 import com.boatguard.boatguard.objects.ObuComponent;
 import com.boatguard.boatguard.objects.ObuState;
 import com.boatguard.boatguard.objects.State;
-import com.boatguard.boatguard.utils.Comm;
 import com.boatguard.boatguard.utils.Settings;
-import com.boatguard.boatguard.utils.Utils;
-import com.boatguard.boatguard.utils.Comm.OnTaskCompleteListener;
-import com.google.gson.Gson;
 
 /**
  * This is the service that provides the factory to be bound to the collection service.
@@ -116,6 +90,9 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 			rvComponent = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_component_accu);
 			rvComponent = showObuData(rvComponent, ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
 		}
+		
+		Intent i = new Intent();
+		rvComponent.setOnClickFillInIntent(R.id.logo, i);
 		
 		
         return rvComponent;
