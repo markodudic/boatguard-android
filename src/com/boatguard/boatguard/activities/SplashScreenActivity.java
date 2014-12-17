@@ -40,11 +40,7 @@ public class SplashScreenActivity extends Activity {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
  
-    	languages = new HashMap<String,String>() {{
-		    put("en", SplashScreenActivity.this.getString(R.string.language_en));
-		    put("sl", SplashScreenActivity.this.getString(R.string.language_slo));
-		    put("hr", SplashScreenActivity.this.getString(R.string.language_hr));
-		}};
+    	languages = getLanguages(SplashScreenActivity.this);
 
 		String lang = Utils.getPrefernciesString(SplashScreenActivity.this, Settings.SETTING_LANG);
         if (lang == null) {
@@ -122,7 +118,15 @@ public class SplashScreenActivity extends Activity {
 	            }
         }, SPLASH_TIME_OUT);
     }
- 
+
+	public static HashMap<String,String> getLanguages(final Context context) {
+    	return new HashMap<String,String>() {{
+		    put("en", context.getResources().getString(R.string.language_en));
+		    put("sl", context.getResources().getString(R.string.language_slo));
+		    put("hr", context.getResources().getString(R.string.language_hr));
+		}};
+	}	
+	
 	public static void setLanguage(Context context, String lang) {
     	Locale locale = new Locale(lang);
 	    Locale.setDefault(locale);

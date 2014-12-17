@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.widget.Spinner;
 
 import com.boatguard.boatguard.R;
 
@@ -109,6 +110,19 @@ public class Utils {
 			diffInMins = 0;
 		}
         return (int)diffInMins;
+    }  
+    
+    public static int getIndex(Spinner spinner, String myString)
+    {
+     int index = 0;
+
+     for (int i=0;i<spinner.getCount();i++){
+      if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+       index = i;
+       i=spinner.getCount();
+      }
+     }
+     return index;
     }     
 }
 

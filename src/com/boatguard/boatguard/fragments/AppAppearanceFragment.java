@@ -33,7 +33,7 @@ public class AppAppearanceFragment  extends Fragment {
 
         final Spinner spinnerRefreshTime = (Spinner) v.findViewById(R.id.spinner_refresh_time);
         
-        spinnerRefreshTime.setSelection(getIndex(spinnerRefreshTime, Utils.getPrefernciesInt(getActivity(), Settings.SETTING_REFRESH_TIME)/60/1000+""), false);
+        spinnerRefreshTime.setSelection(Utils.getIndex(spinnerRefreshTime, Utils.getPrefernciesInt(getActivity(), Settings.SETTING_REFRESH_TIME)/60/1000+""), false);
         spinnerRefreshTime.setOnItemSelectedListener(new OnItemSelectedListener() {
  			@Override
  			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -122,19 +122,6 @@ public class AppAppearanceFragment  extends Fragment {
 
         return v;
     }
-    
-    private int getIndex(Spinner spinner, String myString)
-    {
-     int index = 0;
-
-     for (int i=0;i<spinner.getCount();i++){
-      if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
-       index = i;
-       i=spinner.getCount();
-      }
-     }
-     return index;
-    } 
     
     private void changeLanguage(String lang) {
 		SplashScreenActivity.setLanguage(getActivity(), lang); 

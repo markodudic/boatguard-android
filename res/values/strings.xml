@@ -13,10 +13,6 @@
     <string name="remember_me">REMEMBER ME</string>
     <string name="register">REGISTER</string>
     <string name="login">LOGIN</string>
-    <string name="name">NAME</string>
-    <string name="surname">SURNAME</string>
-    <string name="boatname">BOATNAME</string>
-    <string name="email">E-MAIL</string>
     <string name="ok">OK</string>
     <string name="cancel">CANCEL</string>
     <string name="last_update">LAST UPDATE:</string>
@@ -109,7 +105,19 @@
    <string name="send_email">SEND EMAIL</string>
    <string name="alarm_friends">ALARM FRIENDS</string>
    
-    <string name="refresh_time">REFRESH TIME (MIN)</string>
+    <string name="name">NAME</string>
+    <string name="surname">SURNAME</string>
+    <string name="email">E-MAIL</string>
+    <string name="birthyear">BIRTH YEAR</string>
+    <string name="choose_birthyear">CHOOSE BIRTH YEAR</string>
+        
+    <string name="country">COUNTRY</string>
+    <string name="boatname">BOAT NAME</string>
+    <string name="boatmanafacturer">BOAT MANAFACTURER</string>
+    <string name="boatmodel">BOAT MODEL</string>
+    <string name="boatcountry">BOAT COUNTRY</string>
+   
+   <string name="refresh_time">REFRESH TIME (MIN)</string>
     <string name="choose_refresh_time">Refresh time</string>
     <string-array name="refresh">
         <item>5</item>

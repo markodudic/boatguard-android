@@ -32,24 +32,28 @@
    	<attr name="ic_fan_disabled"/> 
     <attr name="ic_door_disabled"/> 
    	    			
-    <!-- attr name="ic_refresh_step_1" format="reference"/> 
-    <attr name="ic_refresh_step_2" format="reference"/> 
-    <attr name="ic_refresh_step_3" format="reference"/> 
-    <attr name="ic_refresh_step_4" format="reference"/> 
-    <attr name="ic_refresh_step_5" format="reference"/> 
-    <attr name="ic_refresh_step_6" format="reference"/> 
-    <attr name="ic_refresh_step_7" format="reference"/> 
-    <attr name="ic_refresh_step_8" format="reference"/> 
-    <attr name="ic_refresh_step_9" format="reference"/> 
-
-    <attr name="ic_pumping_step_1" format="reference"/> 
-    <attr name="ic_pumping_step_2" format="reference"/> 
-    <attr name="ic_pumping_step_3" format="reference"/> 
-    <attr name="ic_pumping_step_4" format="reference"/> 
-    <attr name="ic_pumping_step_5" format="reference"/> 
-    <attr name="ic_pumping_step_6" format="reference"/> 
-    <attr name="ic_pumping_step_7" format="reference"/> 
-    <attr name="ic_pumping_step_8" format="reference"/> 
-    <attr name="ic_pumping_step_9" format="reference"/--> 
+    <string-array name="birthyear">
+        <item >1990</item>
+        <item >1989</item>
+        <item >1988</item>
+        <item >1987</item>
+        <item >1986</item>
+        <item >1985</item>
+        <item >1984</item>
+        <item >1983</item>
+        <item >1982</item>
+        <item >1981</item>
+        <item >1980</item>
+        <item >1979</item>
+        <item >1978</item>
+        <item >1977</item>
+        <item >1976</item>
+        <item >1975</item>
+        <item >1974</item>
+        <item >1973</item>
+        <item >1972</item>
+        <item >1971</item>
+        <item >1970</item>
+    </string-array>
     
 </resources>
