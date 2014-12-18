@@ -108,8 +108,9 @@
 			<Spinner
 			    android:id="@+id/birthyear"
 			    android:layout_width="match_parent"
-			    android:layout_height="match_parent"
-			    android:gravity="center_vertical|right"
+			    android:layout_height="@dimen/login_edit_height"
+			    android:gravity="center_vertical|left"
+			    style="@style/SpinnerEditText"
 			    android:entries="@array/birthyear"
 				android:prompt="@string/choose_birthyear" />
 
@@ -125,24 +126,14 @@
 		    android:layout_width="match_parent"
 		    android:layout_height="@dimen/login_edit_height">
 		    
-	   	    <com.boatguard.boatguard.components.EditTextFont
-		        android:id="@+id/country"
-		        android:layout_width="match_parent"
-		        android:layout_height="match_parent"
-		        style="@style/LoginEditText"
-		        boatguard:font_name="@string/font_medium"
-		    	android:inputType="textEmailAddress"
-		    	android:text="country">
-		    </com.boatguard.boatguard.components.EditTextFont>
-		    
-		    <ImageView
-		        android:id="@+id/iv_country"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        style="@style/DeleteImageView"
-		        android:clickable="true"
-		        android:focusable="false"
-		        android:src="?ic_delete" />
+			<Spinner
+			    android:id="@+id/country"
+			    android:layout_width="match_parent"
+			    android:layout_height="@dimen/login_edit_height"
+			    android:gravity="center_vertical|left"
+			    style="@style/SpinnerEditText"
+			    android:entries="@array/country"
+				android:prompt="@string/choose_country" />
 		</FrameLayout>	
 				
 		<com.boatguard.boatguard.components.TextViewFont
@@ -214,23 +205,14 @@
 		    android:layout_width="match_parent"
 		    android:layout_height="@dimen/login_edit_height">
 		    
-	   	    <com.boatguard.boatguard.components.EditTextFont
-		        android:id="@+id/boatmanafacturer"
-		        android:layout_width="match_parent"
-		        android:layout_height="match_parent"
-		        style="@style/LoginEditText"
-		        boatguard:font_name="@string/font_medium"
-		    	android:text="manafacturer">
-		    </com.boatguard.boatguard.components.EditTextFont>
-		    
-		    <ImageView
-		        android:id="@+id/iv_boatmanafacturer"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        style="@style/DeleteImageView"
-		        android:clickable="true"
-		        android:focusable="false"
-		        android:src="?ic_delete" />
+			<Spinner
+			    android:id="@+id/boatmanafacturer"
+			    android:layout_width="match_parent"
+			    android:layout_height="@dimen/login_edit_height"
+			    android:gravity="center_vertical|left"
+			    style="@style/SpinnerEditText"
+			    android:entries="@array/manafacturer"
+				android:prompt="@string/choose_manafacturer" />
 		</FrameLayout>
 		
 		<com.boatguard.boatguard.components.TextViewFont
@@ -243,23 +225,14 @@
 		    android:layout_width="match_parent"
 		    android:layout_height="@dimen/login_edit_height">
 		    
-	   	    <com.boatguard.boatguard.components.EditTextFont
-		        android:id="@+id/boatmodel"
-		        android:layout_width="match_parent"
-		        android:layout_height="match_parent"
-		        style="@style/LoginEditText"
-		        boatguard:font_name="@string/font_medium"
-		    	android:text="model">
-		    </com.boatguard.boatguard.components.EditTextFont>
-		    
-		    <ImageView
-		        android:id="@+id/iv_boatmodel"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        style="@style/DeleteImageView"
-		        android:clickable="true"
-		        android:focusable="false"
-		        android:src="?ic_delete" />
+			<Spinner
+			    android:id="@+id/boatmodel"
+			    android:layout_width="match_parent"
+			    android:layout_height="@dimen/login_edit_height"
+			    android:gravity="center_vertical|left"
+			    style="@style/SpinnerEditText"
+			    android:entries="@array/model"
+				android:prompt="@string/choose_model" />
 		</FrameLayout>
 		
 		<com.boatguard.boatguard.components.TextViewFont
@@ -272,23 +245,14 @@
 		    android:layout_width="match_parent"
 		    android:layout_height="@dimen/login_edit_height">
 		    
-	   	    <com.boatguard.boatguard.components.EditTextFont
-		        android:id="@+id/boatcountry"
-		        android:layout_width="match_parent"
-		        android:layout_height="match_parent"
-		        style="@style/LoginEditText"
-		        boatguard:font_name="@string/font_medium"
-		    	android:text="country">
-		    </com.boatguard.boatguard.components.EditTextFont>
-		    
-		    <ImageView
-		        android:id="@+id/iv_boatcountry"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        style="@style/DeleteImageView"
-		        android:clickable="true"
-		        android:focusable="false"
-		        android:src="?ic_delete" />
+			<Spinner
+			    android:id="@+id/boatcountry"
+			    android:layout_width="match_parent"
+			    android:layout_height="@dimen/login_edit_height"
+			    android:gravity="center_vertical|left"
+			    style="@style/SpinnerEditText"
+			    android:entries="@array/country"
+				android:prompt="@string/choose_country" />
 		</FrameLayout>				
 		
 				

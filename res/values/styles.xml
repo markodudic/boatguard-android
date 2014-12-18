@@ -145,6 +145,10 @@
        <item name="android:background">@drawable/login_background</item>
    </style>	
    
+   <style name="SpinnerEditText" parent="LoginEditText">
+       <item name="android:paddingLeft">@dimen/spinner_edit_padding</item>
+   </style>	
+   
    <style name="RegisterButtonText">
        <item name="android:textSize">@dimen/button_text_size</item>
        <item name="android:gravity">center_vertical|center_horizontal</item>

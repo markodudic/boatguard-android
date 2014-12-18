@@ -56,4 +56,35 @@
         <item >1970</item>
     </string-array>
     
+    
+    <string-array name="country">
+        <item >Austria</item>
+        <item >Croatia</item>
+        <item >France</item>
+        <item >Germany</item>
+        <item >Great Britain</item>
+        <item >Greece</item>
+        <item >Holland</item>
+        <item >Italy</item>
+        <item >Slovenia</item>
+        <item >Spain</item>
+        <item >Sweden</item>
+        <item >Other</item>
+    </string-array>    
+    
+    <string-array name="manafacturer">
+        <item >Janno</item>
+        <item >Bavaria</item>
+        <item >SAS</item>
+        <item >Elan</item>
+        <item >Other</item>
+    </string-array>   
+    
+    <string-array name="model">
+        <item >SeaScape 19</item>
+        <item >SeaScape 28</item>
+        <item >Odissey 39</item>
+        <item >Elan 45</item>
+        <item >Other</item>
+    </string-array>     
 </resources>

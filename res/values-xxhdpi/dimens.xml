@@ -17,6 +17,9 @@
     <dimen name="chart_text_size">5sp</dimen>   
     <dimen name="delete_image_view_right">10dp</dimen>
     
+    <dimen name="spinner_edit_padding">16dp</dimen>
+    <dimen name="spinner_text_size">14sp</dimen>   
+    
     <dimen name="login_edit_height">72dp</dimen>
     <dimen name="login_edit_margin_top">12dp</dimen>
     <dimen name="login_edit_margin_bottom">3dp</dimen>

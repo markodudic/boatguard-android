@@ -110,11 +110,13 @@
     <string name="email">E-MAIL</string>
     <string name="birthyear">BIRTH YEAR</string>
     <string name="choose_birthyear">CHOOSE BIRTH YEAR</string>
-        
     <string name="country">COUNTRY</string>
+    <string name="choose_country">CHOOSE COUNTRY</string>
     <string name="boatname">BOAT NAME</string>
     <string name="boatmanafacturer">BOAT MANAFACTURER</string>
+    <string name="choose_manafacturer">CHOOSE MANAFACTURER</string>
     <string name="boatmodel">BOAT MODEL</string>
+    <string name="choose_model">CHOOSE MODEL</string>
     <string name="boatcountry">BOAT COUNTRY</string>
    
    <string name="refresh_time">REFRESH TIME (MIN)</string>
