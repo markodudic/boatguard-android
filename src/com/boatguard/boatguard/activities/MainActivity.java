@@ -493,6 +493,7 @@ public class MainActivity extends Activity {
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ACCU)) { 
 				((TextView)component.findViewById(R.id.accu_napetost)).setText("");
+				accuComponentId = obuComponent.getId_component();
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
@@ -1107,7 +1108,7 @@ public class MainActivity extends Activity {
 	public void changeAccuStep (View v) {
 		if (!isAccuConnected) return;
 		FrameLayout component = (FrameLayout)findViewById(accuComponentId);
-		LinearLayout ll = (LinearLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);	
+		//LinearLayout ll = (LinearLayout)((LinearLayout)(component).getChildAt(0)).getChildAt(1);	
 		TextView tvAccuNapetost = (TextView)component.findViewById(R.id.accu_napetost);
 		TextView tvAccuAH = (TextView)component.findViewById(R.id.accu_ah);
 		TextView tvAccuTok = (TextView)component.findViewById(R.id.accu_tok);
