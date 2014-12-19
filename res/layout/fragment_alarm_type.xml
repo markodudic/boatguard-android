@@ -34,15 +34,17 @@
 	        android:text="@string/play_sound"
 	        boatguard:font_name="@string/font_medium" />
 			    
-		<Switch
-		    android:id="@+id/switch_play_sound"
+		<com.boatguard.boatguard.components.SwitchFont
+		    boatguard:font_name="@string/font_medium"
+        	android:id="@+id/switch_play_sound"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center_vertical|right"
 		    android:layout_weight="2"
 		    android:textOff="@string/off"
 		    android:textOn="@string/on"
-		    android:track="@drawable/switcher" />
+		    android:switchTextAppearance="@style/SwitchTextAppearance"
+		    android:track="@drawable/switcher_track" />
     </LinearLayout>
  
 	
@@ -59,15 +61,17 @@
 	        android:text="@string/vibrate"
 	        boatguard:font_name="@string/font_medium" />
 			    
-		<Switch
-		    android:id="@+id/switch_vibrate"
+		<com.boatguard.boatguard.components.SwitchFont
+		    boatguard:font_name="@string/font_medium"
+        	android:id="@+id/switch_vibrate"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center_vertical|right"
 		    android:layout_weight="2"
 		    android:textOff="@string/off"
 		    android:textOn="@string/on"
-		    android:track="@drawable/switcher" />
+		    android:switchTextAppearance="@style/SwitchTextAppearance"
+		    android:track="@drawable/switcher_track" />
     </LinearLayout>
     
 	<LinearLayout 
@@ -83,15 +87,17 @@
 	        android:text="@string/pop_up"
 	        boatguard:font_name="@string/font_medium" />
 			    
-		<Switch
-		    android:id="@+id/switch_pop_up"
+		<com.boatguard.boatguard.components.SwitchFont
+		    boatguard:font_name="@string/font_medium"
+        	android:id="@+id/switch_pop_up"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center_vertical|right"
 		    android:layout_weight="2"
 		    android:textOff="@string/off"
 		    android:textOn="@string/on"
-		    android:track="@drawable/switcher" />
+		    android:switchTextAppearance="@style/SwitchTextAppearance"
+		    android:track="@drawable/switcher_track" />
     </LinearLayout>
 
 	<LinearLayout 

@@ -34,6 +34,7 @@ import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -49,13 +50,10 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -65,7 +63,6 @@ import com.boatguard.boatguard.components.TextViewFont;
 import com.boatguard.boatguard.objects.AppSetting;
 import com.boatguard.boatguard.objects.ObuAlarm;
 import com.boatguard.boatguard.objects.ObuComponent;
-import com.boatguard.boatguard.objects.ObuSetting;
 import com.boatguard.boatguard.objects.ObuState;
 import com.boatguard.boatguard.objects.State;
 import com.boatguard.boatguard.utils.Comm;
@@ -119,6 +116,7 @@ public class MainActivity extends Activity {
 		if (theme != -1) {
 			setTheme(theme);			
 		}
+		
 		stylesAttributes = getTheme().obtainStyledAttributes(
 	    		Utils.getPrefernciesInt(this, Settings.SETTING_THEME), 
 	    		new int[] {R.attr.horizontal_line,

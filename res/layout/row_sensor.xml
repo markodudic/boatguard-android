@@ -18,15 +18,17 @@
 	        android:layout_weight="1"
 	        boatguard:font_name="@string/font_medium" />
 			    
-		<Switch
-		    android:id="@+id/switch_sensor_enabled"
+		<com.boatguard.boatguard.components.SwitchFont
+		    boatguard:font_name="@string/font_medium"
+        	android:id="@+id/switch_sensor_enabled"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center_vertical|right"
 		    android:layout_weight="2"
 		    android:textOff="@string/off"
 		    android:textOn="@string/on"
-		    android:track="@drawable/switcher" />
+		    android:switchTextAppearance="@style/SwitchTextAppearance"
+		    android:track="@drawable/switcher_track" />
     </LinearLayout>
 
 </LinearLayout>

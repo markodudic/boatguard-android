@@ -54,7 +54,9 @@
 				    android:layout_gravity="center_vertical|center_horizontal"
 				    android:textOff="@string/off"
 				    android:textOn="@string/on"
-				    android:track="@drawable/switcher" /-->			    
+				    android:switchTextAppearance="@style/SwitchTextAppearance"
+		    		android:track="@drawable/switcher"
+		    		android:thumb="@drawable/switcher_thumb" /-->			    
 		    </FrameLayout>
 		</LinearLayout>
 

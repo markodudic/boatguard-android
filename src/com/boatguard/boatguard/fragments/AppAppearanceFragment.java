@@ -1,18 +1,13 @@
 package com.boatguard.boatguard.fragments;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
-import com.boatguard.boatguard.R;
-
-import com.boatguard.boatguard.activities.MainActivity;
-import com.boatguard.boatguard.activities.SettingsActivity;
-import com.boatguard.boatguard.activities.SplashScreenActivity;
-import com.boatguard.boatguard.components.TextViewFont;
-import com.boatguard.boatguard.objects.ObuSetting;
-import com.boatguard.boatguard.utils.Settings;
-import com.boatguard.boatguard.utils.Utils;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +19,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
+
+import com.boatguard.boatguard.R;
+import com.boatguard.boatguard.activities.MainActivity;
+import com.boatguard.boatguard.activities.SettingsActivity;
+import com.boatguard.boatguard.activities.SplashScreenActivity;
+import com.boatguard.boatguard.components.TextViewFont;
+import com.boatguard.boatguard.objects.ObuSetting;
+import com.boatguard.boatguard.utils.Settings;
+import com.boatguard.boatguard.utils.Utils;
 
 public class AppAppearanceFragment  extends Fragment {
     @Override 
@@ -32,7 +37,12 @@ public class AppAppearanceFragment  extends Fragment {
         final View v = inflater.inflate(R.layout.fragment_app_appearance, null);
 
         final Spinner spinnerRefreshTime = (Spinner) v.findViewById(R.id.spinner_refresh_time);
-        
+        MySpinnerAdapter adapter = new MySpinnerAdapter(
+                getActivity(),
+                R.layout.spinner_item,
+                Arrays.asList(getResources().getStringArray(R.array.refresh))
+        );
+        spinnerRefreshTime.setAdapter(adapter);
         spinnerRefreshTime.setSelection(Utils.getIndex(spinnerRefreshTime, Utils.getPrefernciesInt(getActivity(), Settings.SETTING_REFRESH_TIME)/60/1000+""), false);
         spinnerRefreshTime.setOnItemSelectedListener(new OnItemSelectedListener() {
  			@Override
@@ -145,5 +155,27 @@ public class AppAppearanceFragment  extends Fragment {
 		tvLanguageHr.setTextColor(getResources().getColor(hrColor));
 		ivLanguageHr.setBackgroundResource(hrImg);
     }
+    
+    private static class MySpinnerAdapter extends ArrayAdapter<String> {
+        Typeface font = Typeface.createFromAsset(getContext().getAssets(), "fonts/Dosis-Regular.otf");
+
+        private MySpinnerAdapter(Context context, int resource, List<String> items) {
+            super(context, resource, items);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView view = (TextView) super.getView(position, convertView, parent);
+            view.setTypeface(font);
+            return view;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            TextView view = (TextView) super.getDropDownView(position, convertView, parent);
+            view.setTypeface(font);
+            return view;
+        }
+    }     
     
 }

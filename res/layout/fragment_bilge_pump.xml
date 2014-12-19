@@ -19,15 +19,17 @@
 	        android:text="@string/bilge_pump_always"
 	        boatguard:font_name="@string/font_medium" />
 			    
-		<Switch
-		    android:id="@+id/switch_pump_alarm_always"
+		<com.boatguard.boatguard.components.SwitchFont
+		    boatguard:font_name="@string/font_medium"
+        	android:id="@+id/switch_pump_alarm_always"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center_vertical|right"
 		    android:layout_weight="2"
 		    android:textOff="@string/off"
 		    android:textOn="@string/on"
-		    android:track="@drawable/switcher" />
+		    android:switchTextAppearance="@style/SwitchTextAppearance"
+		    android:track="@drawable/switcher_track" />
     
     </LinearLayout>
     
@@ -50,6 +52,7 @@
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center_vertical|left"
+		    style="@style/SpinnerSmallEditText"
 		    android:entries="@array/short_period" />
 		
 	    <com.boatguard.boatguard.components.TextViewFont
@@ -57,7 +60,6 @@
 	        boatguard:font_name="@string/font_medium"
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
-	        android:layout_weight="1"
 	        android:text="@string/bilge_pump_10_min" />
 	</LinearLayout>
 	
@@ -85,6 +87,7 @@
 		    android:id="@+id/spinner_pump_long_period"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
+		    style="@style/SpinnerSmallEditText"
 		    android:layout_gravity="center_vertical|left"
 		    android:entries="@array/long_period" />
 	    
@@ -93,7 +96,6 @@
 	        boatguard:font_name="@string/font_medium"
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
-	        android:layout_weight="1"
 	        android:text="@string/bilge_pump_100_min" />
 	</LinearLayout>
 	

@@ -24,6 +24,7 @@
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:gravity="center_vertical|right"
+		    style="@style/SpinnerSmallEditText"
 		    android:entries="@array/refresh"
 			android:prompt="@string/choose_refresh_time" />
     </LinearLayout>
@@ -41,15 +42,17 @@
 	        android:text="@string/color_theme"
 	        boatguard:font_name="@string/font_medium" />
 			    
-		<Switch
-		    android:id="@+id/switch_color_theme"
+		<com.boatguard.boatguard.components.SwitchFont
+		    boatguard:font_name="@string/font_medium"
+        	android:id="@+id/switch_color_theme"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center_vertical|right"
 		    android:layout_weight="2"
 		    android:textOff="@string/night"
 		    android:textOn="@string/day"
-		    android:track="@drawable/switcher" />
+		    android:switchTextAppearance="@style/SwitchTextAppearance"
+		    android:track="@drawable/switcher_track" />
     </LinearLayout>
  
 	
@@ -68,10 +71,11 @@
 	        boatguard:font_name="@string/font_medium" />
 			    
         <ImageView
-	        android:id="@+id/iv_language_en"
+            android:id="@+id/iv_language_en"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="-10dp" />
 	    
     </LinearLayout>
     
@@ -93,7 +97,8 @@
 	        android:id="@+id/iv_language_slo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="-10dp" />
 	</LinearLayout>
 
 	<LinearLayout 
@@ -114,7 +119,8 @@
 	        android:id="@+id/iv_language_hr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="-10dp" />
 	    
 	 </LinearLayout>		
 </LinearLayout>
