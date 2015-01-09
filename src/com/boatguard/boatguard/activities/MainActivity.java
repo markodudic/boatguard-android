@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -34,7 +35,6 @@ import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -60,6 +60,7 @@ import android.widget.TextView;
 
 import com.boatguard.boatguard.R;
 import com.boatguard.boatguard.components.TextViewFont;
+import com.boatguard.boatguard.objects.Alarm;
 import com.boatguard.boatguard.objects.AppSetting;
 import com.boatguard.boatguard.objects.ObuAlarm;
 import com.boatguard.boatguard.objects.ObuComponent;
@@ -1162,10 +1163,16 @@ public class MainActivity extends Activity {
 		resultIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		PendingIntent pIntent = PendingIntent.getActivity(this, id, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		
+		String uri = "drawable/"+ ((Alarm)Settings.alarms.get(id)).getIcon(); 
+		int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+		Bitmap bm = BitmapFactory.decodeResource(getResources(), imageResource);
+		
 		NotificationCompat.Builder mBuilder =
 		        new NotificationCompat.Builder(this)
 		        .setSmallIcon(R.drawable.ic_notification)
-		        .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.notification))
+		        .setLargeIcon(bm)
+		        .setColor(getResources().getColor(R.color.background_night))
+		        //.setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.notification))
 		        .setContentTitle(title)
 		        .setContentText(message)
 		        .setAutoCancel(true)
