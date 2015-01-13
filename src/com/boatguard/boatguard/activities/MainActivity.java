@@ -832,30 +832,31 @@ public class MainActivity extends Activity {
 					}
 				}
 			}		
-			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) && (isAccuConnected)) { 
+			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(idState);
+				System.out.println("component="+component+":"+component.getId());
 				if (component != null) {
-					((TextViewFont)component.findViewById(R.id.accu_napetost)).setText(obuState.getValue() + "%");
-			        ((TextViewFont)component.findViewById(R.id.accu_napetost)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
-					cancelAlarmAnimation(component, (TextView)component.findViewById(R.id.accu_napetost), true);
+					((TextViewFont)component.findViewById(R.id.accu_ah)).setText(obuState.getValue() + "%");
+			        ((TextViewFont)component.findViewById(R.id.accu_ah)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
+					cancelAlarmAnimation(component, (TextView)component.findViewById(R.id.accu_ah), true);
 					
 					String accuEmpty = ((ObuState)obuStates.get(((State)Settings.states.get(Settings.STATE_ACCU_EMPTY)).getId())).getValue();
 					if (accuEmpty.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ALARM_BATTERY_EMPTY)).getValue())) {
 						alarm = true;
-						showAlarmAccuAnimation(component, (TextView)component.findViewById(R.id.accu_napetost));
+						showAlarmAccuAnimation(component, (TextView)component.findViewById(R.id.accu_ah));
 					}
 				}
 			}			
-			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) && (isAccuConnected)) { 
-				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
+			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) && (isAccuConnected)) { 
+				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId());
 				if (component != null) {
 					String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
-					((TextViewFont)component.findViewById(R.id.accu_ah)).setText(f + "AH");
-			        ((TextViewFont)component.findViewById(R.id.accu_ah)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
+					((TextViewFont)component.findViewById(R.id.accu_napetost)).setText(f + "V");
+			        ((TextViewFont)component.findViewById(R.id.accu_napetost)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
 				}
 			}	
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) && (isAccuConnected)) { 
-				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
+				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId());
 				if (component != null) {
 					String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
 					((TextViewFont)component.findViewById(R.id.accu_tok)).setText(f + "A");
@@ -863,7 +864,7 @@ public class MainActivity extends Activity {
 				}
 			}	
 			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_DISCONNECT)).getId()) { 
-				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
+				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId());
 				if (component != null) {				
 					ImageView imageView = (ImageView)component.findViewById(R.id.accu_disconnected);
 					imageView.setVisibility(View.VISIBLE);
@@ -887,14 +888,14 @@ public class MainActivity extends Activity {
 					else {
 						switch (accuStep) {
 						case 0:
-							tvAccuNapetost.setVisibility(View.VISIBLE);
-							tvAccuAH.setVisibility(View.GONE);
+							tvAccuNapetost.setVisibility(View.GONE);
+							tvAccuAH.setVisibility(View.VISIBLE);
 							tvAccuTok.setVisibility(View.GONE);
 							ivStep.setImageResource(R.drawable.ic_battery_step_1);
 							break;
 						case 1:
-							tvAccuNapetost.setVisibility(View.GONE);
-							tvAccuAH.setVisibility(View.VISIBLE);
+							tvAccuNapetost.setVisibility(View.VISIBLE);
+							tvAccuAH.setVisibility(View.GONE);
 							tvAccuTok.setVisibility(View.GONE);
 							ivStep.setImageResource(R.drawable.ic_battery_step_2);
 							break;
@@ -1041,6 +1042,7 @@ public class MainActivity extends Activity {
 	private void showAlarmAccuAnimation (FrameLayout layout, TextView textView) {
         LinearLayout main = (LinearLayout)layout.findViewById(R.id.main);
         main.setBackgroundResource(0);
+        System.out.println("main="+main);
 	     
         LinearLayout background = (LinearLayout)layout.findViewById(R.id.background);
         background.setBackgroundResource(R.drawable.alarm_confirm);
@@ -1049,6 +1051,7 @@ public class MainActivity extends Activity {
 		anim.setRepeatCount(-1);
 		anim.setRepeatMode(Animation.REVERSE);
 		background.startAnimation(anim);
+        System.out.println("background="+background);
         
         ObjectAnimator colorFade = ObjectAnimator.ofObject(textView, "textColor", 
 				new ArgbEvaluator(), 
@@ -1117,8 +1120,8 @@ public class MainActivity extends Activity {
 		
 		switch (accuStep) {
 		case 0:
-			tvAccuNapetost.setVisibility(View.GONE);
-			tvAccuAH.setVisibility(View.VISIBLE);
+			tvAccuNapetost.setVisibility(View.VISIBLE);
+			tvAccuAH.setVisibility(View.GONE);
 			tvAccuTok.setVisibility(View.GONE);
 			ivStep.setImageResource(R.drawable.ic_battery_step_2);
 			accuStep = 1;
@@ -1131,8 +1134,8 @@ public class MainActivity extends Activity {
 			accuStep = 2;
 			break;
 		case 2: 
-			tvAccuNapetost.setVisibility(View.VISIBLE);
-			tvAccuAH.setVisibility(View.GONE);
+			tvAccuNapetost.setVisibility(View.GONE);
+			tvAccuAH.setVisibility(View.VISIBLE);
 			tvAccuTok.setVisibility(View.GONE);
 			ivStep.setImageResource(R.drawable.ic_battery_step_1);
 			accuStep = 0;

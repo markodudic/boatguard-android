@@ -57,7 +57,8 @@
 			        android:layout_weight="1"
 			        android:gravity="center_vertical|center_horizontal"
 			        android:text="100%"
-			        boatguard:font_name="@string/font_medium" />
+			        boatguard:font_name="@string/font_medium"
+			        android:visibility="gone" />
 			    
 			    <com.boatguard.boatguard.components.TextViewFont
 			        android:id="@+id/accu_ah"
@@ -68,8 +69,7 @@
 			        android:layout_weight="1"
 			        android:gravity="center_vertical|center_horizontal"
 			        android:text="100%"
-			        boatguard:font_name="@string/font_medium"
-			        android:visibility="gone" />
+			        boatguard:font_name="@string/font_medium" />
 	
 			    <com.boatguard.boatguard.components.TextViewFont
 			        android:id="@+id/accu_tok"
