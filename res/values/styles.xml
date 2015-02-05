@@ -4,6 +4,7 @@
     <style name="AppThemeDay">
     	<item name="android:actionBarStyle">@style/MyTheme.ActionBarStyle</item>
 		<item name="background">@color/background_day</item>
+	    <item name="background_semi">@color/background_semi_day</item>
 	    <item name="vertical_line">@color/vertical_line_day</item>
 	    <item name="horizontal_line">@color/horizontal_line_day</item>
 	    <item name="background_button">@color/background_button_day</item>
@@ -35,6 +36,7 @@
    <style name="AppThemeNight">
     	<item name="android:actionBarStyle">@style/MyTheme.ActionBarStyle</item>
 		<item name="background">@color/background_night</item>
+	    <item name="background_semi">@color/background_semi_night</item>
 	    <item name="vertical_line">@color/vertical_line_night</item>
 	    <item name="horizontal_line">@color/horizontal_line_night</item>
 	    <item name="background_button">@color/background_button_night</item>
@@ -119,7 +121,7 @@
    </style>	
 
    <style name="LayoutMenu">
-       <item name="android:background">@color/transparent_color</item>
+       <item name="android:background">?background_semi</item>
    </style>	
    
 				

@@ -32,6 +32,7 @@
 	<color name="location_history">#39a935</color> 
 							
    	<color name="background_day">#d5d6d8</color>
+    <color name="background_semi_day">#ddd5d6d8</color>
     <color name="vertical_line_day">#b3b3b3</color>
     <color name="horizontal_line_day">#b3b3b3</color>
     <color name="background_button_day">#dfe0e2</color>
@@ -42,6 +43,7 @@
     <color name="settings_button_day">#e8e7e8</color>
     	    	    
 	<color name="background_night">#464f58</color>
+    <color name="background_semi_night">#dd464f58</color>
     <color name="vertical_line_night">#25323d</color>
     <color name="horizontal_line_night">#25323d</color>
     <color name="background_button_night">#323f48</color>

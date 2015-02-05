@@ -8,6 +8,7 @@
    
 		
     <attr name="background" format="reference"/>
+    <attr name="background_semi" format="reference"/>
     <attr name="vertical_line" format="reference"/>
     <attr name="horizontal_line" format="reference"/>
     <attr name="background_button" format="reference"/>

@@ -35,7 +35,7 @@
 		        android:layout_height="match_parent"
 		        style="@style/LoginEditText"
 		        boatguard:font_name="@string/font_medium"
-		    	android:text="marko">
+		    	android:text="boat1">
 		        <requestFocus />
 		    </com.boatguard.boatguard.components.EditTextFont>
 		    
@@ -67,7 +67,7 @@
 		        style="@style/LoginEditText"
 		        boatguard:font_name="@string/font_medium"
 		        android:password="true"
-		    	android:text="dudic" />
+		    	android:text="guard" />
 	    	
 		    <ImageView
 		        android:id="@+id/iv_password"

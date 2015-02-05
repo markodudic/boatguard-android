@@ -127,7 +127,7 @@ public class HistoryFragment  extends Fragment {
     			}	
     			
     			
-    			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) { 
+    			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) { 
     	            View vNapetost = inflater.inflate(R.layout.row_history_text, parent, false);
     	            ((TextView) vNapetost.findViewById(R.id.tv_history_row)).setText(obuState.getValue() + "%");
     				if (Integer.parseInt(obuState.getValue()) < Integer.parseInt(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_BATTERY_ALARM_VALUE)).getValue())) {
@@ -138,12 +138,11 @@ public class HistoryFragment  extends Fragment {
     				}
     				((LinearLayout) v.findViewById(R.id.components)).addView(vNapetost);    				
     			}			
-    			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) { 
+    			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) { 
     				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
     				View vv = inflater.inflate(R.layout.row_history_text, parent, false);
     	            ((TextView) vv.findViewById(R.id.tv_history_row)).setText(f + "AH");
     				((LinearLayout) v.findViewById(R.id.components)).addView(vv);
-    				
     			}	
     			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) { 
     				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));

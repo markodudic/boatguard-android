@@ -204,10 +204,7 @@ public class MainActivity extends Activity {
         ivSettings.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) { 
-				Intent i = new Intent(MainActivity.this, SettingsActivity.class);
-				i.putExtra("id", -1);
-				i.putExtra("title", getResources().getString(R.string.menu));
-				startActivity(i);
+				showSettings();
 			}
 		});
 
@@ -364,7 +361,7 @@ public class MainActivity extends Activity {
 			notificationAlarmId = extras.getInt("alarmId");
 		}
 	}
-
+	
 	private void confirmAlarm(int alarmId){
 		String obuId = Utils.getPrefernciesString(MainActivity.this, Settings.SETTING_OBU_ID);
    		String urlString = MainActivity.this.getString(R.string.server_url) + "confirmalarm?obuid="+obuId+"&alarmid="+alarmId;
@@ -544,6 +541,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
+						showSettings();
 					}
 				});
 			} 			
@@ -570,6 +568,15 @@ public class MainActivity extends Activity {
 				lComponents.addView(component);
 			//}
 		}
+		
+		int lc = R.layout.list_component;
+		LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		component = inflater.inflate(lc, null);
+		TextView label = ((TextView)component.findViewById(R.id.label));
+		label.setText("");
+		lComponents.addView(component);	    
+	    
+	    
 		//zadnjo crto skrijem
 		if (component != null) {
 			((LinearLayout)component.findViewById(R.id.line)).setVisibility(View.GONE);
@@ -588,6 +595,12 @@ public class MainActivity extends Activity {
 	}
 
 
+	private void showSettings(){
+		Intent i = new Intent(MainActivity.this, SettingsActivity.class);
+		i.putExtra("id", -1);
+		i.putExtra("title", getResources().getString(R.string.menu));
+		startActivity(i);
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
