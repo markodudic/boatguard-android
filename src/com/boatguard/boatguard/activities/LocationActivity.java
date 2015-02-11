@@ -9,8 +9,8 @@ import java.util.Set;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -36,7 +36,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-public class LocationActivity extends Activity { //implements OnMapReadyCallback {
+public class LocationActivity extends FragmentActivity implements OnMapReadyCallback {
 
 	private static MapFragment lFragment;
     GoogleMap map;
@@ -60,15 +60,6 @@ public class LocationActivity extends Activity { //implements OnMapReadyCallback
         tvTitle.setText(R.string.title_activity_location);
         tvTitle.setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_big));
         
-        //location
-        MapFragment mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragment_location));
-        //mapFragment.getMapAsync(this);
-        
-        map = mapFragment.getMap();
-        map.getUiSettings().setAllGesturesEnabled(true);
-        map.getUiSettings().setMyLocationButtonEnabled(true);
-        map.setMyLocationEnabled(true);
-
 		ImageView btnBack = (ImageView) findViewById(R.id.iv_back);
 		btnBack.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -78,16 +69,27 @@ public class LocationActivity extends Activity { //implements OnMapReadyCallback
 		});          
 	}  
 
-	/*@Override
-	public void onMapReady(GoogleMap arg0) {
-        map.getUiSettings().setAllGesturesEnabled(true);
-        map.getUiSettings().setMyLocationButtonEnabled(true);
-        map.setMyLocationEnabled(true);
-	}    */
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
+
+        //location
+        MapFragment mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragment_location));
+        mapFragment.getMapAsync(this);
+        
+        /*map = mapFragment.getMap();
+        map.getUiSettings().setAllGesturesEnabled(true);
+        map.getUiSettings().setMyLocationButtonEnabled(true);
+        map.setMyLocationEnabled(true);*/		
+	}
+	
+	@Override
+	public void onMapReady(GoogleMap arg) {
+		this.map = arg;
+        map.getUiSettings().setAllGesturesEnabled(true);
+        map.getUiSettings().setMyLocationButtonEnabled(true);
+        map.setMyLocationEnabled(true);
 		
 		//last position
 		HashMap<Integer,ObuState> obuStates = MainActivity.obuStates;

@@ -18,8 +18,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.boatguard.boatguard.R;
+import com.boatguard.boatguard.activities.LoginActivity;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
 
@@ -125,7 +127,26 @@ public class MyAccountFragment  extends Fragment {
 		EditText etObuId = (EditText) v.findViewById(R.id.obu_id);
 		etObuId.setText(Settings.customer.getSerial_number());
 		
-        TextView btnCancel = (TextView) v.findViewById(R.id.button_cancel);
+		final EditText etPassword1 = (EditText) v.findViewById(R.id.password1);
+		etPassword1.setText(Settings.customer.getPassword());
+		ImageView ivPassword1 = (ImageView) v.findViewById(R.id.iv_password1);
+		ivPassword1.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View vv) {
+				etPassword1.setText("");
+			} 
+		});
+		final EditText etPassword2 = (EditText) v.findViewById(R.id.password2);
+		etPassword2.setText(Settings.customer.getPassword());
+		ImageView ivPassword2 = (ImageView) v.findViewById(R.id.iv_password2);
+		ivPassword2.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View vv) {
+				etPassword2.setText("");
+			} 
+		});
+
+		TextView btnCancel = (TextView) v.findViewById(R.id.button_cancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) { 
@@ -137,17 +158,25 @@ public class MyAccountFragment  extends Fragment {
 		btnOk.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Settings.customer.setName(etName.getText().toString());
-				Settings.customer.setSurname(etSurname.getText().toString());
-				Settings.customer.setBirth_year(Integer.parseInt((String)spinnerBirthyear.getSelectedItem()));
-				Settings.customer.setCountry((String)spinnerCountry.getSelectedItem());
-				Settings.customer.setBoat_name(etBoatname.getText().toString());
-				Settings.customer.setBoat_manafacturer((String)spinnerManafacturer.getSelectedItem());
-				Settings.customer.setBoat_model((String)spinnerModel.getSelectedItem());
-				Settings.customer.setBoat_country((String)spinnerBoatCountry.getSelectedItem());
-				Settings.customer.setEmail(etEmail.getText().toString());
-				Settings.setCustomer(getActivity());
-				getActivity().finish();
+				if (etPassword1.getText().toString().equalsIgnoreCase(etPassword2.getText().toString())) {
+					Settings.customer.setPassword(etPassword1.getText().toString());
+					Settings.customer.setName(etName.getText().toString());
+					Settings.customer.setSurname(etSurname.getText().toString());
+					Settings.customer.setBirth_year(Integer.parseInt((String)spinnerBirthyear.getSelectedItem()));
+					Settings.customer.setCountry((String)spinnerCountry.getSelectedItem());
+					Settings.customer.setBoat_name(etBoatname.getText().toString());
+					Settings.customer.setBoat_manafacturer((String)spinnerManafacturer.getSelectedItem());
+					Settings.customer.setBoat_model((String)spinnerModel.getSelectedItem());
+					Settings.customer.setBoat_country((String)spinnerBoatCountry.getSelectedItem());
+					Settings.customer.setEmail(etEmail.getText().toString());
+					Settings.setCustomer(getActivity());
+					getActivity().finish();
+				}
+				else {
+		        	Toast toast = Toast.makeText(getActivity(), getString(R.string.password_error), Toast.LENGTH_LONG);
+		        	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+		        	toast.show();					
+				}
 			} 
 		});
 		

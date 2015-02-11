@@ -106,6 +106,9 @@
    <string name="alarm_friends">ALARM FRIENDS</string>
    
     <string name="name">NAME</string>
+    <string name="password1">PASSWORD</string>
+    <string name="password2">CONFIRM PASSWORD</string>
+    <string name="password_error">PASSWORD ERROR. TRY AGAIN.</string>
     <string name="surname">SURNAME</string>
     <string name="email">E-MAIL</string>
     <string name="birthyear">BIRTH YEAR</string>
