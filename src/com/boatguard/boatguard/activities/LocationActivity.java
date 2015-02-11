@@ -25,6 +25,7 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Circle;
@@ -35,7 +36,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-public class LocationActivity extends Activity {
+public class LocationActivity extends Activity { //implements OnMapReadyCallback {
 
 	private static MapFragment lFragment;
     GoogleMap map;
@@ -61,13 +62,13 @@ public class LocationActivity extends Activity {
         
         //location
         MapFragment mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragment_location));
+        //mapFragment.getMapAsync(this);
         
         map = mapFragment.getMap();
         map.getUiSettings().setAllGesturesEnabled(true);
         map.getUiSettings().setMyLocationButtonEnabled(true);
         map.setMyLocationEnabled(true);
 
-				
 		ImageView btnBack = (ImageView) findViewById(R.id.iv_back);
 		btnBack.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -77,6 +78,12 @@ public class LocationActivity extends Activity {
 		});          
 	}  
 
+	/*@Override
+	public void onMapReady(GoogleMap arg0) {
+        map.getUiSettings().setAllGesturesEnabled(true);
+        map.getUiSettings().setMyLocationButtonEnabled(true);
+        map.setMyLocationEnabled(true);
+	}    */
 	
 	@Override
 	protected void onResume() {
@@ -182,5 +189,8 @@ public class LocationActivity extends Activity {
         polyline.setGeodesic(true);
         polyline.setWidth(3.0f);
 	}
+
+
+
 		
 }
