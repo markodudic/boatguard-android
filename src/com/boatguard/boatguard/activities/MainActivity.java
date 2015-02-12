@@ -82,7 +82,7 @@ public class MainActivity extends Activity {
     private ImageView ivRefresh;
     private AnimationDrawable refreshAnimation;
     private Handler handler = new Handler();
-    private List<Integer> activeAlarms = new ArrayList<Integer>();
+    public static List<Integer> activeAlarms = new ArrayList<Integer>();
     
 	public static HashMap<Integer,ObuState> obuStates = new HashMap<Integer,ObuState>(){};
 	public static HashMap<Integer,ObuAlarm> obuAlarms = new HashMap<Integer,ObuAlarm>(){};
@@ -344,7 +344,7 @@ public class MainActivity extends Activity {
         //componentsAdapter = new ComponentsAdapter();
         //lvComponents.setAdapter(componentsAdapter);
    		
-        handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
+        //handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
 	}
 
 	@Override
@@ -1001,7 +1001,8 @@ public class MainActivity extends Activity {
 			handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
 		}
 		else {
-			Settings.OBU_REFRESH_TIME = Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_REFRESH_TIME);
+			handler.removeCallbacks(startRefresh);
+			//Settings.OBU_REFRESH_TIME = Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_REFRESH_TIME);
 		}
 	}
 	
@@ -1200,14 +1201,14 @@ public class MainActivity extends Activity {
 		
 		beepVibrate(vibrate, sound);
 	}
-	
-	
-	public void cancelNotification(int notifyId) {
+
+		
+	private void cancelNotification(int notifyId) {
 	    NotificationManager nMgr = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 	    nMgr.cancel(notifyId);
 	}
 	
-	public void beepVibrate(int vibrate, int sound) {
+	private void beepVibrate(int vibrate, int sound) {
 	    try {
 	        if (sound == 1 && (Utils.getPrefernciesBoolean(this, Settings.SETTING_PLAY_SOUND, false))) {
 		    	Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
