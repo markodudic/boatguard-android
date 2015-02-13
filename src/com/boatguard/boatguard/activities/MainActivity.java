@@ -640,6 +640,7 @@ public class MainActivity extends Activity {
     
     
 	public void getObudata() {
+		System.out.println("************************GET DATA**************************");
 		refreshing = true;
     	String obuId = Utils.getPrefernciesString(this, Settings.SETTING_OBU_ID);
    		

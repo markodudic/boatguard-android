@@ -20,7 +20,7 @@
     <dimen name="spinner_edit_padding">16dp</dimen>
     <dimen name="spinner_text_size">6sp</dimen>   
     
-    <dimen name="login_edit_height">68dp</dimen>
+    <dimen name="login_edit_height">67dp</dimen>
     <dimen name="login_edit_margin_top">8dp</dimen>
     <dimen name="login_edit_margin_bottom">3dp</dimen>
     <dimen name="login_edit_padding">27dp</dimen>

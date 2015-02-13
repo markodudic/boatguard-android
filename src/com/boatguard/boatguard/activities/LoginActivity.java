@@ -1,17 +1,17 @@
 package com.boatguard.boatguard.activities;
 
 import java.net.URLEncoder;
-
 import org.json.JSONObject;
 import org.json.JSONTokener;
-
 import com.boatguard.boatguard.R;
-
 import com.boatguard.boatguard.components.TextViewFont;
+import com.boatguard.boatguard.objects.Device;
 import com.boatguard.boatguard.utils.Comm;
 import com.boatguard.boatguard.utils.DialogFactory;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
+import com.google.gson.Gson;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		int theme = Utils.getPrefernciesInt(this, Settings.SETTING_THEME);
@@ -109,16 +110,16 @@ public class LoginActivity extends Activity {
 			EditText etUsername = (EditText) findViewById(R.id.username);
 	        EditText etPassword = (EditText) findViewById(R.id.password);
 	        EditText etObuid = (EditText) findViewById(R.id.obu_id);
-	        PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-   		    TelephonyManager mTelephonyMgr; 
-	   	    mTelephonyMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
+	        //PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+   		    //TelephonyManager mTelephonyMgr; 
+	   	    //mTelephonyMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
 
 	        String urlString = LoginActivity.this.getString(R.string.server_url) + 
 					"login?type="+type +
 					"&username=" + etUsername.getText().toString() + 
 					"&password=" + etPassword.getText().toString() + 
-					"&obu_sn=" + etObuid.getText().toString() + 
-					"&app_version=" + URLEncoder.encode(pInfo.versionName) +
+					"&obu_sn=" + etObuid.getText().toString(); 
+					/*"&app_version=" + URLEncoder.encode(pInfo.versionName) +
 					"&device_name="+URLEncoder.encode(Build.MODEL)+
 					"&device_platform="+Build.VERSION.SDK_INT+
 					"&device_version="+URLEncoder.encode(Build.VERSION.RELEASE)+
@@ -126,7 +127,7 @@ public class LoginActivity extends Activity {
 
 			if (mTelephonyMgr!=null && mTelephonyMgr.getLine1Number()!=null && mTelephonyMgr.getLine1Number().length() > 0) {
 				urlString += "&phone_number="+URLEncoder.encode(mTelephonyMgr.getLine1Number());
-			}     
+			}     */
 			
 	        if (Utils.isNetworkConnected(LoginActivity.this, true)) {
 	        	AsyncTask at = new Comm().execute(urlString, null); 
@@ -146,6 +147,8 @@ public class LoginActivity extends Activity {
 	    	   		Intent i = new Intent(LoginActivity.this, MainActivity.class);
 					startActivity(i);								    	   		
 	    	   	}
+	    	   	
+	    	   	setDevice();
 	        }
         } catch (Exception e) {
         	e.printStackTrace();
@@ -155,5 +158,43 @@ public class LoginActivity extends Activity {
    		}
 		
 	} 
+	
+    private void setDevice() {
+		try {
+			String gcm_registration_id = Utils.getPrefernciesString(LoginActivity.this, SplashScreenActivity.PROPERTY_REG_ID);
+		    String obu_id = Utils.getPrefernciesString(LoginActivity.this, Settings.SETTING_OBU_ID);
+		    if (gcm_registration_id != null && obu_id != null) {
+		   		PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+				TelephonyManager mTelephonyMgr;
+				mTelephonyMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
+				
+				Device device = new Device();
+				device.setId_obu(Integer.parseInt(obu_id));
+				device.setGcm_registration_id(gcm_registration_id);
+				device.setPhone_model(Build.MODEL);
+				device.setPhone_platform(Build.VERSION.SDK_INT+"");
+				device.setPhone_platform_version(Build.VERSION.RELEASE);
+				device.setPhone_uuid(Build.SERIAL);
+				device.setApp_version(pInfo.versionName);
+				
+				if (mTelephonyMgr!=null && mTelephonyMgr.getLine1Number()!=null && mTelephonyMgr.getLine1Number().length() > 0) {
+					device.setPhone_number(mTelephonyMgr.getLine1Number());
+				}       
+	        
+			    Gson gson = new Gson();
+			    String data = gson.toJson(device);
+			    
+			    String urlString = LoginActivity.this.getString(R.string.server_url) + "setdevice";
+			    if (Utils.isNetworkConnected(LoginActivity.this, true)) {
+			    	AsyncTask at = new Comm().execute(urlString, "json", data); 
+			    }
+		}
+        } catch (Exception e) {
+        	e.printStackTrace();
+        	Toast toast = Toast.makeText(LoginActivity.this, getString(R.string.json_error), Toast.LENGTH_LONG);
+        	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+        	toast.show();
+   		}	
+    }	
 
 }
