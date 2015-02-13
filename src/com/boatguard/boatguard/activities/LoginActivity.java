@@ -74,6 +74,8 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				((EditText) findViewById(R.id.username)).setText("");
+				((EditText) findViewById(R.id.username)).requestFocus();
+		        
 			} 
 		});
 
@@ -83,6 +85,7 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				((EditText) findViewById(R.id.password)).setText("");
+				((EditText) findViewById(R.id.password)).requestFocus();
 			} 
 		});
 
@@ -92,6 +95,7 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				((EditText) findViewById(R.id.obu_id)).setText("");
+				((EditText) findViewById(R.id.obu_id)).requestFocus();
 			} 
 		});
 		

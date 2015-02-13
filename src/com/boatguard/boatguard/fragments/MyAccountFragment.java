@@ -38,6 +38,7 @@ public class MyAccountFragment  extends Fragment {
 			@Override
 			public void onClick(View vv) {
 				etEmail.setText("");
+				etEmail.requestFocus();
 			} 
 		});
 
@@ -48,6 +49,7 @@ public class MyAccountFragment  extends Fragment {
 			@Override
 			public void onClick(View vv) {
 				etName.setText("");
+				etName.requestFocus();
 			} 
 		});
 
@@ -58,6 +60,7 @@ public class MyAccountFragment  extends Fragment {
 			@Override
 			public void onClick(View vv) {
 				etSurname.setText("");
+				etSurname.requestFocus();
 			} 
 		});
 
@@ -89,6 +92,7 @@ public class MyAccountFragment  extends Fragment {
 			@Override
 			public void onClick(View vv) {
 				etBoatname.setText("");
+				etBoatname.requestFocus();
 			} 
 		});
 		
@@ -134,6 +138,7 @@ public class MyAccountFragment  extends Fragment {
 			@Override
 			public void onClick(View vv) {
 				etPassword1.setText("");
+				etPassword1.requestFocus();
 			} 
 		});
 		final EditText etPassword2 = (EditText) v.findViewById(R.id.password2);
@@ -143,6 +148,7 @@ public class MyAccountFragment  extends Fragment {
 			@Override
 			public void onClick(View vv) {
 				etPassword2.setText("");
+				etPassword2.requestFocus();
 			} 
 		});
 
