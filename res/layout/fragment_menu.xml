@@ -4,7 +4,6 @@
     android:id="@+id/layout_menu"
 	android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/LayoutMenu"
     android:orientation="vertical">
 
  	<LinearLayout
@@ -16,7 +15,8 @@
 	<LinearLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="@dimen/menu_height"
-	    android:orientation="horizontal">
+	    style="@style/LayoutMenu"
+    	android:orientation="horizontal">
 	    
 	    <ImageView
 	        android:id="@+id/iv_settings"
