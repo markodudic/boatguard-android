@@ -820,6 +820,10 @@ public class MainActivity extends Activity {
 						alarm = true;
 						showAlarmAnimation(component, imageView, R.drawable.ic_bilgepump_demaged_1, R.drawable.ic_bilgepump_demaged, true);
 					}
+					else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_SERVIS)).getValue())) {
+						alarm = true;
+						showAlarmAnimation(component, imageView, R.drawable.ic_bilgepump_servis_1, R.drawable.ic_bilgepump_servis, true);
+					}
 					else {
 						imageView.setBackgroundResource(android.R.color.transparent); 
 					}

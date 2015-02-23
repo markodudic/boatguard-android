@@ -86,6 +86,7 @@ public class Settings {
 	public static String APP_STATE_PUMP_PUMPING = "PUMP_PUMPING";
 	public static String APP_STATE_PUMP_CLODGED = "PUMP_CLODGED";
 	public static String APP_STATE_PUMP_DEMAGED = "PUMP_DEMAGED";
+	public static String APP_STATE_PUMP_SERVIS = "PUMP_SERVIS";
 	public static String APP_STATE_ANCHOR_DISABLED = "ANCHOR_DISABLED";
 	public static String APP_STATE_ANCHOR_ENABLED = "ANCHOR_ENABLED";
 	public static String APP_STATE_ANCHOR_DRIFTING = "ANCHOR_DRIFTING";
