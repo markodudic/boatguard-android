@@ -79,6 +79,8 @@ public class HistoryFragment  extends Fragment {
     	            ImageView img = new ImageView(getActivity());
     				String geofence = obuState.getValue();
     				
+    	            ((TextView) v.findViewById(R.id.tv_last_update)).setText(Utils.formatDate(obuState.getDateState() +":"));
+    				
     				if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_DISABLED)).getValue())) {
     		            img.setImageResource(R.drawable.ic_geofence_disabled);
     				} 

@@ -109,7 +109,7 @@ public class BatteryFragment  extends Fragment {
 	    {
 	    	@SuppressWarnings("unchecked")
 			LinkedHashMap<Integer,ObuState> obuStates = (LinkedHashMap<Integer, ObuState>) history.get(i);
-	    	ObuState state = obuStates.get(((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId());
+	    	ObuState state = obuStates.get(((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId());
 	    	if (state==null) continue;
 	    	Entry c1e = new Entry(Float.parseFloat(state.getValue()), historySize-1-i);
 		    valsComp.add(c1e);
