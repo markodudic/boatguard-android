@@ -1,37 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">BoatGuard</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Nastavitve</string>
-    <string name="title_activity_login">PRIJAVA</string>
-    <string name="title_activity_location">LOKACIJA</string>
-    <string name="menu">MENI</string>
-    <string name="username">UPORABIŠKO IME</string>
-    <string name="password">GESLO</string>
+    <string name="app_name">BOATGUARD</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">LOGIN FORM</string>
+    <string name="title_activity_location">LOCATION</string>
+    <string name="menu">MENU</string>
+    <string name="username">USERNAME</string>
+    <string name="password">PASSWORD</string>
     <string name="obu_id">OBU ID</string>
-    <string name="remember_me">ZAPOMNI ME</string>
-    <string name="register">REGISTRACIJA</string>
-    <string name="login">PRIJAVA</string>
+    <string name="remember_me">REMEMBER ME</string>
+    <string name="register">REGISTER</string>
+    <string name="login">LOGIN</string>
     <string name="ok">OK</string>
-    <string name="cancel">PREKLIČI</string>
-    <string name="last_update">ZADNJE OSVEŽEVANJE:</string>
+    <string name="cancel">CANCEL</string>
+    <string name="last_update">LAST UPDATE:</string>
     <string name="alarm">ALARM</string>
-    <string name="location_title">ZADNJA LOKACIJA:</string>
-    <string name="on">DA</string>
-    <string name="off">NE</string>
-    <string name="day">DNEVNA</string>
-    <string name="night">NOČNA</string>
+    <string name="location_title">LAST LOCATION:</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
+    <string name="day">DAY</string>
+    <string name="night">NIGHT</string>
+    <string name="phone_contacts">PHONE CONTACTS</string>
+    <string name="alarm_contacts">ALARM CONTACTS</string>
+    <string name="add_contact">ADD CONTACT</string>
+    <string name="no_contacts">NO CONTACTS</string>
+    <string name="reset">RESET</string>
     
-    
-	<string name="json_error">Nepravilen odgovor strežnika</string> 
-	<string name="json_title">Povezava na strežnik</string> 
-	<string name="conn_error">Ni internetne povezave</string> 
-	<string name="conn_title">Internetna povezava</string> 
-	<string name="no_active_connection_title">Internetna povezave</string> 
-	<string name="no_active_connection_msg">Ni internetna povezave. omogočite povezavo za uporabo aplikacije.</string> 
+	<string name="json_error">Wronf response from the server</string> 
+	<string name="json_title">Server connection</string> 
+	<string name="conn_error">Internet connection unavailable</string> 
+	<string name="conn_title">Internet connection</string> 
+	<string name="no_active_connection_title">Internet connections</string> 
+	<string name="no_active_connection_msg">Internet connection unavailable. Enable internet connection for application usage.</string> 
 		
     <string-array name="settings_items">
+        <item >GEOFENCE</item>
+        <item >BILGE PUMP</item>
+        <item >ANCHOR DRIFTING</item>
+        <item >BATTERY</item>
+        <item >ALARM CONTACTS</item>
+        <item >ALARM SETTINGS</item>
+        <item >MY ACCOUNT</item>
+        <item >HISTORY</item>
+        <item >APP SETTINGS</item>
+        <item >LOG OUT</item>
+   </string-array>	
+
+   <string-array name="settings_items_titles">
         <item >GEOFENCE</item>
         <item >BILGE PUMP</item>
         <item >ANCHOR DRIFTING</item>
@@ -40,27 +56,102 @@
         <item >ALARM TYPE</item>
         <item >MY ACCOUNT</item>
         <item >HISTORY</item>
-        <item >APP APPEARANCE</item>
-   </string-array>	
-
-    
+        <item >APP SETTINGS</item>
+        <item >LOG OUT</item>
+        <item >LIGHTS</item>
+        <item >FANS</item>
+   </string-array>
+       
    <string name="geo_fence">GEOFENCE</string>
    <string name="geo_fence_radius">GEOFENCE RADIUS</string>
    <string name="geo_fence_current">DEFINE CURRENT LOCATION AS HOME</string>
    <string name="geo_fence_define">DEFINE</string>
 
+   <string name="bilge_pump_always">ALERT ALWAYS WHEN PUMPING:</string>
+   <string name="bilge_pump_short_period">SHORT PERIOD BILGE ALERT:</string>
+   <string name="bilge_pump_short_period_desc">DETERMINES TIME OF CUMULATIVE PUMPING FROM THE LAST 10 MINUTES, WHEN THE ALARM IS SENT.</string>
+   <string name="bilge_pump_10_min"> / 10 MINUTES</string>
+   <string name="bilge_pump_long_period">LONG PERIOD BILGE ALERT:</string>
+   <string name="bilge_pump_long_period_desc">DETERMINES TIME OF CUMULATIVE PUMPING FROM THE LAST 12 HOURS, WHEN THE ALARM IS SENT.</string>
+   <string name="bilge_pump_100_min"> / 100 MINUTES from 24 H</string>
+   <string-array name="short_period">
+        <item>1</item>
+        <item>2</item>
+        <item>5</item>
+        <item>10</item>
+   </string-array>
+   <string-array name="long_period">
+        <item>5</item>
+        <item>10</item>
+        <item>30</item>
+        <item>60</item>
+   </string-array>
+          
    <string name="anchor_drifting">ANCHOR DRIFTING</string>
    <string name="anchor_drifting_radius">ANCHOR RADIUS</string>
    <string name="anchor_drifting_current">DEFINE CURRENT LOCATION AS ANCHOR</string>
    <string name="anchor_drifting_define">DEFINE</string>
+   
+   <string name="battery_capacity">BATTERY CAPACITY:</string>
+   <string name="battery_alarm_level">SEND ALARM WHEN BATTERY LEVEL IS AT:</string>
+   <string name="battery_energy_reset">RESET BATTERY ENERGY:</string>
+   
+   <string name="alarm_notifications">ALARM NOTIFICATIONS</string>
+   <string name="alarm_settings">ALARM SETTINGS</string>
+   <string name="play_sound">PLAY SOUND</string>
+   <string name="vibrate">VIBRATE</string>
+   <string name="pop_up">DISPLAY ALERT POP-UP</string>
+   <string name="send_email">SEND EMAIL</string>
+   <string name="alarm_friends">ALARM FRIENDS</string>
+   
+    <string name="name">NAME</string>
+    <string name="password1">PASSWORD</string>
+    <string name="password2">CONFIRM PASSWORD</string>
+    <string name="password_error">PASSWORD ERROR. TRY AGAIN.</string>
+    <string name="surname">SURNAME</string>
+    <string name="email">E-MAIL</string>
+    <string name="birthyear">BIRTH YEAR</string>
+    <string name="choose_birthyear">CHOOSE BIRTH YEAR</string>
+    <string name="country">COUNTRY</string>
+    <string name="choose_country">CHOOSE COUNTRY</string>
+    <string name="boatname">BOAT NAME</string>
+    <string name="boatmanafacturer">BOAT MANAFACTURER</string>
+    <string name="choose_manafacturer">CHOOSE MANAFACTURER</string>
+    <string name="boatmodel">BOAT MODEL</string>
+    <string name="choose_model">CHOOSE MODEL</string>
+    <string name="boatcountry">BOAT LOCATION</string>
+   
+    <string name="refresh_time">REFRESH TIME (MIN)</string>
+    <string name="choose_refresh_time">Refresh time</string>
+    <string-array name="refresh">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>30</item>
+        <item>59</item>
+    </string-array>
+    <string name="color_theme">COLOR THEME</string>
+    <string name="language">LANGUAGE</string>
+    <string name="choose_language">CHOOSE LANGUAGE</string>
+    <string-array name="languages">
+        <item>ENGLISH LANGUAGE</item>
+        <item>GERMAN LANGUAGE</item>
+        <item>FRANCE LANGUAGE</item>
+        <item>ITALIAN LANGUAGE</item>
+        <item>SPANISH LANGUAGE</item>
+        <item>SLOVENIAN LANGUAGE</item>
+        <item>CROATIAN LANGUAGE</item>
+    </string-array>
+    <string-array name="language_codes">
+        <item>en</item>
+        <item>de</item>
+        <item>fr</item>
+        <item>it</item>
+        <item>es</item>
+        <item>sl</item>
+        <item>hr</item>
+    </string-array>
 
-    <string name="play_sound">PLAY SOUND</string>
-    <string name="vibrate">VIBRATE</string>
-    <string name="pop_up">DISPLAY ALERT POP-UP</string>
 
-    <string name="color_theme">BARVNA SHEMA</string>
-    <string name="language_en">ANGLEŠKI JEZIK</string>
-    <string name="language_slo">SLOVENSKI JEZIK</string>
-    <string name="language_hr">HRVAŠKI JEZIK</string>
-    
+    <string name="sensors_title">LOCATION OF THE SENSORS</string>
 </resources>
