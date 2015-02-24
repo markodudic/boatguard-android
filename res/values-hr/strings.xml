@@ -1,66 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">BoatGuard</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_login">LOGIN FORM</string>
-    <string name="title_activity_location">LOCATION</string>
-    <string name="menu">MENU</string>
-    <string name="username">USERNAME</string>
-    <string name="password">PASSWORD</string>
+    <string name="app_name">BOATGUARD</string>
+    <string name="action_settings">Postavke</string>
+    <string name="title_activity_login">PRIJAVA</string>
+    <string name="title_activity_location">LOKACIJA</string>
+    <string name="menu">MENI</string>
+    <string name="username">KORISNIČKO IME</string>
+    <string name="password">LOZINKA</string>
     <string name="obu_id">OBU ID</string>
-    <string name="remember_me">REMEMBER ME</string>
-    <string name="register">REGISTER</string>
-    <string name="login">LOGIN</string>
+    <string name="remember_me">ZAPAMTI ME</string>
+    <string name="register">REGISTRACIJA</string>
+    <string name="login">PRIJAVA</string>
     <string name="ok">OK</string>
-    <string name="cancel">CANCEL</string>
-    <string name="last_update">LAST UPDATE:</string>
+    <string name="cancel">OTKAŽI</string>
+    <string name="last_update">ZADNJE OSVEŽAVANJE:</string>
     <string name="alarm">ALARM</string>
-    <string name="location_title">LAST LOCATION:</string>
-    <string name="on">ON</string>
-    <string name="off">OFF</string>
-    <string name="day">DAY</string>
-    <string name="night">NIGHT</string>
+    <string name="location_title">ZADNJA LOKACIJA:</string>
+    <string name="on">DA</string>
+    <string name="off">NE</string>
+    <string name="day">DNEVNA</string>
+    <string name="night">NOČNA</string>
+    <string name="phone_contacts">KONTAKTI TELEFONA</string>
+    <string name="alarm_contacts">KONTAKTI ALARMA</string>
+    <string name="add_contact">DODAJ KONTAKT</string>
+    <string name="no_contacts">NI KONTAKTOV</string>
+    <string name="reset">PONIŠTI</string>    
     
-    
-	<string name="json_error">Nepravilen odgovor strežnika</string> 
-	<string name="json_title">Povezava na strežnik</string> 
-	<string name="conn_error">Ni internetne povezave</string> 
-	<string name="conn_title">Internetna povezava</string> 
-	<string name="no_active_connection_title">Internetna povezave</string> 
-	<string name="no_active_connection_msg">Ni internetna povezave. omogočite povezavo za uporabo aplikacije.</string> 
+	<string name="json_error">Nepravilan odgovor servera</string> 
+	<string name="json_title">Veza na server</string> 
+	<string name="conn_error">Ni internetne veze</string> 
+	<string name="conn_title">Internetna veza</string> 
+	<string name="no_active_connection_title">Internetna veza</string> 
+	<string name="no_active_connection_msg">Ni internetna veze. Omogući vezo za korištenje aplikacije.</string> 
 		
     <string-array name="settings_items">
         <item >GEOFENCE</item>
-        <item >BILGE PUMP</item>
-        <item >ANCHOR DRIFTING</item>
-        <item >BATTERY</item>
-        <item >ALARM CONTACTS</item>
-        <item >ALARM TYPE</item>
-        <item >MY ACCOUNT</item>
-        <item >HISTORY</item>
-        <item >APP APPEARANCE</item>
+        <item >KALUŽNA PUMPA</item>
+        <item >SIDRO KLIZANJE</item>
+        <item >BATERIJA</item>
+        <item >KONTAKTI ALARMA</item>
+        <item >NASTAVITVE ALARMOV</item>
+        <item >MOJ RAČUN</item>
+        <item >ISTORIJA</item>
+        <item >POSTAVKE APLIKACIJE</item>
+        <item >ODJAVA</item>
    </string-array>	
 
+   <string-array name="settings_items_titles">
+        <item >GEOFENCE</item>
+        <item >KALUŽNA PUMPA</item>
+        <item >SIDRO KLIZANJE</item>
+        <item >BATERIJA</item>
+        <item >KONTAKTI ALARMA</item>
+        <item >NASTAVITVE ALARMOV</item>
+        <item >MOJ RAČUN</item>
+        <item >ISTORIJA</item>
+        <item >POSTAVKE APLIKACIJE</item>
+        <item >ODJAVA</item>
+        <item >SVETLA</item>
+        <item >VENTILATORI</item>
+   </string-array>
     
    <string name="geo_fence">GEOFENCE</string>
-   <string name="geo_fence_radius">GEOFENCE RADIUS</string>
-   <string name="geo_fence_current">DEFINE CURRENT LOCATION AS HOME</string>
-   <string name="geo_fence_define">DEFINE</string>
+   <string name="geo_fence_radius">GEOFENCE RADIJ</string>
+   <string name="geo_fence_current">POSTAVI TRENUTNU LOKACIJO KAO DOMAĆU</string>
+   <string name="geo_fence_define">POSATVI</string>
 
-   <string name="anchor_drifting">ANCHOR DRIFTING</string>
-   <string name="anchor_drifting_radius">ANCHOR RADIUS</string>
-   <string name="anchor_drifting_current">DEFINE CURRENT LOCATION AS ANCHOR</string>
-   <string name="anchor_drifting_define">DEFINE</string>
-
-    <string name="play_sound">PLAY SOUND</string>
-    <string name="vibrate">VIBRATE</string>
-    <string name="pop_up">DISPLAY ALERT POP-UP</string>
-
-    <string name="color_theme">COLOR THEME</string>
-    <string name="language_en">ENGLISH LANGUAGE</string>
-    <string name="language_slo">SLOVENIAN LANGUAGE</string>
-    <string name="language_hr">CROATIAN LANGUAGE</string>
+   <string name="bilge_pump_always">ALARM UVEK KAD PUMPA RADI:</string>
+   <string name="bilge_pump_short_period">KRATAK PERIOD KALUŽNE PUMPE:</string>
+   <string name="bilge_pump_short_period_desc">DOLOČI ČAS KUMULATIVNOG PUMPANJA ZA ZADNJIH 10 MINUTA, KO JE POSLAN ALARM.</string>
+   <string name="bilge_pump_10_min"> / 10 MINUTA</string>
+   <string name="bilge_pump_long_period">DUGI PERIOD KALUŽNE PUMPE:</string>
+   <string name="bilge_pump_long_period_desc">DOLOČI ČAS KUMULATIVNOG PUMPANJA ZA ZADNJIH 12 SATI, KO JE POSLAN ALARM.</string>
+   <string name="bilge_pump_100_min"> / 100 MINUTA u 24 H</string>
+   <string-array name="short_period">
+        <item>1</item>
+        <item>2</item>
+        <item>5</item>
+        <item>10</item>
+   </string-array>
+   <string-array name="long_period">
+        <item>5</item>
+        <item>10</item>
+        <item>30</item>
+        <item>60</item>
+   </string-array>
+          
+   <string name="anchor_drifting">SIDRO KLIZANJE</string>
+   <string name="anchor_drifting_radius">SIDRO RADIJ</string>
+   <string name="anchor_drifting_current">POSTAVI TRENUTNU LOKACIJU ZA SIDRO</string>
+   <string name="anchor_drifting_define">POSTAVI</string>
+   
+   <string name="battery_capacity">BATERIJA KAPACITET:</string>
+   <string name="battery_alarm_level">POŠALJI ALARM KO JE NIVO BATERIJE ISPOD:</string>
+   <string name="battery_energy_reset">RESETIRAJ ENERGIJU BATERIJE:</string>
+   
+   <string name="alarm_notifications">ALARMI OBAVEŠTENJA</string>
+   <string name="alarm_settings">ALARM POSTAVKE</string>
+   <string name="play_sound">ZVUK IGRANJE</string>
+   <string name="vibrate">VIBRIRANJE</string>
+   <string name="pop_up">POKAŽI ALARMNI PROZOR</string>
+   <string name="send_email">POŠALJI EMAIL</string>
+   <string name="alarm_friends">ALARMIRAJ PRIJATELJA</string>
+   
+    <string name="name">IME</string>
+    <string name="password1">LOZINKA</string>
+    <string name="password2">POTVRDI LOZINKU</string>
+    <string name="password_error">GREŠKA LOZINKE. POKUŠAJ PONOVO.</string>
+    <string name="surname">PREZIME</string>
+    <string name="email">E-MAIL</string>
+    <string name="birthyear">GODINA RODJENA</string>
+    <string name="choose_birthyear">IZABERI GODINU RODJENJA</string>
+    <string name="country">DRŽAVA</string>
+    <string name="choose_country">IZABERI DRŽAVU</string>
+    <string name="boatname">IME BRODA</string>
+    <string name="boatmanafacturer">PROIZVODJAČ BRODA</string>
+    <string name="choose_manafacturer">IZABERI PROIZVODJAČA</string>
+    <string name="boatmodel">MODEL BRODA</string>
+    <string name="choose_model">IZABERI MODEL</string>
+    <string name="boatcountry">LOKACIJA BRODA</string>
+   
+    <string name="refresh_time">VREME OSVEŽEVANJA (MIN)</string>
+    <string name="choose_refresh_time">Vreme osveževanja</string>
+    <string-array name="refresh">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>30</item>
+        <item>59</item>
+    </string-array>
+    <string name="color_theme">BARVNA SHEMA</string>
+    <string name="language">JEZIK</string>
+    <string name="choose_language">IZBERI JEZIK</string>
+    <string-array name="languages">
+        <item>ENGLESKI JEZIK</item>
+        <item>NEMAČKI JEZIK</item>
+        <item>FRANCUSKI JEZIK</item>
+        <item>ITALIJANSKI JEZIK</item>
+        <item>ŠPANSKI JEZIK</item>
+        <item>SLOVENAČKI JEZIK</item>
+        <item>HRVATSKI JEZIK</item>
+    </string-array>
+    <string-array name="language_codes">
+        <item>en</item>
+        <item>de</item>
+        <item>fr</item>
+        <item>it</item>
+        <item>es</item>
+        <item>sl</item>
+        <item>hr</item>
+    </string-array>
     
+    <string name="sensors_title">LOKACIJA SENZOROV</string>
 </resources>

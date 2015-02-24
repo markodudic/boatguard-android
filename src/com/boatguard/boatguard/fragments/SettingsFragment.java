@@ -1,15 +1,10 @@
 package com.boatguard.boatguard.fragments;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
-import com.boatguard.boatguard.R;
-
-import com.boatguard.boatguard.activities.SplashScreenActivity;
-import com.boatguard.boatguard.objects.ObuSetting;
-import com.boatguard.boatguard.objects.Setting;
-import com.boatguard.boatguard.objects.State;
-import com.boatguard.boatguard.utils.Settings;
-import com.boatguard.boatguard.utils.Utils;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -17,6 +12,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.boatguard.boatguard.R;
+import com.boatguard.boatguard.activities.SplashScreenActivity;
+import com.boatguard.boatguard.objects.ObuSetting;
+import com.boatguard.boatguard.objects.Setting;
+import com.boatguard.boatguard.objects.State;
+import com.boatguard.boatguard.utils.Settings;
+import com.boatguard.boatguard.utils.Utils;
 
 public class SettingsFragment  extends Fragment {
 	
@@ -113,7 +116,7 @@ public class SettingsFragment  extends Fragment {
         String lang = Utils.getPrefernciesString(getActivity(), Settings.SETTING_LANG);
         text[8] = refreshTime +
         			(theme == R.style.AppThemeDay?" / "+getResources().getString(R.string.day):" / "+getResources().getString(R.string.night)) + 
-        			(SplashScreenActivity.getLanguages(getActivity()).get(lang)!=null?" / "+SplashScreenActivity.getLanguages(getActivity()).get(lang):"");  
+        			(SplashScreenActivity.languageCodes.indexOf(lang)!=-1?" / "+SplashScreenActivity.languages.get(SplashScreenActivity.languageCodes.indexOf(lang)):"");  
 
         FragmentManager fragmentManager = getFragmentManager();
         for (int i=0; i<settingsItems.length; i++) {

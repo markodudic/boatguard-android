@@ -2,7 +2,10 @@ package com.boatguard.boatguard.activities;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import org.json.JSONObject;
@@ -48,7 +51,9 @@ public class SplashScreenActivity extends Activity {
     private GoogleCloudMessaging gcm =null;
     private String regid = null;
     private Context context= null;
-	public static HashMap<String,String> languages;
+	//public static HashMap<String,String> languages;
+    public static  List<String> languages;
+    public static  List<String> languageCodes;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +77,16 @@ public class SplashScreenActivity extends Activity {
          }
         
         
-    	languages = getLanguages(SplashScreenActivity.this);
+    	//languages = getLanguages(SplashScreenActivity.this);
+        String[] languagesArray = getResources().getStringArray(R.array.languages);
+        languages = new ArrayList<String>(Arrays.asList(languagesArray));
+        String[] languageCodesArray = getResources().getStringArray(R.array.language_codes);
+        languageCodes = new ArrayList<String>(Arrays.asList(languageCodesArray));
 
 		String lang = Utils.getPrefernciesString(SplashScreenActivity.this, Settings.SETTING_LANG);
         if (lang == null) {
         	String langDefault = Locale.getDefault().getLanguage();
-        	if (langDefault.equals("sl") || (langDefault.equals("hr"))){
+        	if (langDefault.equals("de") || langDefault.equals("fr") || langDefault.equals("it") || langDefault.equals("es") || langDefault.equals("sl") || (langDefault.equals("hr"))){
         		setLanguage(SplashScreenActivity.this, langDefault);
             } else {
             	setLanguage(SplashScreenActivity.this, "en"); 
@@ -281,13 +290,17 @@ public class SplashScreenActivity extends Activity {
     	}.execute(null, null, null);
     }
     
-	public static HashMap<String,String> getLanguages(final Context context) {
+	/*public static HashMap<String,String> getLanguages(final Context context) {
     	return new HashMap<String,String>() {{
 		    put("en", context.getResources().getString(R.string.language_en));
+		    put("de", context.getResources().getString(R.string.language_de));
+		    put("fr", context.getResources().getString(R.string.language_fr));
+		    put("it", context.getResources().getString(R.string.language_it));
+		    put("es", context.getResources().getString(R.string.language_es));
 		    put("sl", context.getResources().getString(R.string.language_slo));
 		    put("hr", context.getResources().getString(R.string.language_hr));
 		}};
-	}	
+	}*/	
 	
 	public static void setLanguage(Context context, String lang) {
     	Locale locale = new Locale(lang);

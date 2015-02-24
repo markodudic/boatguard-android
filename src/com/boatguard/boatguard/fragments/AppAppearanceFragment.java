@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -25,12 +25,14 @@ import com.boatguard.boatguard.R;
 import com.boatguard.boatguard.activities.MainActivity;
 import com.boatguard.boatguard.activities.SettingsActivity;
 import com.boatguard.boatguard.activities.SplashScreenActivity;
-import com.boatguard.boatguard.components.TextViewFont;
 import com.boatguard.boatguard.objects.ObuSetting;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
 
 public class AppAppearanceFragment  extends Fragment {
+	
+	private int langPos = -1;
+	
     @Override 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /** Inflating the layout for this fragment **/
@@ -79,56 +81,17 @@ public class AppAppearanceFragment  extends Fragment {
 			}
 		});	
 
-		TextViewFont tvLanguageEn = (TextViewFont) v.findViewById(R.id.tv_language_en);
-        tvLanguageEn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v1) {
-				changeLanguage("en"); 
-			}
-		});	
-
-        TextViewFont tvLanguageSlo = (TextViewFont) v.findViewById(R.id.tv_language_slo);
-        tvLanguageSlo.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v1) {
-				changeLanguage("sl"); 
-			}
-		});	
-
-        TextViewFont tvLanguageHr = (TextViewFont) v.findViewById(R.id.tv_language_hr);
-        tvLanguageHr.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v1) {
-				changeLanguage("hr"); 
-			}
-		});	
-
-		int theme = Utils.getPrefernciesInt(getActivity(), Settings.SETTING_THEME);
+		final Spinner spinnerLanguage = (Spinner) v.findViewById(R.id.language);
+        MySpinnerAdapter adapterC = new MySpinnerAdapter(
+                getActivity(),
+                R.layout.spinner_item,
+                Arrays.asList(getResources().getStringArray(R.array.languages))
+        );
+        spinnerLanguage.setAdapter(adapterC);
 		String lang = Utils.getPrefernciesString(getActivity(), Settings.SETTING_LANG);
-        if (lang.equals("en")) {
-			if (theme == R.style.AppThemeDay) {
-				setStyle(v, R.color.text_green, R.drawable.ic_bilgepump, R.color.text_default_day, R.drawable.ic_delete_day, R.color.text_default_day, R.drawable.ic_delete_day);
-			}
-			else {
-				setStyle(v, R.color.text_green, R.drawable.ic_bilgepump, R.color.text_default_night, R.drawable.ic_delete, R.color.text_default_night, R.drawable.ic_delete);
-			}
-		}
-		else if (lang.equals("sl")) {
-			if (theme == R.style.AppThemeDay) {
-				setStyle(v, R.color.text_default_day, R.drawable.ic_delete_day, R.color.text_green, R.drawable.ic_bilgepump, R.color.text_default_day, R.drawable.ic_delete_day);
-			}
-			else {
-				setStyle(v, R.color.text_default_night, R.drawable.ic_delete, R.color.text_green, R.drawable.ic_bilgepump, R.color.text_default_night, R.drawable.ic_delete);
-			}
-		}
-		else if (lang.equals("hr")) {
-			if (theme == R.style.AppThemeDay) {
-				setStyle(v, R.color.text_default_day, R.drawable.ic_delete_day, R.color.text_default_day, R.drawable.ic_delete_day, R.color.text_green, R.drawable.ic_bilgepump);
-			}
-			else {
-				setStyle(v, R.color.text_default_night, R.drawable.ic_delete, R.color.text_default_night, R.drawable.ic_delete_day, R.color.text_green, R.drawable.ic_bilgepump);
-			}
-		}
+		langPos = SplashScreenActivity.languageCodes.indexOf(lang);
+        spinnerLanguage.setSelection(langPos);
+        spinnerLanguage.setOnItemSelectedListener(spinnerSelector);
 
         return v;
     }
@@ -140,22 +103,7 @@ public class AppAppearanceFragment  extends Fragment {
 		i.putExtra("title", getResources().getString(R.string.menu));
 		startActivity(i);
     }
- 
-    private void setStyle(View v, int enColor, int enImg, int sloColor, int sloImg, int hrColor, int hrImg) {
-		TextViewFont tvLanguageEn = (TextViewFont) v.findViewById(R.id.tv_language_en);
-        TextViewFont tvLanguageSlo = (TextViewFont) v.findViewById(R.id.tv_language_slo);
-        TextViewFont tvLanguageHr = (TextViewFont) v.findViewById(R.id.tv_language_hr);
-		ImageView ivLanguageEn = (ImageView) v.findViewById(R.id.iv_language_en);
-		ImageView ivLanguageSlo = (ImageView) v.findViewById(R.id.iv_language_slo);
-		ImageView ivLanguageHr = (ImageView) v.findViewById(R.id.iv_language_hr);
-		tvLanguageEn.setTextColor(getResources().getColor(enColor));
-		ivLanguageEn.setBackgroundResource(enImg);
-		tvLanguageSlo.setTextColor(getResources().getColor(sloColor));
-		ivLanguageSlo.setBackgroundResource(sloImg);
-		tvLanguageHr.setTextColor(getResources().getColor(hrColor));
-		ivLanguageHr.setBackgroundResource(hrImg);
-    }
-    
+
     private static class MySpinnerAdapter extends ArrayAdapter<String> {
         Typeface font = Typeface.createFromAsset(getContext().getAssets(), "fonts/Dosis-Regular.otf");
 
@@ -167,6 +115,7 @@ public class AppAppearanceFragment  extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView view = (TextView) super.getView(position, convertView, parent);
             view.setTypeface(font);
+            view.setGravity(Gravity.LEFT);
             return view;
         }
 
@@ -174,8 +123,26 @@ public class AppAppearanceFragment  extends Fragment {
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
             TextView view = (TextView) super.getDropDownView(position, convertView, parent);
             view.setTypeface(font);
+            view.setGravity(Gravity.LEFT);
             return view;
         }
     }     
+    
+    private OnItemSelectedListener spinnerSelector = new AdapterView.OnItemSelectedListener() {
+        public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+            ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.text_default_day));
+            ((TextView) parent.getChildAt(0)).setTextSize(getResources().getDimension(R.dimen.spinner_text_size));
+            ((TextView) parent.getChildAt(0)).setBackgroundColor(getResources().getColor(R.color.transparent_color));
+    		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Dosis-Medium.otf");  
+    		((TextView) parent.getChildAt(0)).setTypeface(font); 
+    		if (pos != langPos) {
+    			changeLanguage(SplashScreenActivity.languageCodes.get(pos));
+    		}
+        }
+
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };        
     
 }
