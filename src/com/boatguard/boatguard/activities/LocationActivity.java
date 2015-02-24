@@ -103,13 +103,12 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 			ObuState obuState = (ObuState)map.getValue();
 			if (obuState.getId_state() == ((State)Settings.states.get(Settings.STATE_LAT)).getId()) { 
 		        lat = Double.parseDouble(obuState.getValue());
+				date = Utils.formatDate(obuState.getDateState());
 			}
 			else if (obuState.getId_state() == ((State)Settings.states.get(Settings.STATE_LON)).getId()) { 
 		        lon = Double.parseDouble(obuState.getValue());
-			} 
-			else if (obuState.getId_state() == ((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId()) { 
 				date = Utils.formatDate(obuState.getDateState());
-			}
+			} 
 		}
 		if (lat != 0 && lon != 0) {
 			double latF = Math.floor(lat/100);
@@ -158,7 +157,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         	if (os != null){
         		lon = Double.parseDouble(os.getValue());	
         	}
-        	date = Utils.formatDate(obuHistoryStates.get(((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId()).getDateState());
+        	//date = Utils.formatDate(obuHistoryStates.get(((State)Settings.states.get(Settings.STATE_LAT)).getId()).getDateState());
 
         	if ((Math.abs(latLast - lat) < 0.1) || (Math.abs(lonLast - lon) < 0.1)) {
         		continue;
