@@ -822,7 +822,7 @@ public class MainActivity extends Activity {
 					}
 					else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_SERVIS)).getValue())) {
 						alarm = true;
-						showAlarmAnimation(component, imageView, R.drawable.ic_bilgepump_servis_1, R.drawable.ic_bilgepump_servis, true);
+						showAlarmAnimation(component, imageView, R.drawable.ic_bilgepump_repair_1, R.drawable.ic_bilgepump_repair, true);
 					}
 					else {
 						imageView.setBackgroundResource(android.R.color.transparent); 

@@ -109,7 +109,7 @@ public class HistoryFragment  extends Fragment {
     		            img.setImageResource(R.drawable.ic_bilgepump_demaged_1);
     				}
     				else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_SERVIS)).getValue())) {
-    		            img.setImageResource(R.drawable.ic_bilgepump_servis_1);
+    		            img.setImageResource(R.drawable.ic_bilgepump_repair_1);
     				}
     	            ((LinearLayout) v.findViewById(R.id.components)).addView(img);
     			}

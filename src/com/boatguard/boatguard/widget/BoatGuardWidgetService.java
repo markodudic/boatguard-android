@@ -161,7 +161,7 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 				rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_bilgepump_demaged_1);
 			}
 			else if (pumpState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_PUMP_SERVIS)).getValue())) {
-				rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_bilgepump_servis_1);
+				rvComponent.setImageViewResource(R.id.logo, R.drawable.ic_bilgepump_repair_1);
 			}
 		}
 		else if (idState == ((State)Settings.states.get(Settings.STATE_ANCHOR)).getId()) { 
