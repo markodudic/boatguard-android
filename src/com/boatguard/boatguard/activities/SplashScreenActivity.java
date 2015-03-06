@@ -144,6 +144,8 @@ public class SplashScreenActivity extends Activity {
 		    	   	    	   		String name = ((JSONObject)jRes.get("error")).getString("name");
 		    	   	    	   		DialogFactory.getInstance().displayWarning(SplashScreenActivity.this, name, msg, false);
 		    	   	    	   	} else {
+		    		    	   		String sessionId = (String)jRes.get("sessionId");
+		    		    	   		Utils.savePrefernciesString(SplashScreenActivity.this, Settings.SETTING_SESSION_ID, sessionId);
 		    	   	    	   		Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
 		    	   					startActivity(i);
 		    	   					finish();

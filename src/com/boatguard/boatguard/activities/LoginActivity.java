@@ -148,6 +148,8 @@ public class LoginActivity extends Activity {
 	    	   		String uid = ((JSONObject)jRes.get("obu")).getString("uid");
 	    	   		Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_OBU_ID, uid);
 	    	   		Utils.savePrefernciesBoolean(LoginActivity.this, Settings.SETTING_REMEMBER_ME, cbRememberMe.isChecked());
+	    	   		String sessionId = (String)jRes.get("sessionId");
+	    	   		Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_SESSION_ID, sessionId);
 	    	   		Intent i = new Intent(LoginActivity.this, MainActivity.class);
 					startActivity(i);								    	   		
 	    	   	}

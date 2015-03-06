@@ -643,8 +643,9 @@ public class MainActivity extends Activity {
 		System.out.println("************************GET DATA**************************");
 		refreshing = true;
     	String obuId = Utils.getPrefernciesString(this, Settings.SETTING_OBU_ID);
+    	String sessionid = Utils.getPrefernciesString(this, Settings.SETTING_SESSION_ID);
    		
-    	String urlString = this.getString(R.string.server_url) + "getdata?obuid="+obuId;
+    	String urlString = this.getString(R.string.server_url) + "getdata?obuid="+obuId+"&sessionid="+sessionid;
     	if (Utils.isNetworkConnected(this, false)) {
   				tvLastUpdate.setVisibility(View.GONE);	
     			ivRefresh.setVisibility(View.VISIBLE);	
@@ -741,13 +742,7 @@ public class MainActivity extends Activity {
 			}
         }
     };
-    
-	/*private void sendSMS(){    
-		String urlString = this.getString(R.string.server_url) + "sendSms?user=marko&message=qqq";
-		if (Utils.isNetworkConnected(this, false)) {
-			new Comm().execute(urlString, null); 
-		}
-	}*/
+
 			
 	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
@@ -864,7 +859,7 @@ public class MainActivity extends Activity {
 						showAlarmAccuAnimation(component, (TextView)component.findViewById(R.id.accu_ah));
 					}
 				}
-			}			
+			}
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId());
 				if (component != null) {

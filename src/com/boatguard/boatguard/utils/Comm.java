@@ -17,11 +17,11 @@ import android.os.AsyncTask;
 
 public class Comm extends AsyncTask<String, String, String> {
 	
-	OnTaskCompleteListener mListener;
+	public static HttpClient httpClient = new DefaultHttpClient();
+    OnTaskCompleteListener mListener;
 	
 	@Override
     protected String doInBackground(String... params) {
-       HttpClient httpClient = new DefaultHttpClient();
        HttpContext localContext = new BasicHttpContext();
        HttpPost httpPost = new HttpPost(params[0]);
        if (params[1] != null && params[1].equals("json")) {

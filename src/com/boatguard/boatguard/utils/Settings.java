@@ -36,6 +36,7 @@ import com.google.gson.Gson;
 
 public class Settings {
 	
+	public static String SETTING_SESSION_ID = "SESSIONID";
 	public static String SETTING_LANG = "LANG";
 	public static String SETTING_USERNAME = "USERNAME";
 	public static String SETTING_PASSWORD = "PASSWORD";
