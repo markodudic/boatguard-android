@@ -125,7 +125,9 @@ public class Settings {
 	private static Gson gson = new Gson();																					
     
     public static void getSettings(final Context context) {
-		String urlString = context.getString(R.string.server_url) + "getsettings";
+    	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
+   		
+		String urlString = context.getString(R.string.server_url) + "getsettings?sessionid="+sessionid;
     	if (Utils.isNetworkConnected(context, true)) {
   			try {
 		        	AsyncTask at = new Comm().execute(urlString, null); 
@@ -182,7 +184,8 @@ public class Settings {
     public static void getObuSettings(Context context) {
     	String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
    		
-    	String urlString = context.getString(R.string.server_url) + "getobusettings?obuid="+obuId;
+    	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
+    	String urlString = context.getString(R.string.server_url) + "getobusettings?obuid="+obuId+"&sessionid="+sessionid;
     	if (Utils.isNetworkConnected(context, true)) {
   			try {
 	        	AsyncTask at = new Comm().execute(urlString, null); 
@@ -228,7 +231,8 @@ public class Settings {
 	    Gson gson = new Gson();
 	    String data = gson.toJson(list);
 	    
-	    String urlString = context.getString(R.string.server_url) + "setobusettings";
+    	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
+	    String urlString = context.getString(R.string.server_url) + "setobusettings?sessionid="+sessionid;
 	    if (Utils.isNetworkConnected(context, true)) {
 	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
 	    }
@@ -237,7 +241,8 @@ public class Settings {
     public static void getObuComponents(Context context) {
     	String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
    		
-    	String urlString = context.getString(R.string.server_url) + "getobucomponents?obuid="+obuId;
+    	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
+    	String urlString = context.getString(R.string.server_url) + "getobucomponents?obuid="+obuId+"&sessionid="+sessionid;
     	if (Utils.isNetworkConnected(context, true)) {
   			try {
 	        	AsyncTask at = new Comm().execute(urlString, null); 
@@ -262,7 +267,8 @@ public class Settings {
     public static void getObuAlarms(Context context) {
     	String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
    		
-    	String urlString = context.getString(R.string.server_url) + "getobualarms?obuid="+obuId;
+    	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
+    	String urlString = context.getString(R.string.server_url) + "getobualarms?obuid="+obuId+"&sessionid="+sessionid;
     	if (Utils.isNetworkConnected(context, true)) {
   			try {
 	        	AsyncTask at = new Comm().execute(urlString, null); 
@@ -289,7 +295,8 @@ public class Settings {
 	    Gson gson = new Gson();
 	    String data = gson.toJson(obuAlarms);
 	    
-	    String urlString = context.getString(R.string.server_url) + "setobualarms";
+    	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
+	    String urlString = context.getString(R.string.server_url) + "setobualarms?sessionid="+sessionid;
 	    if (Utils.isNetworkConnected(context, true)) {
 	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
 	    }
@@ -298,7 +305,8 @@ public class Settings {
     public static void getCustomer(Context context) {
     	String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
    		
-    	String urlString = context.getString(R.string.server_url) + "getcustomer?obuid="+obuId;
+    	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
+    	String urlString = context.getString(R.string.server_url) + "getcustomer?obuid="+obuId+"&sessionid="+sessionid;
     	if (Utils.isNetworkConnected(context, true)) {
   			try {
 	        	AsyncTask at = new Comm().execute(urlString, null); 
@@ -318,7 +326,8 @@ public class Settings {
 	    Gson gson = new Gson();
 	    String data = gson.toJson(customer);
 	    
-	    String urlString = context.getString(R.string.server_url) + "setcustomer";
+    	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
+	    String urlString = context.getString(R.string.server_url) + "setcustomer?sessionid="+sessionid;
 	    if (Utils.isNetworkConnected(context, true)) {
 	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
 	    }
@@ -326,7 +335,8 @@ public class Settings {
 
     
     public static void getFriends(Context context) {
-    	String urlString = context.getString(R.string.server_url) + "getfriends?customerid="+customer.getUid();
+    	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
+    	String urlString = context.getString(R.string.server_url) + "getfriends?customerid="+customer.getUid()+"&sessionid="+sessionid;
     	if (Utils.isNetworkConnected(context, true)) {
   			try {
 	        	AsyncTask at = new Comm().execute(urlString, null); 
@@ -352,7 +362,8 @@ public class Settings {
 	    Gson gson = new Gson();
 	    String data = gson.toJson(friends);
 	    
-	    String urlString = context.getString(R.string.server_url) + "setfriends";
+    	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
+	    String urlString = context.getString(R.string.server_url) + "setfriends?sessionid="+sessionid;
 	    if (Utils.isNetworkConnected(context, true)) {
 	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
 	    }

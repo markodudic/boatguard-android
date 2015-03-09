@@ -39,7 +39,7 @@ import com.google.gson.Gson;
 
 public class SplashScreenActivity extends Activity {
  
-    private static int SPLASH_TIME_OUT = 200;
+    private static int SPLASH_TIME_OUT = 500;
     private static String TAG = "SplashScreenActivity";
     
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -120,7 +120,7 @@ public class SplashScreenActivity extends Activity {
 	    	   				//PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 		    	   		    //TelephonyManager mTelephonyMgr;
 			    	   	    //mTelephonyMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
-	    	   				String urlString = SplashScreenActivity.this.getString(R.string.server_url) + 
+	    	   		    	String urlString = SplashScreenActivity.this.getString(R.string.server_url) + 
 	    	   						"login?type=login" + 
 	    	   						"&username=" + username + 
 	    	   						"&password=" + password +
@@ -145,7 +145,8 @@ public class SplashScreenActivity extends Activity {
 		    	   	    	   		DialogFactory.getInstance().displayWarning(SplashScreenActivity.this, name, msg, false);
 		    	   	    	   	} else {
 		    		    	   		String sessionId = (String)jRes.get("sessionId");
-		    		    	   		Utils.savePrefernciesString(SplashScreenActivity.this, Settings.SETTING_SESSION_ID, sessionId);
+		    		    	   		//Utils.savePrefernciesString(SplashScreenActivity.this, Settings.SETTING_SESSION_ID, sessionId);
+		    		    	   		Utils.savePrefernciesString(SplashScreenActivity.this, Settings.SETTING_SESSION_ID, getResources().getString(R.string.session_id));
 		    	   	    	   		Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
 		    	   					startActivity(i);
 		    	   					finish();
@@ -196,7 +197,8 @@ public class SplashScreenActivity extends Activity {
 			    Gson gson = new Gson();
 			    String data = gson.toJson(device);
 			    
-			    String urlString = SplashScreenActivity.this.getString(R.string.server_url) + "setdevice";
+		    	String sessionid = Utils.getPrefernciesString(this, Settings.SETTING_SESSION_ID);
+			    String urlString = SplashScreenActivity.this.getString(R.string.server_url) + "setdevice?sessionid="+sessionid;
 			    if (Utils.isNetworkConnected(SplashScreenActivity.this, true)) {
 			    	AsyncTask at = new Comm().execute(urlString, "json", data); 
 			    }

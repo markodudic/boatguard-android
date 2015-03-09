@@ -92,6 +92,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        style="@style/LoginEditText"
+		        android:inputType="number"
 		        boatguard:font_name="@string/font_medium" />
 	    
 		    <ImageView

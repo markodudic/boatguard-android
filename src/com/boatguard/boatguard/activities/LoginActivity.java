@@ -1,16 +1,8 @@
 package com.boatguard.boatguard.activities;
 
-import java.net.URLEncoder;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import com.boatguard.boatguard.R;
-import com.boatguard.boatguard.components.TextViewFont;
-import com.boatguard.boatguard.objects.Device;
-import com.boatguard.boatguard.utils.Comm;
-import com.boatguard.boatguard.utils.DialogFactory;
-import com.boatguard.boatguard.utils.Settings;
-import com.boatguard.boatguard.utils.Utils;
-import com.google.gson.Gson;
+
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -23,11 +15,21 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.boatguard.boatguard.R;
+import com.boatguard.boatguard.components.TextViewFont;
+import com.boatguard.boatguard.objects.Device;
+import com.boatguard.boatguard.utils.Comm;
+import com.boatguard.boatguard.utils.DialogFactory;
+import com.boatguard.boatguard.utils.Settings;
+import com.boatguard.boatguard.utils.Utils;
+import com.google.gson.Gson;
 
 public class LoginActivity extends Activity {
 
@@ -53,7 +55,12 @@ public class LoginActivity extends Activity {
         ivBack.setVisibility(View.GONE);
         tvTitle.setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_big));
         
-        TextView btnRegister = (TextView) findViewById(R.id.button_register);
+   		String username = Utils.getPrefernciesString(LoginActivity.this, Settings.SETTING_USERNAME);
+   		String password = Utils.getPrefernciesString(LoginActivity.this, Settings.SETTING_PASSWORD);
+   		boolean remember = Utils.getPrefernciesBoolean(LoginActivity.this, Settings.SETTING_REMEMBER_ME, false);
+
+   		
+   		TextView btnRegister = (TextView) findViewById(R.id.button_register);
 		btnRegister.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) { 
@@ -69,37 +76,45 @@ public class LoginActivity extends Activity {
 			} 
 		});
 
+		final EditText etUsername = (EditText) findViewById(R.id.username);
+		if (remember) etUsername.setText(username);
 		ImageView ivUsername = (ImageView) findViewById(R.id.iv_username);
 		ivUsername.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				((EditText) findViewById(R.id.username)).setText("");
-				((EditText) findViewById(R.id.username)).requestFocus();
-		        
+				etUsername.setText("");
+				etUsername.requestFocus();
+				((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(etUsername, InputMethodManager.SHOW_FORCED);
 			} 
 		});
 
 		
+		final EditText etPassword = (EditText) findViewById(R.id.password);
+		if (remember) etPassword.setText(password);
 		ImageView ivPassword = (ImageView) findViewById(R.id.iv_password);
 		ivPassword.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				((EditText) findViewById(R.id.password)).setText("");
-				((EditText) findViewById(R.id.password)).requestFocus();
+				etPassword.setText("");
+				etPassword.requestFocus();
+				((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(etPassword, InputMethodManager.SHOW_FORCED);
 			} 
 		});
 
 		
+		final EditText etObuid = (EditText) findViewById(R.id.obu_id);
 		ImageView ivObuId = (ImageView) findViewById(R.id.iv_obu_id);
 		ivObuId.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				((EditText) findViewById(R.id.obu_id)).setText("");
-				((EditText) findViewById(R.id.obu_id)).requestFocus();
+				etObuid.setText("");
+				etObuid.requestFocus();
+				((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(etObuid, InputMethodManager.SHOW_FORCED);
 			} 
 		});
 		
 		CheckBox cbRememberMe = (CheckBox) findViewById(R.id.checkBox_remember_me);
+		cbRememberMe.setChecked(remember);
 		if (Utils.getPrefernciesInt(LoginActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
 			cbRememberMe.setButtonDrawable(R.drawable.btn_check_holo_light);
 		}
@@ -118,11 +133,13 @@ public class LoginActivity extends Activity {
    		    //TelephonyManager mTelephonyMgr; 
 	   	    //mTelephonyMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
 
+	    	String sessionid = Utils.getPrefernciesString(this, Settings.SETTING_SESSION_ID);
 	        String urlString = LoginActivity.this.getString(R.string.server_url) + 
 					"login?type="+type +
 					"&username=" + etUsername.getText().toString() + 
 					"&password=" + etPassword.getText().toString() + 
-					"&obu_sn=" + etObuid.getText().toString(); 
+					"&obu_sn=" + etObuid.getText().toString() +
+					"&sessionid="+sessionid; 
 					/*"&app_version=" + URLEncoder.encode(pInfo.versionName) +
 					"&device_name="+URLEncoder.encode(Build.MODEL)+
 					"&device_platform="+Build.VERSION.SDK_INT+
@@ -149,8 +166,9 @@ public class LoginActivity extends Activity {
 	    	   		Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_OBU_ID, uid);
 	    	   		Utils.savePrefernciesBoolean(LoginActivity.this, Settings.SETTING_REMEMBER_ME, cbRememberMe.isChecked());
 	    	   		String sessionId = (String)jRes.get("sessionId");
-	    	   		Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_SESSION_ID, sessionId);
-	    	   		Intent i = new Intent(LoginActivity.this, MainActivity.class);
+	    	   		//Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_SESSION_ID, sessionId);
+	    	   		Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_SESSION_ID, getResources().getString(R.string.session_id));
+   	    	   		Intent i = new Intent(LoginActivity.this, MainActivity.class);
 					startActivity(i);								    	   		
 	    	   	}
 	    	   	
@@ -190,7 +208,8 @@ public class LoginActivity extends Activity {
 			    Gson gson = new Gson();
 			    String data = gson.toJson(device);
 			    
-			    String urlString = LoginActivity.this.getString(R.string.server_url) + "setdevice";
+		    	String sessionid = Utils.getPrefernciesString(this, Settings.SETTING_SESSION_ID);
+			    String urlString = LoginActivity.this.getString(R.string.server_url) + "setdevice?sessionid="+sessionid;
 			    if (Utils.isNetworkConnected(LoginActivity.this, true)) {
 			    	AsyncTask at = new Comm().execute(urlString, "json", data); 
 			    }

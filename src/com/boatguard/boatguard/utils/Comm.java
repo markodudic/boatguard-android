@@ -24,7 +24,8 @@ public class Comm extends AsyncTask<String, String, String> {
     protected String doInBackground(String... params) {
        HttpContext localContext = new BasicHttpContext();
        HttpPost httpPost = new HttpPost(params[0]);
-       if (params[1] != null && params[1].equals("json")) {
+       System.out.println("url="+params[0]);
+		if (params[1] != null && params[1].equals("json")) {
     	   StringEntity postingString = null;
 			try {
 				postingString = new StringEntity(params[2]);

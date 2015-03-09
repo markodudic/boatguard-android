@@ -256,7 +256,6 @@ public class MainActivity extends Activity {
              	   			if (Utils.isNetworkConnected(MainActivity.this, true)) {
              	       			getObudata();
              	       			getObuHistoryData();
-             	       			//sendSMS();
              	   			}
                 		}
              	   	}
@@ -375,7 +374,8 @@ public class MainActivity extends Activity {
 	
 	private void confirmAlarm(int alarmId){
 		String obuId = Utils.getPrefernciesString(MainActivity.this, Settings.SETTING_OBU_ID);
-   		String urlString = MainActivity.this.getString(R.string.server_url) + "confirmalarm?obuid="+obuId+"&alarmid="+alarmId;
+    	String sessionid = Utils.getPrefernciesString(this, Settings.SETTING_SESSION_ID);
+   		String urlString = MainActivity.this.getString(R.string.server_url) + "confirmalarm?obuid="+obuId+"&alarmid="+alarmId+"&sessionid="+sessionid;
    		new Comm().execute(urlString, null); 
    		
    		if (activeAlarms.indexOf(alarmId) != -1) {
@@ -675,7 +675,7 @@ public class MainActivity extends Activity {
         public void onComplete(String res) {
   			try {
 	            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
-	    	   	JSONArray jsonStates = (JSONArray)jRes.get("states");
+    	   		JSONArray jsonStates = (JSONArray)jRes.get("states");
 	    	   	obuStates.clear();
 		   		for (int i=0; i< jsonStates.length(); i++) {
 		   			ObuState obuState = gson.fromJson(jsonStates.get(i).toString(), ObuState.class);
@@ -717,7 +717,8 @@ public class MainActivity extends Activity {
 	public void getObuHistoryData() {
     	String obuId = Utils.getPrefernciesString(this, Settings.SETTING_OBU_ID);
    		
-    	String urlString = this.getString(R.string.server_url) + "gethistorydata?obuid="+obuId;
+    	String sessionid = Utils.getPrefernciesString(this, Settings.SETTING_SESSION_ID);
+    	String urlString = this.getString(R.string.server_url) + "gethistorydata?obuid="+obuId+"&sessionid="+sessionid;
     	if (Utils.isNetworkConnected(this, false)) {
             	Comm at = new Comm();
     			at.setCallbackListener(clGetObuHistoryData);
@@ -874,7 +875,7 @@ public class MainActivity extends Activity {
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId());
 				if (component != null) {
-					String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
+					String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue().replace(",", ".")));
 					((TextViewFont)component.findViewById(R.id.accu_napetost)).setText(f + "V");
 			        ((TextViewFont)component.findViewById(R.id.accu_napetost)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
 				}
@@ -882,7 +883,7 @@ public class MainActivity extends Activity {
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId());
 				if (component != null) {
-					String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
+					String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue().replace(",", ".")));
 					((TextViewFont)component.findViewById(R.id.accu_tok)).setText(f + "A");
 			        ((TextViewFont)component.findViewById(R.id.accu_tok)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
 				}
