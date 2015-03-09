@@ -50,6 +50,7 @@ public class GcmIntentService extends IntentService {
           
           //if (MainActivity.activeAlarms.indexOf(alarmId) == -1) {
         	  showNotification(alarmId, extras.getString("title"), extras.getString("message"), timestamp, Integer.parseInt(extras.getString("vibrate")), Integer.parseInt(extras.getString("sound")));
+        	  this.sendBroadcast(new Intent("GCMMessageReceived"));
         	//  MainActivity.activeAlarms.add(alarmId);
   		  //}
           
@@ -61,16 +62,18 @@ public class GcmIntentService extends IntentService {
 		resultIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		PendingIntent pIntent = PendingIntent.getActivity(this, id, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		
-		String uri = "drawable/"+ ((Alarm)Settings.alarms.get(id)).getIcon(); 
-		int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-		Bitmap bm = BitmapFactory.decodeResource(getResources(), imageResource);
+		Bitmap bm = BitmapFactory.decodeResource(this.getResources(), R.drawable.notification);
+		if (BoatguardLifecycleHandler.isApplicationRunning()) {
+			String uri = "drawable/"+ ((Alarm)Settings.alarms.get(id)).getIcon(); 
+			int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+			bm = BitmapFactory.decodeResource(getResources(), imageResource);
+		}
 		
 		NotificationCompat.Builder mBuilder =
 		        new NotificationCompat.Builder(this)
 		        .setSmallIcon(R.drawable.ic_notification)
 		        .setLargeIcon(bm)
 		        .setColor(getResources().getColor(R.color.background_night))
-		        //.setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.notification))
 		        .setContentTitle(title)
 		        .setContentText(message)
 		        .setAutoCancel(true)
@@ -87,8 +90,7 @@ public class GcmIntentService extends IntentService {
 		try {
 	        if (sound == 1 && (Utils.getPrefernciesBoolean(this, Settings.SETTING_PLAY_SOUND, false))) {
 		    	Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-		    	System.out.println(notification);
-		        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+		    	Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
 		        r.play();
 	        }
 	    } catch (Exception e) {}

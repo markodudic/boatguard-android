@@ -200,7 +200,7 @@ public class SplashScreenActivity extends Activity {
 			    if (Utils.isNetworkConnected(SplashScreenActivity.this, true)) {
 			    	AsyncTask at = new Comm().execute(urlString, "json", data); 
 			    }
-		}
+		    }
         } catch (Exception e) {
         	e.printStackTrace();
         	Toast toast = Toast.makeText(SplashScreenActivity.this, getString(R.string.json_error), Toast.LENGTH_LONG);

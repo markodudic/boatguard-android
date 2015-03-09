@@ -23,8 +23,10 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -341,6 +343,15 @@ public class MainActivity extends Activity {
         Settings.getFriends(this);
         showObuComponents();
         
+        
+        this.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+            	getObudata();
+            }
+        }, new IntentFilter("GCMMessageReceived"));
+        
+
         //componentsAdapter = new ComponentsAdapter();
         //lvComponents.setAdapter(componentsAdapter);
    		
@@ -639,7 +650,7 @@ public class MainActivity extends Activity {
     }
     
     
-	public void getObudata() {
+    public void getObudata() {
 		System.out.println("************************GET DATA**************************");
 		refreshing = true;
     	String obuId = Utils.getPrefernciesString(this, Settings.SETTING_OBU_ID);
