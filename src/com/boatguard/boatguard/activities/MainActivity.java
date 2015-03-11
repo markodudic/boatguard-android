@@ -708,6 +708,7 @@ public class MainActivity extends Activity {
 	    	   	handler.postDelayed(endRefresh, 1000);
 
 	        } catch (Exception e) {
+	    	   	handler.postDelayed(endRefresh, 1000);
 	        	e.printStackTrace();
 	        	e.getLocalizedMessage();
    	   		}
