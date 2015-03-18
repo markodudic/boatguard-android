@@ -75,72 +75,28 @@
 		    android:entries="@array/languages"
 			android:prompt="@string/choose_language" />
 	</FrameLayout>	
-			
-	<!-- LinearLayout 
+		
+	
+	<LinearLayout 
 		android:layout_width="match_parent"
 	    android:layout_height="@dimen/settings_height"
 	    android:orientation="horizontal" >
 	    
 	    <com.boatguard.boatguard.components.TextViewFont
-	        android:id="@+id/tv_language_en"
-		    style="@style/SettingsText"
+	        style="@style/SettingsText"
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
 	        android:layout_weight="1"
-	        android:text="@string/language_en"
+	        android:text="@string/application_version"
 	        boatguard:font_name="@string/font_medium" />
 			    
-        <ImageView
-            android:id="@+id/iv_language_en"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|right"
-            android:layout_marginRight="-10dp" />
-	    
+	    <com.boatguard.boatguard.components.TextViewFont
+	        android:id="@+id/tv_application_version"
+ 		    style="@style/SettingsTextRight"
+	        boatguard:font_name="@string/font_medium"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="3" />
     </LinearLayout>
-    
-	<LinearLayout 
-		android:layout_width="match_parent"
-	    android:layout_height="@dimen/settings_height"
-	    android:orientation="horizontal" >
-	    
-	    <com.boatguard.boatguard.components.TextViewFont
-	        android:id="@+id/tv_language_slo"
-	        style="@style/SettingsText"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:layout_weight="1"
-	        android:text="@string/language_slo"
-	        boatguard:font_name="@string/font_medium" />
-
-        <ImageView
-	        android:id="@+id/iv_language_slo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|right"
-            android:layout_marginRight="-10dp" />
-	</LinearLayout>
-
-	<LinearLayout 
-		android:layout_width="match_parent"
-	    android:layout_height="@dimen/settings_height"
-	    android:orientation="horizontal" >
-	    
-	    <com.boatguard.boatguard.components.TextViewFont
-	        android:id="@+id/tv_language_hr"
-	        style="@style/SettingsText"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:layout_weight="1"
-	        android:text="@string/language_hr"
-	        boatguard:font_name="@string/font_medium" />
-
-        <ImageView
-	        android:id="@+id/iv_language_hr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|right"
-            android:layout_marginRight="-10dp" />
-	    
-	 </LinearLayout-->		
+	
 </LinearLayout>

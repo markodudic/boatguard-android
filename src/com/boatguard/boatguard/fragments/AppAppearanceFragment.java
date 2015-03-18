@@ -7,6 +7,8 @@ import java.util.List;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -93,6 +95,15 @@ public class AppAppearanceFragment  extends Fragment {
         spinnerLanguage.setSelection(langPos);
         spinnerLanguage.setOnItemSelectedListener(spinnerSelector);
 
+        TextView tvAppVersion = (TextView)v.findViewById(R.id.tv_application_version);
+        try {
+			PackageInfo info = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
+	        tvAppVersion.setText(info.versionName);
+		} catch (NameNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
         return v;
     }
     

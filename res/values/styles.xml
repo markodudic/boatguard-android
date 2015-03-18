@@ -275,9 +275,12 @@
        <item name="android:textColor">?text_content</item>
    </style> 
    
-   <style name="SettingsValueText" parent="SettingsText">
-       <item name="android:textColor">@color/text_green</item>
+   <style name="SettingsTextRight" parent="SettingsText">
        <item name="android:gravity">right</item>
+   </style> 
+   
+   <style name="SettingsValueText" parent="SettingsTextRight">
+       <item name="android:textColor">@color/text_green</item>
    </style> 
 
    <style name="SettingsButtonText" parent="SettingsText">
