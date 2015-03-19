@@ -165,39 +165,8 @@ public class MainActivity extends Activity {
 		ivLocation.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) { 
-				/*double lat=0, lon=0;
-				String date = "";
-		        Set set = obuStates.entrySet(); 
-				Iterator i = set.iterator();
-				while(i.hasNext()) { 
-					Map.Entry map = (Map.Entry)i.next(); 
-					ObuState obuState = (ObuState)map.getValue();
-					if (obuState.getId_state() == ((State)Settings.states.get(Settings.STATE_LAT)).getId()) { 
-				        lat = Double.parseDouble(obuState.getValue());
-					}
-					else if (obuState.getId_state() == ((State)Settings.states.get(Settings.STATE_LON)).getId()) { 
-				        lon = Double.parseDouble(obuState.getValue());
-					} else if (obuState.getId_state() == ((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId()) { 
-						date = Utils.formatDate(obuState.getDateState());
-					}
-				}
-				if (lat != 0 && lon != 0) {
-					double latF = Math.floor(lat/100);
-					double latD = (lat/100 - latF)/0.6;
-					lat = latF + latD;
-					double lonF = Math.floor(lon/100);
-					double lonD = (lon/100 - lonF)/0.6;
-					lon = lonF + lonD;
-				}*/
-
 				Intent in = new Intent(MainActivity.this, LocationActivity.class);
-		    	/*in.putExtra("lat", lat);
-		    	in.putExtra("lon", lon);
-		    	in.putExtra("date", date);*/
 				startActivity(in);				
-				
-				//sv.setVisibility(View.GONE);
-				//lLocation.setVisibility(View.VISIBLE);
 			}
 		});
 		

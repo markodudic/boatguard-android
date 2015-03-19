@@ -116,7 +116,7 @@ public class SettingsFragment  extends Fragment {
         String lang = Utils.getPrefernciesString(getActivity(), Settings.SETTING_LANG);
         text[8] = refreshTime +
         			(theme == R.style.AppThemeDay?" / "+getResources().getString(R.string.day):" / "+getResources().getString(R.string.night)) + 
-        			(SplashScreenActivity.languageCodes.indexOf(lang)!=-1?" / "+SplashScreenActivity.languages.get(SplashScreenActivity.languageCodes.indexOf(lang)):"");  
+        			(SplashScreenActivity.languageCodes!=null&&SplashScreenActivity.languageCodes.indexOf(lang)!=-1?" / "+SplashScreenActivity.languages.get(SplashScreenActivity.languageCodes.indexOf(lang)):"");  
 
         FragmentManager fragmentManager = getFragmentManager();
         for (int i=0; i<settingsItems.length; i++) {
