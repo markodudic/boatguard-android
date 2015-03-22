@@ -829,7 +829,6 @@ public class MainActivity extends Activity {
 			}		
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(idState);
-				System.out.println("component="+component+":"+component.getId());
 				if (component != null) {
 					((TextViewFont)component.findViewById(R.id.accu_ah)).setText(obuState.getValue() + "%");
 			        ((TextViewFont)component.findViewById(R.id.accu_ah)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
@@ -845,16 +844,16 @@ public class MainActivity extends Activity {
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId());
 				if (component != null) {
-					String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue().replace(",", ".")));
-					((TextViewFont)component.findViewById(R.id.accu_napetost)).setText(f + "V");
+					//String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
+					((TextViewFont)component.findViewById(R.id.accu_napetost)).setText(obuState.getValue() + "V");
 			        ((TextViewFont)component.findViewById(R.id.accu_napetost)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
 				}
 			}	
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) && (isAccuConnected)) { 
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId());
 				if (component != null) {
-					String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue().replace(",", ".")));
-					((TextViewFont)component.findViewById(R.id.accu_tok)).setText(f + "A");
+					//String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
+					((TextViewFont)component.findViewById(R.id.accu_tok)).setText(obuState.getValue() + "A");
 			        ((TextViewFont)component.findViewById(R.id.accu_tok)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
 				}
 			}	
