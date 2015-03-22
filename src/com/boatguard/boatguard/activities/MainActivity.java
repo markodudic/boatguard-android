@@ -845,8 +845,11 @@ public class MainActivity extends Activity {
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId());
 				if (component != null) {
 					//String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
+					if (obuState.getValue().equals("MAX")) {
+						((TextViewFont)component.findViewById(R.id.accu_napetost)).setTextColor(getResources().getColor(R.color.text_green));
+					}
 					((TextViewFont)component.findViewById(R.id.accu_napetost)).setText(obuState.getValue() + "V");
-			        ((TextViewFont)component.findViewById(R.id.accu_napetost)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
+					((TextViewFont)component.findViewById(R.id.accu_napetost)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
 				}
 			}	
 			else if ((idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) && (isAccuConnected)) { 
