@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.boatguard.boatguard.R;
 import com.boatguard.boatguard.activities.MainActivity;
+import com.boatguard.boatguard.components.TextViewFont;
 import com.boatguard.boatguard.objects.AppSetting;
 import com.boatguard.boatguard.objects.ObuState;
 import com.boatguard.boatguard.objects.State;
@@ -144,15 +145,21 @@ public class HistoryFragment  extends Fragment {
     				((LinearLayout) v.findViewById(R.id.components)).addView(vNapetost);    				
     			}			
     			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_NAPETOST)).getId()) { 
-    				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
+    				//String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
     				View vv = inflater.inflate(R.layout.row_history_text, parent, false);
-    	            ((TextView) vv.findViewById(R.id.tv_history_row)).setText(f + "AH");
+					if (obuState.getValue().equals("MAX")) {
+						((TextViewFont)vv.findViewById(R.id.tv_history_row)).setTextColor(getResources().getColor(R.color.text_green));
+					}
+    	            ((TextView) vv.findViewById(R.id.tv_history_row)).setText(obuState.getValue() + "V");
     				((LinearLayout) v.findViewById(R.id.components)).addView(vv);
     			}	
     			else if (idState == ((State)Settings.states.get(Settings.STATE_ACCU_TOK)).getId()) { 
-    				String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
+    				//String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
     				View vv = inflater.inflate(R.layout.row_history_text, parent, false);
-    	            ((TextView) vv.findViewById(R.id.tv_history_row)).setText(f + "A");
+					if (obuState.getValue().indexOf("-") != -1) {
+						((TextViewFont)vv.findViewById(R.id.tv_history_row)).setTextColor(getResources().getColor(R.color.alarm_red));
+					}
+    	            ((TextView) vv.findViewById(R.id.tv_history_row)).setText(obuState.getValue() + "A");
     				((LinearLayout) v.findViewById(R.id.components)).addView(vv);
     				
     			}	

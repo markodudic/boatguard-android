@@ -856,6 +856,9 @@ public class MainActivity extends Activity {
 				FrameLayout component = (FrameLayout)findViewById(((State)Settings.states.get(Settings.STATE_ACCU_AH)).getId());
 				if (component != null) {
 					//String f = new DecimalFormat("#.##").format(Float.parseFloat(obuState.getValue()));
+					if (obuState.getValue().indexOf("-") != -1) {
+						((TextViewFont)component.findViewById(R.id.accu_tok)).setTextColor(getResources().getColor(R.color.alarm_red));
+					}
 					((TextViewFont)component.findViewById(R.id.accu_tok)).setText(obuState.getValue() + "A");
 			        ((TextViewFont)component.findViewById(R.id.accu_tok)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
 				}
