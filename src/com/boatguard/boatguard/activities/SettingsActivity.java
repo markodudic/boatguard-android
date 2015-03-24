@@ -134,7 +134,7 @@ public class SettingsActivity extends Activity {
 		btnBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-		    	if ((fragmentId == 0) || (fragmentId == 1) || (fragmentId == 3)) {
+		    	if ((fragmentId == 0) || (fragmentId == 1) || (fragmentId == 2) || (fragmentId == 3)) {
 		    		Settings.setObuSettings(SettingsActivity.this);
 		    		finish();
 		    	}

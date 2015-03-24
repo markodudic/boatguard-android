@@ -9,6 +9,7 @@ import com.boatguard.boatguard.objects.State;
 import com.boatguard.boatguard.utils.Comm;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
+
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -40,8 +41,14 @@ public class AnchorDriftingFragment  extends Fragment {
         
         final TextView tvanchorDrifting = (TextView)v.findViewById(R.id.tv_anchor_drifting);
         tvanchorDrifting.setText(anchorDriftingValue + "m");
-		Switch switchanchorDrifting = (Switch) v.findViewById(R.id.switch_anchor_drifting);
+		final Switch switchanchorDrifting = (Switch) v.findViewById(R.id.switch_anchor_drifting);
 		switchanchorDrifting.setChecked(anchorDrifting.equals("1"));
+		switchanchorDrifting.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v1) {
+				Settings.obuSettings.get(((State)Settings.states.get(Settings.STATE_ANCHOR)).getId()).setValue(switchanchorDrifting.isChecked()?"1":"0");
+			}
+		});
         
 		SeekBar seekbaranchorDrifting = (SeekBar) v.findViewById(R.id.seekbar_anchor_drifting);
 		seekbaranchorDrifting.setProgress(Integer.parseInt(anchorDriftingValue));
@@ -58,7 +65,7 @@ public class AnchorDriftingFragment  extends Fragment {
 
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				tvanchorDrifting.setText(progressChanged + "m");
-
+				Settings.obuSettings.get(((State)Settings.states.get(Settings.STATE_ANCHOR_DRIFTING)).getId()).setValue(progressChanged+"");
 			}
 		});
 		
@@ -67,16 +74,8 @@ public class AnchorDriftingFragment  extends Fragment {
 		tvDefine.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v1) {
-				Switch switchanchorDrifting = (Switch) v.findViewById(R.id.switch_anchor_drifting);
-				SeekBar seekbaranchorDrifting = (SeekBar) v.findViewById(R.id.seekbar_anchor_drifting);
-				
-				//set settings
-		        HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
-		        obuSettings.get(((State)Settings.states.get(Settings.STATE_ANCHOR)).getId()).setValue(switchanchorDrifting.isChecked()?"1":"0");
-		        obuSettings.get(((State)Settings.states.get(Settings.STATE_ANCHOR_DRIFTING)).getId()).setValue(seekbaranchorDrifting.getProgress()+"");
-		        
+				Settings.obuSettings.get(((State)Settings.states.get(Settings.STATE_LAT)).getId()).setValue("SET");
 		        Settings.setObuSettings(getActivity());
-		        
 		        getActivity().finish();
 			}
 		});	
