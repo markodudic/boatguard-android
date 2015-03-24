@@ -753,12 +753,13 @@ public class MainActivity extends Activity {
 				if (component != null) {
 					ImageView imageView = (ImageView)component.findViewById(R.id.logo);
 					String geofence = obuState.getValue();
+					String geofenceValue = Settings.obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).getValue();
 					cancelAlarmAnimation(component, null, false);
 					
-					if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_DISABLED)).getValue())) {
+					if (geofenceValue.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_DISABLED)).getValue())) {
 						imageView.setBackgroundResource(R.drawable.ic_geofence_disabled);
 					} 
-					else if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ENABLED)).getValue())) {
+					else if (geofenceValue.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ENABLED)).getValue())) {
 						imageView.setBackgroundResource(R.drawable.ic_geofence_home);
 					} 
 					else if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ALARM)).getValue())) {
@@ -816,7 +817,7 @@ public class MainActivity extends Activity {
 					if (anchorState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_DISABLED)).getValue())) {
 						imageView.setBackgroundResource(R.drawable.ic_anchor_disabled);
 					}			
-					else if (anchorState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_ENABLED)).getValue())) {
+					if (anchorState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_ENABLED)).getValue())) {
 						imageView.setBackgroundResource(R.drawable.ic_anchor);
 						int anchorDriftingId = ((State)Settings.states.get(Settings.STATE_ANCHOR_DRIFTING)).getId();
 						String anchorDrifting = ((ObuState) obuStates.get(anchorDriftingId)).getValue();

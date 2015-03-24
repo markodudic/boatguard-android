@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.boatguard.boatguard.activities.SettingsActivity;
 import com.boatguard.boatguard.objects.ObuSetting;
 import com.boatguard.boatguard.objects.State;
 import com.boatguard.boatguard.utils.Comm;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
+
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -40,9 +42,15 @@ public class GeoFenceFragment  extends Fragment {
         
         final TextView tvGeoFence = (TextView)v.findViewById(R.id.tv_geo_fence);
         tvGeoFence.setText(geoFenceValue + "m");
-		Switch switchGeoFence = (Switch) v.findViewById(R.id.switch_geo_fence);
+		final Switch switchGeoFence = (Switch) v.findViewById(R.id.switch_geo_fence);
 		switchGeoFence.setChecked(geoFence.equals("1"));
-        
+		switchGeoFence.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v1) {
+				Settings.obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).setValue(switchGeoFence.isChecked()?"1":"0");
+			}
+		});
+		
 		SeekBar seekbarGeoFence = (SeekBar) v.findViewById(R.id.seekbar_geo_fence);
 		seekbarGeoFence.setProgress(Integer.parseInt(geoFenceValue));
 		seekbarGeoFence.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -58,7 +66,7 @@ public class GeoFenceFragment  extends Fragment {
 
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				tvGeoFence.setText(progressChanged + "m");
-
+				Settings.obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_DISTANCE)).getId()).setValue(progressChanged+"");
 			}
 		});
 		
@@ -67,16 +75,8 @@ public class GeoFenceFragment  extends Fragment {
 		tvDefine.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v1) {
-				Switch switchGeoFence = (Switch) v.findViewById(R.id.switch_geo_fence);
-				SeekBar seekbarGeoFence = (SeekBar) v.findViewById(R.id.seekbar_geo_fence);
-				
-				//set settings
-		        HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
-		        obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).setValue(switchGeoFence.isChecked()?"1":"0");
-		        obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_DISTANCE)).getId()).setValue(seekbarGeoFence.getProgress()+"");
-		        
+				Settings.obuSettings.get(((State)Settings.states.get(Settings.STATE_LAT)).getId()).setValue("SET");
 		        Settings.setObuSettings(getActivity());
-		        
 		        getActivity().finish();
 			}
 		});	
