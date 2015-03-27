@@ -91,7 +91,7 @@ public class AppAppearanceFragment  extends Fragment {
         );
         spinnerLanguage.setAdapter(adapterC);
 		String lang = Utils.getPrefernciesString(getActivity(), Settings.SETTING_LANG);
-		langPos = SplashScreenActivity.languageCodes.indexOf(lang);
+		langPos = SplashScreenActivity.languageCodes!=null&&SplashScreenActivity.languageCodes.indexOf(lang)!=-1?SplashScreenActivity.languageCodes.indexOf(lang):0;
         spinnerLanguage.setSelection(langPos);
         spinnerLanguage.setOnItemSelectedListener(spinnerSelector);
 

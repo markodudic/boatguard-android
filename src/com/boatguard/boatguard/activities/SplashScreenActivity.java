@@ -143,16 +143,20 @@ public class SplashScreenActivity extends Activity {
 		    	   	    	   		String msg = ((JSONObject)jRes.get("error")).getString("msg");
 		    	   	    	   		String name = ((JSONObject)jRes.get("error")).getString("name");
 		    	   	    	   		DialogFactory.getInstance().displayWarning(SplashScreenActivity.this, name, msg, false);
+		    	   	    	   		
+		    	    	   			Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
+		    	    	   			startActivity(i);						
+		    	    	   			finish();
 		    	   	    	   	} else {
 		    		    	   		String sessionId = (String)jRes.get("sessionId");
 		    		    	   		//Utils.savePrefernciesString(SplashScreenActivity.this, Settings.SETTING_SESSION_ID, sessionId);
 		    		    	   		Utils.savePrefernciesString(SplashScreenActivity.this, Settings.SETTING_SESSION_ID, getResources().getString(R.string.session_id));
+		    	   					setDevice();
 		    	   	    	   		Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
 		    	   					startActivity(i);
 		    	   					finish();
 		    	   	    	   	}
 		    	   	    	   	
-		    	   	    	   	setDevice();
 	    	   		        }
 	    	   	        } catch (Exception e) {
 	    	   	        	e.printStackTrace();
