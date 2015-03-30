@@ -105,5 +105,8 @@
 	        android:name="com.boatguard.boatguard.widget.BoatGuardWidgetService"
 	        android:exported="false"
 	        android:permission="android.permission.BIND_REMOTEVIEWS" />        
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="3ba4d554b26e61e01ba9a9c35e8066822cd6ce16" />
     </application>
 </manifest>
