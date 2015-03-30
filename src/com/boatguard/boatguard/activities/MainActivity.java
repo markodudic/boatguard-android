@@ -1,7 +1,6 @@
 package com.boatguard.boatguard.activities;
  
 import java.sql.Timestamp;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -73,6 +72,7 @@ import com.boatguard.boatguard.utils.Comm.OnTaskCompleteListener;
 import com.boatguard.boatguard.utils.CyclicTransitionDrawable;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
+import com.flurry.android.FlurryAgent;
 import com.google.gson.Gson;
 
 public class MainActivity extends Activity {
@@ -119,6 +119,7 @@ public class MainActivity extends Activity {
 		if (theme != -1) {
 			setTheme(theme);			
 		}
+		FlurryAgent.logEvent("START");
 		
 		stylesAttributes = getTheme().obtainStyledAttributes(
 	    		Utils.getPrefernciesInt(this, Settings.SETTING_THEME), 

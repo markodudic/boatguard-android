@@ -3,13 +3,17 @@ package com.boatguard.boatguard;
 import android.app.Application;
 
 import com.boatguard.boatguard.utils.BoatguardLifecycleHandler;
+import com.flurry.android.FlurryAgent;
 
 public class BoatguardApplication extends Application
 {
     @Override
     public void onCreate()
     {
-    	registerActivityLifecycleCallbacks(new BoatguardLifecycleHandler());
+        FlurryAgent.setLogEnabled(false);
+        FlurryAgent.init(this, getResources().getString(R.string.MY_FLURRY_APIKEY));
+
+        registerActivityLifecycleCallbacks(new BoatguardLifecycleHandler());
     	
     	// begin add
         try {

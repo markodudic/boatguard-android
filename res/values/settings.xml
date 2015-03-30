@@ -11,5 +11,7 @@
 	<string name="font_regular">fonts/Dosis-Regular.otf</string>
 	<string name="font_medium">fonts/Dosis-Medium.otf</string>		
 		
+	<string name="MY_FLURRY_APIKEY">SGSTT7RB45XRBMKH527D</string>
+		
 </resources> 
 	
