@@ -695,9 +695,6 @@ public class MainActivity extends Activity {
     			at.setCallbackListener(clGetObuHistoryData);
     			at.execute(urlString, null); 
     	}
-        throw new RuntimeException("This is a crash");
-
-    	
 	}
 	
     private OnTaskCompleteListener clGetObuHistoryData = new OnTaskCompleteListener() {
