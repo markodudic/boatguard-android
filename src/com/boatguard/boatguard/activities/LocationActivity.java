@@ -16,6 +16,7 @@ import android.widget.ImageView;
 
 import com.boatguard.boatguard.R;
 import com.boatguard.boatguard.components.TextViewFont;
+import com.boatguard.boatguard.objects.AppSetting;
 import com.boatguard.boatguard.objects.ObuSetting;
 import com.boatguard.boatguard.objects.ObuState;
 import com.boatguard.boatguard.objects.State;
@@ -127,19 +128,17 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 		
 		//geo fence radius
 		HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
-	    String geoFence = obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).getValue();
-	    double geoFenceValue = Double.parseDouble(obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_DISTANCE)).getId()).getValue());
-	    
-	    if (geoFence.equals("1")) {
-	    	CircleOptions circleOptions = new CircleOptions()
-			    .center(new LatLng(lon, lat))
-			    .radius(geoFenceValue); // In meters
-	
-			// Get back the mutable Circle
-			Circle circle = map.addCircle(circleOptions);
-			circle.setFillColor(getResources().getColor(R.color.location_fill));
-			circle.setStrokeColor(getResources().getColor(R.color.location_stroke));
-			circle.setStrokeWidth(4.0f);
+	    String geoFence = obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).getValue();	  
+	    if (geoFence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ENABLED)).getValue())) {
+	    	double geoFenceValue = Double.parseDouble(obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_DISTANCE)).getId()).getValue());
+			drawCircle(lon, lat, geoFenceValue);
+	    }
+
+		//anchor radius
+		String anchor = obuStates.get(((State)Settings.states.get(Settings.STATE_ANCHOR)).getId()).getValue();
+	    if (anchor.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_ANCHOR_ENABLED)).getValue())) {
+	    	double anchorValue = Double.parseDouble(obuSettings.get(((State)Settings.states.get(Settings.STATE_ANCHOR_DRIFTING)).getId()).getValue());
+	    	drawCircle(lon, lat, anchorValue);
 	    }
 
 	    //history positions
@@ -191,7 +190,18 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         polyline.setWidth(3.0f);
 	}
 
+	private void drawCircle (double lon, double lat, double radius) {
+	    CircleOptions circleOptions = new CircleOptions()
+	    .center(new LatLng(lon, lat))
+	    .radius(radius); // In meters
 
+		// Get back the mutable Circle
+		Circle circle = map.addCircle(circleOptions);
+		circle.setFillColor(getResources().getColor(R.color.location_fill));
+		circle.setStrokeColor(getResources().getColor(R.color.location_stroke));
+		circle.setStrokeWidth(4.0f);
+
+	}
 
 		
 }
