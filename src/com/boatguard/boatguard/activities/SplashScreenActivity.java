@@ -47,7 +47,6 @@ public class SplashScreenActivity extends Activity {
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     
-    protected String SENDER_ID = "252096111121";
     private GoogleCloudMessaging gcm =null;
     private String regid = null;
     private Context context= null;
@@ -276,7 +275,7 @@ public class SplashScreenActivity extends Activity {
 			           {
 			                    gcm = GoogleCloudMessaging.getInstance(context);
 			           }
-			           regid = gcm.register(SENDER_ID);      
+			           regid = gcm.register(getResources().getString(R.string.GDC_PROJECT_ID));      
 			           Utils.savePrefernciesString(SplashScreenActivity.this, PROPERTY_REG_ID, regid);
 			           int appVersion = getAppVersion(SplashScreenActivity.this);
 			           Utils.savePrefernciesInt(SplashScreenActivity.this, PROPERTY_APP_VERSION, appVersion);

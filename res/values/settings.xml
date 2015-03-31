@@ -12,6 +12,8 @@
 	<string name="font_medium">fonts/Dosis-Medium.otf</string>		
 		
 	<string name="MY_FLURRY_APIKEY">SGSTT7RB45XRBMKH527D</string>
-		
+
+	<string name="GDC_PROJECT_ID">252096111121</string>
+	
 </resources> 
 	
