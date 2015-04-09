@@ -1,0 +1,6 @@
++ preberi sms, prikazi notification in zbrisi sms iz inboxa. ne dovoli da gre v inbox,
+- prikazi lokacijo uporabnika na karti ali pa ce ti prek sms-a poslje lokacijo
+AT+CMGS="040227627"
+#BilgeGuard {"location":{"lat":"46.052327","lon":"14.506416"}}
+- USSD
+http://www.codedemigod.com/intercepting-ussd-calls-in-android/

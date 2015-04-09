@@ -1,0 +1,75 @@
+
+OBU PO�LJE SERVERJU
+----------------------
+LATITUDE, N/S INDICATOR, LONGITUDE, E/W INDICATOR, GPS QUAL,STA NUM,STANJE PUMPE, DvskStrt, TipkaSidro, FenceVltn, AccPrstn, TokH, TokL, EnergijaH, EnergijaM, EnergijaL, NapetostH, NapetostL, �teviloOutputov, PosamezenOutput, �teviloInputov, PosamezenInput
+
+
+SERVER PO�LJE OBUJU
+---------------------
+YH YL PiaPrstn UraMinute RstEnrgj ZhtvUmrjnjPmp GeoFenceOn Fence �teviloInputov PosamezenInput ŠteviloOutputov PosamezenOutput 
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+OPIS OBU PO�LJE SERVERJU (po�ilja podatke locene z ,)
+----------------------------
+GPS POZICIJO (LATITUDE, N/E, LONGITUDE, E/W, GPS QUAL (1/0), SAT NUM) 
+
+STANJE PUMPE  0, 1, 2, 3--------0-pumpa miruje, 1-pumpa, 2- zama�ena pumpa-tok prevelik, 3- pumpa dela v prazno-tok premajhen 
+
+DvskStrt (1,0)------------------devi�ki start je bil v tem ciklu opravljen
+
+TipkaSidro (1,0)----------------Tipka za drsenje sidra je bila pritisnjena in smo v re�imu nadzorovanja drsenja sidra
+
+FenceVltn (1,0)-----------------V re�imu nadzora drsenja sidra smo opazili prestop zahtevane meje
+
+AccPrstn (1,0)------------------s to spremenljivko javimo odklop akumulatorja, ali njegov padec v napetosti
+
+Tok-----------------------------4 bajte HEXA in nam poda velikost izmerjenega toka. Ni �e doloceno kako se izracuna tok
+
+Energija------------------------6 bajtov HEXA dajo As porabljene energije
+
+Napetost------------------------4 bajte HEXA in nam poda velikost izmerjene napetosti. Ni �e doloceno kako se izracuna napetosti
+
+�teviloOutputov-----------------Dvobajten podatek nam da �tevilo bajtov Outputov na PIA
+
+PosamezenOutput-----------------(dva bajta)[tolikokrat kolikor pi�e v �teviloOutputov.Ce je 00, potem tega ni]
+
+�teviloInputov------------------Dvobajten podatek nam da �tevilo bajtov Inputov na PIA
+
+PosamezenInput------------------(dva bajta)[tolikokrat kolikor pi�e v �teviloInputov.Ce je 00, potem tega ni]
+
+PRIMER
+--------------------------------
+1234.1222,12345.1111,1,5,0,0,1,0,0,2F50,1A1B1C,2F50,00,00
+
+
+
+OPIS SERVER PO�LJE OBUJU (podatki niso loceni)
+--------------------------------
+
+Y-------------------------------Dva bajta v HEXa, ki je �tevilo bajtov celotnega zapisa. Ta dva bajta se ne �tejeta v sum
+
+PiaPrstn (1,0)------------------Pia prisotna 1 bajt
+
+UraMinute-----------------------Interval zbujanja OBUja in po�iljanja podatkov (dva bajta deseti�ko)
+
+RstEnrgj (1,0)------------------Reset energije. Ko se baterija napolni 100% server po�lje reset
+
+ZhtvUmrjnjPmp (1,0)-------------Takrat ko se prikljuci nova pumpo in ob devi�kem startu
+
+GeoFenceOn (1,0)----------------Geo fence status
+
+Fence---------------------------4 bajte deseti�ko. Fence za ancor drifting. Metri v geo koordinate (samo ssss) ddmm.ssss
+
+�teviloInputov------------------Dvobajten podatek nam da �tevilo bajtov Inputov na PIA. HEXA
+
+PosamezenInput-----------------(dva bajta)[tolikokrat kolikor pi�e v �teviloInputov.Ce je 00, potem tega ni]
+
+�teviloOutputov-----------------Dvobajten podatek nam da �tevilo bajtov Outputov na PIA. HEXA
+
+PosamezenOutput----------------(dva bajta)[tolikokrat kolikor pi�e v �teviloOutputov.Ce je 00, potem tega ni]
+
+PRIMER
+-------------------------------
+1303000112340000

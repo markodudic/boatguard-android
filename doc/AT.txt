@@ -1,0 +1,126 @@
+//*****************************
+// SMS
+//*****************************
+
+AT+CPIN?		Preveri ali je potreben PIN
+AT+CPIN=XYXY		Vpi�e� pin, vrne ok ?e je pravi
+AT+COPS?		Vrne operaterja
+
+
+SEND SMS
+AT+CMGF=1		TEXT format
+AT+CMGS="+38640227627" (ENTER)
+> <enter text> (CTRL+Z) Vrne ID sporo?ila
+
+READ SMS
+AT+CMGL="REC UNREAD" 	vrne neprebrane SMS-e, Index + ura
+AT+CMGR=INDEX,0		prebere SMS pod INDEX
+
+PHONEBOOK STORAGE
+AT+CPBS="ME"	storage od naprave
+AT+CPBW=XY,"NUMBER",TYPE,"TEXT"	vpi�e osebo na XY, �tevilak NUMBER (+), TYPE = 145, naziv TEXT
+AT+CPBR=XY		prebere osebo na indexu xy
+AT+CBPF="text"	poi�?e po textu
+URA
+AT+CCLK?		relativna ura od starta naprave
+
+
+GPS
+AT+CGPSSTATUS?
+AT+CGPSINF=32	lokacija
+
+USSD 
+AT+CUSD=
+
+//*****************************
+// GPRS SIMCOM
+//*****************************
+
+//SIMOBIL - nastavis samo prvic
+AT+SAPBR=3,1,"APN","internet.simobil.si"  //set bearer on id
+41 54 2b 53 41 50 42 52 3d 33 2c 31 2c 22 41 50 4e 22 2c 22 69 6e 74 65 72 6e 65 74 2e 73 69 6d 6f 62 69 6c 2e 73 69 22 0D
+AT+SAPBR=3,1,"USER","simobil"
+41 54 2b 53 41 50 42 52 3d 33 2c 31 2c 22 55 53 45 52 22 2c 22 73 69 6d 6f 62 69 6c 22 0D
+AT+SAPBR=3,1,"PWD","internet"
+41 54 2b 53 41 50 42 52 3d 33 2c 31 2c 22 50 57 44 22 2c 22 69 6e 74 65 72 6e 65 74 22 0d 0a 0D
+
+//CONNECTION
+AT+SAPBR=1,1 //open. ce javi error pa resetiramo napravo
+41 54 2b 53 41 50 42 52 3d 31 2c 31 0D
+AT+SAPBR=4,1  //get bearer paramsat+
+41 54 2b 53 41 50 42 52 3d 34 2c 31 0D
+AT+SAPBR=2,1  //get profile
+41 54 2b 53 41 50 42 52 3d 32 2c 31 0D
+
+//HTTP
+AT+HTTPINIT  //init http
+41 54 2b 48 54 54 50 49 4e 49 54 0D
+AT+HTTPPARA="CID",1  //bearer,  id
+41 54 2b 48 54 54 50 50 41 52 41 3d 22 43 49 44 22 2c 31 0D
+//test povezave
+AT+HTTPPARA="URL","http://93.103.12.155:8080/bg/obu" 
+41 54 2b 48 54 54 50 50 41 52 41 3d 22 55 52 4c 22 2c 22 68 74 74 70 3a 2f 2f 39 33 2e 31 30 33 2e 31 32 2e 31 35 35 3a 38 30 38 30 2f 62 67 2f 6f 62 75 22 0D
+//vprasam streznik ce je kaj za mene
+AT+HTTPPARA="URL","http://93.103.12.155:8080/bg/obu?ac=1"  
+41 54 2b 48 54 54 50 50 41 52 41 3d 22 55 52 4c 22 2c 22 68 74 74 70 3a 2f 2f 39 33 2e 31 30 33 2e 31 32 2e 31 35 35 3a 38 30 38 30 2f 62 67 2f 6f 62 75 3f 61 63 3d 31 22 0D
+//posljem podatke na streznik
+AT+HTTPPARA="URL","http://93.103.12.155:8080/bg/obu?or=38640467515&bg=#BG:0,15F3FE,3FF,00A,0.000000,0.000000,20131010193621"
+41 54 2b 48 54 54 50 50 41 52 41 3d 22 55 52 4c 22 2c 22 68 74 74 70 3a 2f 2f 39 33 2e 31 30 33 2e 31 32 2e 31 35 35 3a 38 30 38 30 2f 62 67 2f 6f 62 75 3f 6f 72 3d 33 38 36 34 30 34 36 37 35 31 35 26 62 67 3d 23 42 47 3a 30 2c 31 35 46 33 46 45 2c 33 46 46 2c 30 30 41 2c 30 2e 30 30 30 30 30 30 2c 30 2e 30 30 30 30 30 30 2c 32 30 31 33 31 30 31 30 31 39 33 36 32 31 22 0D
+AT+HTTPACTION=0  //0-get,1-post. tukaj pocakas odgovor od serverja: method, code, data len
+//ce je code 200 je ok, drugace ne. 601 network error
+41 54 2b 48 54 54 50 41 43 54 49 4f 4e 3d 30 0D
+AT+HTTPREAD=0,5  //read from, bytes
+41 54 2b 48 54 54 50 52 45 41 44 3d 30 2c 35 0D
+
+//END
+AT+HTTPTERM    //terminate http service
+41 54 2b 48 54 54 50 54 45 52 4d 0D
+AT+SAPBR=0,1  //close bearer
+41 54 2b 53 41 50 42 52 3d 30 2c 31 0D
+
+//*****************************
+// GPRS TELIT
+//*****************************
+disable flow control on the module with
+AT&K0
+
+//preveriš mrežo
+AT+CGREG?
+
+//apn nastavitve (če shraniš zapomni)
+//username/password 
+AT#USERID="simobil"
+AT#PASSW="simobil"
+//m2m
+AT#USERID="tagm2m"
+AT#PASSW="m2m572"
+//definiraš mrežo
+AT+CGDCONT=1, "IP", "APN","0.0.0.0",0,0
+//m2m
+AT+CGDCONT=1, "IP", "APN","172.22.0.0",0,0
+//shraniš nastavitve za skozi
+AT#SKTSAV
+
+//povezava
+//narediš povezavo
+AT#GPRS=1
+//preveriš povezavo
+AT+CGPADDR=1
+//prekineš povezavo
+AT#GPRS=0
+
+//pošiljanje in branje
+//http connection (zapomni, samo prvič)
+AT#HTTPCFG=0,"93.103.12.155",8091,0,0,120
+//send data
+AT#HTTPSND=0,0,"/bg/setdata?gsmnum=38670231924&serial=123456&data=2,150231,3FF,01B,1403.452026,4626.050656,20140321093336",0
+//get obu settings
+AT#HTTPSND=0,0,"/bg/getobusettings?gsmnum=38670231924&serial=123456",0
+//read response
+AT#HTTPRCV=0
+
+//ostalo
+//IMEI number
+AT#CCID
+//GSM number (samo če je shranjen na sim kartici)
+AT+CNUM

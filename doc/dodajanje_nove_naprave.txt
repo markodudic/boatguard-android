@@ -1,0 +1,16 @@
+//konfiguracija
+INSERT INTO obus (name, number, serial_number, active) VALUES ('Boatguard 2', '38670231924', '00001', 1);
+
+INSERT INTO customers (id_obu, name, surname, username, password) VALUES (4, 'Boat', 'Guard', 'boat2', 'guard');
+
+insert into obu_states (id_obu, id_state, active) select 4, id_state, 1 from obu_states where id_obu = 1;
+
+insert into obu_settings (id_obu, id_setting, value) select 4, id_setting, value  from obu_settings where id_obu = 1;
+
+insert into obu_alarms (id_obu, id_alarm) select 4, id_alarm from obu_alarms where id_obu = 1;
+
+insert into obu_components (id_obu, id_component) select 4, id_component from obu_components where id_obu = 1;
+
+
+//test delovanja
+http://93.103.12.155:8080/boatguard/setdata?serial=00002&data=4622.80303,N,01404.15960,E,1,0,1,3,N,N,N,D,0000,000000,0000,0000,
