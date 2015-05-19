@@ -22,6 +22,7 @@ import com.boatguard.boatguard.objects.ObuState;
 import com.boatguard.boatguard.objects.State;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
+import com.flurry.android.FlurryAgent;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -74,7 +75,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 	@Override
 	protected void onResume() {
 		super.onResume();
-
+		FlurryAgent.logEvent("Location");
         //location
         MapFragment mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragment_location));
         mapFragment.getMapAsync(this);

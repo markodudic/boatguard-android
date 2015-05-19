@@ -27,12 +27,14 @@ import com.boatguard.boatguard.R;
 import com.boatguard.boatguard.R.id;
 import com.boatguard.boatguard.R.layout;
 import com.boatguard.boatguard.R.string;
+import com.flurry.android.FlurryAgent;
 import com.google.gson.Gson;
 
 public class AnchorDriftingFragment  extends Fragment {
     @Override 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /** Inflating the layout for this fragment **/
+    	FlurryAgent.logEvent("Anchor Settings");
         final View v = inflater.inflate(R.layout.fragment_anchor_drifting, null);
 
         HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
@@ -46,6 +48,7 @@ public class AnchorDriftingFragment  extends Fragment {
 		switchanchorDrifting.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v1) {
+		    	FlurryAgent.logEvent("Anchor On/Off");
 				Settings.obuSettings.get(((State)Settings.states.get(Settings.STATE_ANCHOR)).getId()).setValue(switchanchorDrifting.isChecked()?"1":"0");
 			}
 		});
@@ -74,6 +77,7 @@ public class AnchorDriftingFragment  extends Fragment {
 		tvDefine.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v1) {
+		    	FlurryAgent.logEvent("Anchor Define");
 				Settings.obuSettings.get(((State)Settings.states.get(Settings.STATE_LAT)).getId()).setValue("SET");
 		        Settings.setObuSettings(getActivity());
 		        getActivity().finish();

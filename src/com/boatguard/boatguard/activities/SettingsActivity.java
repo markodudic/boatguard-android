@@ -27,6 +27,7 @@ import com.boatguard.boatguard.fragments.SettingsFragment;
 import com.boatguard.boatguard.objects.AppSetting;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
+import com.flurry.android.FlurryAgent;
 
 public class SettingsActivity extends Activity {
 

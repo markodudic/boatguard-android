@@ -20,6 +20,7 @@ import com.boatguard.boatguard.objects.Setting;
 import com.boatguard.boatguard.objects.State;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
+import com.flurry.android.FlurryAgent;
 
 public class SettingsFragment  extends Fragment {
 	
@@ -52,6 +53,7 @@ public class SettingsFragment  extends Fragment {
     @Override
     public void onResume() {
         super.onResume(); 
+		FlurryAgent.logEvent("Settings");
 
     	HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
         String[] text = new String[settingsItems.length];

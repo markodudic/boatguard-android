@@ -308,7 +308,7 @@ public class MainActivity extends Activity {
         Settings.getObuSettings(this);  
         Settings.getObuComponents(this);  
         Settings.getObuAlarms(this); 
-        Settings.getCustomer(this); 
+        //Settings.getCustomer(this); 
         Settings.getFriends(this);
         showObuComponents();
         

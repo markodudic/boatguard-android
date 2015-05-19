@@ -187,13 +187,15 @@ public class LoginActivity extends Activity {
 		try {
 			String gcm_registration_id = Utils.getPrefernciesString(LoginActivity.this, SplashScreenActivity.PROPERTY_REG_ID);
 		    String obu_id = Utils.getPrefernciesString(LoginActivity.this, Settings.SETTING_OBU_ID);
-		    if (gcm_registration_id != null && obu_id != null) {
+		    Settings.getCustomer(this); 
+	        if (gcm_registration_id != null && obu_id != null) {
 		   		PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 				TelephonyManager mTelephonyMgr;
 				mTelephonyMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
 				
 				Device device = new Device();
 				device.setId_obu(Integer.parseInt(obu_id));
+				device.setId_customer(Settings.customer.getUid());
 				device.setGcm_registration_id(gcm_registration_id);
 				device.setPhone_model(Build.MODEL);
 				device.setPhone_platform(Build.VERSION.SDK_INT+"");

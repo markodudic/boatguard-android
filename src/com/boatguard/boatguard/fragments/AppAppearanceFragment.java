@@ -30,6 +30,7 @@ import com.boatguard.boatguard.activities.SplashScreenActivity;
 import com.boatguard.boatguard.objects.ObuSetting;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
+import com.flurry.android.FlurryAgent;
 
 public class AppAppearanceFragment  extends Fragment {
 	
@@ -38,6 +39,7 @@ public class AppAppearanceFragment  extends Fragment {
     @Override 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /** Inflating the layout for this fragment **/
+    	FlurryAgent.logEvent("App Settings");
         final View v = inflater.inflate(R.layout.fragment_app_appearance, null);
 
         final Spinner spinnerRefreshTime = (Spinner) v.findViewById(R.id.spinner_refresh_time);

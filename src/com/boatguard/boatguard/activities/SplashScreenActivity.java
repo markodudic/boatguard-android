@@ -123,7 +123,7 @@ public class SplashScreenActivity extends Activity {
 	    	   						"login?type=login" + 
 	    	   						"&username=" + username + 
 	    	   						"&password=" + password +
-	    	   						"&obu_sn=" + obu_id;
+	    	   						"&obu_sn=" + obu_id; 
 									/*"&app_version=" + URLEncoder.encode(pInfo.versionName) +
 									"&device_name="+URLEncoder.encode(Build.MODEL)+
 									"&device_platform="+Build.VERSION.SDK_INT+
@@ -137,6 +137,7 @@ public class SplashScreenActivity extends Activity {
 	    	   		        if (Utils.isNetworkConnected(SplashScreenActivity.this, true)) {
 	    	   		        	AsyncTask at = new Comm().execute(urlString, null); 
 		    	   	            String res = (String) at.get();
+		    	   	            System.out.println(res);
 		    	   	            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
 		    	   	    	   	if (jRes.has("error") && !jRes.getString("error").equals("null")) {
 		    	   	    	   		String msg = ((JSONObject)jRes.get("error")).getString("msg");
@@ -179,13 +180,15 @@ public class SplashScreenActivity extends Activity {
 		try {
 			String gcm_registration_id = Utils.getPrefernciesString(SplashScreenActivity.this, PROPERTY_REG_ID);
 		    String obu_id = Utils.getPrefernciesString(SplashScreenActivity.this, Settings.SETTING_OBU_ID);
-		    if (gcm_registration_id != null && obu_id != null) {
+		    Settings.getCustomer(this); 
+	        if (gcm_registration_id != null && obu_id != null) {
 		   		PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 				TelephonyManager mTelephonyMgr;
 				mTelephonyMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
 				
 				Device device = new Device();
 				device.setId_obu(Integer.parseInt(obu_id));
+				device.setId_customer(Settings.customer.getUid());
 				device.setGcm_registration_id(gcm_registration_id);
 				device.setPhone_model(Build.MODEL);
 				device.setPhone_platform(Build.VERSION.SDK_INT+"");

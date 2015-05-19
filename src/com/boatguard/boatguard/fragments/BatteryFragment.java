@@ -29,6 +29,7 @@ import com.boatguard.boatguard.objects.Setting;
 import com.boatguard.boatguard.objects.State;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
+import com.flurry.android.FlurryAgent;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -41,6 +42,7 @@ public class BatteryFragment  extends Fragment {
     @Override 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /** Inflating the layout for this fragment **/
+    	FlurryAgent.logEvent("Battery Settings");
         final View v = inflater.inflate(R.layout.fragment_battery, null);
 
         final HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;

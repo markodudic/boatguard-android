@@ -28,13 +28,16 @@ import com.boatguard.boatguard.R;
 import com.boatguard.boatguard.R.id;
 import com.boatguard.boatguard.R.layout;
 import com.boatguard.boatguard.R.string;
+import com.flurry.android.FlurryAgent;
 import com.google.gson.Gson;
 
 public class GeoFenceFragment  extends Fragment {
     @Override 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /** Inflating the layout for this fragment **/
-        final View v = inflater.inflate(R.layout.fragment_geo_fence, null);
+    	FlurryAgent.logEvent("GeoFence");
+
+    	final View v = inflater.inflate(R.layout.fragment_geo_fence, null);
 
         HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
         String geoFence = obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).getValue();
@@ -47,6 +50,7 @@ public class GeoFenceFragment  extends Fragment {
 		switchGeoFence.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v1) {
+		    	FlurryAgent.logEvent("GeoFence On/Off");
 				Settings.obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).setValue(switchGeoFence.isChecked()?"1":"0");
 			}
 		});
@@ -75,6 +79,7 @@ public class GeoFenceFragment  extends Fragment {
 		tvDefine.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v1) {
+		    	FlurryAgent.logEvent("GeoFence Define");
 				Settings.obuSettings.get(((State)Settings.states.get(Settings.STATE_LAT)).getId()).setValue("SET");
 		        Settings.setObuSettings(getActivity());
 		        getActivity().finish();
