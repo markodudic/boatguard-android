@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -136,9 +137,9 @@ public class LoginActivity extends Activity {
 	    	String sessionid = Utils.getPrefernciesString(this, Settings.SETTING_SESSION_ID);
 	        String urlString = LoginActivity.this.getString(R.string.server_url) + 
 					"login?type="+type +
-					"&username=" + etUsername.getText().toString() + 
-					"&password=" + etPassword.getText().toString() + 
-					"&obu_sn=" + etObuid.getText().toString() +
+					"&username=" + Uri.encode(etUsername.getText().toString()) + 
+					"&password=" + Uri.encode(etPassword.getText().toString()) + 
+					"&obu_sn=" + Uri.encode(etObuid.getText().toString()) +
 					"&sessionid="+sessionid; 
 					/*"&app_version=" + URLEncoder.encode(pInfo.versionName) +
 					"&device_name="+URLEncoder.encode(Build.MODEL)+
@@ -153,6 +154,7 @@ public class LoginActivity extends Activity {
 	        if (Utils.isNetworkConnected(LoginActivity.this, true)) {
 	        	AsyncTask at = new Comm().execute(urlString, null); 
 	            String res = (String) at.get();
+	            System.out.println(res);
 	            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
 	    	   	if (jRes.has("error") && !jRes.getString("error").equals("null")) {
 	    	   		String msg = ((JSONObject)jRes.get("error")).getString("msg");

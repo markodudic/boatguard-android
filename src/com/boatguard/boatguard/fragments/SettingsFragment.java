@@ -59,14 +59,16 @@ public class SettingsFragment  extends Fragment {
         String[] text = new String[settingsItems.length];
         int[] textColours = new int[settingsItems.length];
         
-        String geoFence = obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).getValue();
-        if (geoFence.endsWith("1")) {
-        	text[0] = getResources().getString(R.string.on);
-            textColours[0]= R.color.text_green;
-        }
-        else {
-        	text[0] = getResources().getString(R.string.off);
-            textColours[0]= R.color.alarm_red;
+        if ((State)Settings.states.get(Settings.STATE_GEO_FENCE) != null) {
+	        String geoFence = obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).getValue();
+	        if (geoFence.endsWith("1")) {
+	        	text[0] = getResources().getString(R.string.on);
+	            textColours[0]= R.color.text_green;
+	        }
+	        else {
+	        	text[0] = getResources().getString(R.string.off);
+	            textColours[0]= R.color.alarm_red;
+	        }
         }
 
         String pumpAlarmAlways = obuSettings.get(((Setting)Settings.settings.get(Settings.STATE_PUMP_ALARM_ALWAYS)).getId()).getValue();

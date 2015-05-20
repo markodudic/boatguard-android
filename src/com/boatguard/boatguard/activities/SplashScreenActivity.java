@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -121,9 +122,9 @@ public class SplashScreenActivity extends Activity {
 			    	   	    //mTelephonyMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
 	    	   		    	String urlString = SplashScreenActivity.this.getString(R.string.server_url) + 
 	    	   						"login?type=login" + 
-	    	   						"&username=" + username + 
-	    	   						"&password=" + password +
-	    	   						"&obu_sn=" + obu_id; 
+	    	   						"&username=" + Uri.encode(username) + 
+	    	   						"&password=" + Uri.encode(password) +
+	    	   						"&obu_sn=" + Uri.encode(obu_id); 
 									/*"&app_version=" + URLEncoder.encode(pInfo.versionName) +
 									"&device_name="+URLEncoder.encode(Build.MODEL)+
 									"&device_platform="+Build.VERSION.SDK_INT+
