@@ -59,7 +59,7 @@ public class SettingsFragment  extends Fragment {
         String[] text = new String[settingsItems.length];
         int[] textColours = new int[settingsItems.length];
         
-        if ((State)Settings.states.get(Settings.STATE_GEO_FENCE) != null) {
+        if (Settings.states!=null && (State)Settings.states.get(Settings.STATE_GEO_FENCE) != null) {
 	        String geoFence = obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).getValue();
 	        if (geoFence.endsWith("1")) {
 	        	text[0] = getResources().getString(R.string.on);
