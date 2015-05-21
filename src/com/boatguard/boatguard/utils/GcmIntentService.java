@@ -40,19 +40,16 @@ public class GcmIntentService extends IntentService {
 
           Timestamp timestamp = null;
           try{
-        	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        	    Date parsedDate = dateFormat.parse(extras.getString("date"));
-        	    timestamp = new java.sql.Timestamp(parsedDate.getTime());
-          }catch(Exception e){}
+			  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			  Date parsedDate = dateFormat.parse(extras.getString("date"));
+			  timestamp = new java.sql.Timestamp(parsedDate.getTime());
           
-          int alarmId = Integer.parseInt(extras.getString("alarmid"));
-          GcmBroadcastReceiver.completeWakefulIntent(intent);
-          
-          //if (MainActivity.activeAlarms.indexOf(alarmId) == -1) {
-        	  showNotification(alarmId, extras.getString("title"), extras.getString("message"), timestamp, Integer.parseInt(extras.getString("vibrate")), Integer.parseInt(extras.getString("sound")));
-        	  this.sendBroadcast(new Intent("GCMMessageReceived"));
-        	//  MainActivity.activeAlarms.add(alarmId);
-  		  //}
+	          int alarmId = Integer.parseInt(extras.getString("alarmid"));
+	          GcmBroadcastReceiver.completeWakefulIntent(intent);
+	          
+	          showNotification(alarmId, extras.getString("title"), extras.getString("message"), timestamp, Integer.parseInt(extras.getString("vibrate")), Integer.parseInt(extras.getString("sound")));
+	          this.sendBroadcast(new Intent("GCMMessageReceived"));
+	      }catch(Exception e){}
           
      }   
 	
