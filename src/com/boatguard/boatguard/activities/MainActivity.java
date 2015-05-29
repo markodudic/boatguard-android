@@ -319,12 +319,6 @@ public class MainActivity extends Activity {
             	getObudata();
             }
         }, new IntentFilter("GCMMessageReceived"));
-        
-
-        //componentsAdapter = new ComponentsAdapter();
-        //lvComponents.setAdapter(componentsAdapter);
-   		
-        //handler.postDelayed(startRefresh, Settings.OBU_REFRESH_TIME);
 	}
 
 	@Override
@@ -382,64 +376,8 @@ public class MainActivity extends Activity {
 			}
 			
 			LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			//componentLast = component;
 		    component = inflater.inflate(lc, null);
 		    component.setId(obuComponent.getId_component());
-		    
-		    /*if (obuComponent.getType().equals("LIGHT") || obuComponent.getType().equals("FAN")) { 
-				((Switch) component.findViewById(R.id.switch_comp)).setVisibility(View.VISIBLE);
-				((ImageView)component.findViewById(R.id.logo)).setVisibility(View.INVISIBLE);
-			} else if (obuComponent.getType().equals("GEO") || obuComponent.getType().equals("PUMP") || obuComponent.getType().equals("ANCHOR") || obuComponent.getType().equals("DOOR")) {
-				((Switch) component.findViewById(R.id.switch_comp)).setVisibility(View.INVISIBLE);
-				((ImageView)component.findViewById(R.id.logo)).setVisibility(View.VISIBLE);
-			}*/
-
-			/*if (Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
-			    Display display = getWindowManager().getDefaultDisplay();
-			    Point size = new Point();
-			    display.getSize(size);
-			    int width = size.x;
-			    int height = size.y;
-			    component.setLayoutParams(new TableRow.LayoutParams(width/2, width/2));
-			    
-			    LinearLayout content = ((LinearLayout)component.findViewById(R.id.content));
-			    content.setOrientation(LinearLayout.VERTICAL);
-			    int pad = Utils.dpToPx(this, (int)getResources().getDimension(R.dimen.components_margin));
-			    int lin = Utils.dpToPx(this, (int)getResources().getDimension(R.dimen.line_height));
-			    content.setLayoutParams(new TableRow.LayoutParams(width/2, width/2-lin));
-			    content.setPadding(0, (int)getResources().getDimension(R.dimen.components_margin), 0, (int)getResources().getDimension(R.dimen.components_margin));
-			    
-			    TextViewFont label = ((TextViewFont)component.findViewById(R.id.label));
-			    TableRow.LayoutParams lpV = new TableRow.LayoutParams(width/2-(2*(int)getResources().getDimension(R.dimen.components_margin)), width/6);
-		        label.setLayoutParams(lpV);
-			    label.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
-
-			    FrameLayout icon = ((FrameLayout)component.findViewById(R.id.lIcon));
-			    TableRow.LayoutParams lpIc = new TableRow.LayoutParams(width/2-(2*(int)getResources().getDimension(R.dimen.components_margin)), LayoutParams.MATCH_PARENT);
-			    icon.setLayoutParams(lpIc);
-
-			    FrameLayout.LayoutParams lpAccu = new FrameLayout.LayoutParams(width/2-(2*(int)getResources().getDimension(R.dimen.components_margin)), LayoutParams.MATCH_PARENT);
-			    TextViewFont tvNapetost = ((TextViewFont)component.findViewById(R.id.accu_napetost));
-			    if (tvNapetost != null) {
-			    	tvNapetost.setLayoutParams(lpAccu);
-			    }
-			    TextViewFont tvAh = ((TextViewFont)component.findViewById(R.id.accu_ah));
-			    if (tvAh != null) {
-			    	tvAh.setLayoutParams(lpAccu);
-			    }
-			    TextViewFont tvTok = ((TextViewFont)component.findViewById(R.id.accu_tok));
-			    if (tvTok != null) {
-			    	tvTok.setLayoutParams(lpAccu);
-			    }
-			    
-			    ImageView ivStep = (ImageView)component.findViewById(R.id.step);
-			    if (ivStep != null) {
-			    	FrameLayout.LayoutParams lpI = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			    	lpI.gravity = Gravity.BOTTOM | Gravity.LEFT;
-			    	lpI.setMargins((int)getResources().getDimension(R.dimen.components_margin)-20, 0, 0, (int)getResources().getDimension(R.dimen.component_step_margin2));
-				    ivStep.setLayoutParams(lpI);		    
-			    }
-			}*/
 			    
 			TextView label = ((TextView)component.findViewById(R.id.label));
 			label.setText(obuComponent.getName());
@@ -487,18 +425,6 @@ public class MainActivity extends Activity {
 						showSetting(10);
 					}
 				});				
-				/*final Switch switch_comp = ((Switch) component.findViewById(R.id.switch_comp));
-				switch_comp.setVisibility(View.INVISIBLE);
-				switch_comp.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-					@Override
-					public void onCheckedChanged(CompoundButton buttonView,	boolean isChecked) {
-						//set settings
-				        HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
-				        obuSettings.get(((State)Settings.states.get(Settings.STATE_LIGHT)).getId()).setValue(switch_comp.isChecked()?"1":"0");
-				        Settings.setObuSettings(MainActivity.this);
-						
-					}
-				});*/
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_FAN)) { 
 				((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_fan_disabled);
 				label.setOnClickListener(new View.OnClickListener() {
@@ -507,16 +433,6 @@ public class MainActivity extends Activity {
 						showSetting(11);
 					}
 				});	
-				/*final Switch switch_comp = ((Switch) component.findViewById(R.id.switch_comp));
-				switch_comp.setVisibility(View.INVISIBLE);
-				switch_comp.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-					@Override
-					public void onCheckedChanged(CompoundButton buttonView,	boolean isChecked) {
-				        HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
-				        obuSettings.get(((State)Settings.states.get(Settings.STATE_FAN)).getId()).setValue(switch_comp.isChecked()?"1":"0");
-				        Settings.setObuSettings(MainActivity.this);
-					}
-				});*/
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_DOOR)) { 
 				((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_door_disabled);
 				label.setOnClickListener(new View.OnClickListener() {
@@ -526,28 +442,8 @@ public class MainActivity extends Activity {
 					}
 				});
 			} 			
-			/*if (Utils.getPrefernciesInt(MainActivity.this, Settings.SETTING_THEME) == R.style.AppThemeDay) {
-				if (ii%2 == 0) {
-					tr = new TableRow(this);
-					tr.setLayoutParams(new LayoutParams( LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
-				}
-				tr.addView(component);
-				
-				if (ii%2 == 1) {
-					lComponents.addView(tr);
-				} else {
-			        LinearLayout lineV = new LinearLayout(this);
-			        lineV.setBackgroundColor(this.getResources().getColor(lineId));
-			        TableRow.LayoutParams lpV = new TableRow.LayoutParams((int)getResources().getDimension(R.dimen.line_height), LayoutParams.MATCH_PARENT);
-			        lpV.setMargins(0, (int)getResources().getDimension(R.dimen.components_margin), 0, (int)getResources().getDimension(R.dimen.components_margin));
-			        lineV.setLayoutParams(lpV);
-			        tr.addView(lineV);
-				}
-				ii++;
-			} 
-			else {*/
-				lComponents.addView(component);
-			//}
+
+			lComponents.addView(component);
 		}
 		
 		int lc = R.layout.list_component;
@@ -593,30 +489,22 @@ public class MainActivity extends Activity {
 	
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // toggle nav drawer on selecting action bar app icon/title
-        /*if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }*/
         return super.onOptionsItemSelected(item);
     }
     
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        //boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         return super.onPrepareOptionsMenu(menu);
     }
 	  
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-		//mDrawerToggle.syncState();
     }
  
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggls
-        //mDrawerToggle.onConfigurationChanged(newConfig);
     }
     
     
@@ -1228,114 +1116,6 @@ public class MainActivity extends Activity {
 	   		refreshing = false;
 	   }
 	};	    
-
-	/*
-    public class ComponentsAdapter extends BaseAdapter {
-  	  
-        @SuppressLint("NewApi")
-		@Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-        	LayoutInflater inflater = getLayoutInflater();
-        	
-			View component = null;
-			
-			ObuComponent obuComponent = (ObuComponent)getItem(position);
-			int lc = R.layout.list_component;
-			if (obuComponent.getType().equals("ACCU")) { 
-				lc = R.layout.list_component_accu;
-			}
-
-			component = inflater.inflate(lc, null);
-		    component.setId(obuComponent.getId_component());
-		    
-			TextView label = ((TextView)component.findViewById(R.id.label));
-			label.setText(obuComponent.getName());
-		    ((TextViewFont)component.findViewById(R.id.label)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
-	        
-			
-			if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_GEO)) {
-				((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_geofence_disabled);
-				label.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) { 
-						showSetting(0);
-					}
-				});
-			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_PUMP)) {
-			    ((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_bilgepump_disabled);
-			    label.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) { 
-						showSetting(1);
-					}
-				});
-			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ANCHOR)) { 
-			    ((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_anchor_disabled); 
-				label.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) { 
-						showSetting(2);
-					}
-				});
-			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ACCU)) { 
-				((TextView)component.findViewById(R.id.accu_napetost)).setText("");
-				accuComponentId = obuComponent.getId_component();
-				label.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) { 
-						showSetting(3);
-					}
-				});
-			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_LIGHT)) { 
-				((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_light_disabled);
-				label.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) { 
-					}
-				});
-			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_FAN)) { 
-				((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_fan_disabled);
-				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
-				label.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) { 
-					}
-				});
-			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_DOOR)) { 
-				((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_door_disabled);
-				ImageView imageView = (ImageView)component.findViewById(R.id.logo);
-				label.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) { 
-					}
-				});
-			} 
-		    
-			if (position == getCount()) {
-				((LinearLayout)component.findViewById(R.id.line)).setVisibility(View.GONE);
-			}
-
-            return component;
-        }
-
-		@Override
-		public int getCount() {
-			return Settings.obuComponents.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-	        Integer key = (Integer) Settings.obuComponents.keySet().toArray()[position]; 
-			return Settings.obuComponents.get(key);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-		
-	
-    }*/
 
 
 }
