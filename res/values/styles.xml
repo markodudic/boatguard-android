@@ -326,7 +326,7 @@
        <item name="android:textColor">@color/text_default_day</item>
        <item name="android:textSize">@dimen/component_text_size</item>
        <item name="android:paddingTop">@dimen/settings_text_padding</item>
-       <item name="android:paddingLeft">@dimen/settings_text_padding</item>
+       <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
    </style>	
    
    <style name="ReadOnlyText" parent="ReadOnlyTitle">
