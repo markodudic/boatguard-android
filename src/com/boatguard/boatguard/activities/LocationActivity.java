@@ -97,6 +97,8 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 		HashMap<Integer,ObuState> obuStates = MainActivity.obuStates;
 
 		double lat=0, lon=0;
+		String nsIndicator = "N";
+		String ewIndicator = "E";
 		String date = "";
 	    Set set = obuStates.entrySet(); 
 		Iterator i = set.iterator();
@@ -111,6 +113,12 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 		        lon = Double.parseDouble(obuState.getValue());
 				date = Utils.formatDate(obuState.getDateState());
 			} 
+			else if (obuState.getId_state() == ((State)Settings.states.get(Settings.STATE_N_S_INDICATOR)).getId()) { 
+				nsIndicator = obuState.getValue();
+			} 
+			else if (obuState.getId_state() == ((State)Settings.states.get(Settings.STATE_E_W_INDICATOR)).getId()) { 
+				ewIndicator = obuState.getValue();
+			} 
 		}
 		if (lat != 0 && lon != 0) {
 			double latF = Math.floor(lat/100);
@@ -119,9 +127,17 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 			double lonF = Math.floor(lon/100);
 			double lonD = (lon/100 - lonF)/0.6;
 			lon = lonF + lonD;
-	
+			
+			if (ewIndicator.equals("W")) {
+				lat = -lat;
+			}
+			if (nsIndicator.equals("S")) {
+				lon = -lon;
+			}
+			
 			LatLng latlng = new LatLng(lon, lat);
-	        Marker newmarker = map.addMarker(new MarkerOptions().anchor(0.5f, 0.5f).position(latlng).title(getResources().getString(R.string.location_title) + " " + date).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker)));
+			
+			Marker newmarker = map.addMarker(new MarkerOptions().anchor(0.5f, 0.5f).position(latlng).title(getResources().getString(R.string.location_title) + " " + date).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker)));
 	        CameraPosition cameraPosition = new CameraPosition.Builder().target(latlng).zoom(14.0f).build();
 	        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
 	        map.moveCamera(cameraUpdate);

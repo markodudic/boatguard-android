@@ -62,6 +62,8 @@ public class Settings {
 	public static String STATE_GEO_DISTANCE = "GEO_DISTANCE";
 	public static String STATE_LAT = "LAT";
 	public static String STATE_LON = "LON";
+	public static String STATE_N_S_INDICATOR = "N_S_INDICATOR";
+	public static String STATE_E_W_INDICATOR = "E_W_INDICATOR";
 	public static String STATE_PUMP_STATE = "PUMP_STATE";
 	public static String STATE_ACCU_NAPETOST = "ACCU_NAPETOST";
 	public static String STATE_ACCU_AH = "ACCU_AH";
