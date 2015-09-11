@@ -113,12 +113,12 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 		        lon = Double.parseDouble(obuState.getValue());
 				date = Utils.formatDate(obuState.getDateState());
 			} 
-			else if (obuState.getId_state() == ((State)Settings.states.get(Settings.STATE_N_S_INDICATOR)).getId()) { 
+			/*else if (obuState.getId_state() == ((State)Settings.states.get(Settings.STATE_N_S_INDICATOR)).getId()) { 
 				nsIndicator = obuState.getValue();
 			} 
 			else if (obuState.getId_state() == ((State)Settings.states.get(Settings.STATE_E_W_INDICATOR)).getId()) { 
 				ewIndicator = obuState.getValue();
-			} 
+			} */
 		}
 		if (lat != 0 && lon != 0) {
 			double latF = Math.floor(lat/100);
@@ -128,12 +128,12 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 			double lonD = (lon/100 - lonF)/0.6;
 			lon = lonF + lonD;
 			
-			if (ewIndicator.equals("W")) {
+			/*if (ewIndicator.equals("W")) {
 				lat = -lat;
 			}
 			if (nsIndicator.equals("S")) {
 				lon = -lon;
-			}
+			}*/
 			
 			LatLng latlng = new LatLng(lon, lat);
 			
