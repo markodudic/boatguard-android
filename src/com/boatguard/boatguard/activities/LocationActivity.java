@@ -121,12 +121,12 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 			} */
 		}
 		if (lat != 0 && lon != 0) {
-			double latF = Math.floor(lat/100);
+			/*double latF = Math.floor(lat/100);
 			double latD = (lat/100 - latF)/0.6;
 			lat = latF + latD;
 			double lonF = Math.floor(lon/100);
 			double lonD = (lon/100 - lonF)/0.6;
-			lon = lonF + lonD;
+			lon = lonF + lonD;*/
 			
 			/*if (ewIndicator.equals("W")) {
 				lat = -lat;
