@@ -28,8 +28,7 @@
 		        android:layout_height="match_parent"
 		        style="@style/LoginEditText"
 		        boatguard:font_name="@string/font_medium"
-		        android:editable="false" 
-		    	android:text="marko">
+		        android:editable="false">
 		        <requestFocus />
 		    </com.boatguard.boatguard.components.EditTextFont>
 
@@ -108,8 +107,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="match_parent"
 		        style="@style/LoginEditText"
-		        boatguard:font_name="@string/font_medium"
-		    	android:text="marko">
+		        boatguard:font_name="@string/font_medium">
 		    </com.boatguard.boatguard.components.EditTextFont>
 		    
 		    <ImageView
@@ -137,8 +135,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="match_parent"
 		        style="@style/LoginEditText"
-		        boatguard:font_name="@string/font_medium"
-		    	android:text="marko">
+		        boatguard:font_name="@string/font_medium">
 		    </com.boatguard.boatguard.components.EditTextFont>
 		    
 		    <ImageView
@@ -209,8 +206,7 @@
 		        android:layout_height="match_parent"
 		        style="@style/LoginEditText"
 		        boatguard:font_name="@string/font_medium"
-		    	android:inputType="textEmailAddress"
-		    	android:text="marko">
+		    	android:inputType="textEmailAddress">
 		    </com.boatguard.boatguard.components.EditTextFont>
 		    
 		    <ImageView
@@ -223,6 +219,35 @@
 		        android:src="?ic_delete" />
 		</FrameLayout>	
 		
+		<com.boatguard.boatguard.components.TextViewFont
+	        android:layout_width="wrap_content"
+	        android:text="@string/phone_number"
+	        boatguard:font_name="@string/font_medium"
+	    	style="@style/LoginText" />
+		
+		<FrameLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="@dimen/login_edit_height">
+		    
+	   	    <com.boatguard.boatguard.components.EditTextFont
+		        android:id="@+id/phone_number"
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+		        style="@style/LoginEditText"
+		        boatguard:font_name="@string/font_medium"
+		    	android:inputType="phone">
+		    </com.boatguard.boatguard.components.EditTextFont>
+		    
+		    <ImageView
+		        android:id="@+id/iv_phone_number"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        style="@style/DeleteImageView"
+		        android:clickable="true"
+		        android:focusable="false"
+		        android:src="?ic_delete" />
+		</FrameLayout>		
+			
 		<com.boatguard.boatguard.components.TextViewFont
 	        android:layout_width="wrap_content"
 	        android:text="@string/boatname"
@@ -238,8 +263,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="match_parent"
 		        style="@style/LoginEditText"
-		        boatguard:font_name="@string/font_medium"
-		    	android:text="marko">
+		        boatguard:font_name="@string/font_medium">
 		    </com.boatguard.boatguard.components.EditTextFont>
 		    
 		    <ImageView
@@ -329,8 +353,7 @@
 		        android:layout_height="match_parent"
 		        style="@style/LoginEditText"
 		        boatguard:font_name="@string/font_medium"
-		    	android:editable="false" 
-		    	android:text="marko">
+		    	android:editable="false">
 		    </com.boatguard.boatguard.components.EditTextFont>
 
 		</FrameLayout>	

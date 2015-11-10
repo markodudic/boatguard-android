@@ -42,6 +42,17 @@ public class MyAccountFragment  extends Fragment {
 			} 
 		});
 
+        final EditText etPhoneNumber = (EditText) v.findViewById(R.id.phone_number);
+        etPhoneNumber.setText(Settings.customer.getPhone_number());
+		ImageView ivPhoneNumber = (ImageView) v.findViewById(R.id.iv_phone_number);
+		ivPhoneNumber.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View vv) {
+				etPhoneNumber.setText("");
+				etPhoneNumber.requestFocus();
+			} 
+		});
+		
 		final EditText etName = (EditText) v.findViewById(R.id.name);
 		etName.setText(Settings.customer.getName());
 		ImageView ivName = (ImageView) v.findViewById(R.id.iv_name);
@@ -175,6 +186,7 @@ public class MyAccountFragment  extends Fragment {
 					Settings.customer.setBoat_model((String)spinnerModel.getSelectedItem());
 					Settings.customer.setBoat_country((String)spinnerBoatCountry.getSelectedItem());
 					Settings.customer.setEmail(etEmail.getText().toString());
+					Settings.customer.setPhone_number(etPhoneNumber.getText().toString());
 					Settings.setCustomer(getActivity());
 					getActivity().finish();
 				}

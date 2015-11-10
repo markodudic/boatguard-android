@@ -110,6 +110,7 @@
     <string name="password_error">NAPAKA GESLA. POSKUSI PONOVNO.</string>
     <string name="surname">PRIIMEK</string>
     <string name="email">E-MAIL</string>
+    <string name="phone_number">TELEFON</string>
     <string name="birthyear">LETO ROJSTVA</string>
     <string name="choose_birthyear">IZBERI LETO ROJSTVA</string>
     <string name="country">DRŽAVA</string>

@@ -110,6 +110,7 @@
     <string name="password_error">GREŠKA LOZINKE. POKUŠAJ PONOVO.</string>
     <string name="surname">PREZIME</string>
     <string name="email">E-MAIL</string>
+    <string name="phone_number">BROJ TELEFONA</string>
     <string name="birthyear">GODINA RODJENA</string>
     <string name="choose_birthyear">IZABERI GODINU RODJENJA</string>
     <string name="country">DRŽAVA</string>

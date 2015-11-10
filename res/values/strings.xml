@@ -110,6 +110,7 @@
     <string name="password_error">PASSWORD ERROR. TRY AGAIN.</string>
     <string name="surname">SURNAME</string>
     <string name="email">E-MAIL</string>
+    <string name="phone_number">PHONE NUMBER</string>
     <string name="birthyear">BIRTH YEAR</string>
     <string name="choose_birthyear">CHOOSE BIRTH YEAR</string>
     <string name="country">COUNTRY</string>

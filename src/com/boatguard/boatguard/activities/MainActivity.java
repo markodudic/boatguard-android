@@ -181,7 +181,7 @@ public class MainActivity extends Activity {
 		});
 
 
-    	
+    	/*
         //ListView lvComponents = (ListView)findViewById(R.id.components);
         sv.setOnTouchListener(new View.OnTouchListener() {
            @Override
@@ -274,7 +274,7 @@ public class MainActivity extends Activity {
                 return false;
             }
         });       
-        
+        */
         
 		dialogAlarm = new Dialog(this,R.style.Dialog);
 		dialogAlarm.setContentView(R.layout.dialog_alarm); 
