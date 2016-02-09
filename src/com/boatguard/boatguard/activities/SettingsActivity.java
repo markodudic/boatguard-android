@@ -129,7 +129,16 @@ public class SettingsActivity extends Activity {
 	        	fragmentTransaction.add(R.id.fragment_settings, fragFan, extras.getString("title"));
 	            fragmentTransaction.commit();
 				break;
-        }
+	        case 12:
+	        	Bundle bundleExt = new Bundle();
+	        	bundleExt.putString("type", Settings.STATE_EXT1);
+	        	//SensorsFragment fragFan = new SensorsFragment();
+	        	//fragFan.setArguments(bundleFan);
+	        	
+	        	//fragmentTransaction.add(R.id.fragment_settings, fragFan, extras.getString("title"));
+	            fragmentTransaction.commit();
+				break;
+		}
                 
 		ImageView btnBack = (ImageView) findViewById(R.id.iv_back);
 		btnBack.setOnClickListener(new View.OnClickListener() {

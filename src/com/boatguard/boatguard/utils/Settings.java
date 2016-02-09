@@ -48,6 +48,8 @@ public class Settings {
 	public static String SETTING_PLAY_SOUND = "PLAY_SOUND";
 	public static String SETTING_VIBRATE = "VIBRATE";
 	public static String SETTING_POP_UP = "POP_UP";
+	public static String SETTING_EXT1 = "EXT1";
+	public static String SETTING_EXT2 = "EXT2";
 
 	public static String COMPONENT_TYPE_ACCU = "ACCU";
 	public static String COMPONENT_TYPE_PUMP = "PUMP";
@@ -56,6 +58,7 @@ public class Settings {
 	public static String COMPONENT_TYPE_LIGHT = "LIGHT";
 	public static String COMPONENT_TYPE_FAN = "FAN";
 	public static String COMPONENT_TYPE_DOOR = "DOOR";
+	public static String COMPONENT_TYPE_EXT = "EXT";
 
 	public static String STATE_ROW_STATE = "ROW_STATE";
 	public static String STATE_GEO_FENCE = "GEO_FENCE";
@@ -81,7 +84,9 @@ public class Settings {
 	public static String STATE_LIGHT = "LIGHT";
 	public static String STATE_FAN = "FAN";
 	public static String STATE_DOOR = "DOOR";
-		
+	public static String STATE_EXT1 = "EXT1";	
+	public static String STATE_EXT2 = "EXT2";	
+	
 	public static String APP_STATE_GEO_FENCE_DISABLED = "GEO_FENCE_DISABLED";
 	public static String APP_STATE_GEO_FENCE_ENABLED = "GEO_FENCE_ENABLED";
 	public static String APP_STATE_GEO_FENCE_ALARM = "GEO_FENCE_ALARM";
@@ -103,6 +108,8 @@ public class Settings {
 	public static String APP_STATE_FAN_ON = "FAN_ON";
 	public static String APP_STATE_DOOR_OK = "DOOR_OK";
 	public static String APP_STATE_DOOR_ALARM = "DOOR_ALARM";
+	public static String APP_STATE_EXT_OFF = "EXT_OFF";
+	public static String APP_STATE_EXT_ON = "EXT_ON";
 			
 	public static String ALARM_GREEN = "G";
 	public static String ALARM_RED = "R";
@@ -226,6 +233,18 @@ public class Settings {
     	return null;
     }
     
+    public static ObuSetting getObuSettingObject(String setting) {
+    	Iterator<Entry<Integer, ObuSetting>> i = obuSettings.entrySet().iterator();
+    	while(i.hasNext()) { 
+			Map.Entry map = (Map.Entry)i.next(); 
+			ObuSetting obuSetting = (ObuSetting) map.getValue();
+			if (obuSetting.getCode().equals(setting)) {
+				return obuSetting;
+			}
+    	}
+    	
+    	return null;
+    }
     
     public static void setObuSettings(Context context)
     {

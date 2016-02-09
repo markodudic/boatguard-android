@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,6 +66,7 @@ import com.boatguard.boatguard.objects.Alarm;
 import com.boatguard.boatguard.objects.AppSetting;
 import com.boatguard.boatguard.objects.ObuAlarm;
 import com.boatguard.boatguard.objects.ObuComponent;
+import com.boatguard.boatguard.objects.ObuSetting;
 import com.boatguard.boatguard.objects.ObuState;
 import com.boatguard.boatguard.objects.State;
 import com.boatguard.boatguard.utils.Comm;
@@ -180,8 +182,7 @@ public class MainActivity extends Activity {
 			}
 		});
 
-
-    	/*
+       
         //ListView lvComponents = (ListView)findViewById(R.id.components);
         sv.setOnTouchListener(new View.OnTouchListener() {
            @Override
@@ -225,15 +226,15 @@ public class MainActivity extends Activity {
                 			scrollRefresh = true;
              	   			if (Utils.isNetworkConnected(MainActivity.this, true)) {
              	       			getObudata();
-             	       			getObuHistoryData();
+             	       			//getObuHistoryData();
              	   			}
                 		}
              	   	}
-                	if (anim!=null) {
+                	/*if (anim!=null) {
                 		anim.setDuration(1000);
 	             	    anim.setFillAfter(true);
 	             	    lMenu.setAnimation(anim);
-                	}
+                	}*/
              	    initialPosition = sv.getScrollY();
                     break;
                 case MotionEvent.ACTION_DOWN: 
@@ -274,9 +275,8 @@ public class MainActivity extends Activity {
                 return false;
             }
         });       
-        */
-        
-		dialogAlarm = new Dialog(this,R.style.Dialog);
+
+        dialogAlarm = new Dialog(this,R.style.Dialog);
 		dialogAlarm.setContentView(R.layout.dialog_alarm); 
 		dialogAlarm.setCanceledOnTouchOutside(false);
 		dialogAlarm.getWindow().setBackgroundDrawable(new ColorDrawable(0));
@@ -379,9 +379,18 @@ public class MainActivity extends Activity {
 		    component = inflater.inflate(lc, null);
 		    component.setId(obuComponent.getId_component());
 			    
+		    String componentName = obuComponent.getName();
 			TextView label = ((TextView)component.findViewById(R.id.label));
-			label.setText(obuComponent.getName());
-		    ((TextViewFont)component.findViewById(R.id.label)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
+			if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_EXT)) {
+				ObuSetting obuSetting = Settings.getObuSettingObject(obuComponent.getName());
+				if (obuSetting != null) {
+					componentName = obuSetting.getValue().toUpperCase();
+				}
+			}
+			
+			label.setText(componentName);
+			final String componentNameFinal = componentName;
+			((TextViewFont)component.findViewById(R.id.label)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
 	        
 			
 			if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_GEO)) {
@@ -389,7 +398,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(0);
+						showSetting(0, componentNameFinal);
 					}
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_PUMP)) {
@@ -397,7 +406,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(1);
+						showSetting(1, componentNameFinal);
 					}
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ANCHOR)) { 
@@ -405,7 +414,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(2);
+						showSetting(2, componentNameFinal);
 					}
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ACCU)) { 
@@ -414,7 +423,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(3);
+						showSetting(3, componentNameFinal);
 					}
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_LIGHT)) { 
@@ -422,7 +431,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(10);
+						showSetting(10, componentNameFinal);
 					}
 				});				
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_FAN)) { 
@@ -430,7 +439,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(11);
+						showSetting(11, componentNameFinal);
 					}
 				});	
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_DOOR)) { 
@@ -439,6 +448,14 @@ public class MainActivity extends Activity {
 					@Override
 					public void onClick(View v) { 
 						showSettings();
+					}
+				});
+			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_EXT)) { 
+				((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_bilgepump_clodged);
+				label.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) { 
+						showSetting(12, componentNameFinal);
 					}
 				});
 			} 			
@@ -464,10 +481,10 @@ public class MainActivity extends Activity {
 
 	}
 
-	private void showSetting(int item) {
+	private void showSetting(int item, String componentName) {
 		Intent i = new Intent(MainActivity.this, SettingsActivity.class);
 		i.putExtra("id", item);
-		i.putExtra("title", getResources().getStringArray(R.array.settings_items_titles)[item]);
+		i.putExtra("title", componentName);
 		startActivity(i);
 	}
 
@@ -631,7 +648,7 @@ public class MainActivity extends Activity {
 			Map.Entry map = (Map.Entry)i.next(); 
 			ObuState obuState = (ObuState)map.getValue();
 			int idState = obuState.getId_state();
-
+			
 			if (idState == ((State)Settings.states.get(Settings.STATE_ROW_STATE)).getId()) { 
             	tvLastUpdate.setText(getResources().getString(R.string.last_update) + " " + Utils.formatDate(obuState.getDateState()));
             	tvLastUpdate.setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
@@ -870,6 +887,27 @@ public class MainActivity extends Activity {
 					}
 				}
 			}
+			else if ((idState == ((State)Settings.states.get(Settings.STATE_EXT1)).getId()) ||
+					 (idState == ((State)Settings.states.get(Settings.STATE_EXT2)).getId())) { 
+				
+				FrameLayout component = (FrameLayout)findViewById(idState);
+				if (component != null) {
+					ImageView imageView = (ImageView)component.findViewById(R.id.logo);
+					String extState = obuState.getValue(); 
+					cancelAlarmAnimation(component, null, false);
+					
+					if (extState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_EXT_OFF)).getValue())) {
+						imageView.setBackgroundResource(R.drawable.ic_bilgepump_clodged);
+					}			
+					else if (extState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_EXT_ON)).getValue())) {
+						alarm = true;
+						showAlarmAnimation(component, imageView, R.drawable.ic_bilgepump_clodged_1, R.drawable.ic_bilgepump_clodged, true);
+					}
+					else {
+						imageView.setBackgroundResource(R.drawable.ic_bilgepump_clodged);
+					}
+				}
+			}		
 		}
 		
 		if (alarm) {

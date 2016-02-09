@@ -32,7 +32,8 @@
     <attr name="ic_light_disabled"/> 
    	<attr name="ic_fan_disabled"/> 
     <attr name="ic_door_disabled"/> 
-   	    			
+    <attr name="ic_bilgepump_clodged"/> 
+    	    			
     <string-array name="birthyear">
         <item >1990</item>
         <item >1989</item>
