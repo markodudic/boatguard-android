@@ -22,6 +22,7 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import com.boatguard.boatguard.R;
+import com.boatguard.boatguard.activities.MainActivity;
 import com.boatguard.boatguard.objects.Alarm;
 import com.boatguard.boatguard.objects.AppSetting;
 import com.boatguard.boatguard.objects.Customer;
@@ -48,6 +49,9 @@ public class Settings {
 	public static String SETTING_PLAY_SOUND = "PLAY_SOUND";
 	public static String SETTING_VIBRATE = "VIBRATE";
 	public static String SETTING_POP_UP = "POP_UP";
+	public static String SETTING_ALARM_ACTIVE = "ALARM_ACTIVE";
+	public static String SETTING_SEND_EMAIL = "SEND_EMAIL";
+	public static String SETTING_ALARM_FRIENDS = "ALARM_FRIENDS";
 	public static String SETTING_EXT1 = "EXT1";
 	public static String SETTING_EXT2 = "EXT2";
 
@@ -133,13 +137,26 @@ public class Settings {
 			
 	private static Gson gson = new Gson();																					
     
+    public interface AsyncResponse {
+    	void processFinish(String output);
+   	}
+    
+    public interface SettingsListener {
+    	public void successful();
+    	public void failure();
+	}
+    
+	public Settings() {
+        super();
+	}
+	
     public static void getSettings(final Context context) {
     	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
    		
 		String urlString = context.getString(R.string.server_url) + "getsettings?sessionid="+sessionid;
     	if (Utils.isNetworkConnected(context, true)) {
   			try {
-		        	AsyncTask at = new Comm().execute(urlString, null); 
+		        	AsyncTask at = new Comm(null).execute(urlString, null); 
 		            String res = (String) at.get();
 		            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
 		    	   	if (jRes.has("error") && !jRes.getString("error").equals("null")) {
@@ -197,7 +214,7 @@ public class Settings {
     	String urlString = context.getString(R.string.server_url) + "getobusettings?obuid="+obuId+"&sessionid="+sessionid;
     	if (Utils.isNetworkConnected(context, true)) {
   			try {
-	        	AsyncTask at = new Comm().execute(urlString, null); 
+	        	AsyncTask at = new Comm(null).execute(urlString, null); 
 	            String res = (String) at.get();
 	            JSONArray jsonObuSettings = (JSONArray)new JSONTokener(res).nextValue();
     	   		obuSettings.clear();
@@ -255,33 +272,46 @@ public class Settings {
     	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
 	    String urlString = context.getString(R.string.server_url) + "setobusettings?sessionid="+sessionid;
 	    if (Utils.isNetworkConnected(context, true)) {
-	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
+	    	AsyncTask at = new Comm(null).execute(urlString, "json", data); 
+	    	
+	    	// NA KONC SE REFRESHAJ SETTINGSE
+	    	//getObuSetting
 	    }
     }
     
-    public static void getObuComponents(Context context) {
+    public static void getObuComponents(final Context context, final SettingsListener responseHandler) {
     	String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
    		
     	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
     	String urlString = context.getString(R.string.server_url) + "getobucomponents?obuid="+obuId+"&sessionid="+sessionid;
     	if (Utils.isNetworkConnected(context, true)) {
-  			try {
-	        	AsyncTask at = new Comm().execute(urlString, null); 
-	            String res = (String) at.get();
-	            JSONArray jsonObuComponents = (JSONArray)new JSONTokener(res).nextValue();
-	            obuComponents.clear();
-    	   		for (int i=0; i< jsonObuComponents.length(); i++) {
-    	   			ObuComponent obuComponent = gson.fromJson(jsonObuComponents.get(i).toString(), ObuComponent.class);
-    	   			if (obuComponent.getShow() != 0) {
-    	   				obuComponents.put(obuComponent.getId_component(), obuComponent);
-    	   			}
-    	   		}
-	        } catch (Exception e) {
-   	        	e.printStackTrace();
-   	        	Toast toast = Toast.makeText(context, context.getString(R.string.json_error), Toast.LENGTH_LONG);
-   	        	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
-   	        	toast.show();
-   	   		}
+    		Comm asyncTask = new Comm(new AsyncResponse() {
+	            @Override
+	            public void processFinish(String output) {
+	    			try {
+	    				//AsyncTask at = new Comm().execute(urlString, null); 
+  			            //String res = (String) at.get();
+  			            String res = (String) output;
+  			            JSONArray jsonObuComponents = (JSONArray)new JSONTokener(res).nextValue();
+  			            obuComponents.clear();
+  		    	   		for (int i=0; i< jsonObuComponents.length(); i++) {
+  		    	   			ObuComponent obuComponent = gson.fromJson(jsonObuComponents.get(i).toString(), ObuComponent.class);
+  		    	   			if (obuComponent.getShow() != 0) {
+  		    	   				obuComponents.put(obuComponent.getId_component(), obuComponent);
+  		    	   			}
+  		    	   		}
+  		    	   		
+  		    	   		responseHandler.successful();
+  			        } catch (Exception e) {
+  		   	        	e.printStackTrace();
+  		   	        	Toast toast = Toast.makeText(context, context.getString(R.string.json_error), Toast.LENGTH_LONG);
+  		   	        	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+  		   	        	toast.show();
+  		   	        	responseHandler.failure();
+  		   	   		}
+	    	   	}
+			});
+			asyncTask.execute(urlString, null);
     	}
     }    
     
@@ -292,7 +322,7 @@ public class Settings {
     	String urlString = context.getString(R.string.server_url) + "getobualarms?obuid="+obuId+"&sessionid="+sessionid;
     	if (Utils.isNetworkConnected(context, true)) {
   			try {
-	        	AsyncTask at = new Comm().execute(urlString, null); 
+	        	AsyncTask at = new Comm(null).execute(urlString, null); 
 	            String res = (String) at.get();
 	            
 	            JSONArray jsonObuAlarms = (JSONArray)new JSONTokener(res).nextValue();
@@ -319,7 +349,7 @@ public class Settings {
     	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
 	    String urlString = context.getString(R.string.server_url) + "setobualarms?sessionid="+sessionid;
 	    if (Utils.isNetworkConnected(context, true)) {
-	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
+	    	AsyncTask at = new Comm(null).execute(urlString, "json", data); 
 	    }
     }  
     
@@ -330,7 +360,7 @@ public class Settings {
     	String urlString = context.getString(R.string.server_url) + "getcustomer?obuid="+obuId+"&sessionid="+sessionid;
     	if (Utils.isNetworkConnected(context, true)) {
   			try {
-	        	AsyncTask at = new Comm().execute(urlString, null); 
+	        	AsyncTask at = new Comm(null).execute(urlString, null); 
 	            String res = (String) at.get();
 	            customer = gson.fromJson(res, Customer.class);
 	        } catch (Exception e) {
@@ -350,7 +380,7 @@ public class Settings {
     	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
 	    String urlString = context.getString(R.string.server_url) + "setcustomer?sessionid="+sessionid;
 	    if (Utils.isNetworkConnected(context, true)) {
-	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
+	    	AsyncTask at = new Comm(null).execute(urlString, "json", data); 
 	    }
     }     
 
@@ -360,7 +390,7 @@ public class Settings {
     	String urlString = context.getString(R.string.server_url) + "getfriends?customerid="+customer.getUid()+"&sessionid="+sessionid;
     	if (Utils.isNetworkConnected(context, true)) {
   			try {
-	        	AsyncTask at = new Comm().execute(urlString, null); 
+	        	AsyncTask at = new Comm(null).execute(urlString, null); 
 	            String res = (String) at.get();
 
 	            JSONArray jsonFriends = (JSONArray)new JSONTokener(res).nextValue();
@@ -386,7 +416,7 @@ public class Settings {
     	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
 	    String urlString = context.getString(R.string.server_url) + "setfriends?sessionid="+sessionid;
 	    if (Utils.isNetworkConnected(context, true)) {
-	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
+	    	AsyncTask at = new Comm(null).execute(urlString, "json", data); 
 	    }
     }      
     

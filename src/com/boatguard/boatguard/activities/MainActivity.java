@@ -8,7 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Map.Entry;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -306,11 +305,20 @@ public class MainActivity extends Activity {
  
         Settings.getSettings(this);        
         Settings.getObuSettings(this);  
-        Settings.getObuComponents(this);  
+        Settings.getObuComponents(this, new Settings.SettingsListener() {
+			
+			@Override
+			public void successful() {
+				showObuComponents();
+			}
+			
+			@Override
+			public void failure() {
+			}
+		}); 
         Settings.getObuAlarms(this); 
-        //Settings.getCustomer(this); 
         Settings.getFriends(this);
-        showObuComponents();
+        //showObuComponents();
         
         
         this.registerReceiver(new BroadcastReceiver() {
@@ -340,7 +348,7 @@ public class MainActivity extends Activity {
 		String obuId = Utils.getPrefernciesString(MainActivity.this, Settings.SETTING_OBU_ID);
     	String sessionid = Utils.getPrefernciesString(this, Settings.SETTING_SESSION_ID);
    		String urlString = MainActivity.this.getString(R.string.server_url) + "confirmalarm?obuid="+obuId+"&alarmid="+alarmId+"&sessionid="+sessionid;
-   		new Comm().execute(urlString, null); 
+   		new Comm(null).execute(urlString, null); 
    		
    		if (activeAlarms.indexOf(alarmId) != -1) {
    			activeAlarms.remove(activeAlarms.indexOf(alarmId));
@@ -351,7 +359,7 @@ public class MainActivity extends Activity {
 	}
 	
 	@SuppressLint("NewApi")
-	private void showObuComponents(){
+	public void showObuComponents(){
 		TableLayout lComponents = (TableLayout)findViewById(R.id.components);
 
 	    //TypedArray a = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.horizontal_line});     
@@ -380,7 +388,7 @@ public class MainActivity extends Activity {
 		    component.setId(obuComponent.getId_component());
 			    
 		    String componentName = obuComponent.getName();
-			TextView label = ((TextView)component.findViewById(R.id.label));
+		    TextView label = ((TextView)component.findViewById(R.id.label));
 			if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_EXT)) {
 				ObuSetting obuSetting = Settings.getObuSettingObject(obuComponent.getName());
 				if (obuSetting != null) {
@@ -390,6 +398,7 @@ public class MainActivity extends Activity {
 			
 			label.setText(componentName);
 			final String componentNameFinal = componentName;
+			final String componentType = obuComponent.getName();
 			((TextViewFont)component.findViewById(R.id.label)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
 	        
 			
@@ -398,7 +407,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(0, componentNameFinal);
+						showSetting(0, componentNameFinal, componentType);
 					}
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_PUMP)) {
@@ -406,7 +415,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(1, componentNameFinal);
+						showSetting(1, componentNameFinal, componentType);
 					}
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ANCHOR)) { 
@@ -414,7 +423,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(2, componentNameFinal);
+						showSetting(2, componentNameFinal, componentType);
 					}
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ACCU)) { 
@@ -423,7 +432,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(3, componentNameFinal);
+						showSetting(3, componentNameFinal, componentType);
 					}
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_LIGHT)) { 
@@ -431,7 +440,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(10, componentNameFinal);
+						showSetting(10, componentNameFinal, componentType);
 					}
 				});				
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_FAN)) { 
@@ -439,7 +448,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(11, componentNameFinal);
+						showSetting(11, componentNameFinal, componentType);
 					}
 				});	
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_DOOR)) { 
@@ -455,7 +464,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(12, componentNameFinal);
+						showSetting(12, componentNameFinal, componentType);
 					}
 				});
 			} 			
@@ -481,10 +490,11 @@ public class MainActivity extends Activity {
 
 	}
 
-	private void showSetting(int item, String componentName) {
+	private void showSetting(int item, String componentName, String type) {
 		Intent i = new Intent(MainActivity.this, SettingsActivity.class);
 		i.putExtra("id", item);
 		i.putExtra("title", componentName);
+		i.putExtra("type", type);
 		startActivity(i);
 	}
 
@@ -537,7 +547,7 @@ public class MainActivity extends Activity {
     			ivRefresh.setVisibility(View.VISIBLE);	
     			refreshAnimation.start();
     			
-            	Comm at = new Comm();
+            	Comm at = new Comm(null);
     			at.setCallbackListener(clGetObuData);
     			at.execute(urlString, null); 
     	}
@@ -596,7 +606,7 @@ public class MainActivity extends Activity {
     	String sessionid = Utils.getPrefernciesString(this, Settings.SETTING_SESSION_ID);
     	String urlString = this.getString(R.string.server_url) + "gethistorydata?obuid="+obuId+"&sessionid="+sessionid;
     	if (Utils.isNetworkConnected(this, false)) {
-            	Comm at = new Comm();
+            	Comm at = new Comm(null);
     			at.setCallbackListener(clGetObuHistoryData);
     			at.execute(urlString, null); 
     	}

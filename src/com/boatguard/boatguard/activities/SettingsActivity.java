@@ -19,15 +19,14 @@ import com.boatguard.boatguard.fragments.AppAppearanceFragment;
 import com.boatguard.boatguard.fragments.BatteryFragment;
 import com.boatguard.boatguard.fragments.BilgePumpFragment;
 import com.boatguard.boatguard.fragments.ContactsFragment;
+import com.boatguard.boatguard.fragments.ExtFragment;
 import com.boatguard.boatguard.fragments.GeoFenceFragment;
 import com.boatguard.boatguard.fragments.HistoryFragment;
 import com.boatguard.boatguard.fragments.MyAccountFragment;
 import com.boatguard.boatguard.fragments.SensorsFragment;
 import com.boatguard.boatguard.fragments.SettingsFragment;
-import com.boatguard.boatguard.objects.AppSetting;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
-import com.flurry.android.FlurryAgent;
 
 public class SettingsActivity extends Activity {
 
@@ -131,11 +130,12 @@ public class SettingsActivity extends Activity {
 				break;
 	        case 12:
 	        	Bundle bundleExt = new Bundle();
-	        	bundleExt.putString("type", Settings.STATE_EXT1);
-	        	//SensorsFragment fragFan = new SensorsFragment();
-	        	//fragFan.setArguments(bundleFan);
+	        	bundleExt.putString("name", extras.getString("title"));
+	        	bundleExt.putString("type", extras.getString("type"));
+	        	ExtFragment extFragment = new ExtFragment();
+	        	extFragment.setArguments(bundleExt);
 	        	
-	        	//fragmentTransaction.add(R.id.fragment_settings, fragFan, extras.getString("title"));
+	        	fragmentTransaction.add(R.id.fragment_settings, extFragment, extras.getString("title"));
 	            fragmentTransaction.commit();
 				break;
 		}
@@ -144,7 +144,7 @@ public class SettingsActivity extends Activity {
 		btnBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-		    	if ((fragmentId == 0) || (fragmentId == 1) || (fragmentId == 2) || (fragmentId == 3)) {
+		    	if ((fragmentId == 0) || (fragmentId == 1) || (fragmentId == 2) || (fragmentId == 3) || (fragmentId == 12)) {
 		    		Settings.setObuSettings(SettingsActivity.this);
 		    		finish();
 		    	}

@@ -46,7 +46,7 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     public void onCreate() {
     	Settings.getSettings(mContext);
-    	Settings.getObuComponents(mContext);
+    	//Settings.getObuComponents(mContext);
     }
 
     public void onDestroy() {

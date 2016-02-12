@@ -152,7 +152,7 @@ public class LoginActivity extends Activity {
 			}     */
 			
 	        if (Utils.isNetworkConnected(LoginActivity.this, true)) {
-	        	AsyncTask at = new Comm().execute(urlString, null); 
+	        	AsyncTask at = new Comm(null).execute(urlString, null); 
 	            String res = (String) at.get();
 	            System.out.println(res);
 	            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
@@ -215,7 +215,7 @@ public class LoginActivity extends Activity {
 		    	String sessionid = Utils.getPrefernciesString(this, Settings.SETTING_SESSION_ID);
 			    String urlString = LoginActivity.this.getString(R.string.server_url) + "setdevice?sessionid="+sessionid;
 			    if (Utils.isNetworkConnected(LoginActivity.this, true)) {
-			    	AsyncTask at = new Comm().execute(urlString, "json", data); 
+			    	AsyncTask at = new Comm(null).execute(urlString, "json", data); 
 			    }
 		}
         } catch (Exception e) {

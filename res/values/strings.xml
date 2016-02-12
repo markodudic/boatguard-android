@@ -104,6 +104,8 @@
    <string name="send_email">SEND EMAIL</string>
    <string name="alarm_friends">ALARM FRIENDS</string>
    
+   <string name="alarm_active">ALARM ACTIVE</string>
+   
     <string name="name">NAME</string>
     <string name="password1">PASSWORD</string>
     <string name="password2">CONFIRM PASSWORD</string>

@@ -15,11 +15,19 @@ import org.apache.http.protocol.HttpContext;
 
 import android.os.AsyncTask;
 
+import com.boatguard.boatguard.utils.Settings.AsyncResponse;
+
 public class Comm extends AsyncTask<String, String, String> {
 	
 	public static HttpClient httpClient = new DefaultHttpClient();
     OnTaskCompleteListener mListener;
 	
+    public AsyncResponse delegate = null;
+    
+    public Comm(AsyncResponse asyncResponse) {
+        delegate = asyncResponse;
+    }
+    
 	@Override
     protected String doInBackground(String... params) {
        HttpContext localContext = new BasicHttpContext();
@@ -58,6 +66,9 @@ public class Comm extends AsyncTask<String, String, String> {
     protected void onPostExecute(String text) {
         super.onPostExecute(text);
         if (mListener != null) mListener.onComplete(text);
+        if (delegate != null) {
+        	delegate.processFinish(text);
+      	}
     }
     
     public interface OnTaskCompleteListener {
