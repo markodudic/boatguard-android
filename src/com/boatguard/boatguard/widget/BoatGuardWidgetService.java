@@ -6,7 +6,6 @@ import java.util.List;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -45,8 +44,18 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     }
 
     public void onCreate() {
-    	Settings.getSettings(mContext);
-    	//Settings.getObuComponents(mContext);
+    	Settings settings = new Settings(mContext);
+		settings.getSettings(); 
+		settings.getObuComponents(new Settings.SettingsListener() {
+			
+			@Override
+			public void successful() {
+			}
+			
+			@Override
+			public void failure() {
+			}
+		}); 
     }
 
     public void onDestroy() {

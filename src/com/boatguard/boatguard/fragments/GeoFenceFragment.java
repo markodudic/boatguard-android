@@ -81,8 +81,8 @@ public class GeoFenceFragment  extends Fragment {
 			public void onClick(View v1) {
 		    	FlurryAgent.logEvent("GeoFence Define");
 				Settings.obuSettings.get(((State)Settings.states.get(Settings.STATE_LAT)).getId()).setValue("SET");
-		        Settings.setObuSettings(getActivity());
-		        getActivity().finish();
+				new Settings(getActivity()).setObuSettings();
+	    		getActivity().finish();
 			}
 		});	
 

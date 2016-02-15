@@ -59,7 +59,7 @@ public class SensorsFragment  extends Fragment {
 	            public void onClick(View v) {
 			        HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
 			        obuSettings.get(((State)Settings.states.get(type)).getId()).setValue(sensorSwitch.isChecked()?"1":"0");
-	            	Settings.setObuSettings(getActivity());
+			        new Settings(getActivity()).setObuSettings();
 	            }
 	        });  
 

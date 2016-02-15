@@ -22,11 +22,11 @@ public class Comm extends AsyncTask<String, String, String> {
 	public static HttpClient httpClient = new DefaultHttpClient();
     OnTaskCompleteListener mListener;
 	
-    public AsyncResponse delegate = null;
+    /*public AsyncResponse delegate = null;
     
     public Comm(AsyncResponse asyncResponse) {
         delegate = asyncResponse;
-    }
+    }*/
     
 	@Override
     protected String doInBackground(String... params) {
@@ -66,9 +66,9 @@ public class Comm extends AsyncTask<String, String, String> {
     protected void onPostExecute(String text) {
         super.onPostExecute(text);
         if (mListener != null) mListener.onComplete(text);
-        if (delegate != null) {
+        /*if (delegate != null) {
         	delegate.processFinish(text);
-      	}
+      	}*/
     }
     
     public interface OnTaskCompleteListener {

@@ -30,6 +30,8 @@ import com.boatguard.boatguard.utils.Comm;
 import com.boatguard.boatguard.utils.DialogFactory;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
+import com.boatguard.boatguard.utils.Comm.OnTaskCompleteListener;
+import com.boatguard.boatguard.utils.Settings.AsyncResponse;
 import com.google.gson.Gson;
 
 public class LoginActivity extends Activity {
@@ -126,64 +128,77 @@ public class LoginActivity extends Activity {
 
 	
 	private void loginRegister(String type) {
-		try {
-			EditText etUsername = (EditText) findViewById(R.id.username);
-	        EditText etPassword = (EditText) findViewById(R.id.password);
-	        EditText etObuid = (EditText) findViewById(R.id.obu_id);
-	        //PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-   		    //TelephonyManager mTelephonyMgr; 
-	   	    //mTelephonyMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
+		EditText etUsername = (EditText) findViewById(R.id.username);
+		EditText etPassword = (EditText) findViewById(R.id.password);
+        EditText etObuid = (EditText) findViewById(R.id.obu_id);
+        //PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+	    //TelephonyManager mTelephonyMgr; 
+   	    //mTelephonyMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
 
-	    	String sessionid = Utils.getPrefernciesString(this, Settings.SETTING_SESSION_ID);
-	        String urlString = LoginActivity.this.getString(R.string.server_url) + 
-					"login?type="+type +
-					"&username=" + Uri.encode(etUsername.getText().toString()) + 
-					"&password=" + Uri.encode(etPassword.getText().toString()) + 
-					"&obu_sn=" + Uri.encode(etObuid.getText().toString()) +
-					"&sessionid="+sessionid; 
-					/*"&app_version=" + URLEncoder.encode(pInfo.versionName) +
-					"&device_name="+URLEncoder.encode(Build.MODEL)+
-					"&device_platform="+Build.VERSION.SDK_INT+
-					"&device_version="+URLEncoder.encode(Build.VERSION.RELEASE)+
-					"&device_uuid="+URLEncoder.encode(Build.SERIAL);
+    	String sessionid = Utils.getPrefernciesString(this, Settings.SETTING_SESSION_ID);
+        String urlString = LoginActivity.this.getString(R.string.server_url) + 
+				"login?type="+type +
+				"&username=" + Uri.encode(etUsername.getText().toString()) + 
+				"&password=" + Uri.encode(etPassword.getText().toString()) + 
+				"&obu_sn=" + Uri.encode(etObuid.getText().toString()) +
+				"&sessionid="+sessionid; 
+				/*"&app_version=" + URLEncoder.encode(pInfo.versionName) +
+				"&device_name="+URLEncoder.encode(Build.MODEL)+
+				"&device_platform="+Build.VERSION.SDK_INT+
+				"&device_version="+URLEncoder.encode(Build.VERSION.RELEASE)+
+				"&device_uuid="+URLEncoder.encode(Build.SERIAL);
 
-			if (mTelephonyMgr!=null && mTelephonyMgr.getLine1Number()!=null && mTelephonyMgr.getLine1Number().length() > 0) {
-				urlString += "&phone_number="+URLEncoder.encode(mTelephonyMgr.getLine1Number());
-			}     */
-			
-	        if (Utils.isNetworkConnected(LoginActivity.this, true)) {
-	        	AsyncTask at = new Comm(null).execute(urlString, null); 
-	            String res = (String) at.get();
-	            System.out.println(res);
-	            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
-	    	   	if (jRes.has("error") && !jRes.getString("error").equals("null")) {
-	    	   		String msg = ((JSONObject)jRes.get("error")).getString("msg");
-	    	   		String name = ((JSONObject)jRes.get("error")).getString("name");
-	    	   		DialogFactory.getInstance().displayWarning(LoginActivity.this, name, msg, false);
-	    	   	} else {
-	    	   		CheckBox cbRememberMe = (CheckBox) findViewById(R.id.checkBox_remember_me);
-			        Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_USERNAME, etUsername.getText().toString());
-	    	   		Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_PASSWORD, etPassword.getText().toString());
-	    	   		String uid = ((JSONObject)jRes.get("obu")).getString("uid");
-	    	   		Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_OBU_ID, uid);
-	    	   		Utils.savePrefernciesBoolean(LoginActivity.this, Settings.SETTING_REMEMBER_ME, cbRememberMe.isChecked());
-					setDevice();
-	    	   		String sessionId = (String)jRes.get("sessionId");
-	    	   		//Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_SESSION_ID, sessionId);
-	    	   		Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_SESSION_ID, getResources().getString(R.string.session_id));
-   	    	   		Intent i = new Intent(LoginActivity.this, MainActivity.class);
-					startActivity(i);								    	   		
-
-	    	   	}
-	        }
-        } catch (Exception e) {
-        	e.printStackTrace();
-        	Toast toast = Toast.makeText(LoginActivity.this, getString(R.string.json_error), Toast.LENGTH_LONG);
-        	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
-        	toast.show();
-   		}
+		if (mTelephonyMgr!=null && mTelephonyMgr.getLine1Number()!=null && mTelephonyMgr.getLine1Number().length() > 0) {
+			urlString += "&phone_number="+URLEncoder.encode(mTelephonyMgr.getLine1Number());
+		}     */
 		
+        if (Utils.isNetworkConnected(LoginActivity.this, true)) {
+				
+        	Comm at = new Comm(); 
+			at.setCallbackListener(clLogin);
+			at.execute(urlString, null); 
+
+        }
 	} 
+	
+	private OnTaskCompleteListener clLogin = new OnTaskCompleteListener() {
+
+        @Override
+        public void onComplete(String res) {
+			try {	
+		            System.out.println(res);
+		            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
+		    	   	if (jRes.has("error") && !jRes.getString("error").equals("null")) {
+		    	   		String msg = ((JSONObject)jRes.get("error")).getString("msg");
+		    	   		String name = ((JSONObject)jRes.get("error")).getString("name");
+		    	   		DialogFactory.getInstance().displayWarning(LoginActivity.this, name, msg, false);
+		    	   	} else {
+		    	   		EditText etUsername = (EditText) findViewById(R.id.username);
+		    			EditText etPassword = (EditText) findViewById(R.id.password);
+		    	        CheckBox cbRememberMe = (CheckBox) findViewById(R.id.checkBox_remember_me);
+				        Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_USERNAME, etUsername.getText().toString());
+		    	   		Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_PASSWORD, etPassword.getText().toString());
+		    	   		String uid = ((JSONObject)jRes.get("obu")).getString("uid");
+		    	   		Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_OBU_ID, uid);
+		    	   		Utils.savePrefernciesBoolean(LoginActivity.this, Settings.SETTING_REMEMBER_ME, cbRememberMe.isChecked());
+						setDevice();
+		    	   		String sessionId = (String)jRes.get("sessionId");
+		    	   		//Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_SESSION_ID, sessionId);
+		    	   		Utils.savePrefernciesString(LoginActivity.this, Settings.SETTING_SESSION_ID, getResources().getString(R.string.session_id));
+	   	    	   		Intent i = new Intent(LoginActivity.this, MainActivity.class);
+						startActivity(i);								    	   		
+	
+		    	   	}
+
+	        } catch (Exception e) {
+	        	e.printStackTrace();
+	        	Toast toast = Toast.makeText(LoginActivity.this, getString(R.string.json_error), Toast.LENGTH_LONG);
+	        	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+	        	toast.show();
+	   		}
+		
+        }
+    };
 	
     private void setDevice() {
 		try {
@@ -215,9 +230,9 @@ public class LoginActivity extends Activity {
 		    	String sessionid = Utils.getPrefernciesString(this, Settings.SETTING_SESSION_ID);
 			    String urlString = LoginActivity.this.getString(R.string.server_url) + "setdevice?sessionid="+sessionid;
 			    if (Utils.isNetworkConnected(LoginActivity.this, true)) {
-			    	AsyncTask at = new Comm(null).execute(urlString, "json", data); 
+			    	AsyncTask at = new Comm().execute(urlString, "json", data); 
 			    }
-		}
+	        }
         } catch (Exception e) {
         	e.printStackTrace();
         	Toast toast = Toast.makeText(LoginActivity.this, getString(R.string.json_error), Toast.LENGTH_LONG);

@@ -79,7 +79,7 @@ public class AnchorDriftingFragment  extends Fragment {
 			public void onClick(View v1) {
 		    	FlurryAgent.logEvent("Anchor Define");
 				Settings.obuSettings.get(((State)Settings.states.get(Settings.STATE_LAT)).getId()).setValue("SET");
-		        Settings.setObuSettings(getActivity());
+		        new Settings(getActivity()).setObuSettings();
 		        getActivity().finish();
 			}
 		});	

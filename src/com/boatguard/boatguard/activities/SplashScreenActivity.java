@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -25,14 +26,19 @@ import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.boatguard.boatguard.R;
 import com.boatguard.boatguard.objects.Device;
+import com.boatguard.boatguard.objects.ObuComponent;
 import com.boatguard.boatguard.utils.Comm;
 import com.boatguard.boatguard.utils.DialogFactory;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
+import com.boatguard.boatguard.utils.Comm.OnTaskCompleteListener;
+import com.boatguard.boatguard.utils.Settings.AsyncResponse;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -116,60 +122,68 @@ public class SplashScreenActivity extends Activity {
 	    	   			startActivity(i);						
 	    	   			finish();
 	    	   		} else {
-	    	   			try {
-	    	   				//PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-		    	   		    //TelephonyManager mTelephonyMgr;
-			    	   	    //mTelephonyMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
-	    	   		    	String urlString = SplashScreenActivity.this.getString(R.string.server_url) + 
-	    	   						"login?type=login" + 
-	    	   						"&username=" + Uri.encode(username) + 
-	    	   						"&password=" + Uri.encode(password) +
-	    	   						"&obu_sn=" + Uri.encode(obu_id); 
-									/*"&app_version=" + URLEncoder.encode(pInfo.versionName) +
-									"&device_name="+URLEncoder.encode(Build.MODEL)+
-									"&device_platform="+Build.VERSION.SDK_INT+
-									"&device_version="+URLEncoder.encode(Build.VERSION.RELEASE)+
-									"&device_uuid="+URLEncoder.encode(Build.SERIAL);
+    	   				//PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+	    	   		    //TelephonyManager mTelephonyMgr;
+		    	   	    //mTelephonyMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
+    	   		    	String urlString = SplashScreenActivity.this.getString(R.string.server_url) + 
+    	   						"login?type=login" + 
+    	   						"&username=" + Uri.encode(username) + 
+    	   						"&password=" + Uri.encode(password) +
+    	   						"&obu_sn=" + Uri.encode(obu_id); 
+								/*"&app_version=" + URLEncoder.encode(pInfo.versionName) +
+								"&device_name="+URLEncoder.encode(Build.MODEL)+
+								"&device_platform="+Build.VERSION.SDK_INT+
+								"&device_version="+URLEncoder.encode(Build.VERSION.RELEASE)+
+								"&device_uuid="+URLEncoder.encode(Build.SERIAL);
 
-	    	   				if (mTelephonyMgr!=null && mTelephonyMgr.getLine1Number()!=null && mTelephonyMgr.getLine1Number().length() > 0) {
-	    	   					urlString += "&phone_number="+URLEncoder.encode(mTelephonyMgr.getLine1Number());
-	    	   				}   */     
-	    	   	        
-	    	   		        if (Utils.isNetworkConnected(SplashScreenActivity.this, true)) {
-	    	   		        	AsyncTask at = new Comm(null).execute(urlString, null); 
-		    	   	            String res = (String) at.get();
-		    	   	            System.out.println(res);
-		    	   	            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
-		    	   	    	   	if (jRes.has("error") && !jRes.getString("error").equals("null")) {
-		    	   	    	   		String msg = ((JSONObject)jRes.get("error")).getString("msg");
-		    	   	    	   		String name = ((JSONObject)jRes.get("error")).getString("name");
-		    	   	    	   		DialogFactory.getInstance().displayWarning(SplashScreenActivity.this, name, msg, false);
-		    	   	    	   		
-		    	    	   			Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
-		    	    	   			startActivity(i);						
-		    	    	   			finish();
-		    	   	    	   	} else {
-		    		    	   		String sessionId = (String)jRes.get("sessionId");
-		    		    	   		//Utils.savePrefernciesString(SplashScreenActivity.this, Settings.SETTING_SESSION_ID, sessionId);
-		    		    	   		Utils.savePrefernciesString(SplashScreenActivity.this, Settings.SETTING_SESSION_ID, getResources().getString(R.string.session_id));
-		    	   					setDevice();
-		    	   	    	   		Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
-		    	   					startActivity(i);
-		    	   					finish();
-		    	   	    	   	}
-		    	   	    	   	
-	    	   		        }
-	    	   	        } catch (Exception e) {
-	    	   	        	e.printStackTrace();
-	    	   	        	Toast toast = Toast.makeText(SplashScreenActivity.this, getString(R.string.json_error), Toast.LENGTH_LONG);
-	    	   	        	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
-	    	   	        	toast.show();
-	    	   	   		}	
+    	   				if (mTelephonyMgr!=null && mTelephonyMgr.getLine1Number()!=null && mTelephonyMgr.getLine1Number().length() > 0) {
+    	   					urlString += "&phone_number="+URLEncoder.encode(mTelephonyMgr.getLine1Number());
+    	   				}   */     
+    	   	        
+    	   		        if (Utils.isNetworkConnected(SplashScreenActivity.this, true)) {
+    	   		        	Comm at = new Comm(); 
+    	   					at.setCallbackListener(clLogin);
+    	   					at.execute(urlString, null); 
+    	   		        }
 	    	   		}
 	            }
         }, SPLASH_TIME_OUT);
     }
 
+	private OnTaskCompleteListener clLogin = new OnTaskCompleteListener() {
+
+        @Override
+        public void onComplete(String res) {
+			try {	
+   	            JSONObject jRes = (JSONObject)new JSONTokener(res).nextValue();
+   	    	   	if (jRes.has("error") && !jRes.getString("error").equals("null")) {
+   	    	   		String msg = ((JSONObject)jRes.get("error")).getString("msg");
+   	    	   		String name = ((JSONObject)jRes.get("error")).getString("name");
+   	    	   		DialogFactory.getInstance().displayWarning(SplashScreenActivity.this, name, msg, false);
+   	    	   		
+    	   			Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
+    	   			startActivity(i);						
+    	   			finish();
+   	    	   	} else {
+	    	   		String sessionId = (String)jRes.get("sessionId");
+	    	   		//Utils.savePrefernciesString(SplashScreenActivity.this, Settings.SETTING_SESSION_ID, sessionId);
+	    	   		Utils.savePrefernciesString(SplashScreenActivity.this, Settings.SETTING_SESSION_ID, getResources().getString(R.string.session_id));
+   					setDevice();
+   	    	   		Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
+   					startActivity(i);
+   					finish();
+   	    	   	}
+	        } catch (Exception e) {
+	        	e.printStackTrace();
+	        	Toast toast = Toast.makeText(SplashScreenActivity.this, getString(R.string.json_error), Toast.LENGTH_LONG);
+	        	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+	        	toast.show();
+	   		}
+		
+        }
+    };
+
+    
     @Override 
     protected void onResume() {
            super.onResume();
@@ -207,7 +221,7 @@ public class SplashScreenActivity extends Activity {
 		    	String sessionid = Utils.getPrefernciesString(this, Settings.SETTING_SESSION_ID);
 			    String urlString = SplashScreenActivity.this.getString(R.string.server_url) + "setdevice?sessionid="+sessionid;
 			    if (Utils.isNetworkConnected(SplashScreenActivity.this, true)) {
-			    	AsyncTask at = new Comm(null).execute(urlString, "json", data); 
+			    	AsyncTask at = new Comm().execute(urlString, "json", data); 
 			    }
 		    }
         } catch (Exception e) {

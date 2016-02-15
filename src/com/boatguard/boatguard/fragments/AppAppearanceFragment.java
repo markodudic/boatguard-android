@@ -56,8 +56,8 @@ public class AppAppearanceFragment  extends Fragment {
  				String val = (String)spinnerRefreshTime.getSelectedItem();
 		        HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
 		        obuSettings.get(Settings.getObuSetting(Settings.SETTING_REFRESH_TIME)).setValue(val.length()==1?'0'+val:val);
-		        Settings.setObuSettings(getActivity());
-		        Utils.savePrefernciesInt(getActivity(), Settings.SETTING_REFRESH_TIME, Integer.parseInt(val)*60*1000);
+		        new Settings(getActivity()).setObuSettings();
+	    		Utils.savePrefernciesInt(getActivity(), Settings.SETTING_REFRESH_TIME, Integer.parseInt(val)*60*1000);
 			}
 
 

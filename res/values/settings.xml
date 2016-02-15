@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources> 
-	<!-- string name="server_url">http://server.boatguard.com:8080/boatguard/</string-->
+	<string name="server_url">http://server.boatguard.com:8080/boatguard/</string>
 	<!-- string name="server_url">http://46.101.190.123:8080/boatguard/</string-->
-	<string name="server_url">http://192.168.1.82:8080/boatguard/</string>
+	<!-- string name="server_url">http://192.168.1.82:8080/boatguard/</string-->
 
 	<string name="session_id">1234567890</string>
 		

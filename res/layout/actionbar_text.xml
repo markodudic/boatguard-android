@@ -1,5 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:boatguard="http://schemas.android.com/apk/res/com.boatguard.boatguard"
+    android:id="@+id/fl_action_bar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"

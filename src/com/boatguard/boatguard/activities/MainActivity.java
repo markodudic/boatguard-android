@@ -110,6 +110,8 @@ public class MainActivity extends Activity {
     
     private LinearLayout lMenu;
     private TypedArray stylesAttributes = null;
+    
+    private int confirmAlarmId;
  
 	//private ComponentsAdapter componentsAdapter;
 
@@ -303,9 +305,10 @@ public class MainActivity extends Activity {
 		
         lMenu = (LinearLayout)findViewById(R.id.fragment_menu);
  
-        Settings.getSettings(this);        
-        Settings.getObuSettings(this);  
-        Settings.getObuComponents(this, new Settings.SettingsListener() {
+        Settings settings = new Settings(this);
+		settings.getSettings(); 
+		settings.getObuSettings(); 
+		settings.getObuComponents(new Settings.SettingsListener() {
 			
 			@Override
 			public void successful() {
@@ -316,9 +319,8 @@ public class MainActivity extends Activity {
 			public void failure() {
 			}
 		}); 
-        Settings.getObuAlarms(this); 
-        Settings.getFriends(this);
-        //showObuComponents();
+		settings.getObuAlarms(); 
+        settings.getFriends();
         
         
         this.registerReceiver(new BroadcastReceiver() {
@@ -345,18 +347,28 @@ public class MainActivity extends Activity {
 	}
 	
 	private void confirmAlarm(int alarmId){
+		confirmAlarmId = alarmId;
 		String obuId = Utils.getPrefernciesString(MainActivity.this, Settings.SETTING_OBU_ID);
     	String sessionid = Utils.getPrefernciesString(this, Settings.SETTING_SESSION_ID);
    		String urlString = MainActivity.this.getString(R.string.server_url) + "confirmalarm?obuid="+obuId+"&alarmid="+alarmId+"&sessionid="+sessionid;
-   		new Comm(null).execute(urlString, null); 
-   		
-   		if (activeAlarms.indexOf(alarmId) != -1) {
-   			activeAlarms.remove(activeAlarms.indexOf(alarmId));
-   		}
-		cancelNotification(alarmId);
-		dialogAlarmActive = -1;
-		dialogAlarm.dismiss();
+   		Comm at = new Comm();
+   		at.setCallbackListener(clConfirmAlarm);
+   		at.execute(urlString, null); 
 	}
+
+	private OnTaskCompleteListener clConfirmAlarm = new OnTaskCompleteListener() {
+	
+		@Override
+		public void onComplete(String res) {
+				if (activeAlarms.indexOf(confirmAlarmId) != -1) {
+		   			activeAlarms.remove(activeAlarms.indexOf(confirmAlarmId));
+		   		}
+				cancelNotification(confirmAlarmId);
+				dialogAlarmActive = -1;
+				dialogAlarm.dismiss();
+		
+		}
+	};
 	
 	@SuppressLint("NewApi")
 	public void showObuComponents(){
@@ -375,7 +387,7 @@ public class MainActivity extends Activity {
 		
 		while(i.hasNext()) { 
 			Map.Entry map = (Map.Entry)i.next(); 
-			ObuComponent obuComponent = (ObuComponent)map.getValue();
+			final ObuComponent obuComponent = (ObuComponent)map.getValue();
 			if (obuComponent.getShow() == 0) continue;
 			
 			int lc = R.layout.list_component;
@@ -464,7 +476,14 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(12, componentNameFinal, componentType);
+						HashMap<Integer,ObuComponent> obuComponents = Settings.obuComponents;
+						ObuSetting obuSetting = Settings.getObuSettingObject(obuComponent.getName());
+						if (obuSetting != null) {
+							showSetting(12, obuSetting.getValue().toUpperCase(), componentType);
+						}
+						else {
+							showSetting(12, componentNameFinal, componentType);
+						}
 					}
 				});
 			} 			
@@ -547,7 +566,7 @@ public class MainActivity extends Activity {
     			ivRefresh.setVisibility(View.VISIBLE);	
     			refreshAnimation.start();
     			
-            	Comm at = new Comm(null);
+            	Comm at = new Comm();
     			at.setCallbackListener(clGetObuData);
     			at.execute(urlString, null); 
     	}
@@ -606,7 +625,7 @@ public class MainActivity extends Activity {
     	String sessionid = Utils.getPrefernciesString(this, Settings.SETTING_SESSION_ID);
     	String urlString = this.getString(R.string.server_url) + "gethistorydata?obuid="+obuId+"&sessionid="+sessionid;
     	if (Utils.isNetworkConnected(this, false)) {
-            	Comm at = new Comm(null);
+            	Comm at = new Comm();
     			at.setCallbackListener(clGetObuHistoryData);
     			at.execute(urlString, null); 
     	}
@@ -903,6 +922,14 @@ public class MainActivity extends Activity {
 				FrameLayout component = (FrameLayout)findViewById(idState);
 				if (component != null) {
 					ImageView imageView = (ImageView)component.findViewById(R.id.logo);
+					
+					HashMap<Integer,ObuComponent> obuComponents = Settings.obuComponents;
+					ObuSetting obuSetting = Settings.getObuSettingObject(obuComponents.get(idState).getName());
+					if (obuSetting != null) {
+						TextView label = ((TextView)component.findViewById(R.id.label));
+						label.setText(obuSetting.getValue().toUpperCase());
+					}
+					
 					String extState = obuState.getValue(); 
 					cancelAlarmAnimation(component, null, false);
 					

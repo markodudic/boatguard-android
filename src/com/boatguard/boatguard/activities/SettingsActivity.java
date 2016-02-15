@@ -8,7 +8,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
 
 import com.boatguard.boatguard.R;
 import com.boatguard.boatguard.components.TextViewFont;
@@ -140,12 +140,12 @@ public class SettingsActivity extends Activity {
 				break;
 		}
                 
-		ImageView btnBack = (ImageView) findViewById(R.id.iv_back);
+        FrameLayout btnBack = (FrameLayout) findViewById(R.id.fl_action_bar);
 		btnBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 		    	if ((fragmentId == 0) || (fragmentId == 1) || (fragmentId == 2) || (fragmentId == 3) || (fragmentId == 12)) {
-		    		Settings.setObuSettings(SettingsActivity.this);
+		    		new Settings(SettingsActivity.this).setObuSettings();
 		    		finish();
 		    	}
 		    	else if (fragmentId == -1) {
