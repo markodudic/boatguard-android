@@ -1,14 +1,11 @@
 package com.boatguard.boatguard.activities;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -26,19 +23,15 @@ import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.boatguard.boatguard.R;
 import com.boatguard.boatguard.objects.Device;
-import com.boatguard.boatguard.objects.ObuComponent;
 import com.boatguard.boatguard.utils.Comm;
+import com.boatguard.boatguard.utils.Comm.OnTaskCompleteListener;
 import com.boatguard.boatguard.utils.DialogFactory;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
-import com.boatguard.boatguard.utils.Comm.OnTaskCompleteListener;
-import com.boatguard.boatguard.utils.Settings.AsyncResponse;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -195,7 +188,7 @@ public class SplashScreenActivity extends Activity {
 		try {
 			String gcm_registration_id = Utils.getPrefernciesString(SplashScreenActivity.this, PROPERTY_REG_ID);
 		    String obu_id = Utils.getPrefernciesString(SplashScreenActivity.this, Settings.SETTING_OBU_ID);
-		    Settings.getCustomer(this); 
+		    new Settings(this).getCustomer(this); 
 	        if (gcm_registration_id != null && obu_id != null) {
 		   		PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 				TelephonyManager mTelephonyMgr;
@@ -221,7 +214,9 @@ public class SplashScreenActivity extends Activity {
 		    	String sessionid = Utils.getPrefernciesString(this, Settings.SETTING_SESSION_ID);
 			    String urlString = SplashScreenActivity.this.getString(R.string.server_url) + "setdevice?sessionid="+sessionid;
 			    if (Utils.isNetworkConnected(SplashScreenActivity.this, true)) {
-			    	AsyncTask at = new Comm().execute(urlString, "json", data); 
+//			    	AsyncTask at = new Comm().execute(urlString, "json", data); 
+			    	Comm at = new Comm(); 
+			    	at.execute(urlString, "json", data); 
 			    }
 		    }
         } catch (Exception e) {

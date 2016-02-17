@@ -1,18 +1,8 @@
 package com.boatguard.boatguard.fragments;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
-import com.boatguard.boatguard.objects.ObuSetting;
-import com.boatguard.boatguard.objects.State;
-import com.boatguard.boatguard.utils.Comm;
-import com.boatguard.boatguard.utils.Settings;
-import com.boatguard.boatguard.utils.Utils;
 
 import android.app.Fragment;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,11 +14,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.boatguard.boatguard.R;
-import com.boatguard.boatguard.R.id;
-import com.boatguard.boatguard.R.layout;
-import com.boatguard.boatguard.R.string;
+import com.boatguard.boatguard.objects.ObuSetting;
+import com.boatguard.boatguard.objects.State;
+import com.boatguard.boatguard.utils.Settings;
 import com.flurry.android.FlurryAgent;
-import com.google.gson.Gson;
 
 public class AnchorDriftingFragment  extends Fragment {
     @Override 

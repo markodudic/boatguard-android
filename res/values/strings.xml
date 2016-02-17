@@ -27,7 +27,7 @@
     <string name="no_contacts">NO CONTACTS</string>
     <string name="reset">RESET</string>
     
-	<string name="json_error">Wronf response from the server</string> 
+	<string name="json_error">Wrong response from the server</string> 
 	<string name="json_title">Server connection</string> 
 	<string name="conn_error">Internet connection unavailable</string> 
 	<string name="conn_title">Internet connection</string> 

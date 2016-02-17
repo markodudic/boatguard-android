@@ -15,14 +15,12 @@ import org.json.JSONTokener;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.view.Gravity;
 import android.widget.Toast;
 
 import com.boatguard.boatguard.R;
-import com.boatguard.boatguard.activities.MainActivity;
 import com.boatguard.boatguard.objects.Alarm;
 import com.boatguard.boatguard.objects.AppSetting;
 import com.boatguard.boatguard.objects.Customer;
@@ -30,7 +28,6 @@ import com.boatguard.boatguard.objects.Friend;
 import com.boatguard.boatguard.objects.ObuAlarm;
 import com.boatguard.boatguard.objects.ObuComponent;
 import com.boatguard.boatguard.objects.ObuSetting;
-import com.boatguard.boatguard.objects.ObuState;
 import com.boatguard.boatguard.objects.Setting;
 import com.boatguard.boatguard.objects.State;
 import com.boatguard.boatguard.utils.Comm.OnTaskCompleteListener;
@@ -395,30 +392,39 @@ public class Settings {
     	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
 	    String urlString = context.getString(R.string.server_url) + "setobualarms?sessionid="+sessionid;
 	    if (Utils.isNetworkConnected(context, true)) {
-	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
+	    	Comm at = new Comm();
+	    	at.execute(urlString, "json", data); 
 	    }
     }  
     
-    public static void getCustomer(Context context) {
+    public void getCustomer(Context context) {
     	if (Utils.isNetworkConnected(context, true)) {
 	    	String obuId = Utils.getPrefernciesString(context, Settings.SETTING_OBU_ID);
 	   		
 	    	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
 	    	String urlString = context.getString(R.string.server_url) + "getcustomer?obuid="+obuId+"&sessionid="+sessionid;
 
-	    	try {
-	        	AsyncTask at = new Comm().execute(urlString, null); 
-	            String res = (String) at.get();
-	            customer = gson.fromJson(res, Customer.class);
+    		Comm at = new Comm();
+			at.setCallbackListener(clCustomer);
+			at.execute(urlString, null); 
+    	}
+    }
+
+    private OnTaskCompleteListener clCustomer = new OnTaskCompleteListener() {
+
+        @Override
+        public void onComplete(String res) {
+			try {
+	        	customer = gson.fromJson(res, Customer.class);
 	        } catch (Exception e) {
    	        	e.printStackTrace();
    	        	Toast toast = Toast.makeText(context, context.getString(R.string.json_error), Toast.LENGTH_LONG);
    	        	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
    	        	toast.show();
    	   		}
-    	}
-    }
-
+        }
+    };
+    
     public static void setCustomer(Context context)
     {
 	    Gson gson = new Gson();
@@ -427,7 +433,8 @@ public class Settings {
     	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
 	    String urlString = context.getString(R.string.server_url) + "setcustomer?sessionid="+sessionid;
 	    if (Utils.isNetworkConnected(context, true)) {
-	    	AsyncTask at = new Comm().execute(urlString, "json", data); 
+	    	Comm at = new Comm();
+	    	at.execute(urlString, "json", data); 
 	    }
     }     
 
@@ -472,7 +479,8 @@ public class Settings {
 	    	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
 		    String urlString = context.getString(R.string.server_url) + "setfriends?sessionid="+sessionid;
 
-		    AsyncTask at = new Comm().execute(urlString, "json", data); 
+		    Comm at = new Comm();
+		    at.execute(urlString, "json", data); 
 	    }
     }      
     

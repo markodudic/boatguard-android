@@ -156,7 +156,8 @@ public class LoginActivity extends Activity {
 				
         	Comm at = new Comm(); 
 			at.setCallbackListener(clLogin);
-			at.execute(urlString, null); 
+			at.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, urlString);
+    		//at.execute(urlString, null); 
 
         }
 	} 
@@ -204,7 +205,7 @@ public class LoginActivity extends Activity {
 		try {
 			String gcm_registration_id = Utils.getPrefernciesString(LoginActivity.this, SplashScreenActivity.PROPERTY_REG_ID);
 		    String obu_id = Utils.getPrefernciesString(LoginActivity.this, Settings.SETTING_OBU_ID);
-		    Settings.getCustomer(this); 
+		    new Settings(this).getCustomer(this); 
 	        if (gcm_registration_id != null && obu_id != null) {
 		   		PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 				TelephonyManager mTelephonyMgr;
@@ -230,7 +231,8 @@ public class LoginActivity extends Activity {
 		    	String sessionid = Utils.getPrefernciesString(this, Settings.SETTING_SESSION_ID);
 			    String urlString = LoginActivity.this.getString(R.string.server_url) + "setdevice?sessionid="+sessionid;
 			    if (Utils.isNetworkConnected(LoginActivity.this, true)) {
-			    	AsyncTask at = new Comm().execute(urlString, "json", data); 
+			    	Comm at = new Comm(); 
+			    	at.execute(urlString, "json", data); 
 			    }
 	        }
         } catch (Exception e) {

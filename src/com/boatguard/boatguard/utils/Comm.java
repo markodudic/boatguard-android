@@ -15,32 +15,24 @@ import org.apache.http.protocol.HttpContext;
 
 import android.os.AsyncTask;
 
-import com.boatguard.boatguard.utils.Settings.AsyncResponse;
-
 public class Comm extends AsyncTask<String, String, String> {
 	
 	public static HttpClient httpClient = new DefaultHttpClient();
     OnTaskCompleteListener mListener;
 	
-    /*public AsyncResponse delegate = null;
-    
-    public Comm(AsyncResponse asyncResponse) {
-        delegate = asyncResponse;
-    }*/
     
 	@Override
     protected String doInBackground(String... params) {
-       HttpContext localContext = new BasicHttpContext();
+	   HttpContext localContext = new BasicHttpContext();
        HttpPost httpPost = new HttpPost(params[0]);
        System.out.println("url="+params[0]);
-		if (params[1] != null && params[1].equals("json")) {
+		if (params.length > 2 && params[1] != null && params[1].equals("json")) {
     	   StringEntity postingString = null;
 			try {
 				postingString = new StringEntity(params[2]);
 			} catch (UnsupportedEncodingException e) {
 				e.getLocalizedMessage();
 			}
-			System.out.println("postingString="+params[2]);
 			httpPost.setEntity(postingString);
             httpPost.setHeader("Content-type", "application/json; charset=utf-8");
        }
@@ -50,6 +42,7 @@ public class Comm extends AsyncTask<String, String, String> {
     	   HttpResponse response = httpClient.execute(httpPost, localContext);
     	   HttpEntity entity = response.getEntity();
     	   text = getASCIIContentFromEntity(entity);
+    	   response.getEntity().consumeContent();
        } catch (Exception e) {
     	   return e.getLocalizedMessage();
        }
@@ -59,18 +52,20 @@ public class Comm extends AsyncTask<String, String, String> {
 	
 	
     public void setCallbackListener(OnTaskCompleteListener listener) {
-        this.mListener = listener;
+    	this.mListener = listener;
     }
 
     @Override
     protected void onPostExecute(String text) {
         super.onPostExecute(text);
         if (mListener != null) mListener.onComplete(text);
-        /*if (delegate != null) {
-        	delegate.processFinish(text);
-      	}*/
     }
-    
+   
+	@Override
+    protected void onCancelled(String text) {
+        super.onCancelled(text);
+	}
+	
     public interface OnTaskCompleteListener {
        public void onComplete(String text);
     }
