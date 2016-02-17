@@ -696,7 +696,6 @@ public class MainActivity extends Activity {
 				FrameLayout component = (FrameLayout)findViewById(idState);
 				if (component != null) {
 					ImageView imageView = (ImageView)component.findViewById(R.id.logo);
-					String geofence = obuState.getValue();
 					String geofenceValue = Settings.obuSettings.get(((State)Settings.states.get(Settings.STATE_GEO_FENCE)).getId()).getValue();
 					cancelAlarmAnimation(component, null, false);
 					
@@ -705,10 +704,12 @@ public class MainActivity extends Activity {
 					} 
 					else if (geofenceValue.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ENABLED)).getValue())) {
 						imageView.setBackgroundResource(R.drawable.ic_geofence_home);
-					} 
-					else if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ALARM)).getValue())) {
-						alarm = true;
-						showAlarmAnimation(component, imageView, R.drawable.ic_geofence_alarm_1, R.drawable.ic_geofence_alarm, true);
+					
+						String geofence = obuState.getValue();
+						if (geofence.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_GEO_FENCE_ALARM)).getValue())) {
+							alarm = true;
+							showAlarmAnimation(component, imageView, R.drawable.ic_geofence_alarm_1, R.drawable.ic_geofence_alarm, true);
+						}
 					}
 					else {
 						imageView.setBackgroundResource(android.R.color.transparent);
@@ -930,9 +931,9 @@ public class MainActivity extends Activity {
 				
 				FrameLayout component = (FrameLayout)findViewById(idState);
 				if (component != null) {
-					ImageView imageView = (ImageView)component.findViewById(R.id.logo);
+					/*ImageView imageView = (ImageView)component.findViewById(R.id.logo);
 					
-					/*HashMap<Integer,ObuComponent> obuComponents = Settings.obuComponents;
+					HashMap<Integer,ObuComponent> obuComponents = Settings.obuComponents;
 					ObuSetting obuSetting = Settings.getObuSettingObject(obuComponents.get(idState).getName());
 					if (obuSetting != null) {
 						TextView label = ((TextView)component.findViewById(R.id.label));
@@ -942,18 +943,10 @@ public class MainActivity extends Activity {
 					TextView label = ((TextView)component.findViewById(R.id.label));
 					label.setText(obuComponent.getLabel().toUpperCase());
 					
-					String extState = obuState.getValue(); 
 					cancelAlarmAnimation(component, null, false);
-					
-					if (extState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_EXT_OFF)).getValue())) {
-						imageView.setBackgroundResource(R.drawable.ic_bilgepump_clodged);
-					}			
-					else if (extState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_EXT_ON)).getValue())) {
-						alarm = true;
-						showAlarmAnimation(component, imageView, R.drawable.ic_bilgepump_clodged_1, R.drawable.ic_bilgepump_clodged, true);
-					}
-					else {
-						imageView.setBackgroundResource(R.drawable.ic_bilgepump_clodged);
+					String extState = obuState.getValue(); 
+					if (extState.equals(((AppSetting)Settings.appSettings.get(Settings.APP_STATE_EXT_ON)).getValue())) {
+						showAlarmAccuAnimation(component, null);
 					}
 				}
 			}		
@@ -1031,27 +1024,29 @@ public class MainActivity extends Activity {
 		background.startAnimation(anim);
         System.out.println("background="+background);
         
-        ObjectAnimator colorFade = ObjectAnimator.ofObject(textView, "textColor", 
-				new ArgbEvaluator(), 
-				getResources().getColor(R.color.alarm_red), 
-				getResources().getColor(R.color.text_alarm_title));
-		colorFade.setDuration(getResources().getInteger(R.integer.animation_interval));
-		colorFade.setRepeatCount(-1);
-		colorFade.setRepeatMode(Animation.REVERSE);
-		colorFade.start();
-		
-	    //TypedArray a = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.text_content});     
-        ObjectAnimator colorFadeLabel = ObjectAnimator.ofObject((TextView)layout.findViewById(R.id.label), "textColor", 
-				new ArgbEvaluator(), 
-				getResources().getColor(stylesAttributes.getResourceId(1, 0)), 
-				getResources().getColor(R.color.text_alarm_title));
-        colorFadeLabel.setDuration(getResources().getInteger(R.integer.animation_interval));
-        colorFadeLabel.setRepeatCount(-1);
-        colorFadeLabel.setRepeatMode(Animation.REVERSE);
-        colorFadeLabel.start();
-		
-		alarmAnimaations.put(layout.getId(), colorFade);
-		alarmAnimaations.put(layout.getId()+1, colorFadeLabel);
+        if (textView != null) {
+	        ObjectAnimator colorFade = ObjectAnimator.ofObject(textView, "textColor", 
+					new ArgbEvaluator(), 
+					getResources().getColor(R.color.alarm_red), 
+					getResources().getColor(R.color.text_alarm_title));
+			colorFade.setDuration(getResources().getInteger(R.integer.animation_interval));
+			colorFade.setRepeatCount(-1);
+			colorFade.setRepeatMode(Animation.REVERSE);
+			colorFade.start();
+        
+		    //TypedArray a = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.text_content});     
+	        ObjectAnimator colorFadeLabel = ObjectAnimator.ofObject((TextView)layout.findViewById(R.id.label), "textColor", 
+					new ArgbEvaluator(), 
+					getResources().getColor(stylesAttributes.getResourceId(1, 0)), 
+					getResources().getColor(R.color.text_alarm_title));
+	        colorFadeLabel.setDuration(getResources().getInteger(R.integer.animation_interval));
+	        colorFadeLabel.setRepeatCount(-1);
+	        colorFadeLabel.setRepeatMode(Animation.REVERSE);
+	        colorFadeLabel.start();
+			
+			alarmAnimaations.put(layout.getId(), colorFade);
+			alarmAnimaations.put(layout.getId()+1, colorFadeLabel);
+        }
 		
 	    //TypedArray a2 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_logotype_alarm});     
         int logoId = stylesAttributes.getResourceId(4, 0);       
@@ -1073,17 +1068,17 @@ public class MainActivity extends Activity {
 	    	    ((TextView)layout.findViewById(R.id.label)).setTextColor(getResources().getColor(stylesAttributes.getResourceId(1, 0)));
 	        }
 			
-	        LinearLayout background = (LinearLayout)layout.findViewById(R.id.background);
-	        background.clearAnimation();
-
-	        //TypedArray a1 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.component});     
-	        int backgroundId = stylesAttributes.getResourceId(2, 0);       
-	        ((LinearLayout)layout.findViewById(R.id.main)).setBackgroundColor(getResources().getColor(backgroundId));
-	        
-		    //TypedArray a2 = getTheme().obtainStyledAttributes(Utils.getPrefernciesInt(this, Settings.SETTING_THEME), new int[] {R.attr.ic_logotype});     
-	        int logoId = stylesAttributes.getResourceId(3, 0);       
-			((ImageView)findViewById(R.id.actionBarLogo)).setImageResource(logoId);
 		}
+		
+        LinearLayout background = (LinearLayout)layout.findViewById(R.id.background);
+        background.clearAnimation();
+
+        int backgroundId = stylesAttributes.getResourceId(2, 0);       
+        ((LinearLayout)layout.findViewById(R.id.main)).setBackgroundColor(getResources().getColor(backgroundId));
+        
+        int logoId = stylesAttributes.getResourceId(3, 0);       
+		((ImageView)findViewById(R.id.actionBarLogo)).setImageResource(logoId);
+		//}
 	}
 
 	

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:boatguard="http://schemas.android.com/apk/res/com.boatguard.boatguard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?component" >
+    
+    <LinearLayout
+        android:id="@+id/background"
+		android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:orientation="vertical" />
+    
+	<LinearLayout 
+	    android:id="@+id/main"
+		android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    style="@style/Component"
+	    android:orientation="vertical" >
+	
+		<LinearLayout 
+			android:id="@+id/content"
+		    android:layout_width="match_parent"
+		    android:layout_height="@dimen/component_height"
+		    android:orientation="horizontal" >
+		    
+		    <com.boatguard.boatguard.components.TextViewFont
+		        android:id="@+id/label"
+		        style="@style/ComponentText"
+		        boatguard:font_name="@string/font_regular"
+		    	android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:text="label" />
+		 
+			<FrameLayout
+			    android:id="@+id/lIcon"
+		        android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:layout_weight="2"
+			    android:gravity="center_horizontal"
+			    android:orientation="horizontal" >
+			    
+				<com.boatguard.boatguard.components.SwitchFont
+				    boatguard:font_name="@string/font_medium"
+		        	android:id="@+id/switch_ext"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_gravity="center_vertical|right"
+				    android:textOff="@string/off"
+				    android:textOn="@string/on"
+				    android:switchTextAppearance="@style/SwitchTextAppearance"
+				    android:track="@drawable/switcher_track" />
+		    </FrameLayout>
+		</LinearLayout>
+
+		
+	</LinearLayout>
+		
+	<LinearLayout
+	    android:id="@+id/line"
+	    style="@style/ComponentLineLayout"
+	    android:layout_width="match_parent"
+	    android:layout_gravity="bottom"
+	    android:orientation="horizontal" />
+    
+</FrameLayout>
