@@ -144,7 +144,7 @@ public class SettingsActivity extends Activity {
 		btnBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-		    	if ((fragmentId == 0) || (fragmentId == 1) || (fragmentId == 2) || (fragmentId == 3) || (fragmentId == 12)) {
+		    	if ((fragmentId == 0) || (fragmentId == 1) || (fragmentId == 2) || (fragmentId == 3)) {
 		    		new Settings(SettingsActivity.this).setObuSettings();
 		    		finish();
 		    	}
@@ -157,6 +157,10 @@ public class SettingsActivity extends Activity {
 					i.putExtra("id", -1);
 					i.putExtra("title", getResources().getString(R.string.menu));
 					startActivity(i);
+		    	}
+		    	else if (fragmentId == 12) {
+		    		new Settings(SettingsActivity.this).setObuComponents();
+		    		finish();
 		    	}
 		    	else {
 					finish();

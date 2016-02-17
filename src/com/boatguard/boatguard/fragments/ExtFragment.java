@@ -1,10 +1,7 @@
 package com.boatguard.boatguard.fragments;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
@@ -23,10 +20,9 @@ import android.widget.ListView;
 import android.widget.Switch;
 
 import com.boatguard.boatguard.R;
-import com.boatguard.boatguard.activities.MainActivity;
 import com.boatguard.boatguard.components.TextViewFont;
 import com.boatguard.boatguard.objects.ObuAlarm;
-import com.boatguard.boatguard.objects.ObuSetting;
+import com.boatguard.boatguard.objects.ObuComponent;
 import com.boatguard.boatguard.objects.Setting;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
@@ -47,8 +43,8 @@ public class ExtFragment  extends Fragment {
 		etName.setText(getArguments().getString("name"));
 		etName.addTextChangedListener(new TextWatcher(){
 		    public void afterTextChanged(Editable s) {
-		        HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
-		        obuSettings.get(((Setting)Settings.settings.get(type)).getId()).setValue(etName.getText().toString());
+		        HashMap<Integer,ObuComponent> obuComponents = Settings.obuComponents;
+		        obuComponents.get(((Setting)Settings.settings.get(type)).getId()).setLabel(etName.getText().toString());
 		    }
 		    public void beforeTextChanged(CharSequence s, int start, int count, int after){}
 		    public void onTextChanged(CharSequence s, int start, int before, int count){}

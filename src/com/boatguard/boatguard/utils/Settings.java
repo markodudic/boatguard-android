@@ -232,7 +232,7 @@ public class Settings {
 			at.execute(urlString, null); 
     	}
     }
-    
+
     
     private OnTaskCompleteListener clObuSettings = new OnTaskCompleteListener() {
 
@@ -325,6 +325,19 @@ public class Settings {
     	}
     }    
     
+    public static ObuComponent getObuComponentsObject(int idComponent) {
+    	Iterator<Entry<Integer, ObuComponent>> i = obuComponents.entrySet().iterator();
+    	while(i.hasNext()) { 
+			Map.Entry map = (Map.Entry)i.next(); 
+			ObuComponent obuComponent = (ObuComponent) map.getValue();
+			if (obuComponent.getId_component() == idComponent) {
+				return obuComponent;
+			}
+    	}
+    	
+    	return null;
+    }
+    
     private OnTaskCompleteListener clObuComponents = new OnTaskCompleteListener() {
 
         @Override
@@ -349,6 +362,20 @@ public class Settings {
         }
     };
     
+    
+    public void setObuComponents()
+    {
+	    List<ObuComponent> list = new ArrayList<ObuComponent>(obuComponents.values());
+	    Gson gson = new Gson();
+	    String data = gson.toJson(list);
+	    
+    	String sessionid = Utils.getPrefernciesString(context, Settings.SETTING_SESSION_ID);
+	    String urlString = context.getString(R.string.server_url) + "setobucomponents?sessionid="+sessionid;
+	    if (Utils.isNetworkConnected(context, true)) {
+	    	Comm at = new Comm();
+			at.execute(urlString, "json", data); 
+	    }
+    }
     
     public void getObuAlarms() {
     	if (Utils.isNetworkConnected(context, true)) {

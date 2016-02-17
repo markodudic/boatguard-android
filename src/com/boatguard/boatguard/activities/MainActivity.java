@@ -55,6 +55,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -67,6 +68,7 @@ import com.boatguard.boatguard.objects.ObuAlarm;
 import com.boatguard.boatguard.objects.ObuComponent;
 import com.boatguard.boatguard.objects.ObuSetting;
 import com.boatguard.boatguard.objects.ObuState;
+import com.boatguard.boatguard.objects.Setting;
 import com.boatguard.boatguard.objects.State;
 import com.boatguard.boatguard.utils.Comm;
 import com.boatguard.boatguard.utils.Comm.OnTaskCompleteListener;
@@ -394,22 +396,24 @@ public class MainActivity extends Activity {
 			if (obuComponent.getType().equals("ACCU")) { 
 				lc = R.layout.list_component_accu;
 			}
+			else if (obuComponent.getType().equals("EXT")) { 
+				lc = R.layout.list_component_ext;
+			}
 			
 			LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		    component = inflater.inflate(lc, null);
 		    component.setId(obuComponent.getId_component());
 			    
-		    String componentName = obuComponent.getName();
+		    final String componentName = obuComponent.getLabel();
 		    TextView label = ((TextView)component.findViewById(R.id.label));
-			if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_EXT)) {
+			/*if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_EXT)) {
 				ObuSetting obuSetting = Settings.getObuSettingObject(obuComponent.getName());
 				if (obuSetting != null) {
 					componentName = obuSetting.getValue().toUpperCase();
 				}
 			}
-			
+			*/
 			label.setText(componentName);
-			final String componentNameFinal = componentName;
 			final String componentType = obuComponent.getName();
 			((TextViewFont)component.findViewById(R.id.label)).setLetterSpacing(getResources().getInteger(R.integer.letter_spacing_small_set));
 	        
@@ -419,7 +423,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(0, componentNameFinal, componentType);
+						showSetting(0, componentName, componentType);
 					}
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_PUMP)) {
@@ -427,7 +431,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(1, componentNameFinal, componentType);
+						showSetting(1, componentName, componentType);
 					}
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ANCHOR)) { 
@@ -435,7 +439,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(2, componentNameFinal, componentType);
+						showSetting(2, componentName, componentType);
 					}
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_ACCU)) { 
@@ -444,7 +448,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(3, componentNameFinal, componentType);
+						showSetting(3, componentName, componentType);
 					}
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_LIGHT)) { 
@@ -452,7 +456,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(10, componentNameFinal, componentType);
+						showSetting(10, componentName, componentType);
 					}
 				});				
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_FAN)) { 
@@ -460,7 +464,7 @@ public class MainActivity extends Activity {
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						showSetting(11, componentNameFinal, componentType);
+						showSetting(11, componentName, componentType);
 					}
 				});	
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_DOOR)) { 
@@ -472,18 +476,23 @@ public class MainActivity extends Activity {
 					}
 				});
 			} else if (obuComponent.getType().equals(Settings.COMPONENT_TYPE_EXT)) { 
-				((ImageView)component.findViewById(R.id.logo)).setBackgroundResource(R.drawable.ic_bilgepump_clodged);
+				final Switch switchExt = (Switch)component.findViewById(R.id.switch_ext);
+				ObuSetting obuSetting = Settings.getObuSettingObject(obuComponent.getName());
+				switchExt.setChecked(obuSetting.getValue().equals("1"));
+				switchExt.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v1) {
+				        HashMap<Integer,ObuSetting> obuSettings = Settings.obuSettings;
+				        obuSettings.get(obuComponent.getId_component()).setValue(switchExt.isChecked()?"1":"0");
+				        new Settings(MainActivity.this).setObuSettings();
+				    }
+				});	
+				
+				
 				label.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) { 
-						HashMap<Integer,ObuComponent> obuComponents = Settings.obuComponents;
-						ObuSetting obuSetting = Settings.getObuSettingObject(obuComponent.getName());
-						if (obuSetting != null) {
-							showSetting(12, obuSetting.getValue().toUpperCase(), componentType);
-						}
-						else {
-							showSetting(12, componentNameFinal, componentType);
-						}
+						showSetting(12, componentName, componentType);
 					}
 				});
 			} 			
@@ -923,12 +932,15 @@ public class MainActivity extends Activity {
 				if (component != null) {
 					ImageView imageView = (ImageView)component.findViewById(R.id.logo);
 					
-					HashMap<Integer,ObuComponent> obuComponents = Settings.obuComponents;
+					/*HashMap<Integer,ObuComponent> obuComponents = Settings.obuComponents;
 					ObuSetting obuSetting = Settings.getObuSettingObject(obuComponents.get(idState).getName());
 					if (obuSetting != null) {
 						TextView label = ((TextView)component.findViewById(R.id.label));
 						label.setText(obuSetting.getValue().toUpperCase());
-					}
+					}*/
+					ObuComponent obuComponent = Settings.getObuComponentsObject(idState);
+					TextView label = ((TextView)component.findViewById(R.id.label));
+					label.setText(obuComponent.getLabel().toUpperCase());
 					
 					String extState = obuState.getValue(); 
 					cancelAlarmAnimation(component, null, false);
