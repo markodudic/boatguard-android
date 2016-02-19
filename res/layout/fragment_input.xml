@@ -22,7 +22,7 @@
 		    android:layout_height="@dimen/login_edit_height">
 		    
 	   	    <com.boatguard.boatguard.components.EditTextFont
-		        android:id="@+id/extname"
+		        android:id="@+id/inputname"
 		        android:layout_width="match_parent"
 		        android:layout_height="match_parent"
 		        style="@style/LoginEditText"
@@ -32,7 +32,7 @@
 		    </com.boatguard.boatguard.components.EditTextFont>
 
 		    <ImageView
-		        android:id="@+id/iv_extname"
+		        android:id="@+id/iv_inputname"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        style="@style/DeleteImageView"
@@ -41,84 +41,6 @@
 		        android:src="?ic_delete" />
 		</FrameLayout>
     </LinearLayout>
-    
-	<!-- LinearLayout 
-		android:layout_width="match_parent"
-	    android:layout_height="@dimen/settings_height"
-	    android:orientation="horizontal" >
-	    
-	    <com.boatguard.boatguard.components.TextViewFont
-	        style="@style/SettingsText"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:layout_weight="1"
-	        android:text="@string/alarm_active"
-	        boatguard:font_name="@string/font_medium" />
-			    
-		<com.boatguard.boatguard.components.SwitchFont
-		    boatguard:font_name="@string/font_medium"
-        	android:id="@+id/switch_alarm_active"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_gravity="center_vertical|right"
-		    android:layout_weight="2"
-		    android:textOff="@string/off"
-		    android:textOn="@string/on"
-		    android:switchTextAppearance="@style/SwitchTextAppearance"
-		    android:track="@drawable/switcher_track" />
-    </LinearLayout>
-
-	<LinearLayout 
-		android:layout_width="match_parent"
-	    android:layout_height="@dimen/settings_height"
-	    android:orientation="horizontal" >
-	    
-	    <com.boatguard.boatguard.components.TextViewFont
-		    style="@style/SettingsText"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:layout_weight="1"
-	        android:text="@string/send_email"
-	        boatguard:font_name="@string/font_medium" />
-			    
-		<com.boatguard.boatguard.components.SwitchFont
-		    boatguard:font_name="@string/font_medium"
-        	android:id="@+id/switch_send_email"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_gravity="center_vertical|right"
-		    android:layout_weight="2"
-		    android:textOff="@string/off"
-		    android:textOn="@string/on"
-		    android:switchTextAppearance="@style/SwitchTextAppearance"
-		    android:track="@drawable/switcher_track" />
-    </LinearLayout>
-
-	<LinearLayout 
-		android:layout_width="match_parent"
-	    android:layout_height="@dimen/settings_height"
-	    android:orientation="horizontal" >
-	    
-	    <com.boatguard.boatguard.components.TextViewFont
-		    style="@style/SettingsText"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:layout_weight="1"
-	        android:text="@string/alarm_friends"
-	        boatguard:font_name="@string/font_medium" />
-			    
-		<com.boatguard.boatguard.components.SwitchFont
-		    boatguard:font_name="@string/font_medium"
-        	android:id="@+id/switch_alarm_friends"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_gravity="center_vertical|right"
-		    android:layout_weight="2"
-		    android:textOff="@string/off"
-		    android:textOn="@string/on"
-		    android:switchTextAppearance="@style/SwitchTextAppearance"
-		    android:track="@drawable/switcher_track" />
-    </LinearLayout-->
     		
 	<LinearLayout 
 		android:layout_width="match_parent"

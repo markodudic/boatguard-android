@@ -60,7 +60,8 @@
         <item >ODJAVA</item>
         <item >SVETLA</item>
         <item >VENTILATORI</item>
-        <item >EXT</item>
+        <item >INPUT</item>
+        <item >OUTPUT</item>
    </string-array>
     
    <string name="geo_fence">GEOFENCE</string>

@@ -43,7 +43,7 @@
 			    
 				<com.boatguard.boatguard.components.SwitchFont
 				    boatguard:font_name="@string/font_medium"
-		        	android:id="@+id/switch_ext"
+		        	android:id="@+id/switch_output"
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:layout_gravity="center_vertical|right"

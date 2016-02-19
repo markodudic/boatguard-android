@@ -19,10 +19,11 @@ import com.boatguard.boatguard.fragments.AppAppearanceFragment;
 import com.boatguard.boatguard.fragments.BatteryFragment;
 import com.boatguard.boatguard.fragments.BilgePumpFragment;
 import com.boatguard.boatguard.fragments.ContactsFragment;
-import com.boatguard.boatguard.fragments.ExtFragment;
 import com.boatguard.boatguard.fragments.GeoFenceFragment;
 import com.boatguard.boatguard.fragments.HistoryFragment;
+import com.boatguard.boatguard.fragments.InputFragment;
 import com.boatguard.boatguard.fragments.MyAccountFragment;
+import com.boatguard.boatguard.fragments.OutputFragment;
 import com.boatguard.boatguard.fragments.SensorsFragment;
 import com.boatguard.boatguard.fragments.SettingsFragment;
 import com.boatguard.boatguard.utils.Settings;
@@ -129,13 +130,29 @@ public class SettingsActivity extends Activity {
 	            fragmentTransaction.commit();
 				break;
 	        case 12:
-	        	Bundle bundleExt = new Bundle();
-	        	bundleExt.putString("name", extras.getString("title"));
-	        	bundleExt.putString("type", extras.getString("type"));
-	        	ExtFragment extFragment = new ExtFragment();
-	        	extFragment.setArguments(bundleExt);
+	        	String name = Settings.obuComponents.get(Integer.parseInt(extras.getString("type"))).getLabel().toUpperCase();
+		        tvTitle.setText(name);
+		        
+	        	Bundle bundleInput = new Bundle();
+	        	bundleInput.putString("name", name);
+	        	bundleInput.putString("type", extras.getString("type"));
+	        	InputFragment inputFragment = new InputFragment();
+	        	inputFragment.setArguments(bundleInput);
 	        	
-	        	fragmentTransaction.add(R.id.fragment_settings, extFragment, extras.getString("title"));
+	        	fragmentTransaction.add(R.id.fragment_settings, inputFragment, extras.getString("title"));
+	            fragmentTransaction.commit();
+				break;
+	        case 13:
+	        	String nameOutput = Settings.obuComponents.get(Integer.parseInt(extras.getString("type"))).getLabel().toUpperCase();
+		        tvTitle.setText(nameOutput);
+		        
+	        	Bundle bundleOutput = new Bundle();
+	        	bundleOutput.putString("name", nameOutput);
+	        	bundleOutput.putString("type", extras.getString("type"));
+	        	OutputFragment outputFragment = new OutputFragment();
+	        	outputFragment.setArguments(bundleOutput);
+	        	
+	        	fragmentTransaction.add(R.id.fragment_settings, outputFragment, extras.getString("title"));
 	            fragmentTransaction.commit();
 				break;
 		}
@@ -158,8 +175,9 @@ public class SettingsActivity extends Activity {
 					i.putExtra("title", getResources().getString(R.string.menu));
 					startActivity(i);
 		    	}
-		    	else if (fragmentId == 12) {
+		    	else if ((fragmentId == 12) ||  (fragmentId == 13)) {
 		    		new Settings(SettingsActivity.this).setObuComponents();
+		    		new Settings(SettingsActivity.this).getObuAlarms();
 		    		finish();
 		    	}
 		    	else {

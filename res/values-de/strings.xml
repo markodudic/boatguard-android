@@ -60,7 +60,8 @@
         <item >LOG OUT</item>
         <item >LIGHTS</item>
         <item >FANS</item>
-        <item >EXT</item>
+        <item >INPUT</item>
+        <item >OUTPUT</item>
    </string-array>
        
    <string name="geo_fence">GEOFENCE</string>

@@ -51,8 +51,8 @@ public class Settings {
 	public static String SETTING_ALARM_ACTIVE = "ALARM_ACTIVE";
 	public static String SETTING_SEND_EMAIL = "SEND_EMAIL";
 	public static String SETTING_ALARM_FRIENDS = "ALARM_FRIENDS";
-	public static String SETTING_EXT1 = "EXT1";
-	public static String SETTING_EXT2 = "EXT2";
+	public static String SETTING_OUTPUT1 = "OUTPUT1";
+	public static String SETTING_OUTPUT2 = "OUTPUT2";
 
 	public static String COMPONENT_TYPE_ACCU = "ACCU";
 	public static String COMPONENT_TYPE_PUMP = "PUMP";
@@ -61,7 +61,8 @@ public class Settings {
 	public static String COMPONENT_TYPE_LIGHT = "LIGHT";
 	public static String COMPONENT_TYPE_FAN = "FAN";
 	public static String COMPONENT_TYPE_DOOR = "DOOR";
-	public static String COMPONENT_TYPE_EXT = "EXT";
+	public static String COMPONENT_TYPE_INPUT = "INPUT";
+	public static String COMPONENT_TYPE_OUTPUT = "OUTPUT";
 
 	public static String STATE_ROW_STATE = "ROW_STATE";
 	public static String STATE_GEO_FENCE = "GEO_FENCE";
@@ -87,8 +88,8 @@ public class Settings {
 	public static String STATE_LIGHT = "LIGHT";
 	public static String STATE_FAN = "FAN";
 	public static String STATE_DOOR = "DOOR";
-	public static String STATE_EXT1 = "EXT1";	
-	public static String STATE_EXT2 = "EXT2";	
+	public static String STATE_INPUT1 = "INPUT1";	
+	public static String STATE_INPUT2 = "INPUT2";	
 	
 	public static String APP_STATE_GEO_FENCE_DISABLED = "GEO_FENCE_DISABLED";
 	public static String APP_STATE_GEO_FENCE_ENABLED = "GEO_FENCE_ENABLED";
@@ -111,8 +112,8 @@ public class Settings {
 	public static String APP_STATE_FAN_ON = "FAN_ON";
 	public static String APP_STATE_DOOR_OK = "DOOR_OK";
 	public static String APP_STATE_DOOR_ALARM = "DOOR_ALARM";
-	public static String APP_STATE_EXT_OFF = "EXT_OFF";
-	public static String APP_STATE_EXT_ON = "EXT_ON";
+	public static String APP_STATE_INPUT_OFF = "INPUT_OFF";
+	public static String APP_STATE_INPUT_ON = "INPUT_ON";
 			
 	public static String ALARM_GREEN = "G";
 	public static String ALARM_RED = "R";

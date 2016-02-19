@@ -27,29 +27,29 @@ import com.boatguard.boatguard.objects.Setting;
 import com.boatguard.boatguard.utils.Settings;
 import com.boatguard.boatguard.utils.Utils;
 
-public class ExtFragment  extends Fragment {
+public class InputFragment  extends Fragment {
 	protected LayoutInflater inflater;
 	String type = null;
 	
 	@Override 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /** Inflating the layout for this fragment **/
-        final View v = inflater.inflate(R.layout.fragment_ext, null);
+        final View v = inflater.inflate(R.layout.fragment_input, null);
         this.inflater = inflater;
         
         type = getArguments().getString("type");    
         
-		final EditText etName = (EditText) v.findViewById(R.id.extname);
+		final EditText etName = (EditText) v.findViewById(R.id.inputname);
 		etName.setText(getArguments().getString("name"));
 		etName.addTextChangedListener(new TextWatcher(){
 		    public void afterTextChanged(Editable s) {
 		        HashMap<Integer,ObuComponent> obuComponents = Settings.obuComponents;
-		        obuComponents.get(((Setting)Settings.settings.get(type)).getId()).setLabel(etName.getText().toString());
+		        obuComponents.get(Integer.parseInt(type)).setLabel(etName.getText().toString());
 		    }
 		    public void beforeTextChanged(CharSequence s, int start, int count, int after){}
 		    public void onTextChanged(CharSequence s, int start, int before, int count){}
 		}); 
-		ImageView ivName = (ImageView) v.findViewById(R.id.iv_extname);
+		ImageView ivName = (ImageView) v.findViewById(R.id.iv_inputname);
 		ivName.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View vv) {
@@ -144,7 +144,7 @@ public class ExtFragment  extends Fragment {
 		}
 		@Override
 		public Object getItem(int position) {
-			int id = ((Setting)Settings.settings.get(type)).getId();
+			int id = Integer.parseInt(type);
 			List<ObuAlarm> obuAlarms = Settings.obuAlarms;
 			for(int i=0; i<obuAlarms.size(); i++) { 
 				ObuAlarm obuAlarm = obuAlarms.get(i);
@@ -157,7 +157,7 @@ public class ExtFragment  extends Fragment {
 		}
 		@Override
 		public long getItemId(int position) {
-			int id = ((Setting)Settings.settings.get(type)).getId();
+			int id = Integer.parseInt(type);
 			List<ObuAlarm> obuAlarms = Settings.obuAlarms;
 			for(int i=0; i<obuAlarms.size(); i++) { 
 				ObuAlarm obuAlarm = obuAlarms.get(i);
