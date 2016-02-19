@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:boatguard="http://schemas.android.com/apk/res/com.boatguard.boatguard"
+    style="@style/SettingsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+ 
+    <LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
+	    
+	    <com.boatguard.boatguard.components.TextViewFont
+	        android:layout_width="wrap_content"
+	        android:text="@string/name"
+	        boatguard:font_name="@string/font_medium"
+	    	style="@style/LoginText" />
+	
+		<FrameLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="@dimen/login_edit_height">
+		    
+	   	    <com.boatguard.boatguard.components.EditTextFont
+		        android:id="@+id/outputname"
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+		        style="@style/LoginEditText"
+		        boatguard:font_name="@string/font_medium"
+		        android:editable="true">
+		        <requestFocus />
+		    </com.boatguard.boatguard.components.EditTextFont>
+
+		    <ImageView
+		        android:id="@+id/iv_outputname"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        style="@style/DeleteImageView"
+		        android:clickable="true"
+		        android:focusable="false"
+		        android:src="?ic_delete" />
+		</FrameLayout>
+    </LinearLayout>
+    		
+</LinearLayout>
